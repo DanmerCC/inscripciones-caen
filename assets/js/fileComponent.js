@@ -1,0 +1,150 @@
+var fileComponentTemplate={
+    "templante":getFileComponentTemplate
+};
+
+var optionsDefault={
+    "state":false,
+    "target":null,
+    "urlUpload":"/postulante/upload/cv",
+    "urlVerify":"/postulante/stateFiles",
+    "tittle":"Example",
+    "identifier":"example"
+};
+
+var cc={
+    fileComponent:initComponent,
+    uploadFile:actionUploadFile
+}
+
+
+
+function initComponent(target,options=optionsDefault){
+
+    var objectResult={
+        "target":target,
+        "changeState":function(newState){
+            this.state=newState;
+            changeState(newState,this.target);
+        },
+        "state":options.state,
+    };
+
+    options.target=target;
+    var template=fileComponentTemplate.templante(options);
+    verificarEstadoFiles(function(response){
+        changeState(response.content[options.identifier],options.target,"/"+options.identifier+"/"+response.content.nameFiles)
+    });
+
+    $(options.target).html(template);
+    var targetInput=options.target+ "  #file_cv";
+    $(targetInput).change(function(){
+        if($(targetInput)[0].checkValidity()){
+            cc.uploadFile(targetInput,options.urlUpload,function(response){
+                //changeState(response.status=="OK",options.target)
+                if(response.status=="OK"){
+                    alert("Documento Correctamente Subido");
+                }else{
+                    alert("Error al subir el archivo")
+                    console.log(response.status);
+                }
+                verificarEstadoFiles(function(response){
+                    if(response.content==[]){
+                        console.log("error al pedir confirmacion")
+                    }else{
+                        //response.content["cv"];
+                        changeState(response.content[options.identifier],options.target,"/"+options.identifier+"/"+response.content.nameFiles)
+                    }
+                });
+                //verificar();
+            });
+        }else{
+            alert("Solo se puede agregar pdfs");
+        }
+        
+    });
+    //$(options.target+' #hasFile').click(options.goodState);
+    return objectResult;
+}
+
+
+function getFileComponentTemplate(options){
+    var template=''+
+    '<div class="box box-primary">'+
+        '<div class="box-header with-border">'+
+            '<h3 class="box-title"><font style="vertical-align: inherit;">'+options.tittle+'</font></h3>'+
+        '</div>'+
+        '<div class="form-group">'+
+            '<div class="row">'+
+                '<div id="hasFile" '+((options.state)?'':'hidden')+'>'+
+                    '<div class="col-sm-4">'+
+                        '<a id="alinktarget" class="btn btn-app"  target="_blank">'+
+                            '<i class="fa fa-eye"></i><font style="vertical-align: inherit;"> Ver </font>'+
+                        '</a>'+
+                    '</div>'+
+                    '<div class="col-sm-4">'+
+                        '<button class="btn btn-success btn-lg">'+
+                            '<i class="fa fa-fw fa-check"></i>'+
+                        '</button>'+
+                    '</div>'+
+                '</div>'+
+                '<div id="hasNotFile"'+((options.state)?'hidden':'')+' >'+
+                    '<form id="frmUploadCv">'+
+                        '<div class="col-sm-4">'+
+                            '<label for="file_cv">'+options.tittle+'<span style="color: red">(*)</span></label>'+
+                            '<input  class="form-control" type="file" class="form-control" id="file_cv" name="file_cv" value="" accept="pdf">'+
+                        '</div>'+
+                        '<div class="col-sm-4">'+
+                            '<button class="btn btn-lg btn-danger">'+
+                                '<i class="fa fa-fw fa-exclamation"></i>'+
+                            '</button>'+
+                        '</div>'+
+                    '</form>'+
+                '</div>'+
+                '<div id="magicContainer"></div>'+
+            '</div>'
+        '</div>'
+    '</div>';
+return template;
+}
+
+function changeState(state,target,partUrl=""){
+    if(state){
+        $(target+"  #hasFile").removeAttr("hidden");
+        $(target+"  #hasNotFile").prop("hidden","hidden");
+        $(target+"  #alinktarget").prop("href","/admin/view/pdf"+partUrl);
+    }else{
+        $(target+"  #hasFile").prop("hidden","hidden");
+        $(target+"  #hasNotFile").removeAttr("hidden");
+    }
+    
+}
+
+
+function actionUploadFile(target,urlTarget,sucessUpload){
+	var fileSelect = document.querySelector(target);
+	var formData= new FormData();
+	formData.append('cv',fileSelect.files[0],fileSelect.files[0].name);
+	$.ajax({
+		type: "POST",
+		url: urlTarget,
+		data: formData,
+		processData:false,
+		contentType:false,
+        success: sucessUpload,
+        datatype:"json",
+		error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status);
+            console.log(thrownError);
+		}
+	});
+}
+
+function verificarEstadoFiles(action){
+    $.ajax({
+        type: "GET",
+        url: "postulante/stateProfileFiles",
+        data: "",
+        dataType: "json",
+        success: action
+    });
+}

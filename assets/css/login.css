@@ -1,0 +1,14 @@
+.sin-bordes, .login-box-body {
+	border: 2px;
+    /* padding: 10px; */
+    border-radius: 20px;
+}
+
+.sin-bordes.register-box-body {
+    border-radius: 20px;
+}
+
+body.login-page{
+    background: url(/assets/img/background.jpg) center;
+    background-size: cover;
+}
