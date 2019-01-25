@@ -49,9 +49,9 @@ class Alumno extends CI_Controller
 	           "4" => $value["lugar_trabajo"],
 	           "5" => $value["celular"]." \n ".$value["telefono_casa"],
 			   "6" => $value["email"],
-			   "7"=> (file_exists(CC_BASE_PATH."/files/cvs/".$value["documento"].".pdf")?"<a href='".base_url()."/admin/view/pdf/cv/".$value["documento"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir</strong></button></a>":"<button class='btn btn-light'>No subido</button>"),
-			   "8"=> (file_exists(CC_BASE_PATH."/files/dni/".$value["documento"].".pdf")?"<a href='".base_url()."/admin/view/pdf/dni/".$value["documento"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir</strong></button></a>":"<button class='btn btn-light'>No subido</button>"),
-			   "9"=> (file_exists(CC_BASE_PATH."/files/djs/".$value["documento"].".pdf")?"<a href='".base_url()."/admin/view/pdf/dj/".$value["documento"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir</strong></button></a>":"<button class='btn btn-light'>No subido</button>")
+			   "7"=> (file_exists(CC_BASE_PATH."/files/cvs/".$value["documento"].".pdf")?"<a href='".base_url()."admin/view/pdf/cv/".$value["documento"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir</strong></button></a>":"<button class='btn btn-light'>No subido</button>"),
+			   "8"=> (file_exists(CC_BASE_PATH."/files/dni/".$value["documento"].".pdf")?"<a href='".base_url()."admin/view/pdf/dni/".$value["documento"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir</strong></button></a>":"<button class='btn btn-light'>No subido</button>"),
+			   "9"=> (file_exists(CC_BASE_PATH."/files/djs/".$value["documento"].".pdf")?"<a href='".base_url()."admin/view/pdf/dj/".$value["documento"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir</strong></button></a>":"<button class='btn btn-light'>No subido</button>")
 	       );
 	    }        
 	   $results = array(
