@@ -41,6 +41,10 @@ class Alumno extends CI_Controller
 
 
 	   foreach ($rspta as $value) {
+		$haveFileCv=file_exists(CC_BASE_PATH."/files/cvs/".$value["documento"].".pdf");
+		$haveFileDni=file_exists(CC_BASE_PATH."/files/dni/".$value["documento"].".pdf");
+		$haveFileDj=file_exists(CC_BASE_PATH."/files/djs/".$value["documento"].".pdf");
+
 	           $data[] = array(
 	           "0" => $value["grado_profesion"],
 	           "1" => $value["nombres"],
@@ -49,9 +53,9 @@ class Alumno extends CI_Controller
 	           "4" => $value["lugar_trabajo"],
 	           "5" => $value["celular"]." \n ".$value["telefono_casa"],
 			   "6" => $value["email"],
-			   "7"=> (file_exists(CC_BASE_PATH."/files/cvs/".$value["documento"].".pdf")?"<a href='".base_url()."admin/view/pdf/cv/".$value["documento"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir</strong></button></a>":"<button class='btn btn-light'>No subido</button>"),
-			   "8"=> (file_exists(CC_BASE_PATH."/files/dni/".$value["documento"].".pdf")?"<a href='".base_url()."admin/view/pdf/dni/".$value["documento"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir</strong></button></a>":"<button class='btn btn-light'>No subido</button>"),
-			   "9"=> (file_exists(CC_BASE_PATH."/files/djs/".$value["documento"].".pdf")?"<a href='".base_url()."admin/view/pdf/dj/".$value["documento"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir</strong></button></a>":"<button class='btn btn-light'>No subido</button>")
+			   "7" => (($haveFileCv)?"<a href='".base_url()."admin/view/pdf/cv/".$value["documento"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir<button class='btn btn-sucess'>V</button></strong></button></a>":"<button class='btn btn-light'>No subido</button>"),
+			   "8" => (($haveFileDni)?"<a href='".base_url()."admin/view/pdf/dni/".$value["documento"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir</strong></button></a>":"<button class='btn btn-light'>No subido</button>"),
+			   "9" => (($haveFileDj)?"<a href='".base_url()."admin/view/pdf/dj/".$value["documento"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir</strong></button></a>":"<button class='btn btn-light'>No subido</button>")
 	       );
 	    }        
 	   $results = array(
@@ -70,7 +74,7 @@ class Alumno extends CI_Controller
 		$data=base64_encode(file_get_contents(CC_BASE_PATH."/files/cvs/"."47327529".".pdf",true));
 		echo var_dump($parturl);
 		//echo var_dump($data);
-		$this->load->view("viewpdf",array('data'=>$data,'text'=>var_dump($parturl)));
+		$this->load->view("pdf/onlyviewpdf",array('data'=>$data,'text'=>var_dump($parturl)));
 	}
 	
 }

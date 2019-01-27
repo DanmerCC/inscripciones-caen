@@ -51,7 +51,7 @@ class FilesController extends CI_Controller {
 
 		
 
-		$this->load->view("viewpdf",array('data'=>$data));
+		$this->load->view("pdf/viewpdf",array('data'=>$data));
 	}
 	
 }
