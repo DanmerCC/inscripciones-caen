@@ -26,6 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //$config['base_url'] = 'http://inscripciones.caen.edu.pe';
 $config['base_url'] = 'http://inscripciones.test.com';
 /*
+|
 |--------------------------------------------------------------------------
 | Index File
 |--------------------------------------------------------------------------
