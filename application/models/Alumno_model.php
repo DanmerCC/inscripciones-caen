@@ -4,21 +4,29 @@
 
 class Alumno_model extends CI_Model
 {
-	
+	private $table='alumno';
+
+
+	private $id='id_alumno';
+	private $check_cv='check_cv_pdf';
+	private $check_dj='check_dj_pdf';
+	private $check_dni='check_dni_pdf';
+
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->helper('mihelper');
 	}
 
-	public function registrar($apellido_paterno,$apellido_materno,$nombres,$documento,$idTipoDocumento=1){
+	public function registrar($apellido_paterno,$apellido_materno,$nombres,$documento,$email,$idTipoDocumento=1){
 		$data=array(
 			'id_alumno' => NULL,
 			'apellido_paterno' => "$apellido_paterno",
 			'apellido_materno' => "$apellido_materno",
 			'nombres' => "$nombres",
 			'documento' => "$documento",
-			'idTipoDocumento'=>"$idTipoDocumento"
+			'idTipoDocumento'=>"$idTipoDocumento",
+			'email'=>$email
 		);
 		$this->db->insert('alumno',$data);
 		$ultimoId = $this->db->insert_id();
@@ -28,6 +36,10 @@ class Alumno_model extends CI_Model
 
 	public function all($idAlumno){
 		return $this->db->select()->from('alumno')->where('id_alumno',$idAlumno)->get();
+	}
+
+	public function findById($idAlumno){
+		return resultToArray($this->db->select()->from('alumno')->where('id_alumno',$idAlumno)->get());
 	}
 
 	public function getAll(){
@@ -236,5 +248,26 @@ class Alumno_model extends CI_Model
 
 	}
 
+	public function set_check_cvFile($id_alumno){
+		$data=array(
+			$this->check_cv=>1
+		);
+		$this->db->where($this->id, $id_alumno);
+		return $this->db->update($this->table,$data);
+	}
 
+	public function set_check_dniFile($id_alumno){
+		$data=array(
+			$this->check_dni=>1
+		);
+		$this->db->where($this->id, $id_alumno);
+		return $this->db->update($this->table,$data);
+	}
+	public function set_check_djFile($id_alumno){
+		$data=array(
+			$this->check_dj=>1
+		);
+		$this->db->where($this->id, $id_alumno);
+		return $this->db->update($this->table,$data);
+	}
 }

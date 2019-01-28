@@ -161,3 +161,4 @@ $route['prueba']='CorreoController/fileTest';
 
 $route['prueba']='CorreoController/fileTest';
 //
+$route['postulante/checkingfile'] = 'admin/Alumno/set_good_file';

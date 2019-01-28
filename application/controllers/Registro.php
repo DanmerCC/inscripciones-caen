@@ -28,18 +28,19 @@ class Registro extends CI_Controller
 	        $password         = $this->input->post('password');
 	        $email            = $this->input->post('email');
 
-        $ql = $this->db->select('documento')->from('alumno')->where('documento',$id_usuario_dni)->get();
+        $ql = $this->db->select('documento')->from('alumno')->where('documento',$id_usuario_dni)->or_where('email',$email)->get();
         if ($ql->num_rows() > 0) {
-            $data["heading"]="DNI YA ESTA REGISTRADO";
-            $data["message"]="Ya existe un registro con el mismo numero de DNI";
-            $data["seconds"]="3";
-        	$this->load->view('errors/custom/flash_msg',$data);
-
+            $data["heading"]=" YA ESTA REGISTRADO";
+            $data["message"]="Ya existe un registro con el mismo numero de Numero de documento o correo electronico";
+			$data["seconds"]="3";
+			$data["url"]="/registro";
+        	echo $this->load->view('errors/custom/flash_msg',$data,TRUE);
+			die();
         } else {
 
             /*Captura de errores para primer registro*/
-            $this->load->model('Alumno_model');
-            $alumno = $this->Alumno_model->registrar($apellido_paterno, $apellido_materno, $nombre, $id_usuario_dni);
+			$this->load->model('Alumno_model');
+			$alumno = $this->Alumno_model->registrar($apellido_paterno, $apellido_materno, $nombre, $id_usuario_dni,$email);
             $this->load->model('User_model');
             
             if($this->User_model->registrar($id_usuario_dni, $email, $password, $alumno)){
@@ -50,8 +51,8 @@ class Registro extends CI_Controller
                 $this->load->view('errors/custom/flash_msg',$data);
             }else{
                 $data["heading"]="Ah ocurrido un error ";
-                $data["message"]="Su cuenta  $id_usuario_dni no se registro";
-                $data["seconds"]="3";
+                $data["message"]="Su cuenta  $id_usuario_dni no se registro intentelo nuevamente";
+                $data["seconds"]="4";
                 $data["url"]="/postulante";
                 $this->load->view('errors/custom/flash_msg',$data);
             }

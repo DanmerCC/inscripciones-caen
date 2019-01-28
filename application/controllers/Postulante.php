@@ -127,7 +127,7 @@ class Postulante extends CI_Controller {
 		$user=$this->input->post('usuario');
 		$password=$this->input->post('password');
 
-		$this->db->select('alumno.documento,id,alumno.documento,acceso,password,alumno,tipo');
+		$this->db->select('alumno.documento,id,alumno.documento,acceso,password,alumno,tipo,alumno.id_alumno as id_alumno');
 		$this->db->from('usuario');
 		$this->db->join('alumno', 'usuario.alumno = alumno.id_alumno');
 		$this->db->where('usuario.acceso',$user);
@@ -143,7 +143,7 @@ class Postulante extends CI_Controller {
 					/*Estableciendo variables de session*/
 					//$this->nativesession->destroy();
 					$this->nativesession->regenerateId();
-					$this->nativesession->set('idAlumno',$result->result()[0]->alumno);
+					$this->nativesession->set('idAlumno',$result->result()[0]->id_alumno);
 					$this->nativesession->set('idUsuario',$result->result()[0]->id);
 					$this->nativesession->set('dni',$result->result()[0]->documento);
 					$this->nativesession->set('estado','logeado');
@@ -617,7 +617,7 @@ class Postulante extends CI_Controller {
 					"cv"=>file_exists(CC_BASE_PATH.'/files/cvs/'.$this->nativesession->get("dni").".pdf"),
 					"dni"=>file_exists(CC_BASE_PATH.'/files/dni/'.$this->nativesession->get("dni").".pdf"),
 					"dj"=>file_exists(CC_BASE_PATH.'/files/djs/'.$this->nativesession->get("dni").".pdf"),
-					"nameFiles"=>$this->nativesession->get("dni")
+					"nameFiles"=>$this->nativesession->get("idAlumno")
 				],
 				"status"=>"OK"
 				

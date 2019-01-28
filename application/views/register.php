@@ -21,7 +21,7 @@
 
     <form id="frmRegistro" action="registro/enviar" method="post">
       <div class="form-group has-feedback">
-        <input type="text" name="id" class="form-control" placeholder="DNI/PASAPORTE/C.E" maxlength="12" required>
+        <input type="text" name="id" class="form-control" placeholder="DNI/PASAPORTE/C.E" minlength="8" maxlength="12" required>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">

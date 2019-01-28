@@ -7,26 +7,45 @@ class FilesController extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->library('Nativesession');
+		$this->load->library('Mihelper');
     }
     
     public function get_file_view_as_data(){
 		$segmentOfTypeFile=$this->uri->segment(4);
-        $segmentOfNumberDni=$this->uri->segment(5);
+		//$segmentOfNumberDni=$this->uri->segment(5);
+		$segmentIdOfAlumno=$this->uri->segment(5);
 		$data="";
 		$pathFile="";
 
+		$this->load->model('Alumno_model');
+		$result=resultToArray($this->Alumno_model->all($segmentIdOfAlumno));
+		//first element
+		
+		if(count($result)==1){
+			$alumno=$result[0];
+		}else{
+			show_404();
+			die();
+		}
+		if(!$alumno){
+			show_404();
+			die();
+		}
+
 		switch ($segmentOfTypeFile) {
 			case 'cv':
-				$pathFile=CC_BASE_PATH."/files/cvs/".$segmentOfNumberDni.".pdf";
+				$pathFile=CC_BASE_PATH."/files/cvs/".$alumno["documento"].".pdf";
 				break;
 			case 'dj':
-				$pathFile=CC_BASE_PATH."/files/djs/".$segmentOfNumberDni.".pdf";
+				$pathFile=CC_BASE_PATH."/files/djs/".$alumno["documento"].".pdf";
 				break;
 			case 'dni':
-				$pathFile=CC_BASE_PATH."/files/dni/".$segmentOfNumberDni.".pdf";
+				$pathFile=CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf";
 				break;
 			default:
 				$pathFile="";
+				show_404();
+				die();
 				break;
 		}
 
@@ -34,13 +53,15 @@ class FilesController extends CI_Controller {
 
 			if((($pathFile!=""))&&(file_exists($pathFile))){
 				$data=base64_encode(file_get_contents($pathFile,true));
+				$this->load->view("pdf/viewpdf",array('data'=>$data,'idAlumno'=>$alumno["id_alumno"],'typeFile'=>$segmentOfTypeFile));///Load view pdf of only watch
 			}else{
 				show_404();
 			}
 		}elseif($this->nativesession->get('tipo')=='alumno'){
-			if($segmentOfNumberDni==$this->nativesession->get('dni')){
+			if($alumno["documento"]==$this->nativesession->get('dni')){
 				if((!($pathFile==""))&&(file_exists($pathFile))){
 					$data=base64_encode(file_get_contents($pathFile,true));
+					$this->load->view("pdf/onlyviewpdf",array('data'=>$data));///Load view pdf for admin marks
 				}else{
 					show_404();
 				}
@@ -48,10 +69,9 @@ class FilesController extends CI_Controller {
 		}else{
 			show_404();
 		}
-
-		
-
-		$this->load->view("pdf/viewpdf",array('data'=>$data));
 	}
 	
+	function mark_file_good($id_alumno){
+
+	}
 }
