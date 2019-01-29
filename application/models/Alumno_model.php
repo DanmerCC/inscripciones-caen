@@ -14,7 +14,7 @@ class Alumno_model extends CI_Model
 	private $check_bach='check_bach_pdf';
 	private $check_maes='check_maes_pdf';
 	private $check_doct='check_doct_pdf';
-
+	private $check_sins='check_sins_pdf';
 
 	function __construct()
 	{
@@ -288,6 +288,9 @@ class Alumno_model extends CI_Model
 		return $this->set_check_file_true($this->check_doct,$id_alumno);
 	}
 
+	public function set_check_sinstFile($id_alumno){
+		return $this->set_check_file_true($this->check_sins,$id_alumno);
+	}
 
 	private function set_check_file_true($column,$id_alumno){
 		$data=array(

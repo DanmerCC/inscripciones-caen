@@ -416,6 +416,13 @@
                                             <!--box-->
                                         </div>
                                     </div>
+                                    <div class="col-sm-6">
+                                        <div id="containerBoxSolicitud">
+                                            <!--box-->
+                                            
+                                            <!--box-->
+                                        </div>
+                                    </div>
                                 </div>
                         </div>
                     </div>

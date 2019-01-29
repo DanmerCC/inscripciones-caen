@@ -78,6 +78,7 @@ $route['postulante/upload/cp'] = 'Postulante/uploadCopiaDni';
 $route['postulante/upload/bach'] = 'Postulante/uploadCopiaBachiller';
 $route['postulante/upload/maes'] = 'Postulante/uploadCopiaMaestria';
 $route['postulante/upload/doct'] = 'Postulante/uploadCopiaDoctorado';
+$route['postulante/upload/sins'] = 'Postulante/uploadSolicitudInscripcion';
 
 $route['postulante/download/cv'] = 'Postulante/downloadCv';
 $route['postulante/stateProfileFiles'] = 'Postulante/stateOfProfileFiles';

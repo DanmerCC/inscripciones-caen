@@ -23,7 +23,7 @@ class Solicitud extends CI_Controller
             $identidad["rutaimagen"]="/dist/img/avatar5.png";
             $identidad["nombres"]=$this->nativesession->get('acceso');
             $opciones["rutaimagen"]=$identidad["rutaimagen"];
-                $opciones["menu"]=$opciones["menu"]=$this->opciones->segun($this->Permiso_model->lista($this->nativesession->get('idUsuario')),'Solicitudes');
+            $opciones["menu"]=$this->opciones->segun($this->Permiso_model->lista($this->nativesession->get('idUsuario')),'Solicitudes');
             $data['cabecera']=$this->load->view('adminlte/linksHead','',TRUE);
             $data['footer']=$this->load->view('adminlte/scriptsFooter','',TRUE);
             $data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
@@ -77,7 +77,7 @@ class Solicitud extends CI_Controller
                 "3" => $rspta[$i]["apellido_materno"],
                 "4" => $rspta[$i]["tipo_financiamiento"],
                 "5" => $rspta[$i]["documento"],
-                "6" => $rspta[$i]["curso_numeracion"]." ".$rspta[$i]["curso_nombre"],
+                "6" => $rspta[$i]["curso_numeracion"]."".$rspta[$i]["nombretipoCurso"]." ".$rspta[$i]["curso_nombre"],
                 "7" => (($rspta[$i]["marcaPago"]=='0')?' <button class="btn btn-alert"   title="click para marcar como verificado" onclick="marcarPago('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-thumb-tack" aria-hidden="true"></i></button>':
                 ' <button class="btn btn-warning" onclick="quitarmarcaPago('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-thumb-tack" aria-hidden="true"></i></button>'),
                 "8" => '<textarea class="form-control" onclick="editComent('.$rspta[$i]["idSolicitud"].');" readonly="readonly">'.$rspta[$i]["comentario"].'</textarea>',

@@ -52,6 +52,9 @@ class FilesController extends CI_Controller {
 			case 'doct':
 				$pathFile=CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf";
 				break;
+			case 'sins':
+				$pathFile=CC_BASE_PATH."/files/sInscripcion/".$alumno["documento"].".pdf";
+				break;
 			default:
 				$pathFile="";
 				show_404();

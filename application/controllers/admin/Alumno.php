@@ -47,6 +47,7 @@ class Alumno extends CI_Controller
 		$haveFileBach=file_exists(CC_BASE_PATH."/files/bachiller/".$value["documento"].".pdf");
 		$haveFileMaes=file_exists(CC_BASE_PATH."/files/maestria/".$value["documento"].".pdf");
 		$haveFileDoct=file_exists(CC_BASE_PATH."/files/doctorado/".$value["documento"].".pdf");
+		$haveFileSolicitudesInscripcion=file_exists(CC_BASE_PATH."/files/sInscripcion/".$value["documento"].".pdf");
 
 		$checkCv=($value["check_cv_pdf"])?"<i class='fa fa-check' aria-hidden='true'></i>":"";
 		$checkDni=($value["check_dni_pdf"])?"<i class='fa fa-check' aria-hidden='true'></i>":"";
@@ -54,6 +55,7 @@ class Alumno extends CI_Controller
 		$checkBachiller=($value["check_bach_pdf"])?"<i class='fa fa-check' aria-hidden='true'></i>":"";
 		$checkMaestria=($value["check_maes_pdf"])?"<i class='fa fa-check' aria-hidden='true'></i>":"";
 		$checkDoctorado=($value["check_doct_pdf"])?"<i class='fa fa-check' aria-hidden='true'></i>":"";
+		$checkSolicitudesInscripcion=($value["check_sins_pdf"])?"<i class='fa fa-check' aria-hidden='true'></i>":"";
 
 	           $data[] = array(
 	           "0" => $value["grado_profesion"],
@@ -67,9 +69,9 @@ class Alumno extends CI_Controller
 			   "8" => (($haveFileDni)?"<a href='".base_url()."admin/view/pdf/dni/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDni."</strong></button></a>":"<button class='btn btn-light'>No subido</button>"),
 			   "9" => (($haveFileDj)?"<a href='".base_url()."admin/view/pdf/dj/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDj."</strong></button></a>":"<button class='btn btn-light'>No subido</button>"),
 			   "10" => (($haveFileBach)?"<a href='".base_url()."admin/view/pdf/bach/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkBachiller."</strong></button></a>":"<button class='btn btn-light'>No subido</button>"),
-			   "11" => (($haveFileDj)?"<a href='".base_url()."admin/view/pdf/maes/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkMaestria."</strong></button></a>":"<button class='btn btn-light'>No subido</button>"),
-			   "12" => (($haveFileDj)?"<a href='".base_url()."admin/view/pdf/doct/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDoctorado."</strong></button></a>":"<button class='btn btn-light'>No subido</button>"),
-			   
+			   "11" => (($haveFileMaes)?"<a href='".base_url()."admin/view/pdf/maes/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkMaestria."</strong></button></a>":"<button class='btn btn-light'>No subido</button>"),
+			   "12" => (($haveFileDoct)?"<a href='".base_url()."admin/view/pdf/doct/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDoctorado."</strong></button></a>":"<button class='btn btn-light'>No subido</button>"),
+			   "13" => (($haveFileSolicitudesInscripcion)?"<a href='".base_url()."admin/view/pdf/sins/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkSolicitudesInscripcion."</strong></button></a>":"<button class='btn btn-light'>No subido</button>")
 	       );
 	    }        
 	   $results = array(
@@ -126,6 +128,9 @@ class Alumno extends CI_Controller
 					break;
 				case 'doct':
 					$result=$this->Alumno_model->set_check_doctFile($alumno["id_alumno"]);
+					break;
+				case 'sins':
+					$result=$this->Alumno_model->set_check_sinstFile($alumno["id_alumno"]);
 					break;
 
 				default:
