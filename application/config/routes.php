@@ -75,6 +75,10 @@ $route['postulante/password/cambiar'] = 'Usuario/cambiarContraseña';
 $route['postulante/upload/cv'] = 'Postulante/uploadCv';
 $route['postulante/upload/dj'] = 'Postulante/uploadDeclaracionJurada';
 $route['postulante/upload/cp'] = 'Postulante/uploadCopiaDni';
+$route['postulante/upload/bach'] = 'Postulante/uploadCopiaBachiller';
+$route['postulante/upload/maes'] = 'Postulante/uploadCopiaMaestria';
+$route['postulante/upload/doct'] = 'Postulante/uploadCopiaDoctorado';
+
 $route['postulante/download/cv'] = 'Postulante/downloadCv';
 $route['postulante/stateProfileFiles'] = 'Postulante/stateOfProfileFiles';
 

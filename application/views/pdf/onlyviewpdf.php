@@ -9,7 +9,7 @@
   <title>Document</title>
 </head>
 <body>
-<div id="wrap">
+<div id="wrap"></div>
 <iframe id="frame" src="data:application/pdf;base64,<?= $data; ?> " width="100%" height="900"></iframe>
 </div>
 
@@ -18,3 +18,4 @@
 		<script src="/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
 		<script src="/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
+</html>

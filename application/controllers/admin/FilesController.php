@@ -27,6 +27,7 @@ class FilesController extends CI_Controller {
 			show_404();
 			die();
 		}
+		
 		if(!$alumno){
 			show_404();
 			die();
@@ -41,6 +42,15 @@ class FilesController extends CI_Controller {
 				break;
 			case 'dni':
 				$pathFile=CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf";
+				break;
+			case 'bach':
+				$pathFile=CC_BASE_PATH."/files/bachiller/".$alumno["documento"].".pdf";
+				break;
+			case 'maes':
+				$pathFile=CC_BASE_PATH."/files/maestria/".$alumno["documento"].".pdf";
+				break;
+			case 'doct':
+				$pathFile=CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf";
 				break;
 			default:
 				$pathFile="";

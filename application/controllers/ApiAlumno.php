@@ -42,8 +42,41 @@ class ApiAlumno extends CI_Controller
 		$result=[];
 		$i=0;
 
+		$haveBachillerFile=file_exists(CC_BASE_PATH."/files/bachiller/".$this->nativesession->get("dni").".pdf");
+		$haveDoctoradoFile=file_exists(CC_BASE_PATH."/files/doctorado/".$this->nativesession->get("dni").".pdf");
+		$haveMaestriaFile=file_exists(CC_BASE_PATH."/files/maestria/".$this->nativesession->get("dni").".pdf");
+
 		foreach ($solicitudes->result_array() as $row){
-            $result[$i]=$row;
+
+
+			//verify if have a document Incomplete
+			$requiredFile=false;
+			$message="";
+			switch ($row["idTipoCurso"]) {
+				case 1:
+					$requiredFile=true;
+					break;
+				case 2:
+					$requiredFile=$haveBachillerFile;
+					if(!$haveBachillerFile){
+						$message="No olvides cargar tu Bachiller";
+					}
+					break;
+				case 3:
+					$requiredFile=$haveMaestriaFile;
+					if(!$haveMaestriaFile){
+						$message="No olvides cargar tu Maestria";
+					}
+					break;
+				
+				default:
+					# code...
+					break;
+			}
+
+			$row["msgUploadFile"]=$message;
+			$row["completeFile"]=$requiredFile;
+			$result[$i]=$row;
             $i++;
 		}
 

@@ -49,6 +49,9 @@
                 <th>CURRICULUM</th>
                 <th>COPIA DE DNI</th>
                 <th>DECLARACION JURADA</th>
+                <th>BACHILLER</th>
+                <th>MAESTRIA</th>
+                <th>DOCTORADO</th>
               </thead>
               <tfoot>
                 <th>TITULO</th>
