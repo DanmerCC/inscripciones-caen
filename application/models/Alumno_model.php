@@ -11,6 +11,10 @@ class Alumno_model extends CI_Model
 	private $check_cv='check_cv_pdf';
 	private $check_dj='check_dj_pdf';
 	private $check_dni='check_dni_pdf';
+	private $check_bach='check_bach_pdf';
+	private $check_maes='check_maes_pdf';
+	private $check_doct='check_doct_pdf';
+	private $check_sins='check_sins_pdf';
 
 	function __construct()
 	{
@@ -236,10 +240,11 @@ class Alumno_model extends CI_Model
 
 	public function solicitudes($id){
 
-		$this->db->select('s.idSolicitud,s.programa,s.alumno,s.tipo_financiamiento,s.fecha_registro,c.numeracion,c.nombre as nombreCurso,tc.nombre as tipoCurso');
+		$this->db->select('a.documento as documento,s.idSolicitud,s.programa,s.alumno,s.tipo_financiamiento,s.fecha_registro,c.numeracion,c.nombre as nombreCurso,tc.nombre as tipoCurso,tc.idTipo_curso as idTipoCurso');
 		$this->db->from('solicitud s');
 		$this->db->join('curso c', 's.programa=c.id_curso','left');
 		$this->db->join('tipo_curso tc', 'c.idTipo_curso = tc.idTipo_curso','left');
+		$this->db->join('alumno a', 'a.id_alumno = s.alumno','left');
 		$this->db->where('s.alumno',$id);
 
 		return $this->db->get();
@@ -268,6 +273,31 @@ class Alumno_model extends CI_Model
 			$this->check_dj=>1
 		);
 		$this->db->where($this->id, $id_alumno);
+		return $this->db->update($this->table,$data);
+	}
+
+	public function set_check_bachFile($id_alumno){
+		return $this->set_check_file_true($this->check_bach,$id_alumno);
+	}
+
+	public function set_check_maesFile($id_alumno){
+		return $this->set_check_file_true($this->check_maes,$id_alumno);
+	}
+
+	public function set_check_doctFile($id_alumno){
+		return $this->set_check_file_true($this->check_doct,$id_alumno);
+	}
+
+	public function set_check_sinstFile($id_alumno){
+		return $this->set_check_file_true($this->check_sins,$id_alumno);
+	}
+
+	private function set_check_file_true($column,$id_alumno){
+		$data=array(
+			$column=>1
+		);
+		$this->db->where($this->id, $id_alumno);
+
 		return $this->db->update($this->table,$data);
 	}
 }

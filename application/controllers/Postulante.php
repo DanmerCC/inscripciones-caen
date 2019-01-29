@@ -587,6 +587,225 @@ class Postulante extends CI_Controller {
         }
 	}
 
+	public function uploadCopiaBachiller(){
+
+		$config['upload_path'] = CC_BASE_PATH.'/files/bachiller/';
+        
+       	//Tipos de ficheros permitidos
+        $config['allowed_types'] = 'pdf';
+		$config['overwrite'] = true;
+        //nombre de imagen
+		$config['file_name'] = $this->nativesession->get("dni");
+		
+		$this->load->library('upload',$config);
+		header('Content-Type: application/json');
+		if(!$this->upload->do_upload('cv')){
+            /*Si al subirse hay algún error lo meto en un array para pasárselo a la vista*/
+			$error=array('error' => $this->upload->display_errors());
+			//echo  var_dump($error);
+			//$this->load->view('subir_view', $error);
+			//echo "error al subir el archivo";
+			//redirect(base_url().'postulante', 'refresh');
+			$result=[
+				"content"=>[],
+				"status"=>"ERROR_UPDATING_FILE",
+				"error"=>$error
+			];
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+		}elseif($this->nativesession->get("estado")!="logeado"){
+			$result=[
+				"content"=>[],
+				"status"=>"UNAUTHORIZED"
+			];
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+		}
+		else{
+            //Datos del fichero subido
+            $datos["img"]=$this->upload->data();
+ 
+            //Podemos acceder a todas las propiedades del fichero subido 
+            $datos["img"]["file_name"];
+			
+			//echo var_dump($datos);
+
+            //Cargamos la vista y le pasamos los datos
+            //para asegurarse que la imagen nueva se cargue en la vista se agregara un header
+            //header("Cache-Control: no-cache, must-revalidate");
+			//header("Expires: Sat, 1 Jul 2000 5:00:00 GMT");
+			$result=[
+				"content"=>[
+					"file_name"=> $datos["img"]["file_name"]
+				],
+				"status"=>"OK"
+			];
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+        }
+	}
+
+	public function uploadCopiaMaestria(){
+
+		$config['upload_path'] = CC_BASE_PATH.'/files/maestria/';
+        
+       	//Tipos de ficheros permitidos
+        $config['allowed_types'] = 'pdf';
+		$config['overwrite'] = true;
+        //nombre de imagen
+		$config['file_name'] = $this->nativesession->get("dni");
+		
+		$this->load->library('upload',$config);
+		header('Content-Type: application/json');
+		if(!$this->upload->do_upload('cv')){
+            /*Si al subirse hay algún error lo meto en un array para pasárselo a la vista*/
+			$error=array('error' => $this->upload->display_errors());
+			//echo  var_dump($error);
+			//$this->load->view('subir_view', $error);
+			//echo "error al subir el archivo";
+			//redirect(base_url().'postulante', 'refresh');
+			$result=[
+				"content"=>[],
+				"status"=>"ERROR_UPDATING_FILE",
+				"error"=>$error
+			];
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+		}elseif($this->nativesession->get("estado")!="logeado"){
+			$result=[
+				"content"=>[],
+				"status"=>"UNAUTHORIZED"
+			];
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+		}
+		else{
+            //Datos del fichero subido
+            $datos["img"]=$this->upload->data();
+ 
+            //Podemos acceder a todas las propiedades del fichero subido 
+            $datos["img"]["file_name"];
+			
+			//echo var_dump($datos);
+
+            //Cargamos la vista y le pasamos los datos
+            //para asegurarse que la imagen nueva se cargue en la vista se agregara un header
+            //header("Cache-Control: no-cache, must-revalidate");
+			//header("Expires: Sat, 1 Jul 2000 5:00:00 GMT");
+			$result=[
+				"content"=>[
+					"file_name"=> $datos["img"]["file_name"]
+				],
+				"status"=>"OK"
+			];
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+        }
+	}
+
+	public function uploadCopiaDoctorado(){
+
+		$config['upload_path'] = CC_BASE_PATH.'/files/doctorado/';
+        
+       	//Tipos de ficheros permitidos
+        $config['allowed_types'] = 'pdf';
+		$config['overwrite'] = true;
+        //nombre de imagen
+		$config['file_name'] = $this->nativesession->get("dni");
+		
+		$this->load->library('upload',$config);
+		header('Content-Type: application/json');
+		if(!$this->upload->do_upload('cv')){
+            /*Si al subirse hay algún error lo meto en un array para pasárselo a la vista*/
+			$error=array('error' => $this->upload->display_errors());
+			//echo  var_dump($error);
+			//$this->load->view('subir_view', $error);
+			//echo "error al subir el archivo";
+			//redirect(base_url().'postulante', 'refresh');
+			$result=[
+				"content"=>[],
+				"status"=>"ERROR_UPDATING_FILE",
+				"error"=>$error
+			];
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+		}elseif($this->nativesession->get("estado")!="logeado"){
+			$result=[
+				"content"=>[],
+				"status"=>"UNAUTHORIZED"
+			];
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+		}
+		else{
+            //Datos del fichero subido
+            $datos["img"]=$this->upload->data();
+ 
+            //Podemos acceder a todas las propiedades del fichero subido 
+            $datos["img"]["file_name"];
+			
+			//echo var_dump($datos);
+
+            //Cargamos la vista y le pasamos los datos
+            //para asegurarse que la imagen nueva se cargue en la vista se agregara un header
+            //header("Cache-Control: no-cache, must-revalidate");
+			//header("Expires: Sat, 1 Jul 2000 5:00:00 GMT");
+			$result=[
+				"content"=>[
+					"file_name"=> $datos["img"]["file_name"]
+				],
+				"status"=>"OK"
+			];
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+        }
+	}
+
+	public function uploadSolicitudInscripcion(){
+		$config['upload_path'] = CC_BASE_PATH.'/files/sInscripcion/';
+        
+       	//Tipos de ficheros permitidos
+        $config['allowed_types'] = 'pdf';
+		$config['overwrite'] = true;
+        //nombre de imagen
+		$config['file_name'] = $this->nativesession->get("dni");
+		
+		$this->load->library('upload',$config);
+		header('Content-Type: application/json');
+		if(!$this->upload->do_upload('cv')){
+            /*Si al subirse hay algún error lo meto en un array para pasárselo a la vista*/
+			$error=array('error' => $this->upload->display_errors());
+			//echo  var_dump($error);
+			//$this->load->view('subir_view', $error);
+			//echo "error al subir el archivo";
+			//redirect(base_url().'postulante', 'refresh');
+			$result=[
+				"content"=>[],
+				"status"=>"ERROR_UPDATING_FILE",
+				"error"=>$error
+			];
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+		}elseif($this->nativesession->get("estado")!="logeado"){
+			$result=[
+				"content"=>[],
+				"status"=>"UNAUTHORIZED"
+			];
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+		}
+		else{
+            //Datos del fichero subido
+            $datos["img"]=$this->upload->data();
+ 
+            //Podemos acceder a todas las propiedades del fichero subido 
+            $datos["img"]["file_name"];
+			
+			//echo var_dump($datos);
+
+            //Cargamos la vista y le pasamos los datos
+            //para asegurarse que la imagen nueva se cargue en la vista se agregara un header
+            //header("Cache-Control: no-cache, must-revalidate");
+			//header("Expires: Sat, 1 Jul 2000 5:00:00 GMT");
+			$result=[
+				"content"=>[
+					"file_name"=> $datos["img"]["file_name"]
+				],
+				"status"=>"OK"
+			];
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+        }
+	}
+
 	public function downloadCv(){
 
 		$path = CC_BASE_PATH.'/files/cvs/'.$this->nativesession->get("dni").".pdf";
@@ -617,6 +836,10 @@ class Postulante extends CI_Controller {
 					"cv"=>file_exists(CC_BASE_PATH.'/files/cvs/'.$this->nativesession->get("dni").".pdf"),
 					"dni"=>file_exists(CC_BASE_PATH.'/files/dni/'.$this->nativesession->get("dni").".pdf"),
 					"dj"=>file_exists(CC_BASE_PATH.'/files/djs/'.$this->nativesession->get("dni").".pdf"),
+					"bach"=>file_exists(CC_BASE_PATH.'/files/bachiller/'.$this->nativesession->get("dni").".pdf"),
+					"maes"=>file_exists(CC_BASE_PATH.'/files/maestria/'.$this->nativesession->get("dni").".pdf"),
+					"doct"=>file_exists(CC_BASE_PATH.'/files/doctorado/'.$this->nativesession->get("dni").".pdf"),
+					"sins"=>file_exists(CC_BASE_PATH.'/files/sInscripcion/'.$this->nativesession->get("dni").".pdf"),
 					"nameFiles"=>$this->nativesession->get("idAlumno")
 				],
 				"status"=>"OK"

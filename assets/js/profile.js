@@ -23,6 +23,37 @@ var configuracion = function(){
         "tittle":"Copia de Dni",
         "identifier":"dni"
     });
+
+    var cargaDJ=cc.fileComponent("#containerBoxBachiller",{
+        "state":false,
+        "target":null,
+        "urlUpload":"/postulante/upload/bach",
+        "tittle":"Constancia de Bachiller",
+        "identifier":"bach"
+    });
+
+    var cargaDJ=cc.fileComponent("#containerBoxMaestria",{
+        "state":false,
+        "target":null,
+        "urlUpload":"/postulante/upload/maes",
+        "tittle":"Constancia de maestria",
+        "identifier":"maes"
+    });
+
+    var cargaDJ=cc.fileComponent("#containerBoxDoctorado",{
+        "state":false,
+        "target":null,
+        "urlUpload":"/postulante/upload/doct",
+        "tittle":"Constancia de Doctorado",
+        "identifier":"doct"
+    });
+    var cargaDJ=cc.fileComponent("#containerBoxSolicitud",{
+        "state":false,
+        "target":null,
+        "urlUpload":"/postulante/upload/sins",
+        "tittle":"Solicitud de Inscripcion",
+        "identifier":"sins"
+    });
     //configuracion de uploads
     //configInputsFile("#frmUploadCv input[type='file']","/postulante/upload/cv");
 
@@ -368,6 +399,15 @@ $.ajax({
                 alinkdel.innerHTML="Eliminar";
                 otdfDel.append(alinkdel);
                 otr.append(otdfDel);
+
+
+                var tdnotificationhaventFile = document.createElement("td");
+                var alinknotification = document.createElement("a");
+                alinknotification.href="#";
+                alinknotification.innerHTML=((!datos[i].completeFile)?"<button class='btn btn-sm bg-light-blue disabled color-palette' data-toggle='collapse' data-parent='#accordion' href='#collapse9' data-target=''>"+datos[i].msgUploadFile+"</button>":"");
+                tdnotificationhaventFile.append(alinknotification);
+
+                otr.append(tdnotificationhaventFile);
 
                 $("#contentSolicitudes").append(otr);
                 console.log(otr);

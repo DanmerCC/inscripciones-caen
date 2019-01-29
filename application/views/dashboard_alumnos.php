@@ -36,8 +36,8 @@
     <!-- Main content -->
     <section class="content">
       <div class=""><!-- container -->
-          <div class="panel-body table-responsive" id="listadoregistros">
-            <table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
+          <div class="panel-body" id="listadoregistros">
+            <table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover  table-responsive" style="width:100%">
               <thead>
                 <th>TITULO</th>
                 <th>NOMBRES</th>
@@ -49,6 +49,10 @@
                 <th>CURRICULUM</th>
                 <th>COPIA DE DNI</th>
                 <th>DECLARACION JURADA</th>
+                <th>BACHILLER</th>
+                <th>MAESTRIA</th>
+                <th>DOCTORADO</th>
+                <th>SOLICITUD INSCRIPCION</th>
               </thead>
               <tfoot>
                 <th>TITULO</th>
@@ -61,6 +65,10 @@
                 <th>CURRICULUM</th>
                 <th>COPIA DE DNI</th>
                 <th>DECLARACION JURADA</th>
+                <th>BACHILLER</th>
+                <th>MAESTRIA</th>
+                <th>DOCTORADO</th>
+                <th>SOLICITUD INSCRIPCION</th>
               </tfoot>
             </table>
           </div>
