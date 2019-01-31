@@ -208,8 +208,19 @@ class Postulante extends CI_Controller {
  
             //Podemos acceder a todas las propiedades del fichero subido 
             $datos["img"]["file_name"];
-
- 
+			
+			$dir = opendir('files\foto\\');
+			//Copy momentarily
+			if(readdir($dir)){
+				if(strpos($datos["img"]["full_path"], '.') !== 0){
+					//Copio el archivo manteniendo el mismo nombre en la nueva carpeta
+					copy($datos["img"]["full_path"], 'publicfiles/foto'.'/'.$datos["img"]["file_name"]);
+					//echo $datos["img"]["full_path"];
+					//exit;
+				}
+			}
+			
+			
             //Cargamos la vista y le pasamos los datos
             //para asegurarse que la imagen nueva se cargue en la vista se agregara un header
             header("Cache-Control: no-cache, must-revalidate");

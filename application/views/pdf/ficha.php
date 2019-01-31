@@ -28,10 +28,10 @@
             <td style="width: 75%;">
     			<p>A): <u>DATOS PERSONALES</u></p></td>
             <td rowspan="2" style="width: 25%; height:35%">
-				<?php if(file_exists('files/foto/'.$datosAlumno['documento'].'.jpg')): ?>
-                <img height=40px src="files/foto/<?=$datosAlumno['documento']?>.jpg" alt="Logo"><br>
-                <?php elseif(file_exists('files/foto/'.$datosAlumno['documento'].'.jpeg')): ?>
-                <img height=40px src="files/foto/<?=$datosAlumno['documento']?>.jpeg" alt="Logo"><br>
+				<?php if(file_exists('publicfiles/foto/'.$datosAlumno['documento'].'.jpg')): ?>
+                <img height=40px src="publicfiles/foto/<?=$datosAlumno['documento']?>.jpg" alt="Logo"><br>
+                <?php elseif(file_exists('publicfiles/foto/'.$datosAlumno['documento'].'.jpeg')): ?>
+                <img height=40px src="publicfiles/foto/<?=$datosAlumno['documento']?>.jpeg" alt="Logo"><br>
                 <?php endif; ?>
              </td>
         </tr>
