@@ -21,11 +21,11 @@
     
     <form action=<?=$action ?> method="post">
       <div class="form-group has-feedback">
-        <input type="text" name="usuario" class="form-control" placeholder="NUMERO DE USUARIO">
+        <input type="text" name="usuario" class="form-control" placeholder="NUMERO DE USUARIO" required>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" name="password" class="form-control" placeholder="Contraseña">
+        <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
