@@ -32,7 +32,7 @@ class Registro extends CI_Controller
         if ($ql->num_rows() > 0) {
             $data["heading"]=" YA ESTA REGISTRADO";
             $data["message"]="Ya existe un registro con el mismo numero de Numero de documento o correo electronico";
-			$data["seconds"]="3";
+			$data["seconds"]="5";
 			$data["url"]="/registro";
         	echo $this->load->view('errors/custom/flash_msg',$data,TRUE);
 			die();

@@ -124,8 +124,19 @@ class Postulante extends CI_Controller {
 
 //*verificacion de login*/
 	public function verificacion(){
+		
 		$user=$this->input->post('usuario');
 		$password=$this->input->post('password');
+
+		if((!isset($user)||!isset($password))){
+			redirect(base_url().'login', 'refresh');
+			die();
+		}
+		
+		if((($user=="")||($password==""))){
+			redirect(base_url().'login', 'refresh');
+			die();
+		}
 
 		$this->db->select('alumno.documento,id,alumno.documento,acceso,password,alumno,tipo,alumno.id_alumno as id_alumno');
 		$this->db->from('usuario');
@@ -205,13 +216,14 @@ class Postulante extends CI_Controller {
         }else{
             //Datos del fichero subido
             $datos["img"]=$this->upload->data();
- 
+			error_reporting(E_ALL);
+			ini_set('display_errors', '1');
             //Podemos acceder a todas las propiedades del fichero subido 
             $datos["img"]["file_name"];
 			
-			$dir = opendir('files\foto\\');
+			$dir = 'publicfiles/foto';
 			//Copy momentarily
-			if(readdir($dir)){
+			if(is_dir($dir)){
 				if(strpos($datos["img"]["full_path"], '.') !== 0){
 					//Copio el archivo manteniendo el mismo nombre en la nueva carpeta
 					copy($datos["img"]["full_path"], 'publicfiles/foto'.'/'.$datos["img"]["file_name"]);
