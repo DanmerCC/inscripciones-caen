@@ -138,6 +138,16 @@ class Postulante extends CI_Controller {
 			die();
 		}
 
+		if((!isset($user)||!isset($password))){
+			redirect(base_url().'login', 'refresh');
+			die();
+		}
+		
+		if((($user=="")||($password==""))){
+			redirect(base_url().'login', 'refresh');
+			die();
+		}
+
 		$this->db->select('alumno.documento,id,alumno.documento,acceso,password,alumno,tipo,alumno.id_alumno as id_alumno');
 		$this->db->from('usuario');
 		$this->db->join('alumno', 'usuario.alumno = alumno.id_alumno');
