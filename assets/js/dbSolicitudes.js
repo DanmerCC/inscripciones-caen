@@ -2,6 +2,13 @@ var tabla;
 $("#btn-salir").prop('href','/administracion/salir');
 $(document).ready(function(){
 
+    //Load inicial para listar programas
+    loadDataToSelect();
+
+    $("#selectProgram").change(function(){
+        tabla.search($(this).val()).draw();
+    });
+
     //contruirTitulos(dataTables.solicitudes.thead);
     cargarDataTable();
     ajaxCPws();
@@ -175,4 +182,25 @@ function editComent (id){
         console.log("complete");
     });
     
+}
+
+function loadDataToSelect(){
+    $.ajax({
+        type: "get",
+        url: "/api/programas",
+        data: "",
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+            $("#selectProgram").html(listProgramasActivos(response));
+        }
+    });
+}
+
+function listProgramasActivos(array){
+    result="<option value='' disabled required selected>Seleciona una opcion</option>";
+    for (var i = 0; i < array.length; i++) {
+        result=result+"<option value='"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"'>"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"</option>";
+    }
+    return result;
 }

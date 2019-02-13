@@ -17,24 +17,30 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg"><strong>Inicia sesión para comenzar</strong></p>
-
+    <p class="login-box-msg"><h1><?=(isset($title)?$title:"")?></h1><strong>Inicia sesión para comenzar</strong></p>
+    
     <form action=<?=$action ?> method="post">
       <div class="form-group has-feedback">
-        <input type="text" name="usuario" class="form-control" placeholder="NUMERO DE USUARIO">
+        <input type="text" name="usuario" class="form-control" placeholder="NUMERO DE USUARIO" required>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" name="password" class="form-control" placeholder="Contraseña">
+        <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
         <div class="col-xs-6">
           <button type="submit" class="btn btn-primary btn-block btn-flat">Ingresar</button>
         </div>
+        <?php
+          if((!isset($activeRegist))||($activeRegist!=false)):
+        ?>
         <div class="col-xs-6">
           <a href="registro" class="btn btn-primary btn-block btn-flat">Registrarse</a>
         </div>
+        <?php
+          endif;
+        ?>
         <!-- /.col -->
       </div>
     </form>

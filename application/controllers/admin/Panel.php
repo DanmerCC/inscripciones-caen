@@ -38,8 +38,8 @@ class Panel extends CI_Controller
 		$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
 		$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
 		$data['action'] ="/administracion/validacion";
-
-
+		$data['title'] ="CAEN ADMIN";
+		$data['activeRegist'] =false;
 
 		$this->load->view('login',$data);
 	}
