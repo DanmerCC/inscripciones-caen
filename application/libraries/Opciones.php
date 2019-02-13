@@ -74,14 +74,29 @@ class Opciones
                             "atributos"=>"id='' data-toggle='collapse' data-parent='#accordion' href='#collapse8'"
                         ]
                     ],
-                 "active"=>false
+                 "active"=>false                 
                 ];
+    $this->opciones['reportes']=[
+                "text"=>"Reportes",
+                "href"=>"/administracion/vista/reportes",
+                "submenu"=>[
+                    [
+                        "text"=>"Todos",
+                        "atributos"=>"id='' data-toggle='collapse' data-parent='#accordion' href='#collapse8'"
+                    ]
+                    
+                ],
+                "active"=>false
+            ];
+
         array_push($this->arreglo, $this->opciones['alumnos']);
         array_push($this->arreglo, $this->opciones['matriculas']);
         array_push($this->arreglo, $this->opciones['programas']);
         array_push($this->arreglo, $this->opciones['beneficios']);
         array_push($this->arreglo, $this->opciones['solicitudes']);
         array_push($this->arreglo, $this->opciones['informes']);
+        array_push($this->arreglo, $this->opciones['reportes']);
+        
         //print ("<pre>".print_r($this->arreglo[0],true)."</pre>");
         return $this->arreglo;
 	}

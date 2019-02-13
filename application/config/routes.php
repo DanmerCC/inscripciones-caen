@@ -137,6 +137,7 @@ $route['administracion/vista/beneficios'] = 'admin/Beneficio';
 $route['administracion/vista/alumnos'] = 'admin/Alumno';
 $route['administracion/vista/solicitudes'] = 'admin/Solicitud';
 $route['administracion/vista/informes'] = 'admin/InformeController';
+$route['administracion/vista/reportes'] = 'admin/ReportesController';
 
 $route['admin/parts/nuevoprograma'] = 'admin/Programa/newPrograma';
 
