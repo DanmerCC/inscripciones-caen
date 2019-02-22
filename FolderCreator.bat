@@ -1,4 +1,20 @@
+IF EXIST publicFiles (
+	cd publicFiles
+	IF NOT EXIST foto (
+		mkdir foto
+	)
+) ELSE (
+	mkdir publicFiles
+	cd publicFiles
+	IF NOT EXIST foto (
+		mkdir foto
+	)
+)
+
 cd..
+
+cd..
+
 IF EXIST uploads (
 	cd uploads
 	IF EXIST files (
