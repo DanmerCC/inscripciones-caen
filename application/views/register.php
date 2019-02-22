@@ -17,7 +17,7 @@
   </div>
 
   <div class="sin-bordes register-box-body ">
-    <p class="login-box-msg">Registra una nueva cuenta</p>
+    <p class="login-box-msg">Registrate aqui</p>
 
     <form id="frmRegistro" action="registro/enviar" method="post">
       <div class="form-group has-feedback">

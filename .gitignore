@@ -16,5 +16,6 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 /vendor/
+!/vendor/autoload.php
 files
 files/*.*

@@ -17,11 +17,11 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg"><h1><?=(isset($title)?$title:"")?></h1><strong>Inicia sesión para comenzar</strong></p>
+    <p class="login-box-msg"><h1><?=(isset($title)?$title:"")?></h1><strong>Inicia sesión para empezar</strong></p>
     
     <form action=<?=$action ?> method="post">
       <div class="form-group has-feedback">
-        <input type="text" name="usuario" class="form-control" placeholder="NUMERO DE USUARIO" required>
+        <input type="text" name="usuario" class="form-control" placeholder="Número de usuario" required>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
