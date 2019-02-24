@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Solicitud_model extends CI_Model
 {
 	private $tbl_solicitud='solicitud';
+
 	function __construct()
 	{
 		parent::__construct();
@@ -17,6 +18,8 @@ class Solicitud_model extends CI_Model
 			return false;
 		}
 	}
+
+
 	public function getFichaData($idAlumno,$idFicha){
 		$solicitud=$this->db->query("SELECT s.idSolicitud,s.programa,s.alumno,s.tipo_financiamiento as tipoFinanciamiento,s.fecha_registro ,c.nombre as name_programa,c.numeracion as number_programa ,a.* FROM solicitud s  left join curso c on s.programa=c.id_curso left join alumno a on s.alumno=a.id_alumno WHERE (idSolicitud=$idFicha) AND (alumno ='$idAlumno')");
 		// $result=[];
@@ -111,7 +114,7 @@ class Solicitud_model extends CI_Model
 		return $result;
 	}
 
-	public function solicitud_porId($id){
+	public function solicitud_porId($id,$idAlumno=null){
 
 		$this->db->select('s.idSolicitud,s.programa,s.alumno,s.tipo_financiamiento,s.fecha_registro,c.numeracion,c.nombre as nombreCurso,tc.nombre as tipoCurso,a.documento,a.nombres,a.apellido_paterno,a.apellido_materno');
 		$this->db->from('solicitud s');
@@ -119,8 +122,21 @@ class Solicitud_model extends CI_Model
 		$this->db->join('tipo_curso tc', 'c.idTipo_curso = tc.idTipo_curso','left');
 		$this->db->join('alumno a', 's.alumno = a.id_alumno','left');
 		$this->db->where('s.idSolicitud',$id);
+		if($idAlumno!=null){
+			$this->db->where('s.alumno',$idAlumno);
+		}
 
 		return $this->db->get();
+	}
+
+	//Array
+	public function byIdAndAlumno($id,$idAlumno=null){
+		return resultToArray($this->solicitud_porId($id,$idAlumno));
+	}
+
+	public function existByIdAndAlumno($id,$idAlumno){
+		$result=$this->byIdAndAlumno($id,$idAlumno);
+		return (count($result)!=0);
 	}
 
 	public function informacion($limit,$offset){
@@ -158,5 +174,12 @@ class Solicitud_model extends CI_Model
 		$result=($this->db->affected_rows()==1)?1:0;//forzamos el envio de 1 o cero en caso de ocurrir algun error
 
 		return ["result"=>$result];
-    }
+	}
+	
+	function getByAlumno($idAlumno){
+		$this->db->select();
+		$this->db->from($this->tbl_solicitud);
+		$this->db->where('alumno',$idAlumno);
+		return resultToArray($this->db->get());
+	}
 }

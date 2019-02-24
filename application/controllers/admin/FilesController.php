@@ -8,17 +8,18 @@ class FilesController extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->library('Nativesession');
 		$this->load->library('Mihelper');
+		$this->load->model('Solicitud_model');
     }
     
     public function get_file_view_as_data(){
 		$segmentOfTypeFile=$this->uri->segment(4);
 		//$segmentOfNumberDni=$this->uri->segment(5);
-		$segmentIdOfAlumno=$this->uri->segment(5);
+		$id=$this->uri->segment(5);
 		$data="";
 		$pathFile="";
 
 		$this->load->model('Alumno_model');
-		$result=resultToArray($this->Alumno_model->all($segmentIdOfAlumno));
+		$result=resultToArray($this->Alumno_model->all($id));
 		//first element
 		
 		if(count($result)==1){
@@ -55,6 +56,9 @@ class FilesController extends CI_Controller {
 			case 'sins':
 				$pathFile=CC_BASE_PATH."/files/sInscripcion/".$alumno["documento"].".pdf";
 				break;
+			case 'hdatos':
+				$pathFile=CC_BASE_PATH."/files/hdatos/".$id.".pdf";
+				break;
 			default:
 				$pathFile="";
 				show_404();
@@ -86,5 +90,40 @@ class FilesController extends CI_Controller {
 	
 	function mark_file_good($id_alumno){
 
+	}
+
+	public function get_fileSolicitud_view_as_data(){
+		$segmentOfTypeFile=$this->uri->segment(4);
+		//$segmentOfNumberDni=$this->uri->segment(5);
+		$id=$this->uri->segment(5);
+		$data="";
+		$pathFile="";
+
+		switch ($segmentOfTypeFile) {
+			case 'hdatos':
+				$pathFile=CC_BASE_PATH."/files/hojadatos/".$id.".pdf";
+				break;
+			default:
+				$pathFile="";
+				show_404();
+				die();
+				break;
+		}
+
+		if($this->nativesession->get('tipo')=='admin'){
+				show_404();
+		}elseif($this->nativesession->get('tipo')=='alumno'){
+			if($this->Solicitud_model->existByIdAndAlumno($id,$this->nativesession->get('idAlumno'))){
+				if((!($pathFile==""))&&(file_exists($pathFile))){
+					$data=base64_encode(file_get_contents($pathFile,true));
+					$this->load->view("pdf/onlyviewpdf",array('data'=>$data));///Load view pdf for admin marks
+				}else{
+					show_404();
+				}
+			}
+		}else{
+			show_404();
+		}
+		
 	}
 }

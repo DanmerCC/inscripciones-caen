@@ -8,7 +8,8 @@ var optionsDefault={
     "urlUpload":"/postulante/upload/cv",
     "urlVerify":"/postulante/stateFiles",
     "tittle":"Example",
-    "identifier":"example"
+	"identifier":"example",
+	"urlview":"/"
 };
 
 var cc={
@@ -20,23 +21,58 @@ var cc={
 
 function initComponent(target,options=optionsDefault){
 
+	var minimalistTemplateGenerator=function (options){
+		var stringTemplate=''+
+		'<div class="">'+
+			'<div class="form-group">'+
+				'<div class="row">'+
+					'<div id="hasFile" '+((options.state)?'':'hidden')+'>'+
+						'<div class="col-sm-4">'+
+							'<a id="alinktarget" class="btn btn-success btn-lg"  target="_blank">'+
+								'<i class="fa fa-eye"></i><font style="vertical-align: inherit;"> '+options.tittle+'</font>'+
+							'</a>'+
+						'</div>'+
+					'</div>'+
+					'<div id="hasNotFile"'+((options.state)?'hidden':'')+' >'+
+						'<form id="frmUploadCv">'+
+							'<div class="col-sm-12">'+
+								'<label class="btn btn-danger" for="'+options.target+'_file">'+options.tittle+'<i class="fa fa-fw fa-upload" for="file_cv"></i></label>'+
+								'<input  class="form-control" type="file" class="form-control" id="'+options.target+'_file" name="file_cv" value="" accept="pdf" style="visibility:hidden">'+
+							'</div>'+
+						'</form>'+
+					'</div>'+
+					'<div id="magicContainer"></div>'+
+				'</div>'
+			'</div>'
+		'</div>';
+
+
+		return stringTemplate;
+	}
+
     var objectResult={
         "target":target,
         "changeState":function(newState){
             this.state=newState;
-            changeState(newState,this.target);
+            changeState(newState,this.target,options.urlview);
         },
         "state":options.state,
     };
 
-    options.target=target;
-    var template=fileComponentTemplate.templante(options);
+	options.target=target;
+	var template;
+	if(options.sizeTemplate=='min'){
+		fileComponentTemplate.templante=minimalistTemplateGenerator;
+	}
+
+	template=fileComponentTemplate.templante(options);
+    
     verificarEstadoFiles(function(response){
-        changeState(response.content[options.identifier],options.target,"/"+options.identifier+"/"+response.content.nameFiles)
-    });
+        changeState(response.content[options.identifier],options.target,options.urlview,"/"+options.identifier+"/"+response.content.nameFiles)
+    },options.urlVerify);
 
     $(options.target).html(template);
-    var targetInput=options.target+ "  #file_cv";
+    var targetInput=options.target+ "  input[name='file_cv']";
     $(targetInput).change(function(){
         if($(targetInput)[0].checkValidity()){
             cc.uploadFile(targetInput,options.urlUpload,function(response){
@@ -52,9 +88,9 @@ function initComponent(target,options=optionsDefault){
                         console.log("error al pedir confirmacion")
                     }else{
                         //response.content["cv"];
-                        changeState(response.content[options.identifier],options.target,"/"+options.identifier+"/"+response.content.nameFiles)
+                        changeState(response.content[options.identifier],options.target,options.urlview,"/"+options.identifier+"/"+response.content.nameFiles)
                     }
-                });
+                },options.urlVerify);
                 //verificar();
             });
         }else{
@@ -67,51 +103,56 @@ function initComponent(target,options=optionsDefault){
 }
 
 
-function getFileComponentTemplate(options){
-    var template=''+
-    '<div class="box box-primary">'+
-        '<div class="box-header with-border">'+
-            '<h3 class="box-title"><font style="vertical-align: inherit;">'+options.tittle+'</font></h3>'+
-        '</div>'+
-        '<div class="form-group">'+
-            '<div class="row">'+
-                '<div id="hasFile" '+((options.state)?'':'hidden')+'>'+
-                    '<div class="col-sm-4">'+
-                        '<a id="alinktarget" class="btn btn-app"  target="_blank">'+
-                            '<i class="fa fa-eye"></i><font style="vertical-align: inherit;"> Ver </font>'+
-                        '</a>'+
-                    '</div>'+
-                    '<div class="col-sm-4">'+
-                        '<button class="btn btn-success btn-lg">'+
-                            '<i class="fa fa-fw fa-check"></i>'+
-                        '</button>'+
-                    '</div>'+
-                '</div>'+
-                '<div id="hasNotFile"'+((options.state)?'hidden':'')+' >'+
-                    '<form id="frmUploadCv">'+
-                        '<div class="col-sm-4">'+
-                            '<label for="file_cv">'+options.tittle+'<span style="color: red">(*)</span></label>'+
-                            '<input  class="form-control" type="file" class="form-control" id="file_cv" name="file_cv" value="" accept="pdf">'+
-                        '</div>'+
-                        '<div class="col-sm-4">'+
-                            '<button class="btn btn-lg btn-danger">'+
-                                '<i class="fa fa-fw fa-exclamation"></i>'+
-                            '</button>'+
-                        '</div>'+
-                    '</form>'+
-                '</div>'+
-                '<div id="magicContainer"></div>'+
-            '</div>'
-        '</div>'
-    '</div>';
-return template;
+function getFileComponentTemplate(options,modificator=undefined){
+	if(modificator==undefined){
+		var template=''+
+		'<div class="box box-primary">'+
+			'<div class="box-header with-border">'+
+				'<h3 class="box-title"><font style="vertical-align: inherit;">'+options.tittle+'</font></h3>'+
+			'</div>'+
+			'<div class="form-group">'+
+				'<div class="row">'+
+					'<div id="hasFile" '+((options.state)?'':'hidden')+'>'+
+						'<div class="col-sm-4">'+
+							'<a id="alinktarget" class="btn btn-app"  target="_blank">'+
+								'<i class="fa fa-eye"></i><font style="vertical-align: inherit;"> Ver </font>'+
+							'</a>'+
+						'</div>'+
+						'<div class="col-sm-4">'+
+							'<button class="btn btn-success btn-lg">'+
+								'<i class="fa fa-fw fa-check"></i>'+
+							'</button>'+
+						'</div>'+
+					'</div>'+
+					'<div id="hasNotFile"'+((options.state)?'hidden':'')+' >'+
+						'<form id="frmUploadCv">'+
+							'<div class="col-sm-4">'+
+								'<label for="file_cv">'+options.tittle+'<span style="color: red">(*)</span></label>'+
+								'<input  class="form-control" type="file" class="form-control" id="file_cv" name="file_cv" value="" accept="pdf">'+
+							'</div>'+
+							'<div class="col-sm-4">'+
+								'<button class="btn btn-lg btn-danger">'+
+									'<i class="fa fa-fw fa-exclamation"></i>'+
+								'</button>'+
+							'</div>'+
+						'</form>'+
+					'</div>'+
+					'<div id="magicContainer"></div>'+
+				'</div>'
+			'</div>'
+		'</div>';
+		return template;
+	}else{
+		return modificator(options);
+	}
+    
 }
 
-function changeState(state,target,partUrl=""){
+function changeState(state,target,urlView="/",partUrl=""){
     if(state){
         $(target+"  #hasFile").removeAttr("hidden");
         $(target+"  #hasNotFile").prop("hidden","hidden");
-        $(target+"  #alinktarget").prop("href","/admin/view/pdf"+partUrl);
+        $(target+"  #alinktarget").prop("href",urlView+partUrl);
     }else{
         $(target+"  #hasFile").prop("hidden","hidden");
         $(target+"  #hasNotFile").removeAttr("hidden");
@@ -139,10 +180,13 @@ function actionUploadFile(target,urlTarget,sucessUpload){
 	});
 }
 
-function verificarEstadoFiles(action){
+function verificarEstadoFiles(action,urlverification=null){
+	if(urlverification==null){
+		urlverification="postulante/stateProfileFiles"
+	}
     $.ajax({
         type: "GET",
-        url: "postulante/stateProfileFiles",
+        url: urlverification,
         data: "",
         dataType: "json",
         success: action

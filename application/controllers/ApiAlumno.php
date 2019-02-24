@@ -47,7 +47,7 @@ class ApiAlumno extends CI_Controller
 		$haveMaestriaFile=file_exists(CC_BASE_PATH."/files/maestria/".$this->nativesession->get("dni").".pdf");
 
 		foreach ($solicitudes->result_array() as $row){
-
+			$hasHojaDatos=file_exists(CC_BASE_PATH."/files/hojadatos/".$row["idSolicitud"].".pdf");
 
 			//verify if have a document Incomplete
 			$requiredFile=false;
@@ -76,6 +76,7 @@ class ApiAlumno extends CI_Controller
 
 			$row["msgUploadFile"]=$message;
 			$row["completeFile"]=$requiredFile;
+			$row["hasFile"]=$hasHojaDatos;
 			$result[$i]=$row;
             $i++;
 		}

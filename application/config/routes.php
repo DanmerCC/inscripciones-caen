@@ -82,7 +82,8 @@ $route['postulante/upload/sins'] = 'Postulante/uploadSolicitudInscripcion';
 
 $route['postulante/download/cv'] = 'Postulante/downloadCv';
 $route['postulante/stateProfileFiles'] = 'Postulante/stateOfProfileFiles';
-
+$route['solicitud/upload/(:num)'] = 'Solicitud/uploadHojaDeDatos/$1';
+$route['solicitud/stateFile/(:num)'] = 'Solicitud/stateFile/$1';
 
 $route['api/alumno'] = 'ApiAlumno';
 $route['api/programas'] = 'ApiPrograma';
@@ -162,6 +163,7 @@ $route['certifica']='CertificadoController/verificar';
 //$route['admin/view/pdf']='admin/Alumno/viewPdfDocument';
 //$route['admin/view/pdf/:any']='admin/Alumno/viewPdfDocument';
 $route['admin/view/pdf/([a-zA-Z]+)/(:num)']='admin/FilesController/get_file_view_as_data';
+$route['solicitud/view/pdf/([a-zA-Z]+)/(:num)']='admin/FilesController/get_fileSolicitud_view_as_data';
 $route['prueba']='CorreoController/fileTest';
 
 

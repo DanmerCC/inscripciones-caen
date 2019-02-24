@@ -14,6 +14,7 @@ class Solicitud extends CI_Controller
 		$this->load->helper('url');
 		$this->load->library('Pdf');
 		//$this->load->library('Pdf2');
+		$this->load->model('Solicitud_model');
 	}
 	
 	public function index(){
@@ -136,5 +137,98 @@ class Solicitud extends CI_Controller
     
     // Import the annotations for page 1.
     $pdf->importAnnotations(1);
-    }
+	}
+	
+	public function stateFile($id){
+		$result=[];
+		header('Content-Type: application/json');
+		
+		if($this->nativesession->get("estado")=="logeado"){
+			$result=[
+				"content"=>[
+					"hdatos"=>file_exists(CC_BASE_PATH.'/files/hojadatos/'.$id.".pdf"),
+					"nameFiles"=>$id
+				],
+				"status"=>"OK"
+				
+			];
+		}else{
+			$result=[
+				"content"=>[],
+				"status"=>"ERROR"
+			];
+		}
+		echo json_encode($result,JSON_UNESCAPED_UNICODE);
+	}
+	public function uploadHojaDeDatos($id){
+		$idAlumno=$this->nativesession->get("idAlumno");
+		if(!isset($idAlumno)){
+			show_404();
+			exit;
+		}
+		$solicitud=$this->Solicitud_model->byIdAndAlumno($id,$idAlumno);
+		if(count($solicitud)!=0){
+			echo $this->uploadFile('cv',$id);//send result to view
+		}else{
+			show_404();
+			exit;
+		}
+	}
+
+	private function uploadFile($nameInput,$fileName){
+		
+		
+
+		$config['upload_path'] = CC_BASE_PATH.'/files/hojadatos/';
+        
+       	//Tipos de ficheros permitidos
+        $config['allowed_types'] = 'pdf';
+		$config['overwrite'] = true;
+        //nombre de imagen
+		$config['file_name'] = $fileName;
+		
+		$this->load->library('upload',$config);
+		header('Content-Type: application/json');
+		if(!$this->upload->do_upload($nameInput)){
+            /*Si al subirse hay algún error lo meto en un array para pasárselo a la vista*/
+			$error=array('error' => $this->upload->display_errors());
+			//echo  var_dump($error);
+			//$this->load->view('subir_view', $error);
+			//echo "error al subir el archivo";
+			//redirect(base_url().'postulante', 'refresh');
+			$result=[
+				"content"=>[],
+				"status"=>"ERROR_UPDATING_FILE",
+				"error"=>$error
+			];
+			return json_encode($result,JSON_UNESCAPED_UNICODE);
+		}elseif($this->nativesession->get("estado")!="logeado"){
+			$result=[
+				"content"=>[],
+				"status"=>"UNAUTHORIZED"
+			];
+			return json_encode($result,JSON_UNESCAPED_UNICODE);
+		}
+		else{
+            //Datos del fichero subido
+            $datos["img"]=$this->upload->data();
+ 
+            //Podemos acceder a todas las propiedades del fichero subido 
+            $datos["img"]["file_name"];
+			
+			//echo var_dump($datos);
+
+            //Cargamos la vista y le pasamos los datos
+            //para asegurarse que la imagen nueva se cargue en la vista se agregara un header
+            //header("Cache-Control: no-cache, must-revalidate");
+			//header("Expires: Sat, 1 Jul 2000 5:00:00 GMT");
+			$result=[
+				"content"=>[
+					"file_name"=> $datos["img"]["file_name"]
+				],
+				"status"=>"OK"
+			];
+			return json_encode($result,JSON_UNESCAPED_UNICODE);
+        }
+	}
 } 

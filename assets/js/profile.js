@@ -7,21 +7,24 @@ var configuracion = function(){
         "urlUpload":"/postulante/upload/cv",
         "verification":"/postulante/",
         "tittle":"Curriculum",
-        "identifier":"cv"
+		"identifier":"cv",
+		"urlview":"/admin/view/pdf"
     });
     var cargaDJ=cc.fileComponent("#containerBoxDJ",{
         "state":false,
         "target":null,
         "urlUpload":"/postulante/upload/dj",
         "tittle":"DeclaracionJurada",
-        "identifier":"dj"
+        "identifier":"dj",
+		"urlview":"/admin/view/pdf"
     });
     var cargaDJ=cc.fileComponent("#containerBoxCopys",{
         "state":false,
         "target":null,
         "urlUpload":"/postulante/upload/cp",
         "tittle":"Copia de Dni",
-        "identifier":"dni"
+        "identifier":"dni",
+		"urlview":"/admin/view/pdf"
     });
 
     var cargaDJ=cc.fileComponent("#containerBoxBachiller",{
@@ -29,7 +32,8 @@ var configuracion = function(){
         "target":null,
         "urlUpload":"/postulante/upload/bach",
         "tittle":"Constancia de Bachiller",
-        "identifier":"bach"
+        "identifier":"bach",
+		"urlview":"/admin/view/pdf"
     });
 
     var cargaDJ=cc.fileComponent("#containerBoxMaestria",{
@@ -37,7 +41,8 @@ var configuracion = function(){
         "target":null,
         "urlUpload":"/postulante/upload/maes",
         "tittle":"Constancia de maestria",
-        "identifier":"maes"
+        "identifier":"maes",
+		"urlview":"/admin/view/pdf"
     });
 
     var cargaDJ=cc.fileComponent("#containerBoxDoctorado",{
@@ -45,18 +50,21 @@ var configuracion = function(){
         "target":null,
         "urlUpload":"/postulante/upload/doct",
         "tittle":"Constancia de Doctorado",
-        "identifier":"doct"
+        "identifier":"doct",
+		"urlview":"/admin/view/pdf"
     });
     var cargaDJ=cc.fileComponent("#containerBoxSolicitud",{
         "state":false,
         "target":null,
         "urlUpload":"/postulante/upload/sins",
         "tittle":"Solicitud de Inscripcion",
-        "identifier":"sins"
+        "identifier":"sins",
+		"urlview":"/admin/view/pdf"
     });
     //configuracion de uploads
     //configInputsFile("#frmUploadCv input[type='file']","/postulante/upload/cv");
 
+	var solicitudComponets=[];
 
     $("#formChangePwd").submit(function(evt){
         evt.preventDefault();
@@ -406,10 +414,28 @@ $.ajax({
                 alinknotification.href="#";
                 alinknotification.innerHTML=((!datos[i].completeFile)?"<button class='btn btn-sm bg-light-blue disabled color-palette' data-toggle='collapse' data-parent='#accordion' href='#collapse9' data-target=''>"+datos[i].msgUploadFile+"</button>":"");
                 tdnotificationhaventFile.append(alinknotification);
+				otr.append(tdnotificationhaventFile);
 
-                otr.append(tdnotificationhaventFile);
+				var tdSolictudFile = document.createElement("td");
+				tdSolictudFile.innerHTML="<div id='SolicitudFileComponent"+(i+1)+"'><div>";
+				
 
-                $("#contentSolicitudes").append(otr);
+
+                otr.append(tdSolictudFile);
+
+				$("#contentSolicitudes").append(otr);
+				
+				solicitudComponets["SolicitudFileComponent"+(i+1)]=cc.fileComponent("#SolicitudFileComponent"+(i+1),{
+					"state":false,
+					"target":"SolicitudFileComponent"+(i+1),
+					"urlUpload":"/solicitud/upload/"+datos[i].idSolicitud,
+					"urlVerify":"/solicitud/stateFile/"+datos[i].idSolicitud,
+
+					"tittle":"Hoja de datos",
+					"identifier":"hdatos",
+					"sizeTemplate":"min",
+					"urlview":"/solicitud/view/pdf"
+				});
                 console.log(otr);
             }
 
