@@ -1,33 +1,40 @@
-<page backcolor="#FEFEFE" backtop="0" backbottom="0" style="font-size: 10pt margin 1%" >
-    <bookmark title="Solicitud de Inscripccion" level="0" ></bookmark>
-    <table cellspacing="0" style="width: 100%; text-align: center; font-size: 14px" >
+<page backcolor="#FEFEFE" style="font-size: 10pt; margin 1%;" >
+    <bookmark title="Solicitud de Inscripcion" level="0" ></bookmark>
+    <table style="width:100%;">
         <tr>
-            <td style="width: 50%;" rowspan="2" valign="middle" align="center">
-                <img  src="assets/img/logo-caen.jpg" alt="Logo"><br>
+            <td style="width: 50%; height: 60pt;" rowspan="2", valign="middle" align="center">
+                <img  src="assets/img/logo-caen.jpg" alt="Logo">
             </td>
-            <td style="width: 20%;" align="right" valign="middle">
-                <b>CODIGO</b>&nbsp;
+            <td style="width: 30%; height: 40pt; line-height:350%;" align="right">
+                CÓDIGO
             </td>
-            <td style="width: 25%;height: 80%;" align="center" valign="middle" border=1>
-                <span ></span><br/>
+            <td style="width: 20%; height:40pt; line-height:350%;" align="center" border=1>
+                <span ></span>
             </td>
         </tr>
         <tr>
-            <td style="width: 50%;" align="right" valign="bottom" colspan="2">
-                Fecha: <?=date('d/m/Y',strtotime($datosAlumno['fecha_registro'])) ?>
+            <td style="width: 30%; height: 20pt; font-size: 12pt; line-height:175%;" align="right">
+                Fecha:
+            </td>
+            <td style="width: 20%; height: 20pt; line-height:175%;">
+                <?=date('d/m/Y',strtotime($datosAlumno['fecha_registro'])) ?>
             </td>
         </tr>
     </table>
-    <p align="center" style="margin: 1pt;">
-        <b>SOLICITUD DE INSCRIPCION al</b><br><br>
-        <b>__<?=$datosAlumno['number_programa']."_".$datosAlumno['name_programa'];?>__</b>
-    </p>
+    <table cellpadding="11">
+        <tr>
+            <td align="center" style="height: 75pt; font-size: 14pt;">
+                <b>SOLICITUD DE INSCRIPCIÓN al</b><br><br>
+                <b>__<?=$datosAlumno['number_programa']."_".$datosAlumno['name_programa'];?>__</b>
+            </td>
+        </tr>
+    </table>   
     <hr style="height: 0%">
     <table cellspacing="0" style="width: 100%;">
 		<tr>
-            <td style="width: 75%;">
-    			<p>A): <u>DATOS PERSONALES</u></p></td>
-            <td rowspan="2" style="width: 25%; height:35%">
+            <td style="width: 80%; height: 35pt; line-height: 350%;">A): <u>DATOS PERSONALES</u></td>
+            <td style="width: 7%;"></td>
+            <td rowspan="3" style="width: 13%;">
 				<?php if(file_exists('publicfiles/foto/'.$datosAlumno['documento'].'.jpg')): ?>
                 <img height=40px src="publicfiles/foto/<?=$datosAlumno['documento']?>.jpg" alt="Logo"><br>
                 <?php elseif(file_exists('publicfiles/foto/'.$datosAlumno['documento'].'.jpeg')): ?>
@@ -35,24 +42,20 @@
                 <?php endif; ?>
              </td>
         </tr>
+
         <tr>
-            <td style="width: 75%;" align="center"></td>
+            <td style="width: 75%;font-size: 10pt;margin: 10pt;" border="1" align="center"><?=$datosAlumno['grado_profesion']?></td>
+        </tr>
+        <tr>
+            <td style="width: 75%; height:2%; font-size: 8pt; text-align:center;" align="center">GRADO / PROFESIÓN</td>
             <td style="width: 25%;"></td>
         </tr>
         <tr>
-            <td style="width: 75%;height: 12pt;font-size: 12pt;margin: 10pt;" border="1" align="center"><?=$datosAlumno['grado_profesion']?></td>
-            <td style="width: 25%;"></td>
-        </tr>
-        <tr>
-            <td style="width: 75%; height:2%; font-size: 12pt; text-align:center;" align="center">GRADO / PROFESION</td>
-            <td style="width: 25%;"></td>
-        </tr>
-        <tr>
-            <td style="width: 30%;" border="1" align="center"><?=$datosAlumno['apellido_paterno']?></td>
+            <td style="width: 30%; font-size: 10pt; " border="1" align="center"><?=$datosAlumno['apellido_paterno']?></td>
+            <td style="width: 5%;font-size: 10pt;"></td>
+            <td style="width: 30%;font-size: 10pt;" border="1" align="center"><?=$datosAlumno['apellido_materno']?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 30%;" border="1" align="center"><?=$datosAlumno['apellido_materno']?></td>
-            <td style="width: 5%;"></td>
-            <td style="width: 30%;" border="1" align="center"><?=$datosAlumno['nombres']?></td>
+            <td style="width: 30%;font-size: 10pt;" border="1" align="center"><?=$datosAlumno['nombres']?></td>
         </tr>
         <tr>
             <td style="width: 30%; height:12pt; font-size: 8pt; text-align:center;" align="center">APELLIDO PATERNO</td>
@@ -64,11 +67,11 @@
     </table>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 30%;" border="1" align="center"><?=$datosAlumno['documento']?></td>
+            <td style="width: 30%; font-size: 10pt;" border="1" align="center"><?=$datosAlumno['documento']?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 30%;" border="1" align="center"><?=$datosAlumno['estado_civil']?></td>
+            <td style="width: 30%; font-size: 10pt;" border="1" align="center"><?=$datosAlumno['estado_civil']?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 30%;" border="1" align="center"><?=date('d/m/Y',strtotime($datosAlumno['fecha_nac'])) ?></td>
+            <td style="width: 30%; font-size: 10pt;" border="1" align="center"><?=date('d/m/Y',strtotime($datosAlumno['fecha_nac'])) ?></td>
         </tr>
         <tr>
             <td style="width: 30%; height:12pt; font-size: 8pt; text-align:center;" align="center">NRO. DNI</td>
@@ -80,16 +83,16 @@
     </table>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 18%;" border="1" align="center"><?=$datosAlumno['telefono_casa']?></td>
+            <td style="width: 18%; font-size: 10pt;" border="1" align="center"><?=$datosAlumno['telefono_casa']?></td>
             <td style="width: 4%;"></td>
-            <td style="width: 18%;" border="1" align="center"><?=$datosAlumno['celular']?></td>
+            <td style="width: 18%; font-size: 10pt;" border="1" align="center"><?=$datosAlumno['celular']?></td>
             <td style="width: 4%;"></td>
-            <td style="width: 18%;" border="1" align="center"><?=$datosAlumno['celular']?></td>
+            <td style="width: 18%; font-size: 10pt;" border="1" align="center"><?=$datosAlumno['celular']?></td>
             <td style="width: 4%;"></td>
-            <td style="width: 34%;" border="1" align="center"><?=$datosAlumno['email']?></td>
+            <td style="width: 34%; font-size: 10pt;" border="1" align="center"><?=$datosAlumno['email']?></td>
         </tr>
         <tr>
-            <td style="width: 18%; height:12pt; font-size: 8pt; text-align:center;" align="center">TELEFONO CASA</td>
+            <td style="width: 18%; height:12pt; font-size: 8pt; text-align:center;" align="center">TELÉFONO CASA</td>
             <td style="width: 4%;"></td>
             <td style="width: 18%; height:12pt; font-size: 8pt; text-align:center;" align="center">CELULAR</td>
             <td style="width: 4%;"></td>
@@ -100,11 +103,11 @@
     </table>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 30%;" border="1" align="center"><?=$datosAlumno['distrito_nac']?></td>
+            <td style="width: 30%; font-size: 10pt;" border="1" align="center"><?=$datosAlumno['distrito_nac']?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 30%;" border="1" align="center"><?=$datosAlumno['provincia']?></td>
+            <td style="width: 30%; font-size: 10pt;" border="1" align="center"><?=$datosAlumno['provincia']?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 30%;" border="1" align="center"><?=$datosAlumno['departamento']?></td>
+            <td style="width: 30%; font-size: 10pt;" border="1" align="center"><?=$datosAlumno['departamento']?></td>
         </tr>
         <tr>
             <td style="width: 30%; height:12pt; font-size: 8pt; text-align:center;" align="center">DISTRITO DE NACIMIENTO</td>
@@ -116,13 +119,13 @@
     </table>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 10%; height:12pt; font-size: 8pt; text-align:left;">DIRECCION DOMICILIARIA</td>
+            <td style="width: 15%; height:12pt; font-size: 8pt; text-align:left;">DIRECCIÓN DOMICILIARIA</td>
             <td style="width: 2%;"></td>
-            <td style="width: 40%;" border="1" align="center"><?=$datosAlumno['direccion']?> </td>
+            <td style="width: 35%; font-size: 10pt;" border="1" align="center"><?=$datosAlumno['direccion']?> </td>
             <td style="width: 4%;"></td>
-            <td style="width: 15%;" border="1" align="center"><?=$datosAlumno['interior']?> </td>
+            <td style="width: 15%; font-size: 10pt;" border="1" align="center"><?=$datosAlumno['interior']?> </td>
             <td style="width: 4%;"></td>
-            <td style="width: 25%;" border="1" align="center"><?=$datosAlumno['distrito']?> </td>
+            <td style="width: 25%; font-size: 10pt;" border="1" align="center"><?=$datosAlumno['distrito']?> </td>
         </tr>
         <tr>
             <td style="width: 10%; height:12pt; font-size: 8pt; text-align:center;" align="center"></td>
@@ -135,8 +138,11 @@
         </tr>
     </table>
     <hr>
-    <p style="margin: 0pt;">B): <u>DATOS LABORALES</u></p>
+    
     <table cellspacing="0" style="width: 100%;">
+        <tr>
+            <td style="height: 30pt; line-height: 300%;">B): <u>DATOS LABORALES</u></td>
+        </tr>
         <tr>
             <td style="width: 20%;font-size: 8pt; " align="right" valign="middle">LUGAR DE TRABAJO:</td>
             <td style="width: 4%;"></td>
@@ -147,9 +153,9 @@
         <tr>
             <td style="width: 20%; height:12pt; font-size: 8pt; text-align:center;" align="center"></td>
             <td style="width: 4%;"></td>
-            <td style="width: 21%; height:12pt; font-size: 8pt; text-align:center;" align="center">INSTITUCION</td>
+            <td style="width: 21%; height:12pt; font-size: 8pt; text-align:center;" align="center">INSTITUCIÓN</td>
             <td style="width: 4%;"></td>
-            <td style="width: 51%; height:12pt; font-size: 8pt; text-align:center;" align="center">AREA / DIRECCION / OFICINA / DPTO.</td>
+            <td style="width: 51%; height:12pt; font-size: 8pt; text-align:center;" align="center">ÁREA / DIRECCIÓN / OFICINA / DPTO.</td>
         </tr>
     </table>
     <table cellspacing="0" style="width: 100%;">
@@ -179,17 +185,19 @@
             <td style="width: 15%; height:12pt; font-size: 8pt; text-align:center;" border="1" align="center"><?=$datosAlumno['anexo_laboral']?> </td>
         </tr>
         <tr>
-            <td style="width: 40%; height:12pt; font-size: 8pt; text-align:center;" align="center">DIRECCION</td>
+            <td style="width: 40%; height:12pt; font-size: 8pt; text-align:center;" align="center">DIRECCIÓN</td>
             <td style="width: 5%;"></td>
             <td style="width: 15%; height:12pt; font-size: 8pt; text-align:center;" align="center">DISTRITO</td>
             <td style="width: 5%;"></td>
-            <td style="width: 15%; height:12pt; font-size: 8pt; text-align:center;" align="center">TELEFONO</td>
+            <td style="width: 15%; height:12pt; font-size: 8pt; text-align:center;" align="center">TELÉFONO</td>
             <td style="width: 5%;"></td>
             <td style="width: 15%; height:12pt; font-size: 8pt; text-align:center;" align="center">ANEXO</td>
         </tr>
     </table>
-    <p>EXPERIENCIA LABORAL (Referencia de 2 últimos puestos de trabajo):</p>
     <table cellspacing="0" style="width: 100%;">
+        <tr>
+            <td style="width: 100%; font-size: 8pt; height: 16pt; line-height: 180%;">EXPERIENCIA LABORAL (Referencia de 2 últimos puestos de trabajo):</td>
+        </tr>
         <tr>
             <td style="width: 5%;height:12pt;font-size: 8pt;" align="center" valign="bottom">1</td>
             <td style="width: 50%;height:12pt;font-size: 8pt;border-bottom: 1px solid black"><?=$datosAlumno['experiencia_laboral1']?></td>
@@ -210,7 +218,10 @@
     <br>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 40%;font-size: 8pt;" align="center" valign="middle">HA SEGUIDO ALGUN CURSO EN EL CAEN:</td>
+            <td style="height: 2pt; width: 100%;"></td>
+        </tr>
+        <tr>
+            <td style="width: 40%;font-size: 8pt;" align="center" valign="middle">HA SEGUIDO ALGÚN CURSO EN EL CAEN:</td>
             <td style="width: 5%;" align="center" valign="middle" border="1"><?php if($datosAlumno['curso_caen'] == 'SI'): ?>X<?php endif;?></td>
             <td style="width: 5%;"></td>
             <td style="width: 5%;" align="center" valign="middle" border="1"><?php if($datosAlumno['curso_caen'] == 'NO'): ?>X<?php endif;?></td>
@@ -243,8 +254,10 @@
         </tr>
     </table>
     <hr>
-    <p>C): <u>DATOS ACADEMICOS</u></p>
     <table cellspacing="0" style="width: 100%;">
+        <tr>
+            <td style="height: 30pt; line-height: 300%;">C): <u>DATOS ACADÉMICOS</u></td>
+        </tr>
         <tr>
             <td style="width: 5%"></td>
             <td style="width: 20%"></td>
@@ -256,7 +269,7 @@
         </tr>
         <tr>
             <td style="width: 5%;font-size: 8pt;" align="center" valign="middle">1</td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;" align="center" valign="middle">Titulo Universitario en:</td>
+            <td style="width: 20%;height:12pt;font-size: 8pt;" align="center" valign="middle">Título Universitario en:</td>
             <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['titulo_obtenido']?></td>
             <td style="width: 5%;"></td>
             <td style="width: 20%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['universidad_titulo']?></td>
@@ -291,15 +304,18 @@
             <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['fecha_doctor']?></td>
         </tr>
     </table>
-    <table cellspacing="0" style="width: 100%; text-align: center; font-size: 14px" >
+    <br>
+    <table cellspacing="0" style="width: 100%;" >
         <tr>
-            <td style="width: 80%;" rowspan="2" valign="middle" align="center">
+            <td style="width: 50%; height: 60pt;" rowspan="2" valign="middle" align="center">
                 <img width=100% height=20%; src="assets/img/logo-caen.jpg" alt="Logo"><br>
             </td>
         </tr>
     </table>
-    <p>D): <u>DOCUMENTOS PRESENTADOS</u></p>
     <table cellspacing="0" style="width: 100%;">
+        <tr>
+            <td style="width: 100%; height: 25pt;line-height: 200%;">D): <u>DOCUMENTOS PRESENTADOS</u></td>
+        </tr>
         <tr>
             <td style="width: 10%;font-size: 8pt;" align="center" valign="middle" border="1"></td>
             <td style="width: 90%;height:12pt;font-size: 8pt;" align="left" valign="middle" border="1">1.- Solicitud de Inscripción para el Proceso de Admisión (Formato CAEN).</td>
@@ -344,12 +360,15 @@ normas generales del Sistema Universitario y a las directivas de Admisión del C
 relación anteriormente indicada.</li>
     </ul>
     <hr>
-    <p>E): <u>REFERENCIAS</u></p>
-    <blockquote>
-        Indique 2 personas que puedan proporcionar referencias sobre su vida profesional:
-    </blockquote>
-
     <table cellspacing="0" style="width: 100%;">
+        <tr>
+            <td style="width: 100%; height: 30pt; line-height: 350%;">E): <u>REFERENCIAS</u></td>
+        </tr>
+        <tr style="background-color: red;">
+            <td style="text-align: justify; height: 20pt; line-height: 200%; font-size: 10pt;">
+                Indique 2 personas que puedan proporcionar referencias sobre su vida profesional:
+            </td>
+        </tr>
         <tr>
             <td style="width: 5%;height:12pt;font-size: 8pt;" align="center" valign="bottom">1</td>
             <td style="width: 95%;height:12pt;font-size: 8pt;border-bottom: 1px solid black"><?=$datosAlumno['referencia_personal1']?></td>
