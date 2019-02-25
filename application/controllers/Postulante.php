@@ -73,6 +73,10 @@ class Postulante extends CI_Controller {
 								"atributos"=>"id='aDocs' data-toggle='collapse' data-parent='#accordion' href='#collapse9'"
 							],
 							[
+								"text"=>"Formatos",
+								"atributos"=>"id='formatesPanel' data-toggle='collapse' data-parent='#accordion' href='#collapse10'"
+							],
+							[
 								"text"=>"Academica",
 								"atributos"=>"id='aInfLaboral' data-toggle='collapse' data-parent='#accordion' href='#collapse3'"
 							],

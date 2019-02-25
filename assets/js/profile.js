@@ -145,6 +145,7 @@ var configuracion = function(){
 	relacionarColapseLi('#aInfReferencias','#collapse6');
     relacionarColapseLi('#aSolicitudes','#collapse8');
     relacionarColapseLi('#aDocs','#collapse9');
+    relacionarColapseLi('#formates','#collapse10');
 
 	reflejarDatos("#t_enfermedad_asma");
 	reflejarDatos("#t_enfermedad_arterial");
