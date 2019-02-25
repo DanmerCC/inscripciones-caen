@@ -20,3 +20,4 @@ application/config/config.php
 !/vendor/autoload.php
 files
 files/*.*
+publicFiles/foto/*.*
