@@ -426,6 +426,76 @@
                                 </div>
                         </div>
                     </div>
+                    <!--Panel formatos-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse10">FORMATOS</a>
+                            </h4>
+                        </div>
+                        <div id="collapse10" class="panel-collapse collapse">
+                            <div class="">
+                                <div class="panel-body">
+                                    <div class="box">
+                                        <div class="box-header with-border">
+                                            <h3 class="box-title">Bordered Table</h3>
+                                        </div>
+                                        <!-- /.box-header -->
+                                        <div class="box-body">
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr>
+                                                        <th style="width: 10px">#</th>
+                                                        <th>Nombre</th>
+                                                        <th>Descarga</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1.</td>
+                                                        <td>Solicitud de Inscripcion</td>
+                                                        <td>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Solicitud-de-Inscripci%C3%B3n.xls" download>Descargar Solicitud de Inscripcion</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2.</td>
+                                                        <td>Solicitud de Admisión</td>
+                                                        <td>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Solicitud-de-Admisi%C3%B3n.docx" download>Descargar Solicitud de Admisión (Formato CAEN)</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3.</td>
+                                                        <td>Declaración Jurada de no tener antecedentes Penales, Judiciales ni policiales</td>
+                                                        <td>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Declaraci%C3%B3n-Jurada-Simple.docx" download>Descargar Declaración Jurada de no tener antecedentes Penales, Judiciales ni policiales (Formato CAEN). [</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Panel formatos-->
+
 					<!--agregado -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
