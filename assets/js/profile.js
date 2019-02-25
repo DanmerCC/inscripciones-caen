@@ -225,7 +225,6 @@ var configuracion = function(){
 
                 
                 //$("#si_militar").val(datos[i].si_militar);
-                console.log(datos[i].si_militar)
                 if (datos[i].si_militar=='1') {
                     $("#si_militar").prop('checked','checked');
                 }else{
@@ -329,7 +328,6 @@ var configuracion = function(){
         		// $("#").val(datos[i].tipodocumento);
 
         	}
-            console.log(datos);
             
         },error: function (xhr, ajaxOptions, thrownError) {
             console.log(xhr.status);
@@ -437,7 +435,6 @@ $.ajax({
 					"sizeTemplate":"min",
 					"urlview":"/solicitud/view/pdf"
 				});
-                console.log(otr);
             }
 
         },
@@ -529,12 +526,10 @@ function reflejarDatos(idelemento){
 	}else{
 		$(idelemento).on('change',function(){
 			$($(this).data('pointed')).val($(this).val());
-			console.log("vall");
 		});
 
 	}
 
-	console.log($(idelemento).attr('type'));
 }
 
 
@@ -625,7 +620,6 @@ function downloadCv(){
 }
 
 function openPDFv2(cadena) {
-	console.log('open pdf v2 clicked');
 	var container = document.querySelector('#magicContainer');
 	var tempLink = document.createElement('a');
 	tempLink.href = `data:application/pdf;base64,${cadena}`;
