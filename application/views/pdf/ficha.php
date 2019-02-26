@@ -1,4 +1,4 @@
-<page backcolor="#FEFEFE" style="font-size: 10pt; margin 1%;" >
+<page backcolor="#FEFEFE" style="font-size: 10pt; margin 0%;" >
     <bookmark title="Solicitud de Inscripcion" level="0" ></bookmark>
     <table style="width:100%;">
         <tr>
@@ -29,26 +29,26 @@
             </td>
         </tr>
     </table>   
-    <hr style="height: 0%">
+    <hr>
     <table cellspacing="0" style="width: 100%;">
 		<tr>
             <td style="width: 80%; height: 35pt; line-height: 350%;">A): <u>DATOS PERSONALES</u></td>
             <td style="width: 7%;"></td>
             <td rowspan="3" style="width: 13%;">
 				<?php if(file_exists('publicfiles/foto/'.$datosAlumno['documento'].'.jpg')): ?>
-                <img height=40px src="publicfiles/foto/<?=$datosAlumno['documento']?>.jpg" alt="Logo"><br>
+                <img src="publicfiles/foto/<?=$datosAlumno['documento']?>.jpg" alt="Logo" style="height: 450pt; width: 400pt; border: 0.25px solid #000;">
                 <?php elseif(file_exists('publicfiles/foto/'.$datosAlumno['documento'].'.jpeg')): ?>
-                <img height=40px src="publicfiles/foto/<?=$datosAlumno['documento']?>.jpeg" alt="Logo"><br>
+                <img src="publicfiles/foto/<?=$datosAlumno['documento']?>.jpeg" alt="Logo" style="height: 450pt; width: 400pt; border: 0.25px solid #000;">
                 <?php endif; ?>
              </td>
         </tr>
-
         <tr>
-            <td style="width: 75%;font-size: 10pt;margin: 10pt;" border="1" align="center"><?=$datosAlumno['grado_profesion']?></td>
+            <td style="width: 80%;font-size: 10pt;margin: 10pt;" border="1" align="center"><?=$datosAlumno['grado_profesion']?></td>
+            <td style="width: 7%;"></td>
         </tr>
         <tr>
-            <td style="width: 75%; height:2%; font-size: 8pt; text-align:center;" align="center">GRADO / PROFESIÓN</td>
-            <td style="width: 25%;"></td>
+            <td style="width: 80%; height:2%; font-size: 8pt; text-align:center;" align="center">GRADO / PROFESIÓN</td>
+            <td style="width: 7%;"></td>
         </tr>
         <tr>
             <td style="width: 30%; font-size: 10pt; " border="1" align="center"><?=$datosAlumno['apellido_paterno']?></td>
@@ -362,10 +362,10 @@ relación anteriormente indicada.</li>
     <hr>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 100%; height: 30pt; line-height: 350%;">E): <u>REFERENCIAS</u></td>
+            <td style="width: 100%; height: 25pt; line-height: 250%;">E): <u>REFERENCIAS</u></td>
         </tr>
-        <tr style="background-color: red;">
-            <td style="text-align: justify; height: 20pt; line-height: 200%; font-size: 10pt;">
+        <tr>
+            <td style="text-align: justify; height: 20pt; line-height: 150%; font-size: 10pt;">
                 Indique 2 personas que puedan proporcionar referencias sobre su vida profesional:
             </td>
         </tr>
@@ -380,45 +380,49 @@ relación anteriormente indicada.</li>
     </table>
     <br>
     <hr>
-    <p>F): <u>FINANCIAMIENTO</u></p>
     <table cellspacing="0" style="width: 100%;">
         <tr>
+            <td style="width: 100%; height: 25pt; line-height: 250%;">F): <u>FINANCIAMIENTO</u></td>
+        </tr>
+        <tr>
             <td style="width: 30%;font-size: 8pt;" align="center" valign="middle">Indique la alternativa de pago elegida:</td>
-            <td style="width: 5%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($datosAlumno['tipoFinanciamiento'] == 'Contado'): ?>X<?php endif;?></td>
+            <td style="width: 7%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($datosAlumno['tipoFinanciamiento'] == 'Contado'): ?>X<?php endif;?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 5%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($datosAlumno['tipoFinanciamiento'] == 'Cuotas'): ?>X<?php endif;?></td>
-            <td style="width: 55%;"></td>
+            <td style="width: 7%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($datosAlumno['tipoFinanciamiento'] == 'Cuotas'): ?>X<?php endif;?></td>
+            <td style="width: 51%;"></td>
         </tr>
         <tr>
             <td style="width: 30%;" align="center" valign="middle"></td>
-            <td style="width: 5%;height: 12pt;font-size: 8pt;"align="center" valign="top">Contado</td>
+            <td style="width: 7%;height: 20pt;font-size: 8pt;" align="center" valign="top">Contado</td>
             <td style="width: 5%;"></td>
-            <td style="width: 5%;height: 12pt;font-size: 8pt;"align="center" valign="top">Cuotas</td>
-            <td style="width: 55%;"></td>
+            <td style="width: 7%;height: 20pt;font-size: 8pt;" align="center" valign="top">Cuotas</td>
+            <td style="width: 51%;"></td>
         </tr>
     </table>
-    <br>
     <hr>
-    <p>G): <u>DATOS DE SALUD</u></p>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 65%;font-size: 8pt;" align="center" valign="middle"></td>
-            <td style="width: 5%;height: 12pt;font-size: 8pt;" align="center" valign="middle">SI</td>
-            <td style="width: 1%;"></td>
-            <td style="width: 5%;height: 12pt;font-size: 8pt;" align="center" valign="middle">NO</td>
-            <td style="width: 24%;"></td>
+            <td style="width: 100%; height: 25pt; line-height: 250%;">G): <u>DATOS DE SALUD</u></td>
         </tr>
         <tr>
-            <td style="width: 65%;font-size: 8pt;" align="left" valign="middle">1.-¿Sufre de alguna enfermedad crónica que pueda derivar en situación de emergencia médica</td>
+            <td style="width: 70%;font-size: 8pt;" align="center" valign="middle"></td>
+            <td style="width: 2%;"></td>
+            <td style="width: 5%;height: 5pt;font-size: 8pt;" align="center" valign="middle">SI</td>
+            <td style="width: 1%;"></td>
+            <td style="width: 5%;height: 5pt;font-size: 8pt;" align="center" valign="middle">NO</td>
+            <td style="width: 17%;"></td>
+        </tr>
+        <tr>
+            <td style="width: 70%;font-size: 8pt;" align="left" valign="middle">1.-¿Sufre de alguna enfermedad crónica que pueda derivar en situación de emergencia médica?</td>
+            <td style="width: 2%;"></td>
             <td style="width: 5%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($datosAlumno['sufre_enfermedad'] == 'Si'): ?>X<?php endif;?></td>
             <td style="width: 1%;"></td>
             <td style="width: 5%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($datosAlumno['sufre_enfermedad'] == 'No'): ?>X<?php endif;?></td>
-            <td style="width: 24%;"></td>
+            <td style="width: 17%;"></td>
         </tr>
     </table>
     <br>
     <?php 
-
     $enfermedades=json_decode($datosAlumno['tipo_enfermedad'],true);
      ?>
     <table cellspacing="0" style="width: 100%;">
@@ -427,76 +431,66 @@ relación anteriormente indicada.</li>
             <td style="width: 1%;"></td>
             <td style="width: 5%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($enfermedades['Asma'] == 'SI'): ?>X<?php endif;?></td>
             <td style="width: 1%;"></td>
-            <td style="width: 8%;font-size: 8pt;" align="right" valign="middle">Hipertensión Arterial</td>
+            <td style="width: 10%;font-size: 8pt;" align="right" valign="middle">Hipertensión Arterial</td>
             <td style="width: 1%;"></td>
             <td style="width: 5%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($enfermedades['Arterial'] == 'SI'): ?>X<?php endif;?></td>
             <td style="width: 1%;"></td>
-            <td style="width: 5%;font-size: 8pt;" align="right" valign="middle">Diabetes</td>
+            <td style="width: 8%;font-size: 8pt;" align="right" valign="middle">Diabetes</td>
             <td style="width: 1%;"></td>
             <td style="width: 5%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($enfermedades['Diabetes'] == 'SI'): ?>X<?php endif;?></td>
             <td style="width: 1%;"></td>
-            <td style="width: 5%;font-size: 8pt;" align="right" valign="middle">Cancer</td>
+            <td style="width: 6%;font-size: 8pt;" align="right" valign="middle">Cáncer</td>
             <td style="width: 1%;"></td>
             <td style="width: 5%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($enfermedades['Cancer'] == 'SI'): ?>X<?php endif;?></td>
             <td style="width: 1%;"></td>
-            <td style="width: 5%;font-size: 8pt;" align="right" valign="middle">Otras:</td>
-            <td style="width: 1%;"></td>
-            <td style="width: 43%;height: 12pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="middle"><?php echo $enfermedades['otros']; ?></td>
+            <td style="width: 6%;font-size: 8pt;" align="right" valign="middle">Otras:</td>
+            <td style="width: 37%;height: 12pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="bottom">Uso lentes</td>
         </tr>
     </table>
     <br>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 23%;font-size: 8pt;" align="left" valign="middle">2.- ¿Dispone de Seguro Medico?</td>
+            <td style="width: 24%;font-size: 8pt;" align="left" valign="middle">2.- ¿Dispone de Seguro Medico?</td>
             <td style="width: 5%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($datosAlumno['seguro_medico'] == 'SI'): ?>X<?php endif;?></td>
+            <td style="width: 2%;"></td>
+            <td style="width: 30%;font-size: 8pt;" align="right" valign="middle">Indicar Compañía/Consignar Teléfono:</td>
+            <td style="width: 39%;height: 12pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="middle"><?=$datosAlumno['nombre_seguro']?>/<?=$datosAlumno['telefono_seguro']?></td>
+        </tr>
+    </table>
+    <br>
+    <table cellspacing="0" style="width: 100%;">
+        <tr>
+            <td style="width: 26%;font-size: 8pt;" align="left" valign="middle">3.- En caso de Emergencia avisar a:</td>
+            <td style="width: 30%;height: 5pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="middle"><?=$datosAlumno['emergencia_familiar']?></td>
             <td style="width: 1%;"></td>
-            <td style="width: 25%;font-size: 8pt;" align="right" valign="middle">Indicar Compañía/Consignar Teléfono:</td>
+            <td style="width: 10%;font-size: 8pt;" align="left" valign="middle">Teléfonos:</td>
             <td style="width: 1%;"></td>
-            <td style="width: 45%;height: 12pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="middle"><?=$datosAlumno['nombre_seguro']?>/<?=$datosAlumno['telefono_seguro']?></td>
+            <td style="width: 28%;height: 5pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="middle"><?=$datosAlumno['telefono_familiar']?></td>
         </tr>
     </table>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 24%;font-size: 8pt;" align="left" valign="middle">3.- En caso de Emergencia avisar a:</td>
-            <td style="width: 34%;height: 12pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="middle"><?=$datosAlumno['emergencia_familiar']?></td>
-            <td style="width: 1%;"></td>
-            <td style="width: 6%;font-size: 8pt;" align="left" valign="middle">Telefonos:</td>
-            <td style="width: 1%;"></td>
-            <td style="width: 34%;height: 12pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="middle"><?=$datosAlumno['telefono_familiar']?></td>
-        </tr>
-    </table>
-    <table cellspacing="0" style="width: 100%;">
-        <tr>
-            <td style="width: 8%;font-size: 8pt;" align="left" valign="middle">Parentezco:</td>
-            <td style="width: 92%;height: 12pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="middle"><?=$datosAlumno['parentesco']?></td>
+            <td style="width: 10%;font-size: 8pt;" align="left" valign="middle">Parentezco:</td>
+            <td style="width: 90%;height: 5pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="middle"><?=$datosAlumno['parentesco']?></td>
         </tr>
     </table>
     <br>
-    <i><b>Declaro bajo juramento que todos los datos informados son verídicos y pueden ser sustentados por el suscrito, a petición del Centro de Altos Estudios Nacionales.</b></i>
-    <br>
-    <br>
-    <br>
+    <div style="text-align: justify;"><b>Declaro bajo juramento que todos los datos informados son verídicos y pueden ser sustentados por el suscrito, a petición del Centro de Altos Estudios Nacionales.</b></div>
     <hr>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 25%;height:150px;" border="1"></td>
-            <td style="width: 25%;height:150px;" border="1"></td>
-            <td style="width: 25%;height:150px;" border="1"></td>
-            <td style="width: 25%;height:150px;" border="1"></td>
+            <td style="width: 25%;height:60px;" border="1"></td>
+            <td style="width: 25%;height:60px;" border="1"></td>
+            <td style="width: 25%;height:60px;" border="1"></td>
+            <td style="width: 25%;height:60px;" border="1"></td>
         </tr>
         <tr>
             <td style="width: 25%;" valign="middle" align="center" border="1">FIRMA DEL PARTICIPANTE</td>
-            <td style="width: 25%;" valign="middle" align="center" border="1">DIRECCION ACADEMICA</td>
-            <td style="width: 25%;" valign="middle" align="center" border="1">SECRETARIO DE ADMISION</td>
+            <td style="width: 25%;" valign="middle" align="center" border="1">DIRECCIÓN ACADÉMICA</td>
+            <td style="width: 25%;" valign="middle" align="center" border="1">SECRETARIO DE ADMISIÓN</td>
             <td style="width: 25%;" valign="middle" align="center" border="1">DIRECTOR GENERAL DEL CAENEPG</td>
         </tr>
     </table>
     <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <i><p style="width: 23%;font-size: 8pt;" align="left" valign="center">ficha de Solicitud con codigo <?=$datosAlumno['id_alumno']?></p></i>
-    <br>
+    <i><p style="width: 23%;font-size: 8pt;" align="left" valign="center">Ficha de Solicitud con código <?=$datosAlumno['id_alumno']?></p></i>
 </page>
