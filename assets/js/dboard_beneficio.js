@@ -33,14 +33,14 @@ function cargarDataTable(){
             'pdf'
         ],
         "ajax":
-                {
-                    url: '/admin/dataTable/beneficio',
-                    type: "post",
-                    dataType: "json",
-                    error: function (e) {
-                        console.log(e.responseText);
-                    }
-                },
+            {
+                url: '/admin/dataTable/beneficio',
+                type: "post",
+                dataType: "json",
+                error: function (e) {
+                    console.log(e.responseText);
+                }
+            },
         "bDestroy": true,
         "iDisplayLength": 15, // paginacion
         "order": [[0, "desc"]] //ordenar(columna, orden)

@@ -52,8 +52,10 @@ class Alumno_model extends CI_Model
 	}
 
 	public function getAllInscritos(){
-		
-		return resultToArray($this->db->select()->from('alumno')->get());
+		$this->db->select();
+		$this->db->from('alumno');
+		$this->db->order_by("id_alumno", "asc");
+		return resultToArray($this->db->get());
 	}
 
 

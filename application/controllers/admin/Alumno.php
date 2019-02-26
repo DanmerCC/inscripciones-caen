@@ -41,6 +41,7 @@ class Alumno extends CI_Controller
 
 
 	   foreach ($rspta as $value) {
+		$i++;
 		$haveFileCv=file_exists(CC_BASE_PATH."/files/cvs/".$value["documento"].".pdf");
 		$haveFileDni=file_exists(CC_BASE_PATH."/files/dni/".$value["documento"].".pdf");
 		$haveFileDj=file_exists(CC_BASE_PATH."/files/djs/".$value["documento"].".pdf");
@@ -58,20 +59,21 @@ class Alumno extends CI_Controller
 		$checkSolicitudesInscripcion=($value["check_sins_pdf"])?"<i class='fa fa-check' aria-hidden='true'></i>":"";
 
 	           $data[] = array(
-	           "0" => $value["grado_profesion"],
-	           "1" => $value["nombres"],
-	           "2" => $value["apellido_paterno"],
-	           "3" => $value["apellido_materno"],
-	           "4" => $value["lugar_trabajo"],
-	           "5" => $value["celular"]." \n ".$value["telefono_casa"],
-			   "6" => $value["email"],
-			   "7" => (($haveFileCv)?"<a href='".base_url()."admin/view/pdf/cv/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkCv."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
-			   "8" => (($haveFileDni)?"<a href='".base_url()."admin/view/pdf/dni/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDni."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
-			   "9" => (($haveFileDj)?"<a href='".base_url()."admin/view/pdf/dj/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDj."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
-			   "10" => (($haveFileBach)?"<a href='".base_url()."admin/view/pdf/bach/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkBachiller."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
-			   "11" => (($haveFileMaes)?"<a href='".base_url()."admin/view/pdf/maes/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkMaestria."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
-			   "12" => (($haveFileDoct)?"<a href='".base_url()."admin/view/pdf/doct/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDoctorado."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
-			   "13" => (($haveFileSolicitudesInscripcion)?"<a href='".base_url()."admin/view/pdf/sins/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkSolicitudesInscripcion."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>")
+				"0" => $i,
+	           "1" => $value["grado_profesion"],
+	           "2" => $value["nombres"],
+	           "3" => $value["apellido_paterno"],
+	           "4" => $value["apellido_materno"],
+	           "5" => $value["lugar_trabajo"],
+	           "6" => $value["celular"]." \n ".$value["telefono_casa"],
+			   "7" => $value["email"],
+			   "8" => (($haveFileCv)?"<a href='".base_url()."admin/view/pdf/cv/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkCv."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
+			   "9" => (($haveFileDni)?"<a href='".base_url()."admin/view/pdf/dni/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDni."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
+			   "10" => (($haveFileDj)?"<a href='".base_url()."admin/view/pdf/dj/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDj."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
+			   "11" => (($haveFileBach)?"<a href='".base_url()."admin/view/pdf/bach/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkBachiller."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
+			   "12" => (($haveFileMaes)?"<a href='".base_url()."admin/view/pdf/maes/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkMaestria."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
+			   "13" => (($haveFileDoct)?"<a href='".base_url()."admin/view/pdf/doct/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDoctorado."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
+			   "14" => (($haveFileSolicitudesInscripcion)?"<a href='".base_url()."admin/view/pdf/sins/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkSolicitudesInscripcion."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>")
 	       );
 	    }        
 	   $results = array(

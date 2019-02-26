@@ -39,6 +39,7 @@
           <div class="panel-body" id="listadoregistros">
             <table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover  table-responsive" style="width:100%">
               <thead>
+                <th>N°</th>
                 <th>TITULO</th>
                 <th>NOMBRES</th>
                 <th>APELLIDOS PATERNO</th>

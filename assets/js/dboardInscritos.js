@@ -23,13 +23,45 @@ function cargarDataTable(){
 	    tabla = $('#dataTable1').dataTable({
         "aProcessing": true, //activamos el procesamiento del datatables
         "aServerSide": true, //paginacion y filtrado realizados por el servidor 
-        dom: 'Bfrtip', //definimos los elementos del contro la tabla
+        dom: 'Bfrtip', //definimos los elementos del contro la tabla,
         buttons: [
             'copyHtml5',
             'excelHtml5',
             'csvHtml5',
             'pdf'
         ],
+        "fnInitComplete": function(){
+            // Disable TBODY scoll bars
+            $('.dataTables_scrollBody').css({
+                'overflow': 'hidden',
+                'border': '0'
+            });
+            
+            // Enable TFOOT scoll bars
+            $('.dataTables_scrollFoot').css('overflow', 'auto');
+            
+            $('.dataTables_scrollHead').css('overflow', 'auto');
+            
+            // Sync TFOOT scrolling with TBODY
+            $('.dataTables_scrollFoot').on('scroll', function () {
+                $('.dataTables_scrollBody').scrollLeft($(this).scrollLeft());
+            });      
+            
+            $('.dataTables_scrollHead').on('scroll', function () {
+                $('.dataTables_scrollBody').scrollLeft($(this).scrollLeft());
+            });
+        },
+        "scrollX": true,
+        "scrollCollapse": true,
+        "responsive": true,
+        "colResize": {
+            "tableWidthFixed": false,
+            //"handleWidth": 10,
+            "resizeCallback": function(column)
+            {
+
+            }
+        },
         "ajax":
                 {
                     url: '/admin/dataTable/inscritos',
