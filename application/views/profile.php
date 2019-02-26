@@ -28,7 +28,7 @@
         
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/"><i class="fa fa-dashboard"></i> Mi sitio</a></li>
       </ol>
     </section>
 
@@ -79,15 +79,15 @@
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <label>Apellido Paterno<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno" value="" maxlength="45" required>
+                                                <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno" value="" maxlength="45" style="text-transform: capitalize;" required>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Apellido Materno<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="apellido_materno" name="apellido_materno" value="" maxlength="45" required>
+                                                <input type="text" class="form-control" id="apellido_materno" name="apellido_materno" value="" maxlength="45" style="text-transform: capitalize;" required>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Nombres<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="nombres" name="nombres" value="" maxlength="45" required>
+                                                <input type="text" class="form-control" id="nombres" name="nombres" value="" maxlength="45" style="text-transform: capitalize;" required>
                                             </div>
                                         </div>
                                     </div>
@@ -174,7 +174,7 @@
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <label>Distrito de Nacimiento<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="distrito_nac" name="distrito_nac" value="" required="">
+                                                <input type="text" class="form-control" id="distrito_nac" name="distrito_nac" style="text-transform: capitalize;" required="">
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Provincia<span style="color: red">(*)</span></label>
@@ -478,7 +478,7 @@
                                                         <td>
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
-                                                                    <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Declaraci%C3%B3n-Jurada-Simple.docx" download>Descargar Declaración Jurada de no tener antecedentes Penales, Judiciales ni policiales (Formato CAEN). [</a>
+                                                                    <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Declaraci%C3%B3n-Jurada-Simple.docx" download>Descargar Declaración Jurada de no tener antecedentes Penales, Judiciales ni policiales (Formato CAEN).</a>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -798,7 +798,7 @@
                                         <div class="container form-group">
                                             <div class="row">
                                                 <div class="col-sm-10">
-                                                    <label>LIsta de solicitudes hechas por usted<span style="color: red">(*)</span></label>
+                                                    <label>Lista de solicitudes hechas por usted<span style="color: red">(*)</span></label>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -809,7 +809,7 @@
                                                               <tr>
                                                                 <th>Programa</th>
                                                                 <th>Financiamiento</th>
-                                                                <th>Ficha de Inscripcion</th>
+                                                                <th>Ficha de Inscripción</th>
                                                               </tr>
                                                             </thead>
                                                             <tbody id="contentSolicitudes">

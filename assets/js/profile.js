@@ -396,7 +396,7 @@ $.ajax({
                 var otdfinan = document.createElement("td");
                 var alink = document.createElement("a");
                 alink.href="/postulante/pdf/"+datos[i].idSolicitud;
-                alink.innerHTML="ficha";
+                alink.innerHTML="Ficha";
                 otdfinan.append(alink);
                 otr.append(otdfinan);
 
