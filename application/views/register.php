@@ -48,6 +48,24 @@
         <input id="password_repeat" type="password" class="form-control" placeholder="Repite la contraseña" required>
         <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
       </div>
+      <div class="form-group has-feedback">
+        <select class="form-control" name="tipo_programa_id" id="slctTipoPrograma" required>
+          <option value="" disabled selected>Elija Un Tipo de programa</option>
+        </select>
+        <span class="glyphicon glyphicon-education form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <select class="form-control" name="programa_id" id="slctPrograma" required>
+          <option value="" disabled selected>No has seleccionado el tipo</option>
+        </select>
+        <span class="glyphicon glyphicon-education form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <select name="tipoFinan" id="tipoFinan" class="form-control">
+            <option value="Contado">Contado</option>
+            <option value="Cuotas">Cuotas</option>
+        </select>
+      </div>
       <div class="form-group">
         <div class="col-xs-8">
           <div class="checkbox icheck">

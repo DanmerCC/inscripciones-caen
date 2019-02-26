@@ -59,6 +59,10 @@ $route['registro/enviar'] = 'Registro/guardar';
 $route['postulante'] = 'Postulante';
 $route['postulante/verificacion'] = 'Postulante/verificacion';
 
+
+$route['public/api/programas'] = 'Programa/allActives';
+$route['public/api/programas/(:num)'] = 'Programa/allActives/$1';
+$route['public/api/tipos'] = 'Programa/getTypes';
 /*Actualizacion de datos de postulante*/
 $route['postulante/guardar/personal'] = 'Postulante/cargaPersonal';
 $route['postulante/guardar/laboral'] = 'Postulante/cargaLaboral';

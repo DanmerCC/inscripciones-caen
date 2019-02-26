@@ -26,8 +26,19 @@ class Registro extends CI_Controller
 	        $apellido_paterno = $this->input->post('apellido_paterno');
 	        $apellido_materno = $this->input->post('apellido_materno');
 	        $password         = $this->input->post('password');
-	        $email            = $this->input->post('email');
+            $email            = $this->input->post('email');
 
+            $programa_id      =$this->input->post('programa_id');
+            $tipoFinan          =$this->input->post('tipoFinan');
+
+            if($this->isNotSetArray([$id_usuario_dni,$email,$programa_id,$tipoFinan])){
+                $data["heading"]="Ah ocurrido un error ";
+                $data["message"]="Su cuenta  $id_usuario_dni no se registro intentelo nuevamente";
+                $data["seconds"]="4";
+                $data["url"]="/postulante";
+                echo $this->load->view('errors/custom/flash_msg',$data,TRUE);
+                die();
+            }
         $ql = $this->db->select('documento')->from('alumno')->where('documento',$id_usuario_dni)->or_where('email',$email)->get();
         if ($ql->num_rows() > 0) {
             $data["heading"]=" YA ESTA REGISTRADO";
@@ -43,7 +54,11 @@ class Registro extends CI_Controller
 			$alumno = $this->Alumno_model->registrar($apellido_paterno, $apellido_materno, $nombre, $id_usuario_dni,$email);
             $this->load->model('User_model');
             
+            //Agrega una solicitud
+            
+
             if($this->User_model->registrar($id_usuario_dni, $email, $password, $alumno)){
+                $this->Alumno_model->nuevaSolicitud($programa_id, $alumno, $tipoFinan);
                 $data["heading"]="Se registro correctamente";
                 $data["message"]="Su cuenta  $id_usuario_dni a sido registrada correctamente";
                 $data["seconds"]="5";
@@ -51,7 +66,7 @@ class Registro extends CI_Controller
                 $this->load->view('errors/custom/flash_msg',$data);
             }else{
                 $data["heading"]="Ah ocurrido un error ";
-                $data["message"]="Su cuenta  $id_usuario_dni no se registro intentelo nuevamente";
+                $data["message"]="Su cuenta no se registro intentelo nuevamente";
                 $data["seconds"]="4";
                 $data["url"]="/postulante";
                 $this->load->view('errors/custom/flash_msg',$data);
@@ -61,5 +76,20 @@ class Registro extends CI_Controller
 
 
     }
+
+    private function isNotSetArray($array,$operator='and'){
+        $result=false;
+        for ($i=0; $i < count($array); $i++) { 
+           if((!isset($array[$i]))||($array[$i]=="")||($array[$i]==NULL)){
+               $result=true;
+               echo var_dump($array[$i]);
+               exit;
+               break;
+           }
+        }
+        return $result;
+    }
+
+    
 
 }
