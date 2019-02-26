@@ -36,9 +36,9 @@
             <td style="width: 7%;"></td>
             <td rowspan="3" style="width: 13%;">
 				<?php if(file_exists('publicfiles/foto/'.$datosAlumno['documento'].'.jpg')): ?>
-                <img src="publicfiles/foto/<?=$datosAlumno['documento']?>.jpg" alt="Logo" style="height: 450pt; width: 400pt; border: 0.25px solid #000;">
+                <img src="publicfiles/foto/<?=$datosAlumno['documento']?>.jpg" alt="Logo" style="height: 450pt; width: 400pt; max-height: 450pt; max-width: 400pt;border: 0.25px solid #000;">
                 <?php elseif(file_exists('publicfiles/foto/'.$datosAlumno['documento'].'.jpeg')): ?>
-                <img src="publicfiles/foto/<?=$datosAlumno['documento']?>.jpeg" alt="Logo" style="height: 450pt; width: 400pt; border: 0.25px solid #000;">
+                <img src="publicfiles/foto/<?=$datosAlumno['documento']?>.jpeg" alt="Logo" style="height: 450pt; width: 400pt; max-height: 450pt; max-width: 400pt;border: 0.25px solid #000;">
                 <?php endif; ?>
              </td>
         </tr>
@@ -460,12 +460,12 @@ relación anteriormente indicada.</li>
     <br>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 26%;font-size: 8pt;" align="left" valign="middle">3.- En caso de Emergencia avisar a:</td>
-            <td style="width: 30%;height: 5pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="middle"><?=$datosAlumno['emergencia_familiar']?></td>
+            <td style="width: 26%;font-size: 8pt;" align="left" valign="bottom">3.- En caso de Emergencia avisar a:</td>
+            <td style="width: 30%;height: 5pt;font-size: 8pt;text-decoration: underline;" align="center" valign="bottom"><?=$datosAlumno['emergencia_familiar']?></td>
             <td style="width: 1%;"></td>
-            <td style="width: 10%;font-size: 8pt;" align="left" valign="middle">Teléfonos:</td>
+            <td style="width: 10%;font-size: 8pt;" align="left" valign="bottom">Teléfonos:</td>
             <td style="width: 1%;"></td>
-            <td style="width: 28%;height: 5pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="middle"><?=$datosAlumno['telefono_familiar']?></td>
+            <td style="width: 28%;height: 5pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="bottom"><?=$datosAlumno['telefono_familiar']?></td>
         </tr>
     </table>
     <table cellspacing="0" style="width: 100%;">
