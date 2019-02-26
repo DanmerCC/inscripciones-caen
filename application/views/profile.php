@@ -478,7 +478,7 @@
                                                         <td>
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
-                                                                    <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Declaraci%C3%B3n-Jurada-Simple.docx" download>Descargar Declaración Jurada de no tener antecedentes Penales, Judiciales ni policiales (Formato CAEN). [</a>
+                                                                    <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Declaraci%C3%B3n-Jurada-Simple.docx" download>Descargar Declaración Jurada de no tener antecedentes Penales, Judiciales ni policiales (Formato CAEN).</a>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -798,7 +798,7 @@
                                         <div class="container form-group">
                                             <div class="row">
                                                 <div class="col-sm-10">
-                                                    <label>LIsta de solicitudes hechas por usted<span style="color: red">(*)</span></label>
+                                                    <label>Lista de solicitudes hechas por usted<span style="color: red">(*)</span></label>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -809,7 +809,7 @@
                                                               <tr>
                                                                 <th>Programa</th>
                                                                 <th>Financiamiento</th>
-                                                                <th>Ficha de Inscripcion</th>
+                                                                <th>Ficha de Inscripción</th>
                                                               </tr>
                                                             </thead>
                                                             <tbody id="contentSolicitudes">

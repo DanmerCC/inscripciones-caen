@@ -202,7 +202,7 @@
             <td style="width: 5%;height:12pt;font-size: 8pt;" align="center" valign="bottom">1</td>
             <td style="width: 50%;height:12pt;font-size: 8pt;border-bottom: 1px solid black"><?=$datosAlumno['experiencia_laboral1']?></td>
             <td style="width: 5%;height:12pt;font-size: 8pt;" align="center" valign="bottom">del</td>
-            <td style="width: 17%;height:12pt;font-size: 8pt;border-bottom: 1px solid black"><?=$datosAlumno['fecha_inicio1']?></td>
+            <td style="width: 17%;height:12pt;font-size: 8pt;border-bottom: 1px solid black" align="center"><?=$datosAlumno['fecha_inicio1']?></td>
             <td style="width: 5%;height:12pt;font-size: 8pt;" align="center" valign="bottom">al</td>
             <td style="width: 18%;height:12pt;font-size: 8pt;border-bottom: 1px solid black" align="center"><?=$datosAlumno['fecha_fin1']?></td>
         </tr>
@@ -210,7 +210,7 @@
             <td style="width: 5%;height:12pt;font-size: 8pt;" align="center" valign="bottom">2</td>
             <td style="width: 50%;height:12pt;font-size: 8pt;border-bottom: 1px solid black"><?=$datosAlumno['experiencia_laboral2']?></td>
             <td style="width: 5%;height:12pt;font-size: 8pt;" align="center" valign="bottom">del</td>
-            <td style="width: 17%;height:12pt;font-size: 8pt;border-bottom: 1px solid black"><?=$datosAlumno['fecha_inicio2']?></td>
+            <td style="width: 17%;height:12pt;font-size: 8pt;border-bottom: 1px solid black" align="center"><?=$datosAlumno['fecha_inicio2']?></td>
             <td style="width: 5%;height:12pt;font-size: 8pt;" align="center" valign="bottom">al</td>
             <td style="width: 18%;height:12pt;font-size: 8pt;border-bottom: 1px solid black" align="center"><?=$datosAlumno['fecha_fin2']?></td>
         </tr>
@@ -221,12 +221,12 @@
             <td style="height: 2pt; width: 100%;"></td>
         </tr>
         <tr>
-            <td style="width: 40%;font-size: 8pt;" align="center" valign="middle">HA SEGUIDO ALGÚN CURSO EN EL CAEN:</td>
+            <td style="width: 40%;font-size: 8pt;line-height: 220%;" align="center" valign="middle">HA SEGUIDO ALGÚN CURSO EN EL CAEN:</td>
             <td style="width: 5%;" align="center" valign="middle" border="1"><?php if($datosAlumno['curso_caen'] == 'SI'): ?>X<?php endif;?></td>
             <td style="width: 5%;"></td>
             <td style="width: 5%;" align="center" valign="middle" border="1"><?php if($datosAlumno['curso_caen'] == 'NO'): ?>X<?php endif;?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 40%;font-size: 8pt;border-bottom: 1px solid black" align="center" valign="middle"><?=$datosAlumno['indicar1']?></td>
+            <td style="width: 40%;font-size: 8pt;border-bottom: 1px solid black;line-height: 220%;" align="center" valign="middle"><?=$datosAlumno['indicar1']?></td>
         </tr>
         <tr>
             <td style="width: 40%;height:12pt;" align="center" valign="middle"></td>
@@ -237,12 +237,12 @@
             <td style="width: 40%;height:12pt;font-size: 8pt;" align="center" valign="middle">INDICACIONES</td>
         </tr>
         <tr>
-            <td style="width: 40%;font-size: 8pt;" align="center" valign="middle">HA CURSADO ESTUDIOS DE MAESTRIA:</td>
+            <td style="width: 40%;font-size: 8pt;line-height: 220%;" align="center" valign="middle">HA CURSADO ESTUDIOS DE MAESTRIA:</td>
             <td style="width: 5%;" align="center" valign="middle" border="1"><?php if($datosAlumno['curso_maestria'] == 'SI'): ?>X<?php endif;?></td>
             <td style="width: 5%;"></td>
             <td style="width: 5%;" align="center" valign="middle" border="1"><?php if($datosAlumno['curso_maestria'] == 'NO'): ?>X<?php endif;?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 40%;font-size: 8pt;border-bottom: 1px solid black" align="center" valign="middle"><?=$datosAlumno['indicar2']?></td>
+            <td style="width: 40%;font-size: 8pt;border-bottom: 1px solid black;line-height: 220%;" align="center" valign="middle"><?=$datosAlumno['indicar2']?></td>
         </tr>
         <tr>
             <td style="width: 40%;height:12pt;" align="center" valign="middle"></td>
@@ -268,40 +268,40 @@
             <td style="width: 10%;font-size: 8pt;text-align: center;" align="center" valign="middle">Año</td>
         </tr>
         <tr>
-            <td style="width: 5%;font-size: 8pt;" align="center" valign="middle">1</td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;" align="center" valign="middle">Título Universitario en:</td>
-            <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['titulo_obtenido']?></td>
+            <td style="width: 5%;font-size: 8pt; line-height: 170%;" align="center" valign="middle">1</td>
+            <td style="width: 20%;height:12pt;font-size: 8pt;line-height: 170%;" align="center" valign="middle">Título Universitario en:</td>
+            <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['titulo_obtenido']?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['universidad_titulo']?></td>
+            <td style="width: 20%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['universidad_titulo']?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['fecha_titulo']?></td>
+            <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['fecha_titulo']?></td>
         </tr>
         <tr>
-            <td style="width: 5%;font-size: 8pt;" align="center" valign="middle">2</td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;" align="center" valign="middle">Grado Académico de:</td>
-            <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['grado_obtenido']?></td>
+            <td style="width: 5%;font-size: 8pt;line-height: 170%;" align="center" valign="middle">2</td>
+            <td style="width: 20%;height:12pt;font-size: 8pt;line-height: 170%;" align="center" valign="middle">Grado Académico de:</td>
+            <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['grado_obtenido']?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['universidad_grado']?></td>
+            <td style="width: 20%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['universidad_grado']?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['fecha_grado']?></td>
+            <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['fecha_grado']?></td>
         </tr>
         <tr>
-            <td style="width: 5%;font-size: 8pt;" align="center" valign="middle">3</td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;" align="center" valign="middle">Maestrías / Doctorado en:</td>
-            <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['maestria_obtenida']?></td>
+            <td style="width: 5%;font-size: 8pt;line-height: 170%;" align="center" valign="middle">3</td>
+            <td style="width: 20%;height:12pt;font-size: 8pt;line-height: 170%;" align="center" valign="middle">Maestrías / Doctorado en:</td>
+            <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['maestria_obtenida']?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['universidad_maestria']?></td>
+            <td style="width: 20%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['universidad_maestria']?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['fecha_maestria']?></td>
+            <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['fecha_maestria']?></td>
         </tr>
         <tr>
-            <td style="width: 5%;font-size: 8pt;" align="center" valign="middle">4</td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;" align="center" valign="middle">Maestrías / Doctorado en:</td>
-            <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['doctorado_obtenido']?></td>
+            <td style="width: 5%;font-size: 8pt;line-height: 180%;" align="center" valign="middle">4</td>
+            <td style="width: 20%;height:12pt;font-size: 8pt;line-height: 180%;" align="center" valign="middle">Maestrías / Doctorado en:</td>
+            <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 180%;" align="center" valign="middle"><?=$datosAlumno['doctorado_obtenido']?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['universidad_doctor']?></td>
+            <td style="width: 20%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 180%;" align="center" valign="middle"><?=$datosAlumno['universidad_doctor']?></td>
             <td style="width: 5%;"></td>
-            <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['fecha_doctor']?></td>
+            <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 180%;" align="center" valign="middle"><?=$datosAlumno['fecha_doctor']?></td>
         </tr>
     </table>
     <br>
@@ -407,13 +407,13 @@ relación anteriormente indicada.</li>
         <tr>
             <td style="width: 70%;font-size: 8pt;" align="center" valign="middle"></td>
             <td style="width: 2%;"></td>
-            <td style="width: 5%;height: 5pt;font-size: 8pt;" align="center" valign="middle">SI</td>
+            <td style="width: 5%;height: 5pt;font-size: 8pt;line-height: 200%;" align="center" valign="middle">SI</td>
             <td style="width: 1%;"></td>
-            <td style="width: 5%;height: 5pt;font-size: 8pt;" align="center" valign="middle">NO</td>
+            <td style="width: 5%;height: 5pt;font-size: 8pt;line-height: 200%;" align="center" valign="middle">NO</td>
             <td style="width: 17%;"></td>
         </tr>
         <tr>
-            <td style="width: 70%;font-size: 8pt;" align="left" valign="middle">1.-¿Sufre de alguna enfermedad crónica que pueda derivar en situación de emergencia médica?</td>
+            <td style="width: 70%;font-size: 8pt;line-height: 200%;" align="left" valign="middle">1.-¿Sufre de alguna enfermedad crónica que pueda derivar en situación de emergencia médica?</td>
             <td style="width: 2%;"></td>
             <td style="width: 5%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($datosAlumno['sufre_enfermedad'] == 'Si'): ?>X<?php endif;?></td>
             <td style="width: 1%;"></td>
@@ -427,7 +427,7 @@ relación anteriormente indicada.</li>
      ?>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 5%;font-size: 8pt;" align="right" valign="middle">Asma</td>
+            <td style="width: 5%;font-size: 8pt; line-height: 250%;" align="right" valign="middle">Asma</td>
             <td style="width: 1%;"></td>
             <td style="width: 5%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($enfermedades['Asma'] == 'SI'): ?>X<?php endif;?></td>
             <td style="width: 1%;"></td>
@@ -435,43 +435,43 @@ relación anteriormente indicada.</li>
             <td style="width: 1%;"></td>
             <td style="width: 5%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($enfermedades['Arterial'] == 'SI'): ?>X<?php endif;?></td>
             <td style="width: 1%;"></td>
-            <td style="width: 8%;font-size: 8pt;" align="right" valign="middle">Diabetes</td>
+            <td style="width: 8%;font-size: 8pt; line-height: 250%;" align="right" valign="middle">Diabetes</td>
             <td style="width: 1%;"></td>
             <td style="width: 5%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($enfermedades['Diabetes'] == 'SI'): ?>X<?php endif;?></td>
             <td style="width: 1%;"></td>
-            <td style="width: 6%;font-size: 8pt;" align="right" valign="middle">Cáncer</td>
+            <td style="width: 6%;font-size: 8pt; line-height: 250%;" align="right" valign="middle">Cáncer</td>
             <td style="width: 1%;"></td>
             <td style="width: 5%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($enfermedades['Cancer'] == 'SI'): ?>X<?php endif;?></td>
             <td style="width: 1%;"></td>
-            <td style="width: 6%;font-size: 8pt;" align="right" valign="middle">Otras:</td>
-            <td style="width: 37%;height: 12pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="bottom">Uso lentes</td>
+            <td style="width: 6%;font-size: 8pt; line-height: 250%;" align="right" valign="middle">Otras:</td>
+            <td style="width: 37%;height: 12pt;font-size: 8pt;border-bottom: 1px dashed black; line-height: 250%;" align="center" valign="bottom"><?php echo $enfermedades['otros']; ?></td>
         </tr>
     </table>
     <br>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 24%;font-size: 8pt;" align="left" valign="middle">2.- ¿Dispone de Seguro Medico?</td>
+            <td style="width: 24%;font-size: 8pt; line-height: 200%;" align="left" valign="middle">2.- ¿Dispone de Seguro Médico?</td>
             <td style="width: 5%;height: 12pt;font-size: 12pt;" align="center" valign="middle" border="1"><?php if($datosAlumno['seguro_medico'] == 'SI'): ?>X<?php endif;?></td>
             <td style="width: 2%;"></td>
-            <td style="width: 30%;font-size: 8pt;" align="right" valign="middle">Indicar Compañía/Consignar Teléfono:</td>
-            <td style="width: 39%;height: 12pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="middle"><?=$datosAlumno['nombre_seguro']?>/<?=$datosAlumno['telefono_seguro']?></td>
+            <td style="width: 30%;font-size: 8pt; line-height: 200%;" align="right" valign="middle">Indicar Compañía/Consignar Teléfono:</td>
+            <td style="width: 39%;height: 12pt;font-size: 8pt;border-bottom: 1px dashed black; line-height: 200%;" align="center" valign="middle"><?=$datosAlumno['nombre_seguro']?>/<?=$datosAlumno['telefono_seguro']?></td>
         </tr>
     </table>
     <br>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 26%;font-size: 8pt;" align="left" valign="bottom">3.- En caso de Emergencia avisar a:</td>
-            <td style="width: 30%;height: 5pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="bottom"><?=$datosAlumno['emergencia_familiar']?></td>
+            <td style="width: 26%;font-size: 8pt; line-height: 200%;" align="left" valign="bottom">3.- En caso de Emergencia avisar a:</td>
+            <td style="width: 30%; font-size: 8pt;border-bottom: 1px dashed black; line-height: 200%;" align="center"><?=$datosAlumno['emergencia_familiar']?></td>
             <td style="width: 1%;"></td>
-            <td style="width: 10%;font-size: 8pt;" align="left" valign="bottom">Teléfonos:</td>
+            <td style="width: 10%;font-size: 8pt; line-height: 200%;" align="left" valign="bottom">Teléfonos:</td>
             <td style="width: 1%;"></td>
-            <td style="width: 28%;height: 5pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="bottom"><?=$datosAlumno['telefono_familiar']?></td>
+            <td style="width: 28%; font-size: 8pt;border-bottom: 1px dashed black; line-height: 200%;" align="center"><?=$datosAlumno['telefono_familiar']?></td>
         </tr>
     </table>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 10%;font-size: 8pt;" align="left" valign="middle">Parentezco:</td>
-            <td style="width: 90%;height: 5pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="middle"><?=$datosAlumno['parentesco']?></td>
+            <td style="width: 10%;font-size: 8pt; line-height: 135%;" align="left" valign="middle">Parentezco:</td>
+            <td style="width: 90%;height: 12pt;font-size: 8pt;border-bottom: 1px dashed black; line-height: 150%;" align="center" valign="middle"><?=$datosAlumno['parentesco']?></td>
         </tr>
     </table>
     <br>
@@ -488,7 +488,7 @@ relación anteriormente indicada.</li>
             <td style="width: 25%;" valign="middle" align="center" border="1">FIRMA DEL PARTICIPANTE</td>
             <td style="width: 25%;" valign="middle" align="center" border="1">DIRECCIÓN ACADÉMICA</td>
             <td style="width: 25%;" valign="middle" align="center" border="1">SECRETARIO DE ADMISIÓN</td>
-            <td style="width: 25%;" valign="middle" align="center" border="1">DIRECTOR GENERAL DEL CAENEPG</td>
+            <td style="width: 25%;" valign="middle" align="center" border="1">DIRECTOR GENERAL DEL CAEN-EPG</td>
         </tr>
     </table>
     <br>
