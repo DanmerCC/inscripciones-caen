@@ -21,3 +21,4 @@ application/config/config.php
 files
 files/*.*
 publicFiles/foto/*.*
+error_log
