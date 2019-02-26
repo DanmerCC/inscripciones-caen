@@ -461,7 +461,7 @@ relación anteriormente indicada.</li>
     <table cellspacing="0" style="width: 100%;">
         <tr>
             <td style="width: 26%;font-size: 8pt;" align="left" valign="bottom">3.- En caso de Emergencia avisar a:</td>
-            <td style="width: 30%;height: 5pt;font-size: 8pt;text-decoration: underline;" align="center" valign="bottom"><?=$datosAlumno['emergencia_familiar']?></td>
+            <td style="width: 30%;height: 5pt;font-size: 8pt;border-bottom: 1px dashed black" align="center" valign="bottom"><?=$datosAlumno['emergencia_familiar']?></td>
             <td style="width: 1%;"></td>
             <td style="width: 10%;font-size: 8pt;" align="left" valign="bottom">Teléfonos:</td>
             <td style="width: 1%;"></td>
