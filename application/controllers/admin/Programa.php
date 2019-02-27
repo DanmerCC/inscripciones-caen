@@ -133,7 +133,7 @@ class Programa extends CI_Controller
 
     public function desactivar(){
     	$id_curso=$this->input->post('id_curso');
-    	if ($this->Programa_model->activar($id_curso)=='1') {
+    	if ($this->Programa_model->desactivar($id_curso)=='1') {
     		echo "Correcto";
     	}else{
     		echo "Ocurrio un error";
