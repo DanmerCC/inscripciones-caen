@@ -48,6 +48,7 @@
           </div>
             <table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
               <thead>
+                <th>N°</th>
                 <th>Opciones</th>
                 <th>nombres</th>
                 <th>apellido_paterno</th>
@@ -61,6 +62,7 @@
                 <th>Estado</th>
               </thead>
               <tfoot>
+                <th>N°</th>
                 <th>Opciones</th>
                 <th>nombres</th>
                 <th>apellido_paterno</th>

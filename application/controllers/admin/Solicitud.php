@@ -63,26 +63,27 @@ class Solicitud extends CI_Controller
 	}
 
         public function dataTable(){
-        $rspta = $this->mihelper->resultToArray($this->Solicitud_model->getAll());
+        $rspta = $this->mihelper->resultToArray($this->Solicitud_model->getAllOrderByIdSolicitud());
         //vamos a declarar un array
         $data = Array();
         //echo var_dump($rspta);
         header("Content-type: application/json");
         for ($i=0;$i<count($rspta);$i++) {
                 $data[$i] = array(
-                "0" => '<a href="'.base_url()."postulante/pdf/".$rspta[$i]["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a>'.(($rspta[$i]["estado"]=='0')?' <button class="btn btn-alert"   title="click para marcar como verificado" onclick="marcar('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-square-o" aria-hidden="true"></i></button>':
+                "0" => ($i+1),
+                "1" => '<a href="'.base_url()."postulante/pdf/".$rspta[$i]["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a>'.(($rspta[$i]["estado"]=='0')?' <button class="btn btn-alert"   title="click para marcar como verificado" onclick="marcar('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-square-o" aria-hidden="true"></i></button>':
                 ' <button class="btn btn-primary" onclick="quitarmarca('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>'),
-                "1" => $rspta[$i]["nombres"],
-                "2" => $rspta[$i]["apellido_paterno"],
-                "3" => $rspta[$i]["apellido_materno"],
-                "4" => $rspta[$i]["tipo_financiamiento"],
-                "5" => $rspta[$i]["documento"],
-                "6" => $rspta[$i]["curso_numeracion"]."".$rspta[$i]["nombretipoCurso"]." ".$rspta[$i]["curso_nombre"],
-                "7" => (($rspta[$i]["marcaPago"]=='0')?' <button class="btn btn-alert"   title="click para marcar como verificado" onclick="marcarPago('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-thumb-tack" aria-hidden="true"></i></button>':
+                "2" => $rspta[$i]["nombres"],
+                "3" => $rspta[$i]["apellido_paterno"],
+                "4" => $rspta[$i]["apellido_materno"],
+                "5" => $rspta[$i]["tipo_financiamiento"],
+                "6" => $rspta[$i]["documento"],
+                "7" => $rspta[$i]["curso_numeracion"]."".$rspta[$i]["nombretipoCurso"]." ".$rspta[$i]["curso_nombre"],
+                "8" => (($rspta[$i]["marcaPago"]=='0')?' <button class="btn btn-alert"   title="click para marcar como verificado" onclick="marcarPago('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-thumb-tack" aria-hidden="true"></i></button>':
                 ' <button class="btn btn-warning" onclick="quitarmarcaPago('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-thumb-tack" aria-hidden="true"></i></button>'),
-                "8" => '<textarea class="form-control" onclick="editComent('.$rspta[$i]["idSolicitud"].');" readonly="readonly">'.$rspta[$i]["comentario"].'</textarea>',
-                "9" => $rspta[$i]["fecha_registro"],
-                "10" => ($rspta[$i]["estado"]=='0')?'<span class="label bg-red">Sin atender</span>':'<span class="label bg-green">Atendido</span>'
+                "9" => '<textarea class="form-control" onclick="editComent('.$rspta[$i]["idSolicitud"].');" readonly="readonly">'.$rspta[$i]["comentario"].'</textarea>',
+                "10" => $rspta[$i]["fecha_registro"],
+                "11" => ($rspta[$i]["estado"]=='0')?'<span class="label bg-red">Sin atender</span>':'<span class="label bg-green">Atendido</span>'
             );
          }        
         $results = array(

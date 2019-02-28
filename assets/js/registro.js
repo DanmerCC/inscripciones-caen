@@ -57,7 +57,7 @@ function onChangeType(){
 			success: function (response) {
 				$("#slctPrograma").html("<option value='' selected>Selecione un programa</option>");
 				for (var ii = 0; ii < response.length; ii++) {
-					$("#slctPrograma").append(option(response[ii].id_curso,response[ii].nombre));
+					$("#slctPrograma").append(option(response[ii].id_curso,response[ii].numeracion+" "+response[ii].nombre));
 				}
 			}
 		});
