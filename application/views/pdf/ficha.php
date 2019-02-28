@@ -38,7 +38,7 @@
     <hr>
     <table cellspacing="0" style="width: 100%;">
 		<tr>
-            <td style="width: 80%; height: 35pt; line-height: 350%;">A): <u>DATOS PERSONALES</u></td>
+            <td style="width: 80%; height: 35pt;line-height: 280%;">A): <u>DATOS PERSONALES</u></td>
             <td style="width: 7%;"></td>
             <td rowspan="3" style="width: 13%;">
 				<?php if(file_exists('publicfiles/foto/'.$datosAlumno['documento'].'.jpg')): ?>
@@ -259,7 +259,7 @@
     <hr>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="height: 22pt; line-height: 195%;">C): <u>DATOS ACADÉMICOS</u></td>
+            <td style="height: 22pt; line-height: 190%;">C): <u>DATOS ACADÉMICOS</u></td>
         </tr>
         <tr>
             <td style="width: 2%"></td>
