@@ -91,7 +91,7 @@
         Google+</a>
     </div> -->
 
-    <a href="login" class="text-center">Ya tengo una cuenta</a>
+    <a href="http://caen.edu.pe/publicfiles/GUIA.pdf" class="text-center">Guia del participante</a>
   </div>
   <!-- /.form-box -->
 </div>
