@@ -163,7 +163,6 @@ function activarPrograma(valor){
         if (result) {
             $.post('/administracion/programa/activar', {id_curso: valor}, function (e) {
                 bootbox.alert(e);
-                tabla.ajax.reload();
                 console.log(e);
                 console.log(result);
                 tabla2.ajax.reload();
@@ -178,7 +177,6 @@ function desactivarPrograma(valor){
         if (result) {
             $.post('/administracion/programa/desactivar', {id_curso: valor}, function (e) {
                 bootbox.alert(e);
-                tabla.ajax.reload();
                 console.log(e);
                 console.log(result);
                 tabla2.ajax.reload();

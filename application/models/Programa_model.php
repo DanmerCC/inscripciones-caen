@@ -14,9 +14,20 @@ class Programa_model extends CI_Model
 		return $this->db->query('SELECT c.id_curso,c.nombre,c.duracion,c.costo_total,c.vacantes,c.fecha_inicio,c.fecha_final,c.idTipo_curso,c.estado,c.numeracion,t.nombre as tipoNombre FROM curso c left join tipo_curso t on c.idTipo_curso = t.idTipo_curso');
 	}
 
-    public function allActives(){
+  public function allActives(){
 		return $this->db->query('SELECT c.id_curso,c.nombre,c.duracion,c.costo_total,c.vacantes,c.fecha_inicio,c.fecha_final,c.idTipo_curso,c.estado,c.numeracion,t.nombre as tipoNombre FROM curso c left join tipo_curso t on c.idTipo_curso = t.idTipo_curso where c.estado=1');
 	}
+
+	public function allActivesByType($idType){
+		$this->db->select('c.id_curso,c.nombre,c.duracion,c.costo_total,c.vacantes,c.fecha_inicio,c.fecha_final,c.idTipo_curso,c.estado,c.numeracion,t.nombre as tipoNombre');
+		$this->db->from('curso c');
+		$this->db->join('tipo_curso t', 'c.idTipo_curso = t.idTipo_curso');
+		$this->db->where('c.estado',1);
+		$conditions = array('c.estado' => 1, 'c.idTipo_curso' => $idType);
+		$this->db->where($conditions);
+		return $this->db->get();
+	}
+
 	public function getAllTipos(){
 		return $this->db->select()->from('tipo_curso')->get();
 	}
