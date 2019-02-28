@@ -23,9 +23,15 @@
     </table>
     <table cellpadding="11">
         <tr>
-            <td align="center" style="height: 75pt; font-size: 14pt;">
-                <b>SOLICITUD DE INSCRIPCIÓN al</b><br><br>
-                <b>__<?=$datosAlumno['number_programa']."_".$datosAlumno['name_programa'];?>__</b>
+            <td align="center" style="height: 60pt; font-size: 14pt; line-height: 150%;">
+                <b>SOLICITUD DE INSCRIPCIÓN al</b><br>
+                <?php
+                $medirTitulo = "El Leicester City Football Club, conocido también por su apodo The Foxes";
+                    if(strlen($medirTitulo)>=74): ?>
+                        <b style="font-size: 10pt;">__<?=$datosAlumno['number_programa']."_".$datosAlumno['name_programa'];?>__</b>
+                    <?php else: ?>
+                        <b>__<?=$datosAlumno['number_programa']."_".$datosAlumno['name_programa'];?>__</b>
+                <?php endif; ?>
             </td>
         </tr>
     </table>   
@@ -141,7 +147,7 @@
     
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="height: 30pt; line-height: 300%;">B): <u>DATOS LABORALES</u></td>
+            <td style="height: 22pt; line-height: 195%;">B): <u>DATOS LABORALES</u></td>
         </tr>
         <tr>
             <td style="width: 20%;font-size: 8pt; " align="right" valign="middle">LUGAR DE TRABAJO:</td>
@@ -215,11 +221,8 @@
             <td style="width: 18%;height:12pt;font-size: 8pt;border-bottom: 1px solid black" align="center"><?=$datosAlumno['fecha_fin2']?></td>
         </tr>
     </table>
-    <br>
+    <br><br>   
     <table cellspacing="0" style="width: 100%;">
-        <tr>
-            <td style="height: 2pt; width: 100%;"></td>
-        </tr>
         <tr>
             <td style="width: 40%;font-size: 8pt;line-height: 220%;" align="center" valign="middle">HA SEGUIDO ALGÚN CURSO EN EL CAEN:</td>
             <td style="width: 5%;" align="center" valign="middle" border="1"><?php if($datosAlumno['curso_caen'] == 'SI'): ?>X<?php endif;?></td>
@@ -256,55 +259,107 @@
     <hr>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="height: 30pt; line-height: 300%;">C): <u>DATOS ACADÉMICOS</u></td>
+            <td style="height: 22pt; line-height: 195%;">C): <u>DATOS ACADÉMICOS</u></td>
         </tr>
         <tr>
-            <td style="width: 5%"></td>
+            <td style="width: 2%"></td>
             <td style="width: 20%"></td>
             <td style="width: 35%"></td>
-            <td style="width: 5%;"></td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;text-align: center;" align="center" valign="middle">Universidad</td>
-            <td style="width: 5%;"></td>
+            <td style="width: 2%;"></td>
+            <td style="width: 29%;font-size: 8pt;text-align: center;" align="center" valign="middle">Universidad</td>
+            <td style="width: 2%;"></td>
             <td style="width: 10%;font-size: 8pt;text-align: center;" align="center" valign="middle">Año</td>
         </tr>
         <tr>
-            <td style="width: 5%;font-size: 8pt; line-height: 170%;" align="center" valign="middle">1</td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;line-height: 170%;" align="center" valign="middle">Título Universitario en:</td>
-            <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['titulo_obtenido']?></td>
-            <td style="width: 5%;"></td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['universidad_titulo']?></td>
-            <td style="width: 5%;"></td>
-            <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['fecha_titulo']?></td>
+            <?php
+                $uniTit = $datosAlumno['universidad_titulo'];
+                if(strlen($uniTit)>=34):?>
+                    <td style="width: 2%;font-size: 8pt;line-height: 250%;" align="center" valign="middle">1</td>
+                    <td style="width: 20%;font-size: 8pt;line-height: 250%;" align="center" valign="middle">Título Universitario en:</td>
+                    <td style="width: 35%;font-size: 8pt;border-bottom: 1px solid black;line-height: 250%;" align="center" valign="middle"><?=$datosAlumno['titulo_obtenido']?></td>
+                    <td style="width: 2%;"></td>
+                    <td style="width: 29%;font-size: 8pt;border-bottom: 1px solid black;" align="center" valign="middle"><?=$datosAlumno['universidad_titulo']?></td>
+                    <td style="width: 2%;"></td>
+                    <td style="width: 10%;font-size: 8pt;border-bottom: 1px solid black;line-height: 250%;" align="center" valign="middle"><?=$datosAlumno['fecha_titulo']?></td>
+                <?php else: ?>
+                    <td style="width: 2%;font-size: 8pt; line-height: 170%;" align="center" valign="middle">1</td>
+                    <td style="width: 20%;font-size: 8pt;line-height: 170%;" align="center" valign="middle">Título Universitario en:</td>
+                    <td style="width: 35%;font-size: 8pt;border-bottom: 1px solid black;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['titulo_obtenido']?></td>
+                    <td style="width: 2%;"></td>
+                    <td style="width: 29%;font-size: 8pt;border-bottom: 1px solid black;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['universidad_titulo']?></td>
+                    <td style="width: 2%;"></td>
+                    <td style="width: 10%;font-size: 8pt;border-bottom: 1px solid black;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['fecha_titulo']?></td>
+                <?php endif;
+            ?>            
         </tr>
         <tr>
-            <td style="width: 5%;font-size: 8pt;line-height: 170%;" align="center" valign="middle">2</td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;line-height: 170%;" align="center" valign="middle">Grado Académico de:</td>
-            <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['grado_obtenido']?></td>
-            <td style="width: 5%;"></td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['universidad_grado']?></td>
-            <td style="width: 5%;"></td>
-            <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['fecha_grado']?></td>
+            <?php
+                $uniGra = $datosAlumno['universidad_grado'];
+                if(strlen($uniGra)>=34):?>
+                    <td style="width: 2%;font-size: 8pt;line-height: 250%;" align="center" valign="middle">2</td>
+                    <td style="width: 20%;font-size: 8pt;line-height: 250%;" align="center" valign="middle">Grado Académico de:</td>
+                    <td style="width: 35%;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 250%;" align="center" valign="middle"><?=$datosAlumno['grado_obtenido']?></td>
+                    <td style="width: 2%;"></td>
+                    <td style="width: 29%;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['universidad_grado']?></td>
+                    <td style="width: 2%;"></td>
+                    <td style="width: 10%;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 250%;" align="center" valign="middle"><?=$datosAlumno['fecha_grado']?></td>
+                <?php else: ?>
+                    <td style="width: 2%;font-size: 8pt;line-height: 180%;" align="center" valign="middle">2</td>
+                    <td style="width: 20%;font-size: 8pt;line-height: 180%;" align="center" valign="middle">Grado Académico de:</td>
+                    <td style="width: 35%;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 180%;" align="center" valign="middle"><?=$datosAlumno['grado_obtenido']?></td>
+                    <td style="width: 2%;"></td>
+                    <td style="width: 29%;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 180%;" align="center" valign="middle"><?=$datosAlumno['universidad_grado']?></td>
+                    <td style="width: 2%;"></td>
+                    <td style="width: 10%;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 180%;" align="center" valign="middle"><?=$datosAlumno['fecha_grado']?></td>
+                <?php endif;
+            ?>            
         </tr>
         <tr>
-            <td style="width: 5%;font-size: 8pt;line-height: 170%;" align="center" valign="middle">3</td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;line-height: 170%;" align="center" valign="middle">Maestrías / Doctorado en:</td>
-            <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['maestria_obtenida']?></td>
-            <td style="width: 5%;"></td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['universidad_maestria']?></td>
-            <td style="width: 5%;"></td>
-            <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 170%;" align="center" valign="middle"><?=$datosAlumno['fecha_maestria']?></td>
+            <?php
+                $uniMae = $datosAlumno['universidad_maestria'];
+                if(strlen($uniMae)>=34):?>
+                    <td style="width: 2%;font-size: 8pt;line-height: 250%;" align="center" valign="middle">3</td>
+                    <td style="width: 20%;height:12pt;font-size: 8pt;line-height: 250%;" align="center" valign="middle">Maestrías / Doctorado en:</td>
+                    <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 250%;" align="center" valign="middle"><?=$datosAlumno['maestria_obtenida']?></td>
+                    <td style="width: 2%;"></td>
+                    <td style="width: 29%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['universidad_maestria']?></td>
+                    <td style="width: 2%;"></td>
+                    <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 250%;" align="center" valign="middle"><?=$datosAlumno['fecha_maestria']?></td>
+                <?php else: ?>
+                    <td style="width: 2%;font-size: 8pt;line-height: 180%;" align="center" valign="middle">3</td>
+                    <td style="width: 20%;height:12pt;font-size: 8pt;line-height: 180%;" align="center" valign="middle">Maestrías / Doctorado en:</td>
+                    <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 180%;" align="center" valign="middle"><?=$datosAlumno['maestria_obtenida']?></td>
+                    <td style="width: 2%;"></td>
+                    <td style="width: 29%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 180%;" align="center" valign="middle"><?=$datosAlumno['universidad_maestria']?></td>
+                    <td style="width: 2%;"></td>
+                    <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 180%;" align="center" valign="middle"><?=$datosAlumno['fecha_maestria']?></td>
+                <?php endif;
+            ?>            
         </tr>
         <tr>
-            <td style="width: 5%;font-size: 8pt;line-height: 180%;" align="center" valign="middle">4</td>
+            <?php
+                $uniDoc = $datosAlumno['universidad_doctor'];
+                if(strlen($uniDoc)>=34):?>
+                    <td style="width: 2%;font-size: 8pt;line-height: 250%;" align="center" valign="middle">4</td>
+            <td style="width: 20%;height:12pt;font-size: 8pt;line-height: 250%;" align="center" valign="middle">Maestrías / Doctorado en:</td>
+            <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 250%;" align="center" valign="middle"><?=$datosAlumno['doctorado_obtenido']?></td>
+            <td style="width: 2%;"></td>
+            <td style="width: 29%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;" align="center" valign="middle"><?=$datosAlumno['universidad_doctor']?></td>
+            <td style="width: 2%;"></td>
+            <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 250%;" align="center" valign="middle"><?=$datosAlumno['fecha_doctor']?></td>
+                <?php else: ?>
+                    <td style="width: 2%;font-size: 8pt;line-height: 180%;" align="center" valign="middle">4</td>
             <td style="width: 20%;height:12pt;font-size: 8pt;line-height: 180%;" align="center" valign="middle">Maestrías / Doctorado en:</td>
             <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 180%;" align="center" valign="middle"><?=$datosAlumno['doctorado_obtenido']?></td>
-            <td style="width: 5%;"></td>
-            <td style="width: 20%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 180%;" align="center" valign="middle"><?=$datosAlumno['universidad_doctor']?></td>
-            <td style="width: 5%;"></td>
+            <td style="width: 2%;"></td>
+            <td style="width: 29%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 180%;" align="center" valign="middle"><?=$datosAlumno['universidad_doctor']?></td>
+            <td style="width: 2%;"></td>
             <td style="width: 10%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 180%;" align="center" valign="middle"><?=$datosAlumno['fecha_doctor']?></td>
+                <?php endif;
+            ?>            
         </tr>
     </table>
-    <br>
+    <br><br>
     <table cellspacing="0" style="width: 100%;" >
         <tr>
             <td style="width: 50%; height: 60pt;" rowspan="2" valign="middle" align="center">
@@ -322,11 +377,11 @@
         </tr>
         <tr>
             <td style="width: 10%;font-size: 8pt;" align="center" valign="middle" border="1"></td>
-            <td style="width: 90%;height:12pt;font-size: 8pt;" align="left" valign="middle" border="1">2.- Declaración Jurada de poseer Antecedentes Penales, Judiciales ni Policiales (Formato CAEN).</td>
+            <td style="width: 90%;height:12pt;font-size: 8pt;" align="left" valign="middle" border="1">2.- Declaración Jurada de no poseer Antecedentes Penales, Judiciales ni Policiales (Formato CAEN).</td>
         </tr>
         <tr>
             <td style="width: 10%;font-size: 8pt;" align="center" valign="middle" border="1"></td>
-            <td style="width: 90%;height:12pt;font-size: 8pt;" align="left" valign="middle" border="1">3.- Copia del Título Profesional legalizado por notario o fedateado.</td>
+            <td style="width: 90%;height:12pt;font-size: 8pt;" align="left" valign="middle" border="1">3.- Copia del Título Profesional legalizado por notario o fedateado, o Grado Académico de Bachiller</td>
         </tr>
         <tr>
             <td style="width: 10%;font-size: 8pt;" align="center" valign="middle" border="1"></td>
@@ -402,14 +457,14 @@ relación anteriormente indicada.</li>
     <hr>
     <table cellspacing="0" style="width: 100%;">
         <tr>
-            <td style="width: 100%; height: 25pt; line-height: 250%;">G): <u>DATOS DE SALUD</u></td>
+            <td style="width: 100%;line-height: 195%;">G): <u>DATOS DE SALUD</u></td>
         </tr>
         <tr>
             <td style="width: 70%;font-size: 8pt;" align="center" valign="middle"></td>
             <td style="width: 2%;"></td>
-            <td style="width: 5%;height: 5pt;font-size: 8pt;line-height: 200%;" align="center" valign="middle">SI</td>
+            <td style="width: 5%;font-size: 8pt;line-height: 200%;" align="center" valign="middle">SI</td>
             <td style="width: 1%;"></td>
-            <td style="width: 5%;height: 5pt;font-size: 8pt;line-height: 200%;" align="center" valign="middle">NO</td>
+            <td style="width: 5%;font-size: 8pt;line-height: 200%;" align="center" valign="middle">NO</td>
             <td style="width: 17%;"></td>
         </tr>
         <tr>

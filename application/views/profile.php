@@ -108,7 +108,7 @@
 
                                             <div class="col-sm-2">
                                                 <label>Estado Civil<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="estado_civil" name ="estado_civil" value="" required>
+                                                <input type="text" class="form-control" id="estado_civil" name ="estado_civil" style="text-transform: capitalize;" required>
                                             </div>
                                             <div class="col-sm-2">
                                                 <label>Nacionalidad<span style="color: red">(*)</span></label>
@@ -144,9 +144,9 @@
                                                 <input type="text" class="form-control" id="cip_militar" name="cip_militar" readonly="readonly">
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Situacion Militar<span style="color: red">(*)</span></label>
+                                                <label>Situación Militar<span style="color: red">(*)</span></label>
                                                 <select class="form-control" name="situacion_militar" id="situacion_militar" disabled="disabled">
-                                                    <option disabled selected value>elija una opcion</option>
+                                                    <option disabled selected value>Elija una opción</option>
                                                     <option value="ACTIVO">ACTIVO</option>
                                                     <option value="RETIRO">RETIRO</option>
                                                 </select>
@@ -156,7 +156,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <label>Telefono de Casa</label>
+                                                <label>Teléfono de Casa</label>
                                                 <input type="text" class="form-control" id="telefono_casa" name="telefono_casa" value="">
                                             </div>
                                             <div class="col-sm-4">
@@ -178,11 +178,11 @@
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Provincia<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="provincia" name="provincia" value="" required="">
+                                                <input type="text" class="form-control" id="provincia" name="provincia" style="text-transform: capitalize;" required="">
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Departamento<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="departamento" name="departamento" value="" required="">
+                                                <input type="text" class="form-control" id="departamento" name="departamento" style="text-transform: capitalize;" required="">
                                             </div>
                                         </div>
                                     </div>
@@ -190,7 +190,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label>Dirección Domiciliaria (Av / Calle / Jirón)<span style="color: red">(*)</span></label>
+                                                <label>Dirección Domiciliaria (Av. / Calle / Jirón)<span style="color: red">(*)</span></label>
                                                 <input type="text" class="form-control" id="direccion" name="direccion" value="" required="">
                                             </div>
 
@@ -201,7 +201,7 @@
 
                                             <div class="col-sm-4">
                                                 <label>Distrito<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="distrito" name ="distrito" required="">
+                                                <input type="text" class="form-control" id="distrito" name ="distrito" style="text-transform: capitalize;" required="">
                                             </div>
                                         </div>
                                     </div>
@@ -231,11 +231,11 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <label>Lugar de Trabajo/Institutción<span style="color: red">(*)</span></label>
+                                                <label>Lugar de Trabajo/Institución<span style="color: red">(*)</span></label>
                                                 <input type="text" class="form-control" id="lugar_trabajo" name="lugar_trabajo" value="">
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Area/Dirección/Oficina/Dpto<span style="color: red">(*)</span></label>
+                                                <label>Área/Dirección/Oficina/Dpto<span style="color: red">(*)</span></label>
                                                 <input type="text" class="form-control" id="area_direccion" name="area_direccion" value="">
                                             </div>
                                             <div class="col-sm-4">
@@ -267,7 +267,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <label>Telefono<span style="color: red">(*)</span></label>
+                                                <label>Teléfono<span style="color: red">(*)</span></label>
                                                 <input type="text" class="form-control"  id="telefono_laboral" name="telefono_laboral" value="">
                                             </div>
                                             <div class="col-sm-4">
@@ -275,7 +275,7 @@
                                                 <input type="text" class="form-control" id="anexo_laboral" name="anexo_laboral" value="">
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Situacion Laboral<span style="color: red">(*)</span></label>
+                                                <label>Situación Laboral<span style="color: red">(*)</span></label>
                                                 <select type="" class="form-control" name="situacion_laboral" id="situacion_laboral" form="formInfLaboral">
                                                     <option value="planilla">En planilla</option>
                                                     <option value="independiente">Independiente</option>
@@ -288,7 +288,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label for="experiencia_laboral1">Experiencia Laboral (Referencia de los 02 ultimos puestos de trabajo)</label>
+                                                <label for="experiencia_laboral1">Experiencia Laboral (Referencia de los 02 últimos puestos de trabajo)</label>
                                                 <input type="text" class="form-control" id="experiencia_laboral1" name="experiencia_laboral1" value="">
                                             </div>
                                 
@@ -452,11 +452,11 @@
                                                     </tr>
                                                     <tr>
                                                         <td>1.</td>
-                                                        <td>Solicitud de Inscripcion</td>
+                                                        <td>Solicitud de Inscripción</td>
                                                         <td>
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
-                                                                <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Solicitud-de-Inscripci%C3%B3n.xls" download>Descargar Solicitud de Inscripcion</a>
+                                                                <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Solicitud-de-Inscripci%C3%B3n.xls" download>Descargar Solicitud de Inscripción</a>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -600,7 +600,7 @@
                                         <div class="row">
                                             <div class="col-sm-10">
                                                 <div>
-                                                    <label >¿Sufré de alguna enfermedad crónica que pueda derivar en situación de emergencia médica?</label>
+                                                    <label >¿Sufre de alguna enfermedad crónica que pueda derivar en situación de emergencia médica?</label>
                                                     <div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio" name="sufre_enfermedad" id="sufre_enfermedad_si" value="Si" checked="">
@@ -666,8 +666,7 @@
                                 
                                             <div class="col-md-1">
                                                 <div class="form-group">
-                                                    <label>otra </label>
-                                
+                                                    <label>Otra </label>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
@@ -680,7 +679,7 @@
                                         <div class="row">
                                             <div class="col-sm-10">
                                                 <div>
-                                                    <label >Dispone de Seguro Médico</label>
+                                                    <label>¿Dispone de Seguro Médico?</label>
                                                     <div >
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio" name="seguro_medico" id="seguro_medico_si" value="SI" checked>
@@ -709,7 +708,7 @@
                                             </div>
                                 
                                             <div class="col-sm-4">
-                                                <label>Consignar Telefono<span style="color: red">(*)</span></label>
+                                                <label>Consignar Teléfono<span style="color: red">(*)</span></label>
                                                 <input type="text" class="form-control" id="telefono_seguro" name ="telefono_seguro" value="">
                                             </div>
 
@@ -724,7 +723,7 @@
                                             </div>
                                 
                                             <div class="col-sm-4">
-                                                <label>Telefono<span style="color: red">(*)</span></label>
+                                                <label>Teléfono<span style="color: red">(*)</span></label>
                                                 <input type="text" class="form-control" id="telefono_familiar" name ="telefono_familiar" value="">
                                             </div>
                                 

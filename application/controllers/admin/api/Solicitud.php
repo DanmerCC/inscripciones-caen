@@ -20,8 +20,4 @@ class Solicitud extends CI_Controller
 		header("Access-Control-Allow-Origin: *");
 		echo json_encode($this->mihelper->resultToArray($this->Solicitud_model->getAll()));
 	}
-
-
-
-
 }
