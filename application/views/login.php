@@ -38,6 +38,9 @@
         <div class="col-xs-6">
           <a href="registro" class="btn btn-primary btn-block btn-flat">Registrarse</a>
         </div>
+        <div class="col-xs-6">
+        <a href="http://caen.edu.pe/publicfiles/GUIA.pdf" class="text-center" target="_blank">Guia del participante</a>
+        </div>
         <?php
           endif;
         ?>

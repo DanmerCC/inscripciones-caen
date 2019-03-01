@@ -52,6 +52,9 @@ function cargarDataTable(){
                 $('.dataTables_scrollBody').scrollLeft($(this).scrollLeft());
             });
         },
+        "scrollX": true,
+        "scrollCollapse": true,
+        
         "ajax":
                 {
                     url: '/admin/dataTable/inscritos',
