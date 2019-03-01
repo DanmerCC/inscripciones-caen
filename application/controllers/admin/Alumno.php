@@ -34,10 +34,19 @@ class Alumno extends CI_Controller
 		}
 	}
 	public function datatable(){
-	$rspta = $this->Alumno_model->getAllInscritos();
+		$search=$this->input->post("search[]");
+		$start=$this->input->post('start');
+		$length=$this->input->post('length');
+		$activeSearch=!(strlen($search["value"])==0);
+		if(strlen($search["value"])>0){
+			$rspta = $this->Alumno_model->getAllInscritosAndFindTextPage($start,$length,$search["value"]);
+		}else{
+			$rspta = $this->Alumno_model->getAllInscritosPage($start,$length);
+		}
+		$cantidad=$this->Alumno_model->count();
 	   //vamos a declarar un array
 	   $data = Array();
-	   $i=0;
+	   $i=$start;
 
 
 	   foreach ($rspta as $value) {
@@ -59,7 +68,7 @@ class Alumno extends CI_Controller
 		$checkSolicitudesInscripcion=($value["check_sins_pdf"])?"<i class='fa fa-check' aria-hidden='true'></i>":"";
 
 	           $data[] = array(
-				"0" => $i,
+				"0" => $activeSearch?"-":(($cantidad-$i)+1),
 	           "1" => $value["grado_profesion"],
 	           "2" => $value["nombres"],
 	           "3" => $value["apellido_paterno"],
@@ -67,6 +76,7 @@ class Alumno extends CI_Controller
 	           "5" => $value["lugar_trabajo"],
 	           "6" => $value["celular"]." \n ".$value["telefono_casa"],
 			   "7" => $value["email"],
+			   /*
 			   "8" => (($haveFileCv)?"<a href='".base_url()."admin/view/pdf/cv/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkCv."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
 			   "9" => (($haveFileDni)?"<a href='".base_url()."admin/view/pdf/dni/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDni."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
 			   "10" => (($haveFileDj)?"<a href='".base_url()."admin/view/pdf/dj/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDj."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
@@ -74,13 +84,24 @@ class Alumno extends CI_Controller
 			   "12" => (($haveFileMaes)?"<a href='".base_url()."admin/view/pdf/maes/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkMaestria."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
 			   "13" => (($haveFileDoct)?"<a href='".base_url()."admin/view/pdf/doct/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDoctorado."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
 			   "14" => (($haveFileSolicitudesInscripcion)?"<a href='".base_url()."admin/view/pdf/sins/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkSolicitudesInscripcion."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>")
-	       );
+				*/
+
+				"8" => "texto",
+				"9" => "texto",
+				"10" => "texto",
+				"11" => "texto",
+				"12" => "texto",
+				"13" => "texto",
+				"14" => "texto",
+
+			);
 	    }        
 	   $results = array(
-	       "sEcho" => 1, //Informacion para datatables
-	       "iTotalRecords" => count($data), //enviamos el total de registros al datatables
-	       "iTotalDisplayRecords" => count($data), //enviamos total de registros a visualizar
-	       "aaData" => $data);
+	       "sEcho" => $this->input->post('sEcho'), //Informacion para datatables
+	       "iTotalRecords" => $cantidad, //enviamos el total de registros al datatables
+	       "iTotalDisplayRecords" => $cantidad, //enviamos total de registros a visualizar
+		   "aaData" => $data,
+		   "asdasdaaa"=>$this->db->last_query());
 	   echo json_encode($results);
 	}
 

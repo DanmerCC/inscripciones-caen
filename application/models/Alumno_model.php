@@ -16,6 +16,13 @@ class Alumno_model extends CI_Model
 	private $check_doct='check_doct_pdf';
 	private $check_sins='check_sins_pdf';
 
+	//*Searcheable columns*//
+	private $apellido_paterno='apellido_paterno';
+	private $apellido_materno='apellido_materno';
+	private $nombres='nombres';
+	private $documento='documento';
+	private $email='email';
+
 	function __construct()
 	{
 		parent::__construct();
@@ -301,5 +308,35 @@ class Alumno_model extends CI_Model
 		$this->db->where($this->id, $id_alumno);
 
 		return $this->db->update($this->table,$data);
+	}
+
+	public function count(){
+        /*$this->db->select("COUNT(*) as cant");
+        $this->db->from($this->table);
+        $result=$this->db->get();
+        foreach ($variable as $key => $value) {
+            # code...
+        }*/
+        return $this->db->get($this->table)->num_rows();;
+    }
+    public function getAllInscritosPage($start,$limit){
+        $this->db->select();
+        $this->db->from('alumno');
+        $this->db->order_by("id_alumno", "desc");
+        $this->db->limit($limit,$start);
+        return resultToArray($this->db->get());
+	}
+	
+	public function getAllInscritosAndFindTextPage($start,$limit,$text){
+		$this->db->select();
+        $this->db->from($this->table);
+		$this->db->like($this->apellido_paterno,$text);
+		$this->db->or_like($this->apellido_materno,$text);
+		$this->db->or_like($this->nombres,$text);
+		$this->db->or_like($this->documento,$text);
+		$this->db->or_like($this->email,$text);
+		$this->db->order_by("id_alumno", "desc");
+        $this->db->limit($limit,$start);
+        return resultToArray($this->db->get());
 	}
 }
