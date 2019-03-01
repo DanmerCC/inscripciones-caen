@@ -89,8 +89,7 @@ class Alumno extends CI_Controller
 	       "sEcho" => $this->input->post('sEcho'), //Informacion para datatables
 	       "iTotalRecords" => $cantidad, //enviamos el total de registros al datatables
 	       "iTotalDisplayRecords" => $cantidad, //enviamos total de registros a visualizar
-		   "aaData" => $data,
-		   "asdasdaaa"=>$this->db->last_query());
+		   "aaData" => $data);
 	   echo json_encode($results);
 	}
 
