@@ -22,7 +22,8 @@ $(document).ready(function(){
 function cargarDataTable(){
 	    tabla = $('#dataTable1').dataTable({
         "aProcessing": true, //activamos el procesamiento del datatables
-        "aServerSide": true, //paginacion y filtrado realizados por el servidor 
+		"serverSide": true, //paginacion y filtrado realizados por el servidor
+		"sEcho":"1",
         dom: 'Bfrtip', //definimos los elementos del contro la tabla,
         buttons: [
             'copyHtml5',
@@ -50,17 +51,6 @@ function cargarDataTable(){
             $('.dataTables_scrollHead').on('scroll', function () {
                 $('.dataTables_scrollBody').scrollLeft($(this).scrollLeft());
             });
-        },
-        "scrollX": true,
-        "scrollCollapse": true,
-        "responsive": true,
-        "colResize": {
-            "tableWidthFixed": false,
-            //"handleWidth": 10,
-            "resizeCallback": function(column)
-            {
-
-            }
         },
         "ajax":
                 {
