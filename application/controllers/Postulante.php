@@ -864,10 +864,20 @@ class Postulante extends CI_Controller {
 	}
 	
 	public function stateOfProfileFiles(){
+		
 		$result=[];
 		header('Content-Type: application/json');
 		
+		$this->load->model('Alumno_model');
 		if($this->nativesession->get("estado")=="logeado"){
+			$alumno=$this->Alumno_model->all($this->nativesession->get("idAlumno"));
+			$alumnoResult=[];
+			try {
+				$alumnoResult=$alumno->result_array();
+			} catch (\Throwable $th) {
+				show_error("Error durante la consulta a base de datos",500);
+				die();
+			}
 			$result=[
 				"content"=>[
 					"cv"=>file_exists(CC_BASE_PATH.'/files/cvs/'.$this->nativesession->get("dni").".pdf"),

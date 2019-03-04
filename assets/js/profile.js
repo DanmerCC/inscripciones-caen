@@ -8,7 +8,9 @@ var configuracion = function(){
         "verification":"/postulante/",
         "tittle":"Curriculum",
 		"identifier":"cv",
-		"urlview":"/admin/view/pdf"
+        "urlview":"/admin/view/pdf",           
+        "urlInfo":"/file/default/info",
+        "urlDelete":"/file/default/delete"
     });
     var cargaDJ=cc.fileComponent("#containerBoxDJ",{
         "state":false,
@@ -16,7 +18,9 @@ var configuracion = function(){
         "urlUpload":"/postulante/upload/dj",
         "tittle":"DeclaracionJurada",
         "identifier":"dj",
-		"urlview":"/admin/view/pdf"
+		"urlview":"/admin/view/pdf",           
+        "urlInfo":"/file/default/info",
+        "urlDelete":"/file/default/delete"
     });
     var cargaDJ=cc.fileComponent("#containerBoxCopys",{
         "state":false,
@@ -24,7 +28,9 @@ var configuracion = function(){
         "urlUpload":"/postulante/upload/cp",
         "tittle":"Copia de Dni",
         "identifier":"dni",
-		"urlview":"/admin/view/pdf"
+		"urlview":"/admin/view/pdf",           
+        "urlInfo":"/file/default/info",
+        "urlDelete":"/file/default/delete"
     });
 
     var cargaDJ=cc.fileComponent("#containerBoxBachiller",{
@@ -33,7 +39,9 @@ var configuracion = function(){
         "urlUpload":"/postulante/upload/bach",
         "tittle":"Constancia de Bachiller",
         "identifier":"bach",
-		"urlview":"/admin/view/pdf"
+		"urlview":"/admin/view/pdf",           
+        "urlInfo":"/file/default/info",
+        "urlDelete":"/file/default/delete"
     });
 
     var cargaDJ=cc.fileComponent("#containerBoxMaestria",{
@@ -42,7 +50,9 @@ var configuracion = function(){
         "urlUpload":"/postulante/upload/maes",
         "tittle":"Constancia de maestria",
         "identifier":"maes",
-		"urlview":"/admin/view/pdf"
+		"urlview":"/admin/view/pdf",           
+        "urlInfo":"/file/default/info",
+        "urlDelete":"/file/default/delete"
     });
 
     var cargaDJ=cc.fileComponent("#containerBoxDoctorado",{
@@ -51,7 +61,9 @@ var configuracion = function(){
         "urlUpload":"/postulante/upload/doct",
         "tittle":"Constancia de Doctorado",
         "identifier":"doct",
-		"urlview":"/admin/view/pdf"
+		"urlview":"/admin/view/pdf",           
+        "urlInfo":"/file/default/info",
+        "urlDelete":"/file/default/delete"
     });
     var cargaDJ=cc.fileComponent("#containerBoxSolicitud",{
         "state":false,
@@ -59,7 +71,9 @@ var configuracion = function(){
         "urlUpload":"/postulante/upload/sins",
         "tittle":"Solicitud de Inscripcion",
         "identifier":"sins",
-		"urlview":"/admin/view/pdf"
+		"urlview":"/admin/view/pdf",           
+        "urlInfo":"/file/default/info",
+        "urlDelete":"/file/default/delete"
     });
     //configuracion de uploads
     //configInputsFile("#frmUploadCv input[type='file']","/postulante/upload/cv");
@@ -479,7 +493,7 @@ function desactStateMil(val){
         });
     }else
     {
-                $("#cip_militar").prop({
+        $("#cip_militar").prop({
             readonly: ''
         });
         $("#plana_militar").prop({

@@ -126,4 +126,43 @@ class FilesController extends CI_Controller {
 		}
 		
 	}
+
+	public function info($fileName){
+		$deletable=false;
+		switch ($fileName) {
+			case 'cv':
+				$pathFile=CC_BASE_PATH."/files/cvs/".$alumno["documento"].".pdf";
+				break;
+			case 'dj':
+				$pathFile=CC_BASE_PATH."/files/djs/".$alumno["documento"].".pdf";
+				break;
+			case 'dni':
+				$pathFile=CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf";
+				break;
+			case 'bach':
+				$pathFile=CC_BASE_PATH."/files/bachiller/".$alumno["documento"].".pdf";
+				break;
+			case 'maes':
+				$pathFile=CC_BASE_PATH."/files/maestria/".$alumno["documento"].".pdf";
+				break;
+			case 'doct':
+				$pathFile=CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf";
+				break;
+			case 'sins':
+				$pathFile=CC_BASE_PATH."/files/sInscripcion/".$alumno["documento"].".pdf";
+				break;
+			case 'hdatos':
+				$pathFile=CC_BASE_PATH."/files/hdatos/".$id.".pdf";
+				break;
+			default:
+				$pathFile="";
+				show_404();
+				die();
+				break;
+		}
+	}
+
+
+
+
 }
