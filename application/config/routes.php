@@ -89,6 +89,9 @@ $route['postulante/stateProfileFiles'] = 'Postulante/stateOfProfileFiles';
 $route['solicitud/upload/(:num)'] = 'Solicitud/uploadHojaDeDatos/$1';
 $route['solicitud/stateFile/(:num)'] = 'Solicitud/stateFile/$1';
 
+$route['file/delete/([a-zA-Z]+)'] = 'admin/FilesController/eliminar/$1';
+$route['file/info/([a-zA-Z]+)'] = 'admin/FilesController/info/$1';
+
 $route['api/alumno'] = 'ApiAlumno';
 $route['api/programas'] = 'ApiPrograma';
 $route['api/programas/tipos'] = 'ApiPrograma/tipos';
