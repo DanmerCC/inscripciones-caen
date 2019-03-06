@@ -511,11 +511,11 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label>Título Universitario en<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="titulo_obtenido" name="titulo_obtenido" value="">
+                                                <input type="text" class="form-control" id="titulo_obtenido" name="titulo_obtenido" style="text-transform: capitalize;">
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Universidad<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="universidad_titulo" name="universidad_titulo" value="">
+                                                <input type="text" class="form-control" id="universidad_titulo" name="universidad_titulo" style="text-transform: capitalize;">
                                             </div>
                                             <div class="col-sm-2">
                                                 <label>Año<span style="color: red">(*)</span></label>
@@ -528,12 +528,12 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label>Grado Académico de<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="grado_obtenido" name="grado_obtenido" value="">
+                                                <input type="text" class="form-control" id="grado_obtenido" name="grado_obtenido" style="text-transform: capitalize;">
                                             </div>
                                 
                                             <div class="col-sm-4">
                                                 <label>Universidad<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="universidad_grado"  name ="universidad_grado" value="">
+                                                <input type="text" class="form-control" id="universidad_grado"  name ="universidad_grado" style="text-transform: capitalize;">
                                             </div>
                                 
                                             <div class="col-sm-2">
@@ -547,11 +547,11 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label>Maestrías/Doctorado en<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="maestria_obtenida" name="maestria_obtenida" value="">
+                                                <input type="text" class="form-control" id="maestria_obtenida" name="maestria_obtenida" style="text-transform: capitalize;">
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Universidad<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="universidad_maestria" name="universidad_maestria" value="">
+                                                <input type="text" class="form-control" id="universidad_maestria" name="universidad_maestria" style="text-transform: capitalize;">
                                             </div>
                                             <div class="col-sm-2">
                                                 <label>Año<span style="color: red">(*)</span></label>
@@ -563,11 +563,11 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label>Maestrías/Doctorado en<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="doctorado_obtenido" name="doctorado_obtenido" value="">
+                                                <input type="text" class="form-control" id="doctorado_obtenido" name="doctorado_obtenido" style="text-transform: capitalize;">
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Universidad<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="universidad_doctor" name="universidad_doctor" value="">
+                                                <input type="text" class="form-control" id="universidad_doctor" name="universidad_doctor" style="text-transform: capitalize;">
                                             </div>
                                             <div class="col-sm-2">
                                                 <label>Año<span style="color: red">(*)</span></label>

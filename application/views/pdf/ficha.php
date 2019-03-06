@@ -37,11 +37,11 @@
     </table>   
     <hr>
     <table cellspacing="0" style="width: 100%;">
-		<tr>
+        <tr>
             <td style="width: 80%; height: 35pt;line-height: 280%;">A): <u>DATOS PERSONALES</u></td>
             <td style="width: 7%;"></td>
             <td rowspan="3" style="width: 13%;">
-				<?php if(file_exists('publicfiles/foto/'.$datosAlumno['documento'].'.jpg')): ?>
+                <?php if(file_exists('publicfiles/foto/'.$datosAlumno['documento'].'.jpg')): ?>
                 <img src="publicfiles/foto/<?=$datosAlumno['documento']?>.jpg" alt="Logo" style="height: 450pt; width: 400pt; max-height: 450pt; max-width: 400pt;border: 0.25px solid #000;">
                 <?php elseif(file_exists('publicfiles/foto/'.$datosAlumno['documento'].'.jpeg')): ?>
                 <img src="publicfiles/foto/<?=$datosAlumno['documento']?>.jpeg" alt="Logo" style="height: 450pt; width: 400pt; max-height: 450pt; max-width: 400pt;border: 0.25px solid #000;">
@@ -273,7 +273,7 @@
         <tr>
             <?php
                 $uniTit = $datosAlumno['universidad_titulo'];
-                if(strlen($uniTit)>=34):?>
+                if(mb_strlen($uniTit, "UTF-8")>=36):?>
                     <td style="width: 2%;font-size: 8pt;line-height: 250%;" align="center" valign="middle">1</td>
                     <td style="width: 20%;font-size: 8pt;line-height: 250%;" align="center" valign="middle">Título Universitario en:</td>
                     <td style="width: 35%;font-size: 8pt;border-bottom: 1px solid black;line-height: 250%;" align="center" valign="middle"><?=$datosAlumno['titulo_obtenido']?></td>
@@ -295,7 +295,7 @@
         <tr>
             <?php
                 $uniGra = $datosAlumno['universidad_grado'];
-                if(strlen($uniGra)>=34):?>
+                if(mb_strlen($uniGra, "UTF-8")>=40):?>
                     <td style="width: 2%;font-size: 8pt;line-height: 250%;" align="center" valign="middle">2</td>
                     <td style="width: 20%;font-size: 8pt;line-height: 250%;" align="center" valign="middle">Grado Académico de:</td>
                     <td style="width: 35%;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 250%;" align="center" valign="middle"><?=$datosAlumno['grado_obtenido']?></td>
@@ -317,7 +317,7 @@
         <tr>
             <?php
                 $uniMae = $datosAlumno['universidad_maestria'];
-                if(strlen($uniMae)>=34):?>
+                if(mb_strlen($uniMae, "UTF-8")>=40):?>
                     <td style="width: 2%;font-size: 8pt;line-height: 250%;" align="center" valign="middle">3</td>
                     <td style="width: 20%;height:12pt;font-size: 8pt;line-height: 250%;" align="center" valign="middle">Maestrías / Doctorado en:</td>
                     <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 250%;" align="center" valign="middle"><?=$datosAlumno['maestria_obtenida']?></td>
@@ -339,7 +339,7 @@
         <tr>
             <?php
                 $uniDoc = $datosAlumno['universidad_doctor'];
-                if(strlen($uniDoc)>=34):?>
+                if(mb_strlen($uniDoc, "UTF-8")>=40):?>
                     <td style="width: 2%;font-size: 8pt;line-height: 250%;" align="center" valign="middle">4</td>
             <td style="width: 20%;height:12pt;font-size: 8pt;line-height: 250%;" align="center" valign="middle">Maestrías / Doctorado en:</td>
             <td style="width: 35%;height:12pt;font-size: 8pt;border-bottom: 1px solid black;text-align: center;line-height: 250%;" align="center" valign="middle"><?=$datosAlumno['doctorado_obtenido']?></td>
@@ -360,6 +360,14 @@
         </tr>
     </table>
     <br><br>
+    <?php
+        if( mb_strlen($uniDoc, "UTF-8")<40 || mb_strlen($uniMae, "UTF-8")<40 || mb_strlen($uniGra, "UTF-8")<40 || mb_strlen($uniTit, "UTF-8")<40): ?>
+            <br>
+    <?php endif;?>
+    <?php
+        if( mb_strlen($uniDoc, "UTF-8")<40 && mb_strlen($uniMae, "UTF-8")<40 && mb_strlen($uniGra, "UTF-8")<40 && mb_strlen($uniTit, "UTF-8")<40): ?>
+            <br><br>
+    <?php endif;?> 
     <table cellspacing="0" style="width: 100%;" >
         <tr>
             <td style="width: 50%; height: 60pt;" rowspan="2" valign="middle" align="center">
