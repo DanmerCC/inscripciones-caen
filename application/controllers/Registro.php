@@ -33,10 +33,11 @@ class Registro extends CI_Controller
 
             if($this->isNotSetArray([$id_usuario_dni,$email,$programa_id,$tipoFinan])){
                 $data["heading"]="Ah ocurrido un error ";
-                $data["message"]="Su cuenta  $id_usuario_dni no se registro intentelo nuevamente";
+                $data["message"]="Su cuenta  no se registro intentelo nuevamente";
                 $data["seconds"]="4";
                 $data["url"]="/postulante";
                 echo $this->load->view('errors/custom/flash_msg',$data,TRUE);
+                echo "Error se detecto un valor nulo";
                 die();
             }
         $ql = $this->db->select('documento')->from('alumno')->where('documento',$id_usuario_dni)->or_where('email',$email)->get();
@@ -82,8 +83,8 @@ class Registro extends CI_Controller
         for ($i=0; $i < count($array); $i++) { 
            if((!isset($array[$i]))||($array[$i]=="")||($array[$i]==NULL)){
                $result=true;
-               echo var_dump($array[$i]);
-               exit;
+               //echo var_dump($array[$i]);
+               //exit;
                break;
            }
         }

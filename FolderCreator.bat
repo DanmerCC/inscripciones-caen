@@ -153,3 +153,8 @@ IF EXIST uploads (
 		)
 	)
 )
+
+cd..
+cd..
+mkdir .\uploads\trash
+pause

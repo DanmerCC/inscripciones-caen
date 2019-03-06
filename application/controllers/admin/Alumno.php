@@ -161,5 +161,93 @@ class Alumno extends CI_Controller
 			echo "Error !!!";
 		}
 	}
+
+	public function getAlumnoById($idAlumno){
+		$resultOfConsult=$this->Alumno_model->findAllInnerSolicitudCountById($idAlumno);
+		header("Content-type:application/json");
+		if(count($resultOfConsult)!=1){
+			echo json_encode([
+				"content"=>[],
+				"status"=>"NO FOUND",
+				"result"=>NULL
+					
+			],JSON_UNESCAPED_UNICODE);
+		}else{
+			$alumno=$resultOfConsult[0];
+			$alumno["documentosObject"]=[
+				[
+					"name"=>"curriculum",
+					"identifier"=>"cv",
+					"stateUpload"=>(boolean)$alumno["check_cv_pdf"],
+					"statechecked"=>file_exists(CC_BASE_PATH."/files/cvs/".$alumno["documento"].".pdf"),
+				],
+				[
+					"name"=>"declaracion jurada",
+					"identifier"=>"dj",
+					"stateUpload"=>(boolean)$alumno["check_dj_pdf"],
+					"statechecked"=>file_exists(CC_BASE_PATH."/files/djs/".$alumno["documento"].".pdf"),
+				],
+				[
+					"name"=>"dni",
+					"identifier"=>"dni",
+					"stateUpload"=>(boolean)$alumno["check_dni_pdf"],
+					"statechecked"=>file_exists(CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf"),
+				],
+				[
+					"name"=>"bachiller",
+					"identifier"=>"bach",
+					"stateUpload"=>(boolean)$alumno["check_bach_pdf"],
+					"statechecked"=>file_exists(CC_BASE_PATH."/files/bachiller/".$alumno["documento"].".pdf"),
+				],
+				[
+					"name"=>"maestria",
+					"identifier"=>"maes",
+					"stateUpload"=>(boolean)$alumno["check_maes_pdf"],
+					"statechecked"=>file_exists(CC_BASE_PATH."/files/maestria/".$alumno["documento"].".pdf"),
+				],
+				[
+					"name"=>"Doctorado",
+					"identifier"=>"doct",
+					"stateUpload"=>(boolean)$alumno["check_doct_pdf"],
+					"statechecked"=>file_exists(CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf"),
+				],
+				[
+					"name"=>"Solicitud de Inscripcion",
+					"identifier"=>"sins",
+					"stateUpload"=>(boolean)$alumno["check_sins_pdf"],
+					"statechecked"=>file_exists(CC_BASE_PATH."/files/sInscripcion/".$alumno["documento"].".pdf"),
+				],
+
+			];
+
+			$imagen;
+			if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".jpg")){
+				$imagen="data:image/jpg;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".jpg"));
+
+			}else if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".png")){
+				$imagen="data:image/png;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".png"));
+
+			}else if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".gif")){
+				$imagen="data:image/gif;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".gif"));
+				
+			}else{
+				$imagen="/dist/img/avatar5.png";
+			}
+
+			$alumno["fotoData"]=$imagen;
+			header("Content-type:application/json");
+			echo json_encode([
+				"content"=>[],
+				"status"=>"OK",
+				"result"=>$alumno
+					
+			],JSON_UNESCAPED_UNICODE);
+		}
+		
+
+	}
+
+
+	/**End class */
 	
 }

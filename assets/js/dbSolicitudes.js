@@ -204,3 +204,56 @@ function listProgramasActivos(array){
     }
     return result;
 }
+
+var modalDataAlumno={
+    target:"#mdl_datos_alumno",
+    limpiar:eliminarContenido,
+    loadData:cargarData
+    
+
+}
+
+function eliminarContenido(){
+    var idquerytarget=this.target;
+    $(idquerytarget+' #mdl-foto').prop("src","");
+    $(idquerytarget+' #mdl-name').html("");
+    $(idquerytarget+' #mdl-name').html("");
+    $(idquerytarget+' #mdl-profesion').html("");
+    $(idquerytarget+' #mdl-solicitudes').html("");
+    $(idquerytarget+' #mdl-educacion').html("");
+    $(idquerytarget+' #mdl-celphone').html("");
+    $(idquerytarget+' #mdl-icons-documents').html("");
+}
+function cargarData(id){
+    var idquerytarget=this.target;
+    $.ajax({
+        type: "get",
+        url: "/secure/alumno/"+id,
+        data: "",
+        dataType: "json",
+        success: function (response) {
+            if(response.status=="NO FOUND"){
+                alert("Ocurrio un error el alumno no pudo ser encontrado");
+            }else{
+                alumno=response.result;
+                $(idquerytarget+' #mdl-name').html((alumno.nombres!=null)?alumno.nombres:''+' '+(alumno.apellido_materno!=null)?alumno.apellido_materno:''+' '+(alumno.apellido_materno!=null)?alumno.apellido_materno:'');
+                $(idquerytarget+' #mdl-profesion').html(alumno.grado_profesion);
+                $(idquerytarget+' #mdl-solicitudes').html(alumno.solicitudes);
+                $(idquerytarget+' #mdl-educacion').html(alumno.grado_profesion);
+                $(idquerytarget+' #mdl-celphone').html(alumno.celular+' \t '+alumno.telefono_casa);
+                $(idquerytarget+' #mdl-icons-documents').html(makeTemplateIconsDocuments(alumno.estado));
+                //fotoData
+                $(idquerytarget+' #mdl-foto').prop("src",alumno.fotoData);
+            }
+            
+        }
+    });
+}
+
+function makeTemplateIconsDocuments(nombre,estado){
+    template=''+
+    '<span class="'+((estado)?"label label-primary":"label label-danger")+'">'+
+    nombre+
+    '</span>';
+    return template;
+}

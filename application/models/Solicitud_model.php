@@ -52,7 +52,7 @@ class Solicitud_model extends CI_Model
 	}
 
 	public function getAllOrderByIdSolicitud(){
-		$result=$this->db->query("SELECT tc.nombre as nombretipoCurso,s.idSolicitud,s.estado estado,s.programa,s.alumno,s.tipo_financiamiento,s.fecha_registro,a.documento,a.nombres,a.apellido_paterno,a.apellido_materno,c.nombre curso_nombre,c.numeracion curso_numeracion ,s.marcaPago , s.comentario FROM solicitud s left join alumno a on s.alumno=a.id_alumno left join curso c on s.programa=c.id_curso left join tipo_curso tc on c.idTipo_curso=tc.idTipo_Curso ORDER BY s.idSolicitud");
+		$result=$this->db->query("SELECT tc.nombre as nombretipoCurso,s.idSolicitud as idSolicitud,s.estado estado,s.programa,s.alumno,s.tipo_financiamiento,s.fecha_registro,a.documento,a.nombres,a.apellido_paterno,a.apellido_materno,c.nombre curso_nombre,c.numeracion curso_numeracion ,s.marcaPago , s.comentario FROM solicitud s left join alumno a on s.alumno=a.id_alumno left join curso c on s.programa=c.id_curso left join tipo_curso tc on c.idTipo_curso=tc.idTipo_Curso ORDER BY s.idSolicitud");
 		return $result;
 	}
 

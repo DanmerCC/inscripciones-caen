@@ -55,7 +55,7 @@ function initComponent(target,options=optionsDefault){
 
 		return stringTemplate;
 	}
-
+	
     var objectResult={
         "target":target,
         "changeState":function(newState){
@@ -77,11 +77,13 @@ function initComponent(target,options=optionsDefault){
         changeState(response.content[options.identifier],options.target,options.urlview,"/"+options.identifier+"/"+response.content.nameFiles)
     },options.urlVerify,options.pathInfo);
 
+	
+
+	$(options.target).html(template);
+	configInit(options);
 	getInfo(options,function(response){
 		changeStateDeleteOption(response.removable,options.target,options.identifier,response.urlDeleting);
 	});
-
-    $(options.target).html(template);
     var targetInput=options.target+ "  input[name='file_cv']";
     $(targetInput).change(function(){
         if($(targetInput)[0].checkValidity()){
@@ -92,7 +94,10 @@ function initComponent(target,options=optionsDefault){
                 }else{
                     alert("Error al subir el archivo")
                     console.log(response.status);
-                }
+				}
+				getInfo(options,function(response){
+					changeStateDeleteOption(response.removable,options.target,options.identifier,response.urlDeleting);
+				});
                 verificarEstadoFiles(function(response){
                     if(response.content==[]){
                         console.log("error al pedir confirmacion")
@@ -100,8 +105,9 @@ function initComponent(target,options=optionsDefault){
                         //response.content["cv"];
                         changeState(response.content[options.identifier],options.target,options.urlview,"/"+options.identifier+"/"+response.content.nameFiles)
                     }
-                },options.urlVerify);
-                //verificar();
+                },options.urlVerify,null,options);
+				//verificar();
+				
             });
         }else{
             alert("Solo se puede agregar pdfs");
@@ -183,7 +189,7 @@ function changeState(state,target,urlView="/",partUrl=""){
 function actionUploadFile(target,urlTarget,sucessUpload){
 	var fileSelect = document.querySelector(target);
 	var formData= new FormData();
-	formData.append('cv',fileSelect.files[0],fileSelect.files[0].name);
+	formData.append('cv',fileSelect.files[0],(typeof( fileSelect.files[0].name)!='undefined')?fileSelect.files[0].name:null);
 	$.ajax({
 		type: "POST",
 		url: urlTarget,
@@ -199,7 +205,7 @@ function actionUploadFile(target,urlTarget,sucessUpload){
 	});
 }
 
-function verificarEstadoFiles(action,urlverification=null){
+function verificarEstadoFiles(action,urlverification=null,options){
 	if(urlverification==null){
 		urlverification="postulante/stateProfileFiles"
 	}
@@ -225,10 +231,7 @@ function getInfo(options,callback){
 
 function changeStateDeleteOption(state,target,identify,urlDelete=null){
 	if(state){
-		$(target+"  #deleteFileOption a").click(function(){
-			deleteFileAjax(urlDelete);
-		});
-		
+		$(target+"  #deleteFileOption a").data('targetUrl',urlDelete);
 		$(target+"  #deleteFileOption").removeAttr("hidden");
     }else{
 		$(target+"  #deleteFileOption a").prop("href","#");
@@ -236,16 +239,41 @@ function changeStateDeleteOption(state,target,identify,urlDelete=null){
 	}
 }
 
-function deleteFileAjax(urlInput){
+function configInit(options){
+	$(options.target+"  #deleteFileOption a").click(function(){
+		var urltarget =$(options.target+"  #deleteFileOption a").data('targetUrl');
+		deleteFileAjax(options,urltarget,function (response) {
+			alert(response.message)
+		});
+		
+		getInfo(options,function(response){
+			changeStateDeleteOption(response.removable,options.target,options.identifier,response.urlDeleting);
+			location.reload();
+			/*
+			verificarEstadoFiles(function(response2){
+				if(response2.content==[]){
+					console.log("error al pedir confirmacion")
+				}else{
+					//response2.content["cv"];
+					changeState(response2.content[options.identifier],options.target,options.urlview,"/"+options.identifier+"/"+response2.content.nameFiles)
+				}
+			},options.urlVerify);
+			*/
+		});
+		
+	});
+	
+}
+
+function deleteFileAjax(options,urlDelete,callBack){
+	
 	if(confirm("Esta seguro de borrar el archivo?")){
 		$.ajax({
 			type: "GET",
-			url: urlInput,
+			url: urlDelete,
 			data: "",
 			dataType: "json",
-			success: function (response) {
-				alert(response.message)
-			}
+			success: callBack
 		});
 	}
 }
