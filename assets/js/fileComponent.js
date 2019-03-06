@@ -78,7 +78,7 @@ function initComponent(target,options=optionsDefault){
     },options.urlVerify,options.pathInfo);
 
 	getInfo(options,function(response){
-		changeStateDeleteOption(response.removable,options.target,options.identifier);
+		changeStateDeleteOption(response.removable,options.target,options.identifier,response.urlDeleting);
 	});
 
     $(options.target).html(template);
@@ -136,13 +136,14 @@ function getFileComponentTemplate(options,modificator=undefined){
 						'<div class="col-sm-4">'+
 							'<div id="deleteFileOption">'+
 								'<button class="btn btn-danger btn-lg">'+
+									'<a href="#">'+
 									'<i class="fa fa-fw fa-trash"></i>'+
+									'</a>'+
 								'</button>'+
 							'</div>'+
 						'</div>'+
-						
 					'</div>'+
-					'<div id="hasNotFile"'+((options.state)?'hidden':'')+' >'+
+					'<div id="hasNotFile" '+((!(options.state))?'':'hidden')+' >'+
 						'<form id="frmUploadCv">'+
 							'<div class="col-sm-4">'+
 								'<label for="file_cv">'+options.tittle+'<span style="color: red">(*)</span></label>'+
@@ -156,8 +157,8 @@ function getFileComponentTemplate(options,modificator=undefined){
 						'</form>'+
 					'</div>'+
 					'<div id="magicContainer"></div>'+
-				'</div>'
-			'</div>'
+				'</div>'+
+			'</div>'+
 		'</div>';
 		return template;
 	}else{
@@ -222,8 +223,29 @@ function getInfo(options,callback){
 	});
 }
 
-function changeStateDeleteOption(state,target,identify){
+function changeStateDeleteOption(state,target,identify,urlDelete=null){
 	if(state){
+		$(target+"  #deleteFileOption a").click(function(){
+			deleteFileAjax(urlDelete);
+		});
+		
+		$(target+"  #deleteFileOption").removeAttr("hidden");
+    }else{
+		$(target+"  #deleteFileOption a").prop("href","#");
 		$(target+"  #deleteFileOption").prop("hidden","hidden");
-    }
+	}
+}
+
+function deleteFileAjax(urlInput){
+	if(confirm("Esta seguro de borrar el archivo?")){
+		$.ajax({
+			type: "GET",
+			url: urlInput,
+			data: "",
+			dataType: "json",
+			success: function (response) {
+				alert(response.message)
+			}
+		});
+	}
 }
