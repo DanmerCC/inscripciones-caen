@@ -801,7 +801,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-sm-8 col-md-8">
+                                                <div class="col-sm-12 col-md-12">
                                                     <div class="table-responsive">
                                                         <table class="table">
                                                             <thead>

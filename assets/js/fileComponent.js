@@ -9,7 +9,10 @@ var optionsDefault={
     "urlVerify":"/postulante/stateFiles",
     "tittle":"Example",
 	"identifier":"example",
-	"urlview":"/"
+	"urlview":"/",
+	"pathInfo":"/file/default/info",
+	"pathDelete":"/file/default/delete",
+	"id":undefined
 };
 
 var cc={
@@ -27,15 +30,18 @@ function initComponent(target,options=optionsDefault){
 			'<div class="form-group">'+
 				'<div class="row">'+
 					'<div id="hasFile" '+((options.state)?'':'hidden')+'>'+
-						'<div class="col-sm-4">'+
-							'<a id="alinktarget" class="btn btn-success btn-sm"  target="_blank">'+
-								'<i class="fa fa-eye"></i><font style="vertical-align: inherit;"> '+options.tittle+'</font>'+
-							'</a>'+
+						'<div class="container">'+
+							'<div class="col-sm-8 col-md-8">'+
+								'<a id="alinktarget" class="btn btn-success btn-sm"  target="_blank">'+
+									'<i class="fa fa-eye"></i><font style="vertical-align: inherit;"> '+options.tittle+' </font>'+
+								'</a>'+
+								'<div id="deleteFileOption" class="btn btn-danger btn-xsm" ><a id="" href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></div>'+
+							'</div>'+
 						'</div>'+
 					'</div>'+
 					'<div id="hasNotFile"'+((options.state)?'hidden':'')+' >'+
 						'<form id="frmUploadCv">'+
-							'<div class="col-sm-12">'+
+							'<div class="col-sm-12 col-md-12">'+
 								'<label class="btn btn-danger btn-sm" for="'+options.target+'_file">'+options.tittle+'<i class="fa fa-fw fa-upload" for="file_cv"></i></label>'+
 								'<input  class="form-control" type="file" class="form-control" id="'+options.target+'_file" name="file_cv" value="" accept="pdf" style="visibility:hidden">'+
 							'</div>'+
@@ -69,7 +75,11 @@ function initComponent(target,options=optionsDefault){
     
     verificarEstadoFiles(function(response){
         changeState(response.content[options.identifier],options.target,options.urlview,"/"+options.identifier+"/"+response.content.nameFiles)
-    },options.urlVerify);
+    },options.urlVerify,options.pathInfo);
+
+	getInfo(options,function(response){
+		changeStateDeleteOption(response.removable,options.target,options.identifier,response.urlDeleting);
+	});
 
     $(options.target).html(template);
     var targetInput=options.target+ "  input[name='file_cv']";
@@ -123,8 +133,17 @@ function getFileComponentTemplate(options,modificator=undefined){
 								'<i class="fa fa-fw fa-check"></i>'+
 							'</button>'+
 						'</div>'+
+						'<div class="col-sm-4">'+
+							'<div id="deleteFileOption">'+
+								'<button class="btn btn-danger btn-lg">'+
+									'<a href="#">'+
+									'<i class="fa fa-fw fa-trash"></i>'+
+									'</a>'+
+								'</button>'+
+							'</div>'+
+						'</div>'+
 					'</div>'+
-					'<div id="hasNotFile"'+((options.state)?'hidden':'')+' >'+
+					'<div id="hasNotFile" '+((!(options.state))?'':'hidden')+' >'+
 						'<form id="frmUploadCv">'+
 							'<div class="col-sm-4">'+
 								'<label for="file_cv">'+options.tittle+'<span style="color: red">(*)</span></label>'+
@@ -138,8 +157,8 @@ function getFileComponentTemplate(options,modificator=undefined){
 						'</form>'+
 					'</div>'+
 					'<div id="magicContainer"></div>'+
-				'</div>'
-			'</div>'
+				'</div>'+
+			'</div>'+
 		'</div>';
 		return template;
 	}else{
@@ -191,4 +210,42 @@ function verificarEstadoFiles(action,urlverification=null){
         dataType: "json",
         success: action
     });
+}
+
+
+function getInfo(options,callback){
+	$.ajax({
+		type: "POST",
+		url: options.pathInfo+'/'+options.identifier,
+		data: {"id":options.id},
+		dataType: "json",
+		success:callback
+	});
+}
+
+function changeStateDeleteOption(state,target,identify,urlDelete=null){
+	if(state){
+		$(target+"  #deleteFileOption a").click(function(){
+			deleteFileAjax(urlDelete);
+		});
+		
+		$(target+"  #deleteFileOption").removeAttr("hidden");
+    }else{
+		$(target+"  #deleteFileOption a").prop("href","#");
+		$(target+"  #deleteFileOption").prop("hidden","hidden");
+	}
+}
+
+function deleteFileAjax(urlInput){
+	if(confirm("Esta seguro de borrar el archivo?")){
+		$.ajax({
+			type: "GET",
+			url: urlInput,
+			data: "",
+			dataType: "json",
+			success: function (response) {
+				alert(response.message)
+			}
+		});
+	}
 }
