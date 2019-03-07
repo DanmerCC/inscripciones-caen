@@ -208,9 +208,16 @@ function listProgramasActivos(array){
 var modalDataAlumno={
     target:"#mdl_datos_alumno",
     limpiar:eliminarContenido,
-    loadData:cargarData
-    
+    loadData:cargarData,
+    init:inicio
 
+}
+
+function inicio(){
+	$(this.target).on('show.bs.modal', function (event) {
+		this.limpiar();
+		alert("borrando");
+	});
 }
 
 function eliminarContenido(){
@@ -236,14 +243,21 @@ function cargarData(id){
                 alert("Ocurrio un error el alumno no pudo ser encontrado");
             }else{
                 alumno=response.result;
-                $(idquerytarget+' #mdl-name').html((alumno.nombres!=null)?alumno.nombres:''+' '+(alumno.apellido_materno!=null)?alumno.apellido_materno:''+' '+(alumno.apellido_materno!=null)?alumno.apellido_materno:'');
+                $(idquerytarget+' #mdl-name').html(((alumno.nombres!=null)?alumno.nombres:'')+' '+((alumno.apellido_paterno!=null)?alumno.apellido_paterno:'')+' '+((alumno.apellido_materno!=null)?alumno.apellido_materno:''));
                 $(idquerytarget+' #mdl-profesion').html(alumno.grado_profesion);
                 $(idquerytarget+' #mdl-solicitudes').html(alumno.solicitudes);
                 $(idquerytarget+' #mdl-educacion').html(alumno.grado_profesion);
                 $(idquerytarget+' #mdl-celphone').html(alumno.celular+' \t '+alumno.telefono_casa);
                 $(idquerytarget+' #mdl-icons-documents').html(makeTemplateIconsDocuments(alumno.estado));
                 //fotoData
-                $(idquerytarget+' #mdl-foto').prop("src",alumno.fotoData);
+				$(idquerytarget+' #mdl-foto').prop("src",alumno.fotoData);
+				var documentos=alumno.documentosObject;
+				var htmlDocuments="";
+				for (var i = 0; i < documentos.length; i++) {
+					htmlDocuments=htmlDocuments+makeTemplateIconsDocuments(documentos[i].name,documentos[i].stateUpload);
+					
+				}
+				$(idquerytarget+' #mdl-icons-documents').html(htmlDocuments);
             }
             
         }

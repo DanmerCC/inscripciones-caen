@@ -56,8 +56,8 @@ class Alumno_model extends CI_Model
 	public function findAllInnerSolicitudCountById($idAlumno){
 		$this->db->select('COUNT(s.idSolicitud) as solicitudes,a.*');
 		$this->db->from($this->table." a");
-		$this->db->join('solicitud s', 'a.'.$this->id.'=s.idSolicitud','left');
-		$this->db->where('s.idSolicitud',$idAlumno);
+		$this->db->join('solicitud s', 'a.'.$this->id.'=s.alumno','left');
+		$this->db->where($this->id,$idAlumno);
 		$this->db->group_by('a.'.$this->id);
 		$this->db->order_by('solicitudes', 'DESC');
 		return resultToArray($this->db->get());
