@@ -214,11 +214,20 @@ var modalDataAlumno={
 }
 
 function inicio(){
-	$(this.target).on('show.bs.modal', function (event) {
-		this.limpiar();
-		alert("borrando");
+    var idquerytarget=this.target;
+	$(this.target).on('hide.bs.modal', function (event) {
+		$(idquerytarget+' #mdl-foto').prop("src","");
+        $(idquerytarget+' #mdl-name').html("");
+        $(idquerytarget+' #mdl-name').html("");
+        $(idquerytarget+' #mdl-profesion').html("");
+        $(idquerytarget+' #mdl-solicitudes').html("");
+        $(idquerytarget+' #mdl-educacion').html("");
+        $(idquerytarget+' #mdl-celphone').html("");
+        $(idquerytarget+' #mdl-icons-documents').html("");
 	});
 }
+
+modalDataAlumno.init();
 
 function eliminarContenido(){
     var idquerytarget=this.target;
