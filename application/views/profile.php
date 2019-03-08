@@ -846,7 +846,7 @@
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
+      <b>Soporte</b> desarrollo.tic@gmail.com
     </div>
     <strong>Copyright &copy;<a href="/">CAEN EPG</a>.</strong> All rights
     reserved.
