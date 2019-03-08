@@ -257,14 +257,9 @@ function cargarData(id){
                 $(idquerytarget+' #mdl-profesion').html(alumno.grado_profesion);
                 $(idquerytarget+' #mdl-solicitudes').html(alumno.solicitudes);
                 $(idquerytarget+' #mdl-educacion').html(alumno.grado_profesion);
-<<<<<<< Updated upstream
-                $(idquerytarget+' #mdl-celphone').html(alumno.celular+' \t '+alumno.telefono_casa);
-				$(idquerytarget+' #mdl-icons-documents').html(makeTemplateIconsDocuments(alumno.estado));
-				$(idquerytarget+' #mdl-email').html(alumno.email);
-=======
                 $(idquerytarget+' #mdl-celphone').html(' - '+alumno.celular+' - '+alumno.telefono_casa+' - ');
                 $(idquerytarget+' #mdl-icons-documents').html(makeTemplateIconsDocuments(alumno.estado));
->>>>>>> Stashed changes
+                $(idquerytarget+' #mdl-email').html(alumno.email);
                 //fotoData
 				$(idquerytarget+' #mdl-foto').prop("src",alumno.fotoData);
 				var documentos=alumno.documentosObject;
