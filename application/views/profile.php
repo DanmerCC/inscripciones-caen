@@ -846,7 +846,7 @@
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Soporte</b> desarrollo.tic@gmail.com
+      <b>Soporte</b> desarrollo.tic@caen.edu.pe
     </div>
     <strong>Copyright &copy;<a href="/">CAEN EPG</a>.</strong> All rights
     reserved.
