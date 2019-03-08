@@ -238,7 +238,8 @@ function eliminarContenido(){
     $(idquerytarget+' #mdl-solicitudes').html("");
     $(idquerytarget+' #mdl-educacion').html("");
     $(idquerytarget+' #mdl-celphone').html("");
-    $(idquerytarget+' #mdl-icons-documents').html("");
+	$(idquerytarget+' #mdl-icons-documents').html("");
+	$(idquerytarget+' #mdl-email').html("");
 }
 function cargarData(id){
     var idquerytarget=this.target;
@@ -257,7 +258,8 @@ function cargarData(id){
                 $(idquerytarget+' #mdl-solicitudes').html(alumno.solicitudes);
                 $(idquerytarget+' #mdl-educacion').html(alumno.grado_profesion);
                 $(idquerytarget+' #mdl-celphone').html(alumno.celular+' \t '+alumno.telefono_casa);
-                $(idquerytarget+' #mdl-icons-documents').html(makeTemplateIconsDocuments(alumno.estado));
+				$(idquerytarget+' #mdl-icons-documents').html(makeTemplateIconsDocuments(alumno.estado));
+				$(idquerytarget+' #mdl-email').html(alumno.email);
                 //fotoData
 				$(idquerytarget+' #mdl-foto').prop("src",alumno.fotoData);
 				var documentos=alumno.documentosObject;

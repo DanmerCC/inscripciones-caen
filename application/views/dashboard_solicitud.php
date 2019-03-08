@@ -181,6 +181,14 @@
 
               <hr>
 
+							<strong><i class="fa fa-envelope margin-r-5"></i> Email</strong>
+
+              <p class="text-muted" id="mdl-email">
+                
+              </p>
+
+              <hr>
+
               <strong><i class="fa fa-pencil margin-r-5"></i> Documentos</strong>
 
               <p>
