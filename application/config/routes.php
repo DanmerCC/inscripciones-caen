@@ -178,3 +178,7 @@ $route['prueba']='CorreoController/fileTest';
 $route['prueba']='CorreoController/fileTest';
 //
 $route['postulante/checkingfile'] = 'admin/Alumno/set_good_file';
+
+
+$route['dashboard/reporte/informes'] = 'dashboard/InformesController/report';
+$route['dashboard/reporte/solicitudes/(:num)'] = 'dashboard/SolicitudController/report/$1';

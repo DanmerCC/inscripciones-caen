@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Solicitud_model extends CI_Model
 {
 	private $tbl_solicitud='solicitud';
-
+	private $id_programa='programa';
 	function __construct()
 	{
 		parent::__construct();
@@ -184,6 +184,13 @@ class Solicitud_model extends CI_Model
 		$this->db->select();
 		$this->db->from($this->tbl_solicitud);
 		$this->db->where('alumno',$idAlumno);
+		return resultToArray($this->db->get());
+	}
+
+	function getAllByPrograma($idPrograma){
+		$this->db->select();
+		$this->db->from($this->tbl_solicitud);
+		$this->db->where($this->id_programa,$idPrograma);
 		return resultToArray($this->db->get());
 	}
 }
