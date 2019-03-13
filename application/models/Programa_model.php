@@ -8,6 +8,7 @@ class Programa_model extends CI_Model
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->helper('mihelper');
 	}
 
 	public function all(){
@@ -86,5 +87,12 @@ class Programa_model extends CI_Model
 
 		$result=$this->db->insert('curso',$data);
 		return $result;
+	}
+
+	public function actives(){
+		$this->db->select('nombre,id_curso');
+		$this->db->from('curso');
+		$this->db->where('estado',1);
+		return resultToArray($this->db->get());
 	}
 }
