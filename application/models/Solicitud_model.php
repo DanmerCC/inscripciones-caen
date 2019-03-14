@@ -187,10 +187,36 @@ class Solicitud_model extends CI_Model
 		return resultToArray($this->db->get());
 	}
 
-	function getAllByPrograma($idPrograma){
-		$this->db->select();
+	function getAllByProgramaFilter($idPrograma){
+		/*$this->db->select();
 		$this->db->from($this->tbl_solicitud);
+		$this->db->where($this->id_programa,$idPrograma);*/
+
+		$this->db->select('c.nombre nombrePrograma, a.nombres, a.apellido_paterno, a.apellido_materno, s.fecha_registro');
+		$this->db->from('solicitud s');
+		$this->db->join('alumno a', 's.alumno=a.id_alumno');
+		$this->db->join('curso c', 's.programa=c.id_curso');
 		$this->db->where($this->id_programa,$idPrograma);
+
+		/*
+		$this->db->select('s.idSolicitud,a.nombres,a.apellido_paterno,a.apellido_materno,a.documento,a.email,c.nombre nombrePrograma,s.estado,tp.nombre tipoPrograma,s.fecha_registro as fecha_complete,DATE_FORMAT(s.fecha_registro,\'%d-%m-%Y\') as fecha_registro');
+        $this->db->from('solicitud s');
+        $this->db->join('alumno a', 's.alumno=a.id_alumno');
+        $this->db->join('curso c', 's.programa=c.id_curso');
+        $this->db->join('tipo_curso tp', 'c.idTipo_curso=tp.idTipo_curso');
+		*/
+
+		return resultToArray($this->db->get());
+	}
+
+	function getAllByPrograma($limit){
+		$this->db->select('c.nombre nombrePrograma, a.nombres, a.apellido_paterno, a.apellido_materno, s.fecha_registro');
+		$this->db->from('solicitud s');
+		$this->db->join('alumno a', 's.alumno=a.id_alumno');
+		$this->db->join('curso c', 's.programa=c.id_curso');
+		$this->db->limit($limit);
+		$this->db->order_by('s.fecha_registro','DESC');
+
 		return resultToArray($this->db->get());
 	}
 }
