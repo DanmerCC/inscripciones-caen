@@ -180,42 +180,49 @@ class Alumno extends CI_Controller
 					"identifier"=>"cv",
 					"statechecked"=>(boolean)$alumno["check_cv_pdf"],
 					"stateUpload"=>file_exists(CC_BASE_PATH."/files/cvs/".$alumno["documento"].".pdf"),
+					"fileName"=>$idAlumno
 				],
 				[
 					"name"=>"declaracion jurada",
 					"identifier"=>"dj",
 					"statechecked"=>(boolean)$alumno["check_dj_pdf"],
 					"stateUpload"=>file_exists(CC_BASE_PATH."/files/djs/".$alumno["documento"].".pdf"),
+					"fileName"=>$idAlumno
 				],
 				[
 					"name"=>"dni",
 					"identifier"=>"dni",
 					"statechecked"=>(boolean)$alumno["check_dni_pdf"],
 					"stateUpload"=>file_exists(CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf"),
+					"fileName"=>$idAlumno
 				],
 				[
 					"name"=>"bachiller",
 					"identifier"=>"bach",
 					"statechecked"=>(boolean)$alumno["check_bach_pdf"],
 					"stateUpload"=>file_exists(CC_BASE_PATH."/files/bachiller/".$alumno["documento"].".pdf"),
+					"fileName"=>$idAlumno
 				],
 				[
 					"name"=>"maestria",
 					"identifier"=>"maes",
 					"statechecked"=>(boolean)$alumno["check_maes_pdf"],
 					"stateUpload"=>file_exists(CC_BASE_PATH."/files/maestria/".$alumno["documento"].".pdf"),
+					"fileName"=>$idAlumno
 				],
 				[
 					"name"=>"Doctorado",
 					"identifier"=>"doct",
 					"statechecked"=>(boolean)$alumno["check_doct_pdf"],
 					"stateUpload"=>file_exists(CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf"),
+					"fileName"=>$idAlumno
 				],
 				[
 					"name"=>"Solicitud de Inscripcion",
 					"identifier"=>"sins",
 					"statechecked"=>(boolean)$alumno["check_sins_pdf"],
 					"stateUpload"=>file_exists(CC_BASE_PATH."/files/sInscripcion/".$alumno["documento"].".pdf"),
+					"fileName"=>$idAlumno
 				],
 
 			];

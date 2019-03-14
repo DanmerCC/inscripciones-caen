@@ -265,7 +265,7 @@ function cargarData(id){
 				var documentos=alumno.documentosObject;
 				var htmlDocuments="";
 				for (var i = 0; i < documentos.length; i++) {
-					htmlDocuments=htmlDocuments+makeTemplateIconsDocuments(documentos[i].name,documentos[i].stateUpload);
+					htmlDocuments=htmlDocuments+makeTemplateIconsDocuments(documentos[i].name,documentos[i].stateUpload,documentos[i].identifier,documentos[i].fileName);
 					
 				}
 				$(idquerytarget+' #mdl-icons-documents').html(htmlDocuments);
@@ -275,10 +275,12 @@ function cargarData(id){
     });
 }
 
-function makeTemplateIconsDocuments(nombre,estado){
+function makeTemplateIconsDocuments(nombre,estado,identifier,nameFile){
     template=''+
+    ((estado)?"<a href='/admin/view/pdf/"+identifier+"/"+nameFile+"' target='_blank'>":"")+
     '<span class="'+((estado)?"label label-primary":"label label-danger")+'">'+
     nombre+
-    '</span>';
+    '</span>'+
+    ((estado)?'</a>':"");
     return template;
 }
