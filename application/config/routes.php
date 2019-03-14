@@ -181,5 +181,6 @@ $route['postulante/checkingfile'] = 'admin/Alumno/set_good_file';
 
 
 $route['dashboard/reporte/informes'] = 'dashboard/InformesController/report';
-$route['dashboard/reporte/solicitudes/(:num)'] = 'dashboard/SolicitudController/report/$1';
+$route['dashboard/reporte/solicitudes'] = 'dashboard/SolicitudController/report';
+$route['dashboard/reporte/solicitudes/(:num)'] = 'dashboard/SolicitudController/reportFilter/$1';
 $route['dashboard/reporte/programas'] = 'dashboard/ProgramasController/report';
