@@ -372,7 +372,11 @@
                         </div>
                         <div id="collapse9" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                <p style="font-style: oblique; font-weight: 700;">Nota: Los documentos a subir deben estar en un único archivo y en formato PDF.</p>
+                                <p style="font-style: oblique; font-weight: 700;">
+                                Nota: <br> 
+                                - Los documentos a subir deben estar en un único archivo y en formato PDF. <br>
+                                - Las constancias de estudios a subir deben estar verificadas por la SUNEDU.
+                                </p>
                                     <div class="col-sm-6">
                                         <div id="containerBoxCV">
                                             PDF
