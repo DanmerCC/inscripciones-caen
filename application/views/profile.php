@@ -456,7 +456,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>1.</td>
-                                                        <td>Solicitud de Inscripción</td>
+                                                        <td>Hoja de datos</td>
                                                         <td>
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
@@ -467,7 +467,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>2.</td>
-                                                        <td>Solicitud de Admisión</td>
+                                                        <td>Solicitud de Inscripcion</td>
                                                         <td>
                                                             <div class="col-md-12">
                                                                 <div class="form-group">

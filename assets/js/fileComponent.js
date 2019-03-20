@@ -48,8 +48,8 @@ function initComponent(target,options=optionsDefault){
 						'</form>'+
 					'</div>'+
 					'<div id="magicContainer"></div>'+
-				'</div>'
-			'</div>'
+				'</div>'+
+			'</div>'+
 		'</div>';
 
 
