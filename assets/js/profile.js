@@ -69,7 +69,7 @@ var configuracion = function(){
         "state":false,
         "target":null,
         "urlUpload":"/postulante/upload/sins",
-        "tittle":"Solicitud de Inscripcion",
+        "tittle":"Solicitud de Admision",
         "identifier":"sins",
 		"urlview":"/admin/view/pdf",           
         "pathInfo":"/file/info",
