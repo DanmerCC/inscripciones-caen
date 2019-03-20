@@ -460,14 +460,14 @@
                                                         <td>
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
-                                                                <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Solicitud-de-Inscripci%C3%B3n.xls" download>Descargar Solicitud de Inscripción</a>
+                                                                <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Solicitud-de-Inscripci%C3%B3n.xls" download>Hoja de datos</a>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>2.</td>
-                                                        <td>Solicitud de Inscripcion</td>
+                                                        <td>Solicitud de Admision</td>
                                                         <td>
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
