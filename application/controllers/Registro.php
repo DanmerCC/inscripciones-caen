@@ -27,11 +27,11 @@ class Registro extends CI_Controller
 	        $apellido_materno = $this->input->post('apellido_materno');
 	        $password         = $this->input->post('password');
             $email            = $this->input->post('email');
-
+			$celphone         = $this->input->post('celphone');
             $programa_id      =$this->input->post('programa_id');
             $tipoFinan          =$this->input->post('tipoFinan');
 
-            if($this->isNotSetArray([$id_usuario_dni,$email,$programa_id,$tipoFinan])){
+            if($this->isNotSetArray([$id_usuario_dni,$email,$programa_id,$tipoFinan,$celphone])){
                 $data["heading"]="Ah ocurrido un error ";
                 $data["message"]="Su cuenta  no se registro intentelo nuevamente";
                 $data["seconds"]="4";
@@ -52,7 +52,7 @@ class Registro extends CI_Controller
 
             /*Captura de errores para primer registro*/
 			$this->load->model('Alumno_model');
-			$alumno = $this->Alumno_model->registrar($apellido_paterno, $apellido_materno, $nombre, $id_usuario_dni,$email);
+			$alumno = $this->Alumno_model->registrar($apellido_paterno, $apellido_materno, $nombre, $id_usuario_dni,$email,$celphone);
             $this->load->model('User_model');
             
             //Agrega una solicitud

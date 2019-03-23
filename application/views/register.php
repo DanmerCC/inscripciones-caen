@@ -36,6 +36,10 @@
         <input type="text" name="apellido_materno" class="form-control" placeholder="APELLIDOS MATERNO" required>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
+			<div class="form-group has-feedback">
+        <input type="tel" name="celphone" class="form-control" placeholder="Numero de contacto" pattern="[0-9]*" required>
+        <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
+      </div>
       <div class="form-group has-feedback">
         <input type="email" name="email" class="form-control" placeholder="Correo" required>
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

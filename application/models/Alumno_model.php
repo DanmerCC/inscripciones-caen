@@ -16,6 +16,7 @@ class Alumno_model extends CI_Model
 	private $check_doct='check_doct_pdf';
 	private $check_sins='check_sins_pdf';
 
+	private $celphone='celular';
 	//*Searcheable columns*//
 	private $apellido_paterno='apellido_paterno';
 	private $apellido_materno='apellido_materno';
@@ -29,7 +30,7 @@ class Alumno_model extends CI_Model
 		$this->load->helper('mihelper');
 	}
 
-	public function registrar($apellido_paterno,$apellido_materno,$nombres,$documento,$email,$idTipoDocumento=1){
+	public function registrar($apellido_paterno,$apellido_materno,$nombres,$documento,$email,$celphone,$idTipoDocumento=1){
 		$data=array(
 			'id_alumno' => NULL,
 			'apellido_paterno' => "$apellido_paterno",
@@ -37,7 +38,8 @@ class Alumno_model extends CI_Model
 			'nombres' => "$nombres",
 			'documento' => "$documento",
 			'idTipoDocumento'=>"$idTipoDocumento",
-			'email'=>$email
+			'email'=>$email,
+			$this->celphone=>$celphone
 		);
 		$this->db->insert('alumno',$data);
 		$ultimoId = $this->db->insert_id();
