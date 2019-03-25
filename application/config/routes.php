@@ -54,7 +54,8 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['login'] = 'Login';
-$route['login/recoverpassword'] = 'Login/recuperarcontrasena';
+$route['login/recoverpassword'] = 'Login/recuperarPassword';
+$route['login/restorepassword'] = 'Login/restablecerPassword';
 
 
 $route['registro'] = 'Registro';

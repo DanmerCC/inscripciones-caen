@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Recuperar Contraseña</title>
+  <title>Restaurar contraseña</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -19,25 +19,28 @@
   <div class="login-box-body">
     <p class="login-box-msg"><strong>Ingrese los datos solicitados</strong></p>
     
-    <form action="/login/enviarCorreo" method="post">
+    <form action="/login/updatePassword" method="post">
       <div class="form-group has-feedback">
-        <input class="form-control" type="email" name="email" placeholder="Ingrese el correo con el que se registro" value="<?php echo set_value('email'); ?>"/>
+        <?php if(isset($email_hash, $email_code)) { ?>
+          <input type="hidden" value="<?php echo $email_hash ?>" name="email_hash"/>
+          <input type="hidden" value="<?php echo $email_code ?>" name="email_code"/>
+        <?php } ?>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" name="password" class="form-control" placeholder="Ingrese su nueva contraseña" required>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" name="password_conf" class="form-control" placeholder="Confirme su nueva contraseña" required>
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Enviar correo</button>
-        </div>
-        <div class="col-xs-12">
-        <a href="http://inscripciones.prueba.com/login" class="text-center" target="_blank">Regresar</a>
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Restaurar contraseña</button>
         </div>
         <!-- /.col -->
       </div>
     </form>
     <?php 
         // echo validation_errors('<p class="error">');
-        if(isset($error)) {
-            echo '<p class="text-danger">'.$error.'</p>';
-        }
         if(isset($success)) {
           echo '<p class="text-success">'.$success.'</p>';
         } 
