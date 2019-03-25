@@ -103,6 +103,9 @@ class FilesController extends CI_Controller {
 			case 'hdatos':
 				$pathFile=CC_BASE_PATH."/files/hojadatos/".$id.".pdf";
 				break;
+			case 'solad':
+				$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
+				break;
 			default:
 				$pathFile="";
 				show_404();
@@ -222,6 +225,17 @@ class FilesController extends CI_Controller {
 				$resultModel["identifier"]='hdatos';
 				$resultModel["id"]=$id;
 				break;
+			case 'solad':
+				$id=$this->input->post('id');
+				$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
+				
+				$resultModel["name"]=$this->nativesession->get('idAlumno');
+				$resultModel["urlDeleting"]="/file/delete/$fileName/$id";
+				$resultModel["removable"]=(file_exists($pathFile));
+				$resultModel["properties"]=[""];
+				$resultModel["identifier"]='solad';
+				$resultModel["id"]=$id;
+				break;
 			default:
 				$pathFile="";
 				show_404();
@@ -273,6 +287,10 @@ public function eliminar($FileType,$id){
 			break;
 		case 'hdatos':
 			$pathFile=CC_BASE_PATH."/files/hojadatos/".$id.".pdf";
+			$nameFile=$id;
+			break;
+		case 'solad':
+			$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
 			$nameFile=$id;
 			break;
 		default:

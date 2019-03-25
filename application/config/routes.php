@@ -87,7 +87,9 @@ $route['postulante/upload/sins'] = 'Postulante/uploadSolicitudInscripcion';
 $route['postulante/download/cv'] = 'Postulante/downloadCv';
 $route['postulante/stateProfileFiles'] = 'Postulante/stateOfProfileFiles';
 $route['solicitud/upload/(:num)'] = 'Solicitud/uploadHojaDeDatos/$1';
+$route['soladmision/upload/(:num)'] = 'Solicitud/upload_sol_admision/$1';
 $route['solicitud/stateFile/(:num)'] = 'Solicitud/stateFile/$1';
+$route['soladmision/stateFile/(:num)'] = 'Solicitud/stateFile_sol_admision/$1';
 
 $route['file/delete/([a-zA-Z]+)/(:num)'] = 'admin/FilesController/eliminar/$1/$2';
 $route['file/info/([a-zA-Z]+)'] = 'admin/FilesController/info/$1';
