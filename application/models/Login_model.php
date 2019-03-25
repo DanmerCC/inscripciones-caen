@@ -8,7 +8,7 @@ class Login_model extends CI_Model
         $result = $this->db->query($sql);
         $row = $result->row();
 
-        return ($result->num_rows() == 1 && $row->email) ? $row->firstname : false;
+        return ($result->num_rows() === 1 && $row->email) ? $row->firstname : false;
     }
 
     public function verificarPassword($email, $code){
@@ -16,7 +16,7 @@ class Login_model extends CI_Model
         $result = $this->db->query($sql);
         $row = $result->row();
 		
-		if($result->num_rows()==1){
+		if($result->num_rows()===1){
 			return ($code == md5($this->config->item('salt').$row->firstname)) ? true : false;
 		} else {
 			return false;

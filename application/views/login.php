@@ -52,6 +52,11 @@
         <!-- /.col -->
       </div>
     </form>
+    <?php
+      if(isset($success)) {
+        echo '<p class="text-success">'.$success.'</p>';
+      } 
+    ?>
   </div>
   <!-- /.login-box-body -->
 </div>

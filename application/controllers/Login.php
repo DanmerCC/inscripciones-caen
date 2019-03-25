@@ -131,10 +131,10 @@ class Login extends CI_Controller {
 			$result = $this->Login_model->updatePassword();
 
 			if($result){
-				$data['success'] = 'Su contraseña ha sido restablecido. Haga<a href="http://inscripciones.prueba.com/login"><strong> click aqui</strong></a> para ingresar al sitio principal.';
+				$data['success'] = 'Su contraseña ha sido restablecido.';
 				$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
 				$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
-				$this->load->view('recover_password/restablecer_contrasena',$data);
+				$this->load->view('login',$data);
 			} else {
 				$data['error'] = 'Problemas para actualizar su password. Por favor contáctenos en: desarrollo.tic@caen.edu.pe';
 				$data['email'] = $email;
