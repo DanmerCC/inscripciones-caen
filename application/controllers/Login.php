@@ -66,10 +66,22 @@ class Login extends CI_Controller {
 
 	//Funcion donde se configura el correo a enviar
 	private function enviarPasswordEmail($email, $firstname){
-		$email_code = md5($this->config->item('salt') . $firstname);
+		$configGmail = array(
+			'protocol' => 'smtp',
+			'smtp_host' => 'ssl://smtp.gmail.com',
+			'smtp_port' => 465,
+			'smtp_user' => 'no-reply@caen.edu.pe',
+			'smtp_pass' => '1qazxsw2$123',
+			'mailtype' => 'html',
+			'charset' => 'utf-8',
+			'newline' => "\r\n"
+		); 
 		
+		$email_code = md5($this->config->item('salt') . $firstname);
+		$this->email->initialize($configGmail);
 		$this->email->set_mailtype('html');
 		$this->email->from($this->config->item('bot_email'), 'CAEN-EPG');
+		// $this->email->from($this->config->item('bot_email'), 'CAEN-EPG');
 		$this->email->to($email);
 		$this->email->subject('Por favor restablezca su contrasena de la intranet del CAEN-EPG');
 		

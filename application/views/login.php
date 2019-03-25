@@ -43,7 +43,7 @@
             <a href="http://caen.edu.pe/publicfiles/GUIA.pdf" class="text-center" target="_blank">Guia del participante</a>
           </div>
           <div class="col-xs-6 text-right">
-            <a href="/login/recoverpassword" target="_blank">Olvide mi contraseña</a>
+            <a href="<?php echo base_url().'login/recoverpassword';?>">Olvide mi contraseña</a>
           </div>
         </div>
         <?php

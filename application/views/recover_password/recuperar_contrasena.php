@@ -28,7 +28,7 @@
           <button type="submit" class="btn btn-primary btn-block btn-flat">Enviar correo</button>
         </div>
         <div class="col-xs-12">
-        <a href="http://inscripciones.prueba.com/login" class="text-center" target="_blank">Regresar</a>
+        <a href="<?php echo base_url().'login';?>" class="text-center">Regresar</a>
         </div>
         <!-- /.col -->
       </div>
