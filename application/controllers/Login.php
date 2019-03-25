@@ -9,6 +9,7 @@ class Login extends CI_Controller {
 		$this->load->library('Nativesession');
 		$this->load->helper('url');
 		$this->load->library('form_validation');
+		$this->load->model('Login_model');
 		$this->load->library('email');
 		$this->load->helper('security'); //Libreria para habilitar xss_clean
 	}
@@ -41,7 +42,6 @@ class Login extends CI_Controller {
 				$this->load->view('recover_password/recuperar_contrasena', $data);
 			} else {
 				$email = trim($this->input->post('email'));
-				$this->load->model('Login_model');
 				$result = $this->Login_model->emailExists($email);
 				
 				if ($result) {
@@ -64,13 +64,12 @@ class Login extends CI_Controller {
 		}	
 	}
 
-	//Funcion donde de configura el correo a enviar
+	//Funcion donde se configura el correo a enviar
 	private function enviarPasswordEmail($email, $firstname){
-		
 		$email_code = md5($this->config->item('salt') . $firstname);
 		
 		$this->email->set_mailtype('html');
-		$this->email->from($this->config->item('bot_email'), 'Freight Forum');
+		$this->email->from($this->config->item('bot_email'), 'CAEN-EPG');
 		$this->email->to($email);
 		$this->email->subject('Por favor restablezca su contrasena de la intranet del CAEN-EPG');
 		
@@ -92,8 +91,7 @@ class Login extends CI_Controller {
 	public function restablecerPassword($email, $email_code){
 		if(isset($email, $email_code)){
 			$email = trim($email);
-			$email_hash = sha1($email.$email_code);
-			$this->load->model('Login_model');
+			$email_hash = sha1($email . $email_code);
 			$verified = $this->Login_model->verificarPassword($email, $email_code);
 			
 			if($verified){
@@ -103,7 +101,6 @@ class Login extends CI_Controller {
 				$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
 				$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
 				$this->load->view('recover_password/restablecer_contrasena',$data);
-
 			} else {
 				$data['error'] = 'Hubo un problema con tu enlace. Por favor haga clic nuevamente o solicite restablecer su contraseña nuevamente.';
 				$data['email'] = $email;
@@ -131,7 +128,6 @@ class Login extends CI_Controller {
 			$this->load->view('login/view_update_password');
 			$this->load->view('includes/footer');
 		}else{
-			$this->load->model('Login_model');
 			$result = $this->Login_model->updatePassword();
 
 			if($result){
