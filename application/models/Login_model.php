@@ -4,15 +4,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Login_model extends CI_Model
 {
     public function emailExists($correo) {
-        $sql = "SELECT a.nombres as firstname, u.correo as email FROM usuario u INNER JOIN alumno a ON a.id_alumno=u.alumno WHERE u.correo = '{$correo}' LIMIT 1";
+        $sql = "SELECT IF(a.nombres IS NULL ,'nombre-sin-registrar',a.nombres) as firstname, u.correo as email FROM usuario u LEFT JOIN alumno a ON a.id_alumno=u.alumno WHERE u.correo = '{$correo}' LIMIT 1";
         $result = $this->db->query($sql);
         $row = $result->row();
-
+		echo var_dump($row);
+		exit;
         return ($result->num_rows() === 1 && $row->email) ? $row->firstname : false;
     }
 
     public function verificarPassword($email, $code){
-        $sql = "SELECT a.nombres as firstname, u.correo as email FROM usuario u INNER JOIN alumno a ON a.id_alumno=u.alumno WHERE u.correo = '{$email}' LIMIT 1";
+        $sql = "SELECT IF(a.nombres IS NULL ,'nombre-sin-registrar',a.nombres) as firstname, u.correo as email FROM usuario u INNER JOIN alumno a ON a.id_alumno=u.alumno WHERE u.correo = '{$email}' LIMIT 1";
         $result = $this->db->query($sql);
         $row = $result->row();
 		

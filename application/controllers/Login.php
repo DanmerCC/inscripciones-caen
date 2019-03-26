@@ -33,7 +33,7 @@ class Login extends CI_Controller {
 	public function enviarCorreo(){		
 		if(isset($_POST['email']) && !empty($_POST['email'])){
 			//Primero compruebo si es el correo electrónico válido o no
-			$this->form_validation->set_rules('email','Email Address','trim|required|min_length[6]|max_length[50]|valid_email|xss_clean');
+			$this->form_validation->set_rules('email','Email Address','trim|required|min_length[6]|max_length[50]|valid_email');
 
 			if ($this->form_validation->run() == FALSE) {
 				$data['error'] = 'Por favor proporcione una dirección de correo electrónico válida';

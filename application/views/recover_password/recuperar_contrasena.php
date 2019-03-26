@@ -34,7 +34,7 @@
       </div>
     </form>
     <?php 
-        // echo validation_errors('<p class="error">');
+        echo validation_errors('<p class="error">');
         if(isset($error)) {
             echo '<p class="text-danger">'.$error.'</p>';
         }
