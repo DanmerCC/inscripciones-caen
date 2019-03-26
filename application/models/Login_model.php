@@ -22,11 +22,10 @@ class Login_model extends CI_Model
 		}
     }
     
-    public function updatePassword() {
+    public function updatePassword($textpassword) {
 		$email = $this->input->post('email');
-		$password = sha1($this->config->item('salt').$this->input->post('password'));
-
-		$sql = "UPDATE usuario SET password = '{$password}' WHERE correo = '{$email}' LIMIT 1";
+		$hashpassword=password_hash($textpassword, PASSWORD_DEFAULT);
+		$sql = "UPDATE usuario SET password = '{$hashpassword}' WHERE correo = '{$email}' LIMIT 1";
 		$this->db->query($sql);
 
 		if ($this->db->affected_rows() === 1){

@@ -141,20 +141,28 @@ class Login extends CI_Controller {
 			$this->load->view('login/view_update_password');
 			$this->load->view('includes/footer');
 		}else{
-			$result = $this->Login_model->updatePassword();
-
-			if($result){
-				$data['success'] = 'Su contraseña ha sido restablecido.';
-				$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
-				$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
-				$this->load->view('login',$data);
-			} else {
+			if($_POST["password"]!=$_POST['password_conf']){
 				$data['error'] = 'Problemas para actualizar su password. Por favor contáctenos en: desarrollo.tic@caen.edu.pe';
 				$data['email'] = $email;
 				$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
 				$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
 				$this->load->view('recover_password/recuperar_contrasena', $data);
+			}else{
+				$result = $this->Login_model->updatePassword($_POST['password']);
+				if($result){
+					$data['success'] = 'Su contraseña ha sido restablecido.';
+					$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
+					$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
+					$this->load->view('login',$data);
+				} else {
+					$data['error'] = 'Problemas para actualizar su password. Por favor contáctenos en: desarrollo.tic@caen.edu.pe';
+					$data['email'] = $email;
+					$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
+					$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
+					$this->load->view('recover_password/recuperar_contrasena', $data);
+				}
 			}
+			
 		}
 	}
 }
