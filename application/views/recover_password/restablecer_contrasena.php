@@ -21,7 +21,8 @@
     
     <form action="/login/updatePassword" method="post">
       <div class="form-group has-feedback">
-        <?php if(isset($email_hash, $email_code)) { ?>
+        <?php if(isset($email_hash, $email_code,$email)) { ?>
+          <input type="hidden" value="<?php echo $email ?>" name="email"/>
           <input type="hidden" value="<?php echo $email_hash ?>" name="email_hash"/>
           <input type="hidden" value="<?php echo $email_code ?>" name="email_code"/>
         <?php } ?>
