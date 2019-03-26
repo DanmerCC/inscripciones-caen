@@ -70,7 +70,7 @@ class Login extends CI_Controller {
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.gmail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'no-reply@caen.edu.pe',
+			'smtp_user' => 'no_reply@caen.edu.pe',
 			'smtp_pass' => '1qazxsw2$123',
 			'mailtype' => 'html',
 			'charset' => 'utf-8',
