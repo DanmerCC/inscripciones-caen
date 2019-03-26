@@ -18,7 +18,7 @@ class Login extends CI_Controller {
 	{
 		$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
 		$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
-		$data['action'] = "postulante/verificacion";
+		$data['action'] = base_url()."postulante/verificacion";
 		$this->load->view('login',$data);
 	}
 
@@ -128,6 +128,7 @@ class Login extends CI_Controller {
 		if(!isset($_POST['email'], $_POST['email_hash']) || $_POST['email_hash'] !== sha1($_POST['email'].$_POST['email_code'])){
 			die("Error al actualizar su password");
 		}
+		$email=$_POST["email"];
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('email_hash', 'Email Hash', 'trim|required');
