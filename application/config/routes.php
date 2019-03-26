@@ -55,7 +55,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['login'] = 'Login';
 $route['login/recoverpassword'] = 'Login/recuperarPassword';
-$route['login/restorepassword'] = 'Login/restablecerPassword';
+$route['login/restorepassword/(^[^@]+@[^@]+\.[a-zA-Z]{2,}$)/([A-Za-z0-9]+)'] = 'Login/restablecerPassword/$1/$2';
 
 
 $route['registro'] = 'Registro';
