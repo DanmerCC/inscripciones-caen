@@ -18,7 +18,7 @@ class Login extends CI_Controller {
 	{
 		$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
 		$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
-		$data['action'] = base_url()."postulante/verificacion";
+		$data['action'] = "postulante/verificacion";
 		$this->load->view('login',$data);
 	}
 
@@ -33,7 +33,7 @@ class Login extends CI_Controller {
 	public function enviarCorreo(){		
 		if(isset($_POST['email']) && !empty($_POST['email'])){
 			//Primero compruebo si es el correo electrónico válido o no
-			$this->form_validation->set_rules('email','Email Address','trim|required|min_length[6]|max_length[50]|valid_email');
+			$this->form_validation->set_rules('email','Email Address','trim|required|min_length[6]|max_length[50]|valid_email|xss_clean');
 
 			if ($this->form_validation->run() == FALSE) {
 				$data['error'] = 'Por favor proporcione una dirección de correo electrónico válida';
@@ -42,7 +42,7 @@ class Login extends CI_Controller {
 				$this->load->view('recover_password/recuperar_contrasena', $data);
 			} else {
 				$email = trim($this->input->post('email'));
-				$result = $this->Login_model->emailExists($email);
+				$result = $this->Login_model->validityEmail_Existence($email);
 				
 				if ($result) {
 					$this->enviarPasswordEmail($email, $result);		
@@ -51,13 +51,14 @@ class Login extends CI_Controller {
 					$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
 					$this->load->view('recover_password/recuperar_contrasena', $data);
 				} else {
-					$data['error'] = 'Dirección de correo no registrado.';
+					$data['error'] = 'Dirección de correo no registrado o no tiene permitido el cambio de contraseña.';
 					$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
 					$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
 					$this->load->view('recover_password/recuperar_contrasena', $data);
 				}
 			}
 		} else {
+			$data['error'] = 'El campo de correo no debe estar vacío.';
 			$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
 			$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
 			$this->load->view('recover_password/recuperar_contrasena', $data);
@@ -70,7 +71,7 @@ class Login extends CI_Controller {
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.gmail.com',
 			'smtp_port' => 465,
-			'smtp_user' => 'no_reply@caen.edu.pe',
+			'smtp_user' => 'no-reply@caen.edu.pe',
 			'smtp_pass' => '1qazxsw2$123',
 			'mailtype' => 'html',
 			'charset' => 'utf-8',
@@ -78,10 +79,9 @@ class Login extends CI_Controller {
 		); 
 		
 		$email_code = md5($this->config->item('salt') . $firstname);
-		$this->email->initialize($configGmail);
+		// $this->email->initialize($configGmail);
 		$this->email->set_mailtype('html');
 		$this->email->from($this->config->item('bot_email'), 'CAEN-EPG');
-		// $this->email->from($this->config->item('bot_email'), 'CAEN-EPG');
 		$this->email->to($email);
 		$this->email->subject('Por favor restablezca su contrasena de la intranet del CAEN-EPG');
 		
@@ -128,7 +128,6 @@ class Login extends CI_Controller {
 		if(!isset($_POST['email'], $_POST['email_hash']) || $_POST['email_hash'] !== sha1($_POST['email'].$_POST['email_code'])){
 			die("Error al actualizar su password");
 		}
-		$email=$_POST["email"];
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('email_hash', 'Email Hash', 'trim|required');
@@ -141,29 +140,20 @@ class Login extends CI_Controller {
 			$this->load->view('login/view_update_password');
 			$this->load->view('includes/footer');
 		}else{
-			if($_POST["password"]!=$_POST['password_conf']){
+			$result = $this->Login_model->updatePassword();
+
+			if($result){
+				$data['success'] = 'Su contraseña ha sido restablecido.';
+				$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
+				$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
+				$this->load->view('login',$data);
+			} else {
 				$data['error'] = 'Problemas para actualizar su password. Por favor contáctenos en: desarrollo.tic@caen.edu.pe';
 				$data['email'] = $email;
 				$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
 				$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
 				$this->load->view('recover_password/recuperar_contrasena', $data);
-			}else{
-				$result = $this->Login_model->updatePassword($_POST['password']);
-				if($result){
-					$data['success'] = 'Su contraseña ha sido restablecido.';
-					$data['action'] = base_url()."postulante/verificacion";
-					$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
-					$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
-					$this->load->view('login',$data);
-				} else {
-					$data['error'] = 'Problemas para actualizar su password. Por favor contáctenos en: desarrollo.tic@caen.edu.pe';
-					$data['email'] = $email;
-					$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
-					$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
-					$this->load->view('recover_password/recuperar_contrasena', $data);
-				}
 			}
-			
 		}
 	}
 }

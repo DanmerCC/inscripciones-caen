@@ -3,8 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login_model extends CI_Model
 {
-    public function emailExists($correo) {
-        $sql = "SELECT IF(a.nombres IS NULL ,'nombre-sin-registrar',a.nombres) as firstname, u.correo as email FROM usuario u LEFT JOIN alumno a ON a.id_alumno=u.alumno WHERE u.correo = '{$correo}' LIMIT 1";
+    public function validityEmail_Existence($correo) {
+		$tipoAlumno = 1;
+        $sql = "SELECT IF(a.nombres IS NULL ,'nombre-sin-registrar',a.nombres) as firstname, u.correo as email FROM usuario u LEFT JOIN alumno a ON a.id_alumno=u.alumno WHERE u.correo = '{$correo}' AND u.tipousuario = {$tipoAlumno} LIMIT 1";
         $result = $this->db->query($sql);
         $row = $result->row();
         return ($result->num_rows() === 1 && $row->email) ? $row->firstname : false;
@@ -23,6 +24,7 @@ class Login_model extends CI_Model
     }
     
     public function updatePassword($textpassword) {
+
 		$email = $this->input->post('email');
 		$hashpassword=password_hash($textpassword, PASSWORD_DEFAULT);
 		$sql = "UPDATE usuario SET password = '{$hashpassword}' WHERE correo = '{$email}' LIMIT 1";
