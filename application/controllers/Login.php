@@ -105,7 +105,7 @@ class Login extends CI_Controller {
 			$email = trim($email);
 			$email_hash = sha1($email . $email_code);
 			$verified = $this->Login_model->verificarPassword($email, $email_code);
-			if(isValidEmail($email) === true){
+			if($this->isValidEmail($email) === true){
 				if($verified){
 					$data['email_hash'] = $email_hash;
 					$data['email_code'] = $email_code;
