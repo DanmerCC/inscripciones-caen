@@ -79,7 +79,7 @@ class Login extends CI_Controller {
 		); 
 		
 		$email_code = md5($this->config->item('salt') . $firstname);
-		// $this->email->initialize($configGmail);
+		$this->email->initialize($configGmail);
 		$this->email->set_mailtype('html');
 		$this->email->from($this->config->item('bot_email'), 'CAEN-EPG');
 		$this->email->to($email);
@@ -105,22 +105,34 @@ class Login extends CI_Controller {
 			$email = trim($email);
 			$email_hash = sha1($email . $email_code);
 			$verified = $this->Login_model->verificarPassword($email, $email_code);
-			
-			if($verified){
-				$data['email_hash'] = $email_hash;
-				$data['email_code'] = $email_code;
-				$data['email'] = $email;
-				$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
-				$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
-				$this->load->view('recover_password/restablecer_contrasena',$data);
-			} else {
-				$data['error'] = 'Hubo un problema con tu enlace. Por favor haga clic nuevamente o solicite restablecer su contraseña nuevamente.';
+			if(isValidEmail($email) === true){
+				if($verified){
+					$data['email_hash'] = $email_hash;
+					$data['email_code'] = $email_code;
+					$data['email'] = $email;
+					$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
+					$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
+					$this->load->view('recover_password/restablecer_contrasena',$data);
+				} else {
+					$data['error'] = 'Hubo un problema con tu enlace. Por favor haga clic nuevamente o solicite restablecer su contraseña nuevamente.';
+					$data['email'] = $email;
+					$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
+					$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
+					$this->load->view('recover_password/recuperar_contrasena', $data);
+				}
+			}else{
+				$data['error'] = 'El link redireccionado no es válido.';
 				$data['email'] = $email;
 				$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
 				$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
 				$this->load->view('recover_password/recuperar_contrasena', $data);
 			}
 		}
+	}
+
+	//Este código verifica si la dirección URL del correo es válido
+	function isValidEmail($email){
+		return filter_var($email, FILTER_VALIDATE_EMAIL) ? true : false;
 	}
 
 	//Se hace la actualizacion del password
