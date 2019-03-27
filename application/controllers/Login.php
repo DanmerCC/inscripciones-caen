@@ -152,7 +152,7 @@ class Login extends CI_Controller {
 			$this->load->view('login/view_update_password');
 			$this->load->view('includes/footer');
 		}else{
-			$result = $this->Login_model->updatePassword();
+			$result = $this->Login_model->updatePassword($_POST['password']);
 
 			if($result){
 				$data['success'] = 'Su contraseña ha sido restablecido.';
