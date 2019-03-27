@@ -155,6 +155,7 @@ class Login extends CI_Controller {
 			$result = $this->Login_model->updatePassword($_POST['password']);
 
 			if($result){
+				$data['action'] = base_url()."postulante/verificacion";
 				$data['success'] = 'Su contraseña ha sido restablecido.';
 				$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
 				$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
