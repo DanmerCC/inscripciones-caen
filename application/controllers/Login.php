@@ -10,6 +10,7 @@ class Login extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->library('form_validation');
 		$this->load->model('Login_model');
+		$this->load->model('Token_model');
 		$this->load->library('email');
 		$this->load->helper('security'); //Libreria para habilitar xss_clean
 	}
@@ -66,7 +67,7 @@ class Login extends CI_Controller {
 	}
 
 	//Funcion donde se configura el correo a enviar
-	private function enviarPasswordEmail($email, $firstname){
+	private function enviarPasswordEmail($email, /*$firstname*/ $id){
 		$configGmail = array(
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.gmail.com',
@@ -76,9 +77,9 @@ class Login extends CI_Controller {
 			'mailtype' => 'html',
 			'charset' => 'utf-8',
 			'newline' => "\r\n"
-		); 
-		
-		$email_code = md5($this->config->item('salt') . $firstname);
+		);
+		$email_code = $this->Token_model->create_requestHash($id);
+		echo $email_code; 
 		$this->email->initialize($configGmail);
 		$this->email->set_mailtype('html');
 		$this->email->from($this->config->item('bot_email'), 'CAEN-EPG');
@@ -89,7 +90,8 @@ class Login extends CI_Controller {
 					"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html>
 					<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 					</head><body>';
-		$message .= '<p>Querido '.$firstname.',</p>';
+		// $message .= '<p>Querido '.$firstname.',</p>';
+		$message .= '<p>Querido postulante,</p>';
 		$message .= '<p>¡Queremos ayudarte a restablecer tu contrasena! Por favor haga <strong><a href="'.base_url().'login/restorepassword/'.$email.'/'.$email_code.'">click aqui</a></strong> para reestablecer tu password.</p>';
 		$message .= '<p>Gracias</p>';
 		$message .= '<p>El equipo de tecnologias del CAEN-EPG</p>';
@@ -104,8 +106,10 @@ class Login extends CI_Controller {
 		if(isset($email, $email_code)){
 			$email = trim($email);
 			$email_hash = sha1($email . $email_code);
-			$verified = $this->Login_model->verificarPassword($email, $email_code);
-			if($this->isValidEmail($email) === true){
+			$verified_hash = $this->Token_model->verificar_requestHash($email_code);
+
+			if($this->isValidEmail($email) === true && $verified_hash === true){
+				$verified = $this->Login_model->verificarPassword($email, $email_code);
 				if($verified){
 					$data['email_hash'] = $email_hash;
 					$data['email_code'] = $email_code;
