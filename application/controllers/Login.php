@@ -79,7 +79,6 @@ class Login extends CI_Controller {
 			'newline' => "\r\n"
 		);
 		$email_code = $this->Token_model->create_requestHash($id);
-		echo $email_code; 
 		$this->email->initialize($configGmail);
 		$this->email->set_mailtype('html');
 		$this->email->from($this->config->item('bot_email'), 'CAEN-EPG');
@@ -108,7 +107,7 @@ class Login extends CI_Controller {
 			$email_hash = sha1($email . $email_code);
 			$verified_hash = $this->Token_model->verificar_requestHash($email_code);
 
-			if($this->isValidEmail($email) === true && $verified_hash === true){
+			if($this->isValidEmail($email) === true && $verified_hash == true){
 				$verified = $this->Login_model->verificarPassword($email, $email_code);
 				if($verified){
 					$data['email_hash'] = $email_hash;

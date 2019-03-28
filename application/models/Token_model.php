@@ -19,7 +19,6 @@ class Token_model extends CI_Model
 		);
 		$this->db->insert($this->table, $data);
         $lastid = $this->db->insert_id();
-        echo $lastid;
 		$sql2 = "SELECT * FROM $this->table WHERE $this->id = '{$lastid}'";
 		$result = $this->db->query($sql2);
 		$row = $result->row();
@@ -29,7 +28,8 @@ class Token_model extends CI_Model
 
 	public function verificar_requestHash($code){
 		$hashstate_one = 0;
-		$lastid = $this->db->insert_id();
+        $lastid = $this->db->insert_id();
+        echo $lastid;
 		$first_query = "SELECT * FROM $this->table WHERE $this->state = '{$hashstate_one}' AND $this->id='{$lastid}'";
         $result = $this->db->query($first_query);
 		$row = $result->row();
