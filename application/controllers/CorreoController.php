@@ -17,8 +17,8 @@ class CorreoController extends CI_Controller
 			'smtp_host' => 'ssl://smtp.gmail.com',
 			'smtp_port' => 465,
 			//'smtp_user' => 'programador1@caen.edu.pe',
-			'smtp_user' => 'danmerccoscco@gmail.com',
-			'smtp_pass' => '/Canibal0010',
+			'smtp_user' => 'no-reply@caen.edu.pe',
+			'smtp_pass' => '1qazxsw2$123',
 			'mailtype' => 'html',
 			'charset' => 'utf-8',
 			'newline' => "\r\n"
