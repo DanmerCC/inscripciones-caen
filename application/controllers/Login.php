@@ -102,14 +102,10 @@ class Login extends CI_Controller {
 
 	//Funcion para activar la vista de Reestablecer contraseña
 	public function restablecerPassword($email, $email_code){
-		if(isset($email, $email_code)){
-			$email = trim($email);
+		if($this->isValidEmail($email) && isset($email, $email_code)){
 			$email_hash = sha1($email . $email_code);
-			$verified_hash = $this->Token_model->verificar_requestHash($email_code);
-
-			if($this->isValidEmail($email) === true && $verified_hash == true){
-				$verified = $this->Login_model->verificarPassword($email, $email_code);
-				if($verified){
+			$isvalid_hash = $this->Token_model->verificar_requestHash($email_code);
+				if($isvalid_hash){
 					$data['email_hash'] = $email_hash;
 					$data['email_code'] = $email_code;
 					$data['email'] = $email;
@@ -123,13 +119,6 @@ class Login extends CI_Controller {
 					$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
 					$this->load->view('recover_password/recuperar_contrasena', $data);
 				}
-			}else{
-				$data['error'] = 'El link redireccionado no es válido.';
-				$data['email'] = $email;
-				$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
-				$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
-				$this->load->view('recover_password/recuperar_contrasena', $data);
-			}
 		}
 	}
 
@@ -140,8 +129,12 @@ class Login extends CI_Controller {
 
 	//Se hace la actualizacion del password
 	public function updatePassword() {
+		
 		if(!isset($_POST['email'], $_POST['email_hash']) || $_POST['email_hash'] !== sha1($_POST['email'].$_POST['email_code'])){
+			
 			die("Error al actualizar su password");
+			
+			exit;
 		}
 		$this->load->library('form_validation');
 
@@ -151,9 +144,10 @@ class Login extends CI_Controller {
 		$this->form_validation->set_rules('password_conf', 'Confirmed Password', 'trim|required|min_length[6]|max_length[50]|xss_clean');
 
 		if($this->form_validation->run() == FALSE){
-			$this->load->view('includes/header');
-			$this->load->view('login/view_update_password');
-			$this->load->view('includes/footer');
+			$data['error'] = 'Por favor proporcione los datos correctamente';
+			$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
+			$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
+			$this->load->view('recover_password/restablecer_contrasena', $data);
 		}else{
 			$result = $this->Login_model->updatePassword($_POST['password']);
 

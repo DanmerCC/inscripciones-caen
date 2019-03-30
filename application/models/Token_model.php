@@ -9,36 +9,59 @@ class Token_model extends CI_Model
     private $id_usuario = 'id_usuario';
     private $time_stamp = 'time_stamp';
     private $state = 'state';
-    private $hash_create = 'hash_create';
+	private $hash_create = 'hash_create';
 
     public function create_requestHash($id_usu){
+		//create a new register
 		$hash_state = 0;
 		$data = array(
 			$this->id_usuario => $id_usu,
 			$this->state => $hash_state
 		);
-		$this->db->insert($this->table, $data);
-        $lastid = $this->db->insert_id();
-		$sql2 = "SELECT * FROM $this->table WHERE $this->id = '{$lastid}'";
-		$result = $this->db->query($sql2);
-		$row = $result->row();
+		$this->db->trans_start();
+			$this->db->insert($this->table, $data);
+			$lastid = $this->db->insert_id();
+			
+			//get a new register
+			$this->db->select();
+			$this->db->from($this->table);
+			$this->db->where($this->id,$lastid);
+			$result = $this->db->get();
+			$row = $result->row();
 
-		return ($result->num_rows() === 1) ? md5($row->id . $row->id_usuario . $row->time_stamp) : false;
+			//update register with a hash md5
+			$this->db->where($this->id,$lastid);
+			$tokendata=array(
+				$this->hash_create=>md5($row->id . $row->id_usuario . $row->time_stamp)
+			);
+			$this->db->update($this->table,$tokendata);
+
+			//Select a register complete from table
+			$this->db->select();
+			$this->db->from($this->table);
+			$this->db->where($this->id,$lastid);
+			$complete_record = $this->db->get();
+			$row_complete_record = $complete_record->row();
+		$this->db->trans_complete();
+		return ($complete_record->num_rows() === 1) ? $row_complete_record->hash_create : false;
 	}
 
 	public function verificar_requestHash($code){
-		$hashstate_one = 0;
-        $lastid = $this->db->insert_id();
-        echo $lastid;
-		$first_query = "SELECT * FROM $this->table WHERE $this->state = '{$hashstate_one}' AND $this->id='{$lastid}'";
-        $result = $this->db->query($first_query);
-		$row = $result->row();
 		
+		$result = $this->db->select("*,time_stamp > '".date('Y-m-d H:i:s', strtotime('-30 minute'))."' as calculo ,'".date('Y-m-d H:i:s', strtotime('-30 minute'))."'")->from($this->table)->where(
+					array(
+						$this->hash_create=>$code,
+						$this->state=>0,
+						$this->time_stamp." > "=>date('Y-m-d H:i:s', strtotime('-30 minute'))
+					)
+				)->get();
+		$row = $result->row();
 		if($result->num_rows()===1){
-			$hashstate_two = 1;
-			$second_query = "UPDATE $this->table SET $this->state = {$hashstate_two}, $this->hash_create = '{$code}' WHERE $this->id='{$lastid}'";
-			$this->db->query($second_query);
-			return true;
+			$this->db->where($this->id,$row->id);
+			$this->db->update($this->table,array(
+				$this->state=>1
+			));
+			return $row->id;
 		} else {
 			return false;
 		}

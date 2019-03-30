@@ -56,6 +56,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'Login';
 $route['login/recoverpassword'] = 'Login/recuperarPassword';
 $route['login/restorepassword/(:any)/([A-Za-z0-9]+)'] = 'Login/restablecerPassword/$1/$2';
+$route['login/updatePassword'] = 'Login/updatePassword';
 
 
 $route['registro'] = 'Registro';

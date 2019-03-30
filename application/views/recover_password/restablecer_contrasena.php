@@ -44,6 +44,13 @@
         // echo validation_errors('<p class="error">');
         if(isset($success)) {
           echo '<p class="text-success">'.$success.'</p>';
+				}
+				echo validation_errors('<p class="error">');
+        if(isset($error)) {
+            echo '<p class="text-danger">'.$error.'</p>';
+        }
+        if(isset($success)) {
+          echo '<p class="text-success">'.$success.'</p>';
         } 
     ?>
   </div>
