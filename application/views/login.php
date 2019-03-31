@@ -9,6 +9,7 @@
   <!-- Bootstrap 3.3.7 -->
 	<?=$cabecera?>
 	<link rel="stylesheet" href="/assets/css/login.css">
+	
 </head>
 <body class="hold-transition login-page bg-caen">
 <div class="login-box">
@@ -47,11 +48,17 @@
         <!-- /.col -->
       </div>
     </form>
+		<form action="?" method="POST">
+      <div class="g-recaptcha" data-sitekey="6Lc2LJsUAAAAAFsRnD-cEQfFp8o-vlyMUQmT0N0R"></div>
+      <br/>
+      <input type="submit" value="Submit">
+    </form>
   </div>
   <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
 
 <?=$footer?>
+<script src="https://www.google.com/recaptcha/api.js"></script>
 </body>
 </html>
