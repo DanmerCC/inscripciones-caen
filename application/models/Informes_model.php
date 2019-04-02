@@ -51,6 +51,17 @@ class Informes_model extends CI_Model
 		$query = $this->DB2->query('SELECT * FROM '.$this->table);
 		return $query->num_rows();
 	}
+
+	public function countByFilter($columnFilter,$value){
+		$filters=[
+			$this->condicion,
+		];
+		if(in_array($columnFilter,$filters)){
+			$result=$this->select()->from($this->table)->where($columnFilter,$value)->get();
+			return $result->num_rows();
+		}
+		return NULL;
+	}
 	
 	public function getLastQueries($limit){
 		$this->DB2->select($this->consulta.','.$this->fecha.','.$this->nombres.','.$this->programa.','.$this->condicion);
