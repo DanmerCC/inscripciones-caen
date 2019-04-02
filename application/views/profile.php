@@ -136,11 +136,17 @@
                                                 <input type="text" class="form-control" id="grado_militar" name="grado_militar" readonly="readonly">
                                             </div>
                                             <div class="col-sm-2">
-                                                <label>Plana militar</label>
-                                                <input type="text" class="form-control" id="plana_militar" name="plana_militar" readonly="readonly">
+                                                <label>Institucion </label>
+                                                <select class="form-control" name="plana_militar" id="plana_militar" disabled="disabled">
+                                                    <option disabled selected value>Elija una opción</option>
+                                                    <option value="MARINA">Marina de guerra del Perú</option>
+                                                    <option value="EJERCITO">Ejército del Perú</option>
+                                                    <option value="FAP">Fuerza Aérea del Perú</option>
+                                                    <option value="PNP">Policia Nacional del Perú</option>
+                                                </select>
                                             </div>
                                             <div class="col-sm-2">
-                                                <label>CIP<span style="color: red">(Militar)</span></label>
+                                                <label>CIP<span style="color: red">(Insitucion)</span></label>
                                                 <input type="text" class="form-control" id="cip_militar" name="cip_militar" readonly="readonly">
                                             </div>
                                             <div class="col-sm-4">
@@ -280,7 +286,7 @@
                                                     <option value="planilla">En planilla</option>
                                                     <option value="independiente">Independiente</option>
                                                     <option value="cas">CAS</option>
-                                                    <option value="locador">Locador de servicios</option>
+                                                    <option value="dl276">D.L. 276</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -739,6 +745,14 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
+                                            <div class="col-sm-4">
+                                                <label>Presenta alguna Discapacidad?<span style="color: red"></span></label>
+                                                <input class="form-control" type="text" id="desc_discapacidad" name="desc_discapacidad" placeholder="Especificar de ser el caso">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
                                             <div class="col-sm-12">
                                                 <button type="sumbit" class="btn btn-primary btn-lg right" id="btnSalud">Guardar</button>
                                             </div>
@@ -837,6 +851,47 @@
                             </form>         
                         </div>
                     </div>
+                    <!--otros datos-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse11">OTROS DATOS</a>
+                            </h4>
+                        </div>
+                        <div id="collapse11" class="panel-collapse collapse">
+                            <form action="postulante/guardar/otros" method="post" name="formulario" id="formulario" class="form-horizontal">
+                                <div class=" panel-body">
+                                        <div class="container form-group">
+                                            <div class="row">
+                                                <div class="col-sm-10">
+                                                    <label>Marque de corresponder<span style="color: red"></span></label>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                        <input type="checkbox" name="def_patria" id="def_patria" value="1">
+                                                            Soy Defensor de la patria
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                        <input type="checkbox" name="def_democracia" id="def_democracia" value="1">
+                                                            Soy Defensor de la democracia
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <button type="sumbit" class="btn btn-primary btn-lg right" id="btnSalud">Guardar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                           
+                                </div>
+                            </form>         
+                        </div>
+                    </div>
+                    <!--otros datos-->
                   </div><!-- end acordion -->
               </div>
 

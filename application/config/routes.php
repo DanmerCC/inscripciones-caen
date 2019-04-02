@@ -74,6 +74,7 @@ $route['postulante/guardar/laboral'] = 'Postulante/cargaLaboral';
 $route['postulante/guardar/academico'] = 'Postulante/cargaAcademico';
 $route['postulante/guardar/salud'] = 'Postulante/cargaSalud';
 $route['postulante/guardar/referencia'] = 'Postulante/cargaReferencia';
+$route['postulante/guardar/otros'] = 'Postulante/cargaOtros';
 $route['postulante/salir'] = 'Postulante/cerrarSession';
 $route['postulante/solicitar'] = 'Postulante/solicitud';
 $route['postulante/pdf/(:num)'] = 'Solicitud/pdf/$1';
