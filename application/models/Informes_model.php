@@ -57,7 +57,7 @@ class Informes_model extends CI_Model
 			$this->condicion,
 		];
 		if(in_array($columnFilter,$filters)){
-			$result=$this->select()->from($this->table)->where($columnFilter,$value)->get();
+			$result=$this->DB2->select()->from($this->table)->where($columnFilter,$value)->get();
 			return $result->num_rows();
 		}
 		return NULL;
