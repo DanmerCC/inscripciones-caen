@@ -16,7 +16,7 @@ class InformesController extends CI_Controller
     public function report(){
         $pageDefault=10;
         $cantidad=$this->Informes_model->count();
-        $atendidos=$this->Informes_model->countByFilter('condicion',0);
+        $atendidos=$this->Informes_model->countByFilter('condicion',1);
         $consultas=$this->Informes_model->getLastQueries($pageDefault);
         $result["status"]="OK";
         $result["result"]=[
