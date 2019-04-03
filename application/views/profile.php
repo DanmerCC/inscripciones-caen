@@ -802,6 +802,8 @@
                             </form>         
                         </div>
                     </div>
+
+                    <!-- PARTE DEL DISEÑO A MODIFICAR -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
@@ -814,8 +816,8 @@
                                 <div class=" panel-body">
                                         <div class="container form-group">
                                             <div class="row">
-                                                <div class="col-sm-10">
-                                                    <label>Lista de solicitudes hechas por usted<span style="color: red">(*)</span></label>
+                                                <div class="col-sm-12">
+                                                    <label>Lista de solicitudes hechas por usted <span style="color: red">(*)</span></label>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -851,6 +853,8 @@
                             </form>         
                         </div>
                     </div>
+                    <!-- FIN PARTE DEL DISEÑO A MODIFICAR -->
+
                     <!--otros datos-->
                     <div class="panel panel-default">
                         <div class="panel-heading">
