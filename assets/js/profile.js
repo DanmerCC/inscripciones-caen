@@ -160,7 +160,8 @@ var configuracion = function(){
     relacionarColapseLi('#aSolicitudes','#collapse8');
     relacionarColapseLi('#aDocs','#collapse9');
     relacionarColapseLi('#formatesPanel','#collapse10');
-
+    relacionarColapseLi('#aInfOtros','#collapse11');
+    
 	reflejarDatos("#t_enfermedad_asma");
 	reflejarDatos("#t_enfermedad_arterial");
 	reflejarDatos("#t_enfermedad_diabetes");
