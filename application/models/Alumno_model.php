@@ -15,6 +15,9 @@ class Alumno_model extends CI_Model
 	private $check_maes='check_maes_pdf';
 	private $check_doct='check_doct_pdf';
 	private $check_sins='check_sins_pdf';
+	
+	//*Salud Data
+	private $desc_discapacidad='espec_discapacidad';
 
 	private $celphone='celular';
 	//*Searcheable columns*//
@@ -222,7 +225,8 @@ class Alumno_model extends CI_Model
 		$telefono_seguro,
 		$emergencia_familiar,
 		$telefono_familiar,
-		$parentesco
+		$parentesco,
+		$discapacidad
 	){
 
 		$data = array(
@@ -233,12 +237,21 @@ class Alumno_model extends CI_Model
 			'telefono_seguro'=>$telefono_seguro,
 			'emergencia_familiar'=>$emergencia_familiar,
 			'telefono_familiar'=>$telefono_familiar,
-			'parentesco'=>$parentesco
+			'parentesco'=>$parentesco,
+			$this->desc_discapacidad=>$discapacidad
         );
         $this->db->where('id_alumno', $id);
         return $this->db->update('alumno', $data);
 	}
 
+	public function updateOtros($def_patria=null,$def_democracia){
+		$data = array(
+			'def_patria'=>$def_patria,
+			'def_democracia'=>$def_democracia
+		);
+		return $this->db->update($this->table,$data);
+
+	}
 
 	public function updateInformacionReferencias($id,$referencia_personal1,$referencia_personal2){
 		$data = array(

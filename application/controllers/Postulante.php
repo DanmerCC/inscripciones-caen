@@ -87,6 +87,10 @@ class Postulante extends CI_Controller {
 							[
 								"text"=>"Referencias",
 								"atributos"=>"id='aInfReferencias' data-toggle='collapse' data-parent='#accordion' href='#collapse6'"
+							],
+							[
+								"text"=>"Otros",
+								"atributos"=>"id='aInfOtros' data-toggle='collapse' data-parent='#accordion' href='#collapse11'"
 							]
 						],
 					"active"=>true
@@ -404,7 +408,7 @@ class Postulante extends CI_Controller {
 		$emergencia_familiar=$this->input->post('emergencia_familiar');
 		$telefono_familiar=$this->input->post('telefono_familiar');
 		$parentesco=$this->input->post('parentesco');
-
+		$desc_discapacidad=$this->input->post('desc_discapacidad');
 
 		$temp=array();
 
@@ -428,7 +432,7 @@ class Postulante extends CI_Controller {
 		$telefono_seguro,
 		$emergencia_familiar,
 		$telefono_familiar,
-		$parentesco);
+		$parentesco,$desc_discapacidad);
 
 		redirect(base_url().'postulante', 'refresh');
 	}
@@ -443,6 +447,14 @@ class Postulante extends CI_Controller {
 		$this->load->model('Alumno_model');
 		$this->Alumno_model->updateInformacionReferencias($id,$referencia_personal1,$referencia_personal2);
 
+		redirect(base_url().'postulante', 'refresh');
+	}
+
+	public function cargaOtros(){
+		$this->load->model('Alumno_model');
+		$def_patria=($this->input->post('def_patria')=='1');
+		$def_democracia=($this->input->post('def_democracia')=='1');
+		$this->Alumno_model->updateOtros($def_patria,$def_democracia);
 		redirect(base_url().'postulante', 'refresh');
 	}
 

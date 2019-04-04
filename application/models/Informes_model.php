@@ -9,6 +9,7 @@ class Informes_model extends CI_Model
 	private $fecha='fecha_consulta';
 	private $nombres='nombres_apellidos';
 	private $programa='programa';
+	private $condicion='condicion';
 
 	public function __construct()
 	{
@@ -50,9 +51,20 @@ class Informes_model extends CI_Model
 		$query = $this->DB2->query('SELECT * FROM '.$this->table);
 		return $query->num_rows();
 	}
+
+	public function countByFilter($columnFilter,$value){
+		$filters=[
+			$this->condicion,
+		];
+		if(in_array($columnFilter,$filters)){
+			$result=$this->DB2->select()->from($this->table)->where($columnFilter,$value)->get();
+			return $result->num_rows();
+		}
+		return NULL;
+	}
 	
 	public function getLastQueries($limit){
-		$this->DB2->select($this->consulta.','.$this->fecha.','.$this->nombres.','.$this->programa);
+		$this->DB2->select($this->consulta.','.$this->fecha.','.$this->nombres.','.$this->programa.','.$this->condicion);
 		$this->DB2->from($this->table);
 		$this->DB2->limit($limit);
 		$this->DB2->order_by($this->fecha,'DESC');

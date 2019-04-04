@@ -161,7 +161,8 @@ var configuracion = function(){
     relacionarColapseLi('#aSolicitudes','#collapse8');
     relacionarColapseLi('#aDocs','#collapse9');
     relacionarColapseLi('#formatesPanel','#collapse10');
-
+    relacionarColapseLi('#aInfOtros','#collapse11');
+    
 	reflejarDatos("#t_enfermedad_asma");
 	reflejarDatos("#t_enfermedad_arterial");
 	reflejarDatos("#t_enfermedad_diabetes");
@@ -237,13 +238,25 @@ var configuracion = function(){
         		$("#experiencia_laboral2").val(datos[i].experiencia_laboral2);
         		$("#fecha_inicio2").val(datos[i].fecha_inicio2);
         		$("#fecha_fin2").val(datos[i].fecha_fin2);
-
+                $("#desc_discapacidad").val(datos[i].espec_discapacidad);
                 
                 //$("#si_militar").val(datos[i].si_militar);
                 if (datos[i].si_militar=='1') {
                     $("#si_militar").prop('checked','checked');
                 }else{
                     $("#si_militar").prop('checked','');
+                }
+
+                if (datos[i].def_democracia=='1') {
+                    $("#def_democracia").prop('checked','checked');
+                }else{
+                    $("#def_democracia").prop('checked','');
+                }
+                
+                if (datos[i].def_patria=='1') {
+                    $("#def_patria").prop('checked','checked');
+                }else{
+                    $("#def_patria").prop('checked','');
                 }
 
                 desactStateMil(!(datos[i].si_militar=='1'));
@@ -516,6 +529,10 @@ function desactStateMil(val){
         $("#situacion_militar").prop({
             disabled: 'disabled'
         });
+
+        $("#plana_militar").prop({
+            disabled: 'disabled'
+        });
     }else
     {
         $("#cip_militar").prop({
@@ -530,6 +547,10 @@ function desactStateMil(val){
         });
 
         $("#situacion_militar").prop({
+            disabled: ''
+        });
+
+        $("#plana_militar").prop({
             disabled: ''
         });
     }
