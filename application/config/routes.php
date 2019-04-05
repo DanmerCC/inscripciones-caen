@@ -115,7 +115,7 @@ $route['administracion/login'] = 'admin/Panel/login';
 $route['administracion/validacion'] = 'admin/Panel/validacion';
 $route['administracion/perfil'] = 'admin/Panel';
 $route['administracion/programa/(:num)'] = 'admin/Programa/get/$1';
-$route['secure/alumno/(:num)'] = 'admin/Alumno/getAlumnoById/$1';
+$route['secure/alumno/(:num)'] = 'admin/Solicitud/getResumenSolicitudById/$1';
 
 /*send id for post*/
 $route['administracion/programa/activar'] = 'admin/Programa/activar';

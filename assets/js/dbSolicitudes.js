@@ -268,6 +268,15 @@ function cargarData(id){
 					htmlDocuments=htmlDocuments+makeTemplateIconsDocuments(documentos[i].name,documentos[i].stateUpload,documentos[i].identifier,documentos[i].fileName);
 					
 				}
+
+				//documents for solicitud
+				var filesOfSol =alumno.solicitudFiles;
+				var htmlfilesOfSol="";
+				for (var ii = 0; ii < filesOfSol.length; ii++) {
+					htmlfilesOfSol += makeTemplateIconsDocuments(filesOfSol[ii].name,filesOfSol[ii].stateUpload,filesOfSol[ii].identifier,filesOfSol[ii].fileName);
+					
+				}
+				$(idquerytarget+' #mdl-icons-filesOfSol').html(htmlfilesOfSol);
 				$(idquerytarget+' #mdl-icons-documents').html(htmlDocuments);
             }
             

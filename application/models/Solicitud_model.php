@@ -4,6 +4,7 @@ class Solicitud_model extends CI_Model
 {
 	private $tbl_solicitud='solicitud';
 	private $id_programa='programa';
+	private $id='idSolicitud';
 	function __construct()
 	{
 		parent::__construct();
@@ -218,5 +219,14 @@ class Solicitud_model extends CI_Model
 		$this->db->order_by('s.fecha_registro','DESC');
 
 		return resultToArray($this->db->get());
+	}
+
+	public function getAllColumnsById($id){
+		$result=$this->db->select()->from($this->tbl_solicitud,$id)->where($this->id,$id)->get();
+		if($result->num_rows()===1){
+			return $result->result_array()[0];
+		}else{
+			return NULL;
+		}
 	}
 }
