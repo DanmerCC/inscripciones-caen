@@ -105,43 +105,87 @@ class Alumno extends CI_Controller
 	}
 
 	public function set_good_file(){
+		$this->load->model('Solicitud_model');
+
 		$tipoDocumento=$this->input->post('type');
-		$idAlumno=$this->input->post('id');//id alumno
+		$id=$this->input->post('id');//id alumno
 		//echo $tipoDocumento;
 		if(($this->nativesession->get('tipo')=='admin')||
-		((isset($tipoDocumento))||(isset($idAlumno)))){
-			$resultOfConsult=$this->Alumno_model->findById($idAlumno);
-			if(count($resultOfConsult)!=1){
-				show_error("Error en el servidor no se encontro usuario",500);
-				die();
-			};
-			$alumno=$resultOfConsult[0];
+		((isset($tipoDocumento))||(isset($id)))){
 
-			$result=0;
+			$result=NULL;
 			
 			switch ($tipoDocumento) {
 				case 'cv':
+					$resultOfConsult=$this->Alumno_model->findById($id);
+					if(count($resultOfConsult)!=1){
+						show_error("Error en el servidor no se encontro usuario",500);
+						die();
+					};
+					$alumno=$resultOfConsult[0];
 					$result=$this->Alumno_model->set_check_cvFile($alumno["id_alumno"]);
 					break;
 
 				case 'dj':
+					$resultOfConsult=$this->Alumno_model->findById($id);
+					if(count($resultOfConsult)!=1){
+						show_error("Error en el servidor no se encontro usuario",500);
+						die();
+					};
+					$alumno=$resultOfConsult[0];
 					$result=$this->Alumno_model->set_check_djFile($alumno["id_alumno"]);
 					break;
 				
 				case 'dni':
+					$resultOfConsult=$this->Alumno_model->findById($id);
+					if(count($resultOfConsult)!=1){
+						show_error("Error en el servidor no se encontro usuario",500);
+						die();
+					};
+					$alumno=$resultOfConsult[0];
 					$result=$this->Alumno_model->set_check_dniFile($alumno["id_alumno"]);
 					break;
 				case 'bach':
+					$resultOfConsult=$this->Alumno_model->findById($id);
+					if(count($resultOfConsult)!=1){
+						show_error("Error en el servidor no se encontro usuario",500);
+						die();
+					};
+					$alumno=$resultOfConsult[0];
 					$result=$this->Alumno_model->set_check_bachFile($alumno["id_alumno"]);
 					break;
 				case 'maes':
+					$resultOfConsult=$this->Alumno_model->findById($id);
+					if(count($resultOfConsult)!=1){
+						show_error("Error en el servidor no se encontro usuario",500);
+						die();
+					};
+					$alumno=$resultOfConsult[0];
 					$result=$this->Alumno_model->set_check_maesFile($alumno["id_alumno"]);
 					break;
 				case 'doct':
+					$resultOfConsult=$this->Alumno_model->findById($id);
+					if(count($resultOfConsult)!=1){
+						show_error("Error en el servidor no se encontro usuario",500);
+						die();
+					};
+					$alumno=$resultOfConsult[0];
 					$result=$this->Alumno_model->set_check_doctFile($alumno["id_alumno"]);
 					break;
 				case 'sins':
+					$resultOfConsult=$this->Alumno_model->findById($id);
+					if(count($resultOfConsult)!=1){
+						show_error("Error en el servidor no se encontro usuario",500);
+						die();
+					};
+					$alumno=$resultOfConsult[0];
 					$result=$this->Alumno_model->set_check_sinstFile($alumno["id_alumno"]);
+					break;
+				case 'solad':
+					$solicitud=$this->Solicitud_model->getAllColumnsById($id);
+					$cantSolicitud=$this->Solicitud_model->countByAlumno($solicitud["alumno"]);
+					$result["solicitudes"]=$cantSolicitud;
+					$result=$this->Solicitud_model->setCheckSolicitudInscripcion($solicitud["idSolicitud"]);
 					break;
 
 				default:
