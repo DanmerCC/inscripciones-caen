@@ -87,6 +87,18 @@ class Opciones
                     
                 ],
                 "active"=>false
+			];
+	$this->opciones['inscripciones']=[
+                "text"=>"Inscripcion",
+                "href"=>"/administracion/vista/inscripciones",
+                "submenu"=>[
+                    [
+                        "text"=>"Todos",
+                        "atributos"=>"id='' data-toggle='collapse' data-parent='#accordion' href='#collapse8'"
+                    ]
+                    
+                ],
+                "active"=>false
             ];
 
         array_push($this->arreglo, $this->opciones['alumnos']);
@@ -95,7 +107,8 @@ class Opciones
         array_push($this->arreglo, $this->opciones['beneficios']);
         array_push($this->arreglo, $this->opciones['solicitudes']);
         array_push($this->arreglo, $this->opciones['informes']);
-        array_push($this->arreglo, $this->opciones['reportes']);
+		array_push($this->arreglo, $this->opciones['reportes']);
+		array_push($this->arreglo, $this->opciones['inscripciones']);
         
         //print ("<pre>".print_r($this->arreglo[0],true)."</pre>");
         return $this->arreglo;

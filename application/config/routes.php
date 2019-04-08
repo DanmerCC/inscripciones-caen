@@ -130,6 +130,7 @@ $route['admin/dataTable/solicitud'] = 'admin/Solicitud/dataTable';
 $route['admin/dataTable/solicitudaceptada'] = 'admin/Solicitud/dataTableAtendidas';
 $route['admin/dataTable/inscritos'] = 'admin/Alumno/datatable';
 $route['admin/dataTable/informes'] = 'admin/InformeController/dataTable';
+$route['admin/dataTable/inscripciones'] = 'admin/InscripcionController/datatable_dashboard';
 
 $route['admin/dataTable/programa'] = 'admin/Programa/dataTable';
 $route['admin/dataTable/beneficio'] = 'admin/Beneficio/dataTable';
@@ -155,6 +156,7 @@ $route['administracion/vista/alumnos'] = 'admin/Alumno';
 $route['administracion/vista/solicitudes'] = 'admin/Solicitud';
 $route['administracion/vista/informes'] = 'admin/InformeController';
 $route['administracion/vista/reportes'] = 'admin/ReportesController';
+$route['administracion/vista/inscripciones'] ='admin/InscripcionController/index';
 
 $route['admin/parts/nuevoprograma'] = 'admin/Programa/newPrograma';
 

@@ -254,4 +254,16 @@ class Solicitud_model extends CI_Model
 
 		return ["result"=>$result];
 	}
+
+	public function verify_requeriments($id){
+		$conditions=array(
+			$this->id=>$id,
+			$this->check_sol_ad=>1,
+			//Aqui completar condiciones de que hacer a una solicitud este verificada
+		);
+		$result=$this->db->select()->from($this->tbl_solicitud)->where($conditions)->get();
+		$cant_result_rows=$result->num_rows();
+
+		return ($cant_result_rows===1);
+	}
 }
