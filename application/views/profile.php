@@ -822,13 +822,13 @@
                                             </div>
                                             <div class="container-fluid">
                                                 <div class="row">
-                                                    <div class="col-sm-12 col-md-12">
+                                                    <div class="col-xs-12 col-md-12">
                                                         <div class="row">
-                                                            <div class="col-sm-4 col-md-4"><strong>Programa</strong></div>
-                                                            <div class="col-sm-3 col-md-2"><strong>Financiamiento</strong></div>
-                                                            <div class="col-sm-5 col-md-6"><strong>Ficha de Inscripción</strong></div>
+                                                            <div class="col-xs-3 col-md-4"><strong>Programa</strong></div>
+                                                            <div class="col-xs-4 col-md-2"><strong>Financiamiento</strong></div>
+                                                            <div class="col-xs-5 col-md-6"><strong>Ficha de Inscripción</strong></div>
                                                         </div>
-                                                        <div id="contentSolicitudes" class="row">
+                                                        <div id="contentSolicitudes">
                                                         </div>
                                                     </div>
                                                 </div>
