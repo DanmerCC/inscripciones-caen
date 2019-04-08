@@ -374,6 +374,7 @@ $.ajax({
         success: function (data) {
 
             var datos= JSON.parse(data);
+            console.log(datos);
             
             for (var i = datos.length - 1; i >= 0; i--) {
                 var option = document.createElement("option");
@@ -389,7 +390,11 @@ $.ajax({
             console.log(xhr.status);
             console.log(thrownError);
         }
+
+
 });
+
+
 
 $.ajax({
         url: "/api/solicitudes",
@@ -401,32 +406,53 @@ $.ajax({
         success: function (data) {
 
             var datos= JSON.parse(data);
+            //console.log(datos);
             
             for (var i = datos.length - 1; i >= 0; i--) {
 
-                var alink = "/postulante/pdf/"+datos[i].idSolicitud;
-                var alinkdel = "/postulante/solicitud/eliminar/"+datos[i].idSolicitud;
-                var alinknotification = ((!datos[i].completeFile)?"<div class='col-xs-12 col-md-4'><a href='#'><button class='btn btn-sm bg-light-blue disabled color-palette' data-toggle='collapse' data-parent='#accordion' href='#collapse9' data-target=''>"+datos[i].msgUploadFile+"</button></a></div>":"");
+                var otr = document.createElement("tr");
 
-                var diseño = 
-                "<div class='row'>"+
-                    "<div class='col-xs-3 col-md-4'>"+datos[i].numeracion+" "+datos[i].tipoCurso+" "+datos[i].nombreCurso+"</div>"+
-                    "<div class='col-xs-4 col-md-2'>"+datos[i].tipo_financiamiento+"</div>"+
-                    "<div class='col-xs-5 col-md-6'>"+
-                        "<div class='row'>"+
-                            "<div class='col-xs-6 col-md-2'><a href="+alink+">Ficha</a></div>"+
-                            "<div class='col-xs-6 col-md-2'><a href="+alinkdel+">Eliminar</a></div>"+
-                            "<div class='col-xs-12 col-md-4' id='SolicitudFileComponent"+(i+1)+"'></div>"+
-                            "<div class='col-xs-12 col-md-4' id='SolicitudFormalFileComponent"+(i+1)+"'></div>"+
-                            alinknotification+
-                        "</div>"+
-                    "</div>"+
-                "</div>"+
-                "<hr noshade>";
-                
-                $("#contentSolicitudes").append(diseño);
+                var otdname = document.createElement("td");
+                otdname.innerHTML=datos[i].numeracion+" "+datos[i].tipoCurso+" "+datos[i].nombreCurso;;
+                otr.append(otdname);
 
-                solicitudComponets["SolicitudFileComponent"+(i+1)]=cc.fileComponent("#SolicitudFileComponent"+(i+1),{
+                var otdfinan = document.createElement("td");
+                otdfinan.innerHTML=datos[i].tipo_financiamiento;
+                otr.append(otdfinan);
+
+
+                var otdfinan = document.createElement("td");
+                var alink = document.createElement("a");
+                alink.href="/postulante/pdf/"+datos[i].idSolicitud;
+                alink.innerHTML="Ficha";
+                otdfinan.append(alink);
+                otr.append(otdfinan);
+
+                var otdfDel = document.createElement("td");
+                var alinkdel = document.createElement("a");
+                alinkdel.href="/postulante/solicitud/eliminar/"+datos[i].idSolicitud;
+                alinkdel.innerHTML="Eliminar";
+                otdfDel.append(alinkdel);
+                otr.append(otdfDel);
+
+
+                var tdnotificationhaventFile = document.createElement("td");
+                var alinknotification = document.createElement("a");
+                alinknotification.href="#";
+                alinknotification.innerHTML=((!datos[i].completeFile)?"<button class='btn btn-sm bg-light-blue disabled color-palette' data-toggle='collapse' data-parent='#accordion' href='#collapse9' data-target=''>"+datos[i].msgUploadFile+"</button>":"");
+                tdnotificationhaventFile.append(alinknotification);
+				otr.append(tdnotificationhaventFile);
+
+				var tdSolictudFile = document.createElement("td");
+				tdSolictudFile.innerHTML="<div id='SolicitudFileComponent"+(i+1)+"'><div>";
+				
+
+
+                otr.append(tdSolictudFile);
+
+				$("#contentSolicitudes").append(otr);
+				
+				solicitudComponets["SolicitudFileComponent"+(i+1)]=cc.fileComponent("#SolicitudFileComponent"+(i+1),{
 					"state":false,
 					"target":"SolicitudFileComponent"+(i+1),
 					"urlUpload":"/solicitud/upload/"+datos[i].idSolicitud,
@@ -439,7 +465,13 @@ $.ajax({
                     "pathInfo":"/file/info",
                     "pathDelete":"/file/delete",
                     "id":datos[i].idSolicitud
-                });
+				});
+
+				var tdSolictudFormalFile = document.createElement("td");
+				tdSolictudFormalFile.innerHTML="<div id='SolicitudFormalFileComponent"+(i+1)+"'><div>";
+
+				otr.append(tdSolictudFormalFile);
+				$("#contentSolicitudes").append(otr);
 
 				solicitudFormalComponets["SolicitudFormalFileComponent"+(i+1)]=cc.fileComponent("#SolicitudFormalFileComponent"+(i+1),{
 					"state":false,
@@ -447,14 +479,14 @@ $.ajax({
 					"urlUpload":"/soladmision/upload/"+datos[i].idSolicitud,
 					"urlVerify":"/soladmision/stateFile/"+datos[i].idSolicitud,
 
-					"tittle":"Solicitud admisión",
+					"tittle":"Solicitud admision",
 					"identifier":"solad",
 					"sizeTemplate":"min",
                     "urlview":"/solicitud/view/pdf",                      
                     "pathInfo":"/file/info",
                     "pathDelete":"/file/delete",
                     "id":datos[i].idSolicitud
-                });
+				});
             }
 
         },
@@ -462,6 +494,8 @@ $.ajax({
             console.log(xhr.status);
             console.log(thrownError);
         }
+
+
 });
 
 $("#si_militar").on('change',function(){

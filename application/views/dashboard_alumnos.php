@@ -53,6 +53,7 @@
                 <th>BACHILLER</th>
                 <th>MAESTRIA</th>
                 <th>DOCTORADO</th>
+                <th>SOLICITUD INSCRIPCION</th>
               </thead>
               <tfoot>
                 <th>TITULO</th>
@@ -68,6 +69,7 @@
                 <th>BACHILLER</th>
                 <th>MAESTRIA</th>
                 <th>DOCTORADO</th>
+                <th>SOLICITUD INSCRIPCION</th>
               </tfoot>
             </table>
           </div>

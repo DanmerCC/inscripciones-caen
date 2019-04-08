@@ -166,12 +166,10 @@ class Solicitud extends CI_Controller
 
 	public function getResumenSolicitudById($id){
 		$this->load->model('Alumno_model');
-		
 		$solicitud=$this->Solicitud_model->getAllColumnsById($id);
 		$alumno=$this->Alumno_model->findById($solicitud['alumno'])[0];
 		$data=[];
 		$data=$alumno;
-		$data["solicitudes"]=$this->Solicitud_model->countByAlumno($solicitud["alumno"]);
 		$data["documentosObject"]=[
 			[
 				"name"=>"curriculum",
