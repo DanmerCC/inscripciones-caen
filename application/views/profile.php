@@ -814,27 +814,22 @@
                         <div id="collapse8" class="panel-collapse collapse">
                             <form action="" method="post" name="formulario" id="formulario" class="form-horizontal">
                                 <div class=" panel-body">
-                                        <div class="container form-group">
+                                        <div class="form-create">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <label>Lista de solicitudes hechas por usted <span style="color: red">(*)</span></label>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-12 col-md-12">
-                                                    <div class="table-responsive">
-                                                        <table class="table">
-                                                            <thead>
-                                                              <tr>
-                                                                <th>Programa</th>
-                                                                <th>Financiamiento</th>
-                                                                <th>Ficha de Inscripción</th>
-                                                              </tr>
-                                                            </thead>
-                                                            <tbody id="contentSolicitudes">
-                                                            <!-- content -->
-                                                            </tbody>
-                                                          </table>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-2 col-lg-4">Programa</div>
+                                                            <div class="col-sm-2 col-lg-2">Financiamiento</div>
+                                                            <div class="col-sm-2 col-lg-4">Ficha de Inscripción</div>
+                                                        </div>
+                                                        <div id="contentSolicitudes" class="row">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
