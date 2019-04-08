@@ -449,7 +449,7 @@
                                 <div class="panel-body">
                                     <div class="box">
                                         <div class="box-header with-border">
-                                            <h3 class="box-title">Bordered Table</h3>
+                                            <h3 class="box-title">Puede descargar los siguientes formatos</h3>
                                         </div>
                                         <!-- /.box-header -->
                                         <div class="box-body">
@@ -802,6 +802,8 @@
                             </form>         
                         </div>
                     </div>
+
+                    <!-- PARTE DEL DISEÑO A MODIFICAR -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
@@ -812,27 +814,22 @@
                         <div id="collapse8" class="panel-collapse collapse">
                             <form action="" method="post" name="formulario" id="formulario" class="form-horizontal">
                                 <div class=" panel-body">
-                                        <div class="container form-group">
+                                        <div class="form-create">
                                             <div class="row">
-                                                <div class="col-sm-10">
-                                                    <label>Lista de solicitudes hechas por usted<span style="color: red">(*)</span></label>
+                                                <div class="col-sm-12">
+                                                    <label>Lista de solicitudes hechas por usted <span style="color: red">(*)</span></label>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-12 col-md-12">
-                                                    <div class="table-responsive">
-                                                        <table class="table">
-                                                            <thead>
-                                                              <tr>
-                                                                <th>Programa</th>
-                                                                <th>Financiamiento</th>
-                                                                <th>Ficha de Inscripción</th>
-                                                              </tr>
-                                                            </thead>
-                                                            <tbody id="contentSolicitudes">
-                                                            <!-- content -->
-                                                            </tbody>
-                                                          </table>
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-xs-3 col-md-4"><strong>Programa</strong></div>
+                                                            <div class="col-xs-4 col-md-2"><strong>Financiamiento</strong></div>
+                                                            <div class="col-xs-5 col-md-6"><strong>Ficha de Inscripción</strong></div>
+                                                        </div>
+                                                        <div id="contentSolicitudes">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -851,6 +848,8 @@
                             </form>         
                         </div>
                     </div>
+                    <!-- FIN PARTE DEL DISEÑO A MODIFICAR -->
+
                     <!--otros datos-->
                     <div class="panel panel-default">
                         <div class="panel-heading">

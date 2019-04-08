@@ -1,0 +1,9 @@
+body{
+    min-width: 478px;
+}
+.table-responsive {
+    overflow-x: hidden;
+}
+.form-create {
+    margin: 0;
+}
