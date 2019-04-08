@@ -35,7 +35,7 @@ function initComponent(target,options=optionsDefault){
 			'<div id="hasNotFile"'+((options.state)?'hidden':'')+' >'+
 				'<form id="frmUploadCv">'+
 					'<label class="btn btn-danger btn-sm" for="'+options.target+'_file">'+options.tittle+'<i class="fa fa-fw fa-upload" for="file_cv"></i></label>'+
-					'<input class="form-control" type="file" class="form-control" id="'+options.target+'_file" name="file_cv" value="" accept="pdf" style="visibility:hidden">'+
+					'<input type="file" class="form-control" id="'+options.target+'_file" name="file_cv" value="" accept="pdf" style="visibility:hidden; position: fixed;">'+
 				'</form>'+
 			'</div>'+
 			'<div id="magicContainer"></div>';
