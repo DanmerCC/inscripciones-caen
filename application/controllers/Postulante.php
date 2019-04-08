@@ -87,6 +87,10 @@ class Postulante extends CI_Controller {
 							[
 								"text"=>"Referencias",
 								"atributos"=>"id='aInfReferencias' data-toggle='collapse' data-parent='#accordion' href='#collapse6'"
+							],
+							[
+								"text"=>"Otros",
+								"atributos"=>"id='aInfOtros' data-toggle='collapse' data-parent='#accordion' href='#collapse11'"
 							]
 						],
 					"active"=>true

@@ -19,45 +19,61 @@ class FilesController extends CI_Controller {
 		$pathFile="";
 
 		$this->load->model('Alumno_model');
-		$result=resultToArray($this->Alumno_model->all($id));
-		//first element
-		
-		if(count($result)==1){
-			$alumno=$result[0];
-		}else{
-			show_404();
-			die();
-		}
-		
-		if(!$alumno){
-			show_404();
-			die();
-		}
+		$result;
+		$idNameAndRegist=NULL;
 
 		switch ($segmentOfTypeFile) {
 			case 'cv':
-				$pathFile=CC_BASE_PATH."/files/cvs/".$alumno["documento"].".pdf";
+				$result=resultToArray($this->Alumno_model->all($id))[0];
+				$pathFile=CC_BASE_PATH."/files/cvs/".$result["documento"].".pdf";
+				
+				$idNameAndRegist=$result["id_alumno"];
 				break;
 			case 'dj':
-				$pathFile=CC_BASE_PATH."/files/djs/".$alumno["documento"].".pdf";
+				$result=resultToArray($this->Alumno_model->all($id))[0];
+				$pathFile=CC_BASE_PATH."/files/djs/".$result["documento"].".pdf";
+				
+				$idNameAndRegist=$result["id_alumno"];
 				break;
 			case 'dni':
-				$pathFile=CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf";
+				$result=resultToArray($this->Alumno_model->all($id))[0];
+				$pathFile=CC_BASE_PATH."/files/dni/".$result["documento"].".pdf";
+				
+				$idNameAndRegist=$result["id_alumno"];
 				break;
 			case 'bach':
-				$pathFile=CC_BASE_PATH."/files/bachiller/".$alumno["documento"].".pdf";
+				$result=resultToArray($this->Alumno_model->all($id))[0];
+				$pathFile=CC_BASE_PATH."/files/bachiller/".$result["documento"].".pdf";
+				
+				$idNameAndRegist=$result["id_alumno"];
 				break;
 			case 'maes':
-				$pathFile=CC_BASE_PATH."/files/maestria/".$alumno["documento"].".pdf";
+				$result=resultToArray($this->Alumno_model->all($id))[0];
+				$pathFile=CC_BASE_PATH."/files/maestria/".$result["documento"].".pdf";
+				
+				$idNameAndRegist=$result["id_alumno"];
 				break;
 			case 'doct':
-				$pathFile=CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf";
+				$result=resultToArray($this->Alumno_model->all($id))[0];
+				$pathFile=CC_BASE_PATH."/files/doctorado/".$result["documento"].".pdf";
+				
+				$idNameAndRegist=$result["id_alumno"];
 				break;
 			case 'sins':
-				$pathFile=CC_BASE_PATH."/files/sInscripcion/".$alumno["documento"].".pdf";
+				$result=resultToArray($this->Alumno_model->all($id))[0];
+				$pathFile=CC_BASE_PATH."/files/sInscripcion/".$result["documento"].".pdf";
+				
+				$idNameAndRegist=$result["id_alumno"];
 				break;
 			case 'hdatos':
 				$pathFile=CC_BASE_PATH."/files/hdatos/".$id.".pdf";
+				$result=$this->Solicitud_model->getAllColumnsById($id);
+				$idNameAndRegist=$result["idSolicitud"];
+				break;
+			case 'solad':
+				$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
+				$result=$this->Solicitud_model->getAllColumnsById($id);
+				$idNameAndRegist=$result["idSolicitud"];
 				break;
 			default:
 				$pathFile="";
@@ -67,14 +83,18 @@ class FilesController extends CI_Controller {
 		}
 
 		if($this->nativesession->get('tipo')=='admin'){
-
+			
 			if((($pathFile!=""))&&(file_exists($pathFile))){
+				
 				$data=base64_encode(file_get_contents($pathFile,true));
-				$this->load->view("pdf/viewpdf",array('data'=>$data,'idAlumno'=>$alumno["id_alumno"],'typeFile'=>$segmentOfTypeFile));///Load view pdf of only watch
+				$this->load->view("pdf/viewpdf",array('data'=>$data,'id'=>$idNameAndRegist,'typeFile'=>$segmentOfTypeFile));///Load view pdf of only watch
 			}else{
 				show_404();
 			}
 		}elseif($this->nativesession->get('tipo')=='alumno'){
+			$this->load->model('User_model');
+			$usuario=$this->User_model->buscarUsuario($this->nativesession->get('idUsuario'))[0];
+			$alumno=resultToArray($this->Alumno_model->all($usuario["alumno"]))[0];
 			if($alumno["documento"]==$this->nativesession->get('dni')){
 				if((!($pathFile==""))&&(file_exists($pathFile))){
 					$data=base64_encode(file_get_contents($pathFile,true));
@@ -102,6 +122,9 @@ class FilesController extends CI_Controller {
 		switch ($segmentOfTypeFile) {
 			case 'hdatos':
 				$pathFile=CC_BASE_PATH."/files/hojadatos/".$id.".pdf";
+				break;
+			case 'solad':
+				$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
 				break;
 			default:
 				$pathFile="";
@@ -222,6 +245,17 @@ class FilesController extends CI_Controller {
 				$resultModel["identifier"]='hdatos';
 				$resultModel["id"]=$id;
 				break;
+			case 'solad':
+				$id=$this->input->post('id');
+				$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
+				
+				$resultModel["name"]=$this->nativesession->get('idAlumno');
+				$resultModel["urlDeleting"]="/file/delete/$fileName/$id";
+				$resultModel["removable"]=(file_exists($pathFile));
+				$resultModel["properties"]=[""];
+				$resultModel["identifier"]='solad';
+				$resultModel["id"]=$id;
+				break;
 			default:
 				$pathFile="";
 				show_404();
@@ -273,6 +307,10 @@ public function eliminar($FileType,$id){
 			break;
 		case 'hdatos':
 			$pathFile=CC_BASE_PATH."/files/hojadatos/".$id.".pdf";
+			$nameFile=$id;
+			break;
+		case 'solad':
+			$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
 			$nameFile=$id;
 			break;
 		default:

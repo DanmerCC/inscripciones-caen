@@ -3,7 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Solicitud_model extends CI_Model
 {
 	private $tbl_solicitud='solicitud';
+	private $id='idSolicitud';
 	private $id_programa='programa';
+	private $check_sol_ad='check_sol_ad';
+	private $alumno_id='alumno';
+
+
 	function __construct()
 	{
 		parent::__construct();
@@ -187,6 +192,14 @@ class Solicitud_model extends CI_Model
 		return resultToArray($this->db->get());
 	}
 
+	function countByAlumno($idAlumno){
+		$this->db->select($this->id);
+		$this->db->from($this->tbl_solicitud);
+		$this->db->where($this->alumno_id,$idAlumno);
+		$result = $this->db->get();
+		return $result->num_rows();
+	}
+
 	function getAllByProgramaFilter($idPrograma){
 		/*$this->db->select();
 		$this->db->from($this->tbl_solicitud);
@@ -218,5 +231,27 @@ class Solicitud_model extends CI_Model
 		$this->db->order_by('s.fecha_registro','DESC');
 
 		return resultToArray($this->db->get());
+	}
+
+	public function getAllColumnsById($id){
+		$result=$this->db->select()->from($this->tbl_solicitud,$id)->where($this->id,$id)->get();
+		if($result->num_rows()===1){
+			return $result->result_array()[0];
+		}else{
+			return NULL;
+		}
+	}
+	
+	function setCheckSolicitudInscripcion($id){
+
+		$data = array(
+		    $this->check_sol_ad => 1
+		);
+
+		$this->db->where($this->id, $id);
+		$this->db->update($this->tbl_solicitud, $data);
+		$result=($this->db->affected_rows()==1)?1:0;
+
+		return ["result"=>$result];
 	}
 }

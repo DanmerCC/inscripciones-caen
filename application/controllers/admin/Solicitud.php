@@ -71,7 +71,7 @@ class Solicitud extends CI_Controller
         for ($i=0;$i<count($rspta);$i++) {
                 $data[$i] = array(
                 "0" => ($i+1),
-                "1" => '<a href="'.base_url()."postulante/pdf/".$rspta[$i]["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a> <div class="btn btn-info" data-toggle="modal" data-target="#mdl_datos_alumno" onclick="modalDataAlumno.loadData('.$rspta[$i]["alumno"].');"><i class="fa fa-eye"></i></div>'.(($rspta[$i]["estado"]=='0')?' <button class="btn btn-alert"   title="click para marcar como verificado" onclick="marcar('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-square-o" aria-hidden="true"></i></button>':
+                "1" => '<a href="'.base_url()."postulante/pdf/".$rspta[$i]["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a> <div class="btn btn-info" data-toggle="modal" data-target="#mdl_datos_alumno" onclick="modalDataAlumno.loadData('.$rspta[$i]["idSolicitud"].');"><i class="fa fa-eye"></i></div>'.(($rspta[$i]["estado"]=='0')?' <button class="btn btn-alert"   title="click para marcar como verificado" onclick="marcar('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-square-o" aria-hidden="true"></i></button>':
                 ' <button class="btn btn-primary" onclick="quitarmarca('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>'),
                 "2" => $rspta[$i]["nombres"],
                 "3" => $rspta[$i]["apellido_paterno"],
@@ -164,5 +164,92 @@ class Solicitud extends CI_Controller
             echo json_encode($this->Solicitud_model->setComentarioArray($id,$comentario));
         }
 
+	public function getResumenSolicitudById($id){
+		$this->load->model('Alumno_model');
+		
+		$solicitud=$this->Solicitud_model->getAllColumnsById($id);
+		$alumno=$this->Alumno_model->findById($solicitud['alumno'])[0];
+		$data=[];
+		$data=$alumno;
+		$data["solicitudes"]=$this->Solicitud_model->countByAlumno($solicitud["alumno"]);
+		$data["documentosObject"]=[
+			[
+				"name"=>"curriculum",
+				"identifier"=>"cv",
+				"statechecked"=>(boolean)$alumno["check_cv_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/cvs/".$alumno["documento"].".pdf"),
+				"fileName"=>$solicitud['alumno']
+			],
+			[
+				"name"=>"declaracion jurada",
+				"identifier"=>"dj",
+				"statechecked"=>(boolean)$alumno["check_dj_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/djs/".$alumno["documento"].".pdf"),
+				"fileName"=>$solicitud['alumno']
+			],
+			[
+				"name"=>"dni",
+				"identifier"=>"dni",
+				"statechecked"=>(boolean)$alumno["check_dni_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf"),
+				"fileName"=>$solicitud['alumno']
+			],
+			[
+				"name"=>"bachiller",
+				"identifier"=>"bach",
+				"statechecked"=>(boolean)$alumno["check_bach_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/bachiller/".$alumno["documento"].".pdf"),
+				"fileName"=>$solicitud['alumno']
+			],
+			[
+				"name"=>"maestria",
+				"identifier"=>"maes",
+				"statechecked"=>(boolean)$alumno["check_maes_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/maestria/".$alumno["documento"].".pdf"),
+				"fileName"=>$solicitud['alumno']
+			],
+			[
+				"name"=>"Doctorado",
+				"identifier"=>"doct",
+				"statechecked"=>(boolean)$alumno["check_doct_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf"),
+				"fileName"=>$solicitud['alumno']
+			]
+
+		];
+
+		$data["solicitudFiles"]=[
+			[
+				"name"=>"Solicitud de Inscripcion",
+				"identifier"=>"solad",
+				"statechecked"=>(boolean)$alumno["check_sins_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/sol-ad/".$solicitud["idSolicitud"].".pdf"),
+				"fileName"=>$solicitud["idSolicitud"]
+			]
+
+		];
+
+		$imagen;
+			if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".jpg")){
+				$imagen="data:image/jpg;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".jpg"));
+
+			}else if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".png")){
+				$imagen="data:image/png;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".png"));
+
+			}else if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".gif")){
+				$imagen="data:image/gif;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".gif"));
+				
+			}else{
+				$imagen="/dist/img/avatar5.png";
+			}
+		$data["fotoData"]=$imagen;
+			header("Content-type:application/json");
+			echo json_encode([
+				"content"=>[],
+				"status"=>"OK",
+				"result"=>$data
+					
+			],JSON_UNESCAPED_UNICODE);
+	}
 
 }

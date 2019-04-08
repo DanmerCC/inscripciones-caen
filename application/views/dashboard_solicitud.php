@@ -200,6 +200,12 @@
                 <span class="label label-warning">PHP</span>
                 <span class="label label-primary">Node.js</span>
               </div>
+							</p>
+							<strong><i class="fa fa-pencil margin-r-5"></i> Documentos De solicitud</strong>
+
+              <p>
+              <div id="mdl-icons-filesOfSol">
+              </div>
               </p>
             </div>
             <!-- /.box-body -->

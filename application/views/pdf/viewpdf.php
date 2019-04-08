@@ -13,7 +13,7 @@
 <iframe id="frame" src="data:application/pdf;base64,<?= $data; ?> " width="100%" height="900"></iframe>
 </div>
 <input id="type" type="hidden" value="<?=$typeFile;?>" />
-<input id="id" type="hidden" value="<?=$idAlumno;?>"/>
+<input id="id" type="hidden" value="<?=$id;?>"/>
 <div class="contenedor">
 <button class="botonF1">
   <span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>

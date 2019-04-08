@@ -30,8 +30,8 @@ function initComponent(target,options=optionsDefault){
 			'<div class="form-group">'+
 				'<div class="row">'+
 					'<div id="hasFile" '+((options.state)?'':'hidden')+'>'+
-						'<div class="container">'+
-							'<div class="col-sm-8 col-md-8">'+
+						'<div class="">'+
+							'<div class="col-sm-4 col-md-4">'+
 								'<a id="alinktarget" class="btn btn-success btn-sm"  target="_blank">'+
 									'<i class="fa fa-eye"></i><font style="vertical-align: inherit;"> '+options.tittle+' </font>'+
 								'</a>'+
@@ -41,7 +41,7 @@ function initComponent(target,options=optionsDefault){
 					'</div>'+
 					'<div id="hasNotFile"'+((options.state)?'hidden':'')+' >'+
 						'<form id="frmUploadCv">'+
-							'<div class="col-sm-12 col-md-12">'+
+							'<div class="col-sm-6 col-md-6">'+
 								'<label class="btn btn-danger btn-sm" for="'+options.target+'_file">'+options.tittle+'<i class="fa fa-fw fa-upload" for="file_cv"></i></label>'+
 								'<input  class="form-control" type="file" class="form-control" id="'+options.target+'_file" name="file_cv" value="" accept="pdf" style="visibility:hidden">'+
 							'</div>'+

@@ -160,6 +160,29 @@ class Solicitud extends CI_Controller
 		}
 		echo json_encode($result,JSON_UNESCAPED_UNICODE);
 	}
+
+	public function stateFile_sol_admision($id){
+		$result=[];
+		header('Content-Type: application/json');
+		
+		if($this->nativesession->get("estado")=="logeado"){
+			$result=[
+				"content"=>[
+					"solad"=>file_exists(CC_BASE_PATH.'/files/sol-ad/'.$id.".pdf"),
+					"nameFiles"=>$id
+				],
+				"status"=>"OK"
+				
+			];
+		}else{
+			$result=[
+				"content"=>[],
+				"status"=>"ERROR"
+			];
+		}
+		echo json_encode($result,JSON_UNESCAPED_UNICODE);
+	}
+
 	public function uploadHojaDeDatos($id){
 		$idAlumno=$this->nativesession->get("idAlumno");
 		if(!isset($idAlumno)){
@@ -168,18 +191,31 @@ class Solicitud extends CI_Controller
 		}
 		$solicitud=$this->Solicitud_model->byIdAndAlumno($id,$idAlumno);
 		if(count($solicitud)!=0){
-			echo $this->uploadFile('cv',$id);//send result to view
+			echo $this->uploadFile('cv',$id,"hojadatos");//send result to view
 		}else{
 			show_404();
 			exit;
 		}
 	}
 
-	private function uploadFile($nameInput,$fileName){
-		
-		
+	public function upload_sol_admision($id){
+		$idAlumno=$this->nativesession->get("idAlumno");
+		if(!isset($idAlumno)){
+			show_404();
+			exit;
+		}
+		$solicitud=$this->Solicitud_model->byIdAndAlumno($id,$idAlumno);
+		if(count($solicitud)!=0){
+			echo $this->uploadFile('cv',$id,"sol-ad");//send result to view
+		}else{
+			show_404();
+			exit;
+		}
+	}
 
-		$config['upload_path'] = CC_BASE_PATH.'/files/hojadatos/';
+	private function uploadFile($nameInput,$fileName,$path){
+
+		$config['upload_path'] = CC_BASE_PATH."/files/$path/";
         
        	//Tipos de ficheros permitidos
         $config['allowed_types'] = 'pdf';

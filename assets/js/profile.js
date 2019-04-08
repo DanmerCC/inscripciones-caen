@@ -79,6 +79,7 @@ var configuracion = function(){
     //configInputsFile("#frmUploadCv input[type='file']","/postulante/upload/cv");
 
 	var solicitudComponets=[];
+	var solicitudFormalComponets=[];
 
     $("#formChangePwd").submit(function(evt){
         evt.preventDefault();
@@ -160,7 +161,8 @@ var configuracion = function(){
     relacionarColapseLi('#aSolicitudes','#collapse8');
     relacionarColapseLi('#aDocs','#collapse9');
     relacionarColapseLi('#formatesPanel','#collapse10');
-
+    relacionarColapseLi('#aInfOtros','#collapse11');
+    
 	reflejarDatos("#t_enfermedad_asma");
 	reflejarDatos("#t_enfermedad_arterial");
 	reflejarDatos("#t_enfermedad_diabetes");
@@ -470,6 +472,27 @@ $.ajax({
 
 					"tittle":"Hoja de datos",
 					"identifier":"hdatos",
+					"sizeTemplate":"min",
+                    "urlview":"/solicitud/view/pdf",                      
+                    "pathInfo":"/file/info",
+                    "pathDelete":"/file/delete",
+                    "id":datos[i].idSolicitud
+				});
+
+				var tdSolictudFormalFile = document.createElement("td");
+				tdSolictudFormalFile.innerHTML="<div id='SolicitudFormalFileComponent"+(i+1)+"'><div>";
+
+				otr.append(tdSolictudFormalFile);
+				$("#contentSolicitudes").append(otr);
+
+				solicitudFormalComponets["SolicitudFormalFileComponent"+(i+1)]=cc.fileComponent("#SolicitudFormalFileComponent"+(i+1),{
+					"state":false,
+					"target":"SolicitudFormalFileComponent"+(i+1),
+					"urlUpload":"/soladmision/upload/"+datos[i].idSolicitud,
+					"urlVerify":"/soladmision/stateFile/"+datos[i].idSolicitud,
+
+					"tittle":"Solicitud admision",
+					"identifier":"solad",
 					"sizeTemplate":"min",
                     "urlview":"/solicitud/view/pdf",                      
                     "pathInfo":"/file/info",
