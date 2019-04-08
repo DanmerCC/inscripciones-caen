@@ -421,49 +421,10 @@ $.ajax({
                 "<div class='col-sm-6 col-md-2'><a href="+alink+">Ficha</a></div>"+
                 "<div class='col-sm-6 col-md-2'><a href="+alinkdel+">Eliminar</a></div>"+
                 alinknotification+
-                "<div class='col-sm-6 col-md-4' id='SolicitudFileComponent"+(i+1)+"'><div>"+
-                "</div></div>"
-                ;
-                // var otdname = document.createElement("td");
-                // otdname.innerHTML=datos[i].numeracion+" "+datos[i].tipoCurso+" "+datos[i].nombreCurso;;
-                // otr.append(diseño);
+                "<div class='col-sm-6 col-md-2' id='SolicitudFileComponent"+(i+1)+"'><div>"+
+                "<div class='col-sm-6 col-md-2' id='SolicitudFormalFileComponent"+(i+1)+"'><div>"+
+                "</div></div>";
 
-                // var otdfinan = document.createElement("td");
-                // otdfinan.innerHTML=datos[i].tipo_financiamiento;
-                // otr.append(otdfinan);
-
-                // var otdfinan = document.createElement("td");
-                // var alink = document.createElement("a");
-                // alink.href="/postulante/pdf/"+datos[i].idSolicitud;
-                // alink.innerHTML="Ficha";
-                // otdfinan.append(alink);
-                // otr.append(otdfinan);
-
-                // var otdfDel = document.createElement("td");
-                // var alinkdel = document.createElement("a");
-                // alinkdel.href="/postulante/solicitud/eliminar/"+datos[i].idSolicitud;
-                // alinkdel.innerHTML="Eliminar";
-                // otdfDel.append(alinkdel);
-                // otr.append(otdfDel);
-
-                // var tdnotificationhaventFile = document.createElement("td");
-                // var alinknotification = document.createElement("a");
-                // alinknotification.href="#";
-                // alinknotification.innerHTML=((!datos[i].completeFile)?"<button class='btn btn-sm bg-light-blue disabled color-palette' data-toggle='collapse' data-parent='#accordion' href='#collapse9' data-target=''>"+datos[i].msgUploadFile+"</button>":"");
-                // tdnotificationhaventFile.append(alinknotification);
-				// otr.append(tdnotificationhaventFile);
-
-				// var tdSolictudFile = document.createElement("td");
-				// tdSolictudFile.innerHTML="<div id='SolicitudFileComponent"+(i+1)+"'><div>";
-				
-
-
-                // otr.append(tdSolictudFile);
-
-                // $("#contentSolicitudes").append(otr);
-
-                $("#contentSolicitudes").append(diseño);
-				
 				solicitudComponets["SolicitudFileComponent"+(i+1)]=cc.fileComponent("#SolicitudFileComponent"+(i+1),{
 					"state":false,
 					"target":"SolicitudFileComponent"+(i+1),
@@ -479,12 +440,6 @@ $.ajax({
                     "id":datos[i].idSolicitud
 				});
 
-				var tdSolictudFormalFile = document.createElement("td");
-				tdSolictudFormalFile.innerHTML="<div id='SolicitudFormalFileComponent"+(i+1)+"'><div>";
-
-				otr.append(tdSolictudFormalFile);
-				$("#contentSolicitudes").append(otr);
-
 				solicitudFormalComponets["SolicitudFormalFileComponent"+(i+1)]=cc.fileComponent("#SolicitudFormalFileComponent"+(i+1),{
 					"state":false,
 					"target":"SolicitudFormalFileComponent"+(i+1),
@@ -498,7 +453,9 @@ $.ajax({
                     "pathInfo":"/file/info",
                     "pathDelete":"/file/delete",
                     "id":datos[i].idSolicitud
-				});
+                });
+                
+                $("#contentSolicitudes").append(diseño);
             }
 
         },
