@@ -372,7 +372,6 @@ $.ajax({
         success: function (data) {
 
             var datos= JSON.parse(data);
-            console.log(datos);
             
             for (var i = datos.length - 1; i >= 0; i--) {
                 var option = document.createElement("option");
@@ -411,18 +410,17 @@ $.ajax({
                 // var otr = document.createElement("tr");
                 var alink = "/postulante/pdf/"+datos[i].idSolicitud;
                 var alinkdel = "/postulante/solicitud/eliminar/"+datos[i].idSolicitud;
+                var alinknotification = ((!datos[i].completeFile)?"<div class='col-sm-6 col-md-4'><a href='#'><button class='btn btn-sm bg-light-blue disabled color-palette' data-toggle='collapse' data-parent='#accordion' href='#collapse9' data-target=''>"+datos[i].msgUploadFile+"</button></a></div>":"");
 
                 var diseño = 
-                "<div class='col-sm-2 col-lg-4'>"+
-                datos[i].numeracion+" "+datos[i].tipoCurso+" "+datos[i].nombreCurso+
-                "</div>"+
-                "<div class='col-sm-2 col-lg-2'>"+
-                datos[i].tipo_financiamiento+
-                "</div>"+
-                "<div class='col-sm-2 col-lg-2'>"+
-                "<a href="+alink+">Ficha</a>"+
-                "<a href="+alinkdel+">Elminar</a>"+
-                "</div>";
+                "<div class='col-sm-4 col-md-4'>"+datos[i].numeracion+" "+datos[i].tipoCurso+" "+datos[i].nombreCurso+"</div>"+
+                "<div class='col-sm-3 col-md-2'>"+datos[i].tipo_financiamiento+"</div>"+
+                "<div class='col-sm-5 col-md-6'><div class='row'>"+
+                "<div class='col-sm-6 col-md-2'><a href="+alink+">Ficha</a></div>"+
+                "<div class='col-sm-6 col-md-2'><a href="+alinkdel+">Eliminar</a></div>"+
+                alinknotification+
+                "<div class='col-sm-6 col-md-4' id='SolicitudFileComponent"+(i+1)+"'><div>"+
+                "</div></div>"
                 ;
                 // var otdname = document.createElement("td");
                 // otdname.innerHTML=datos[i].numeracion+" "+datos[i].tipoCurso+" "+datos[i].nombreCurso;;
@@ -445,7 +443,6 @@ $.ajax({
                 // alinkdel.innerHTML="Eliminar";
                 // otdfDel.append(alinkdel);
                 // otr.append(otdfDel);
-
 
                 // var tdnotificationhaventFile = document.createElement("td");
                 // var alinknotification = document.createElement("a");

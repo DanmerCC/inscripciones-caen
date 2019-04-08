@@ -820,13 +820,13 @@
                                                     <label>Lista de solicitudes hechas por usted <span style="color: red">(*)</span></label>
                                                 </div>
                                             </div>
-                                            <div class="container">
+                                            <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-12">
                                                         <div class="row">
-                                                            <div class="col-sm-2 col-lg-4">Programa</div>
-                                                            <div class="col-sm-2 col-lg-2">Financiamiento</div>
-                                                            <div class="col-sm-2 col-lg-4">Ficha de Inscripción</div>
+                                                            <div class="col-sm-4 col-md-4"><strong>Programa</strong></div>
+                                                            <div class="col-sm-3 col-md-2"><strong>Financiamiento</strong></div>
+                                                            <div class="col-sm-5 col-md-6"><strong>Ficha de Inscripción</strong></div>
                                                         </div>
                                                         <div id="contentSolicitudes" class="row">
                                                         </div>
