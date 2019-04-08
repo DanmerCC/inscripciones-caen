@@ -198,6 +198,43 @@ class Solicitud extends CI_Controller
 		}
 	}
 
+	public function upload_pro_inves($id){
+		$idAlumno=$this->nativesession->get("idAlumno");
+		if(!isset($idAlumno)){
+			show_404();
+			exit;
+		}
+		$solicitud=$this->Solicitud_model->byIdAndAlumno($id,$idAlumno);
+		if(count($solicitud)!=0){
+			echo $this->uploadFile('cv',$id,"proinves");//send result to view
+		}else{
+			show_404();
+			exit;
+		}
+	}
+
+	public function stateFile_spro_inves($id){
+		$result=[];
+		header('Content-Type: application/json');
+		
+		if($this->nativesession->get("estado")=="logeado"){
+			$result=[
+				"content"=>[
+					"pinvs"=>file_exists(CC_BASE_PATH.'/files/proinves/'.$id.".pdf"),
+					"nameFiles"=>$id
+				],
+				"status"=>"OK"
+				
+			];
+		}else{
+			$result=[
+				"content"=>[],
+				"status"=>"ERROR"
+			];
+		}
+		echo json_encode($result,JSON_UNESCAPED_UNICODE);
+	}
+
 	public function upload_sol_admision($id){
 		$idAlumno=$this->nativesession->get("idAlumno");
 		if(!isset($idAlumno)){
@@ -260,6 +297,7 @@ class Solicitud extends CI_Controller
 			//header("Expires: Sat, 1 Jul 2000 5:00:00 GMT");
 			$result=[
 				"content"=>[
+					"dataextra"=>$this->upload->data(),
 					"file_name"=> $datos["img"]["file_name"]
 				],
 				"status"=>"OK"

@@ -225,6 +225,13 @@ class Solicitud extends CI_Controller
 				"statechecked"=>(boolean)$alumno["check_sins_pdf"],
 				"stateUpload"=>file_exists(CC_BASE_PATH."/files/sol-ad/".$solicitud["idSolicitud"].".pdf"),
 				"fileName"=>$solicitud["idSolicitud"]
+            ],
+            [
+				"name"=>"Proyecto de Investigacion",
+				"identifier"=>"pinvs",
+				"statechecked"=>(boolean)1,//Corregir
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/sol-ad/".$solicitud["idSolicitud"].".pdf"),
+				"fileName"=>$solicitud["idSolicitud"]
 			]
 
 		];
