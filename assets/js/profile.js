@@ -80,6 +80,7 @@ var configuracion = function(){
 
 	var solicitudComponets=[];
 	var solicitudFormalComponets=[];
+    var proInvest=[];
 
     $("#formChangePwd").submit(function(evt){
         evt.preventDefault();
@@ -418,6 +419,7 @@ $.ajax({
                             "<div class='col-xs-6 col-md-2'><a href="+alinkdel+">Eliminar</a></div>"+
                             "<div class='col-xs-12 col-md-4' id='SolicitudFileComponent"+(i+1)+"'></div>"+
                             "<div class='col-xs-12 col-md-4' id='SolicitudFormalFileComponent"+(i+1)+"'></div>"+
+                            "<div class='col-md-4' id='proInvest"+(i+1)+"'></div>"+
                             alinknotification+
                         "</div>"+
                     "</div>"+
@@ -449,6 +451,21 @@ $.ajax({
 
 					"tittle":"Solicitud admisión",
 					"identifier":"solad",
+					"sizeTemplate":"min",
+                    "urlview":"/solicitud/view/pdf",                      
+                    "pathInfo":"/file/info",
+                    "pathDelete":"/file/delete",
+                    "id":datos[i].idSolicitud
+                });
+
+                proInvest["proInvest"+(i+1)]=cc.fileComponent("#proInvest"+(i+1),{
+					"state":false,
+					"target":"proInvest"+(i+1),
+					"urlUpload":"/proinves/upload/"+datos[i].idSolicitud,
+					"urlVerify":"/proinves/stateFile/"+datos[i].idSolicitud,
+
+					"tittle":"Proyecto de Investigacion",
+					"identifier":"pinvs",
 					"sizeTemplate":"min",
                     "urlview":"/solicitud/view/pdf",                      
                     "pathInfo":"/file/info",

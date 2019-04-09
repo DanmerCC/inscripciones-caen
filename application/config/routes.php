@@ -97,6 +97,12 @@ $route['soladmision/upload/(:num)'] = 'Solicitud/upload_sol_admision/$1';
 $route['solicitud/stateFile/(:num)'] = 'Solicitud/stateFile/$1';
 $route['soladmision/stateFile/(:num)'] = 'Solicitud/stateFile_sol_admision/$1';
 
+/**
+ *  Proyecto de investigacion
+ */
+$route['proinves/upload/(:num)'] = 'Solicitud/upload_pro_inves/$1';
+$route['proinves/stateFile/(:num)'] = 'Solicitud/stateFile_spro_inves/$1';
+
 $route['file/delete/([a-zA-Z]+)/(:num)'] = 'admin/FilesController/eliminar/$1/$2';
 $route['file/info/([a-zA-Z]+)'] = 'admin/FilesController/info/$1';
 

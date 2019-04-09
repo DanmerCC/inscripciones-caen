@@ -6,6 +6,7 @@ class Solicitud_model extends CI_Model
 	private $id='idSolicitud';
 	private $id_programa='programa';
 	private $check_sol_ad='check_sol_ad';
+	private $check_proyect_invs='check_proyect_invest';
 	private $alumno_id='alumno';
 
 
@@ -246,6 +247,27 @@ class Solicitud_model extends CI_Model
 
 		$data = array(
 		    $this->check_sol_ad => 1
+		);
+
+		$this->db->where($this->id, $id);
+		$this->db->update($this->tbl_solicitud, $data);
+		$result=($this->db->affected_rows()==1)?1:0;
+
+		return ["result"=>$result];
+	}
+
+/**
+ * Set check Proyect of Investigation to 1
+ */
+	function setCheckProyectInvestigacion($id){
+		return $this->setCheckColumnByName($id,$this->check_proyect_invs);
+	}
+/**
+ * Set a 1 in the @column especificated
+ */
+	function setCheckColumnByName($id,$column){
+		$data = array(
+		    $column => 1
 		);
 
 		$this->db->where($this->id, $id);
