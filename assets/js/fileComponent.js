@@ -30,7 +30,6 @@ function initComponent(target,options=optionsDefault){
 				'<a id="alinktarget" class="btn btn-success btn-sm"  target="_blank">'+
 					'<i class="fa fa-eye"></i><font style="vertical-align: inherit;"> '+options.tittle+' </font>'+
 				'</a>'+
-				// '<div id="deleteFileOption"><a id="" href="#" class="btn btn-danger btn-xsm" ><i class="fa fa-trash" aria-hidden="true"></i></a></div>'+
 				'<label id="deleteFileOption"><a id="" href="#" class="btn btn-danger btn-xsm"><i class="fa fa-trash" aria-hidden="true"></i></a></label>'+
 			'</div>'+
 			'<div id="hasNotFile"'+((options.state)?'hidden':'')+' >'+
