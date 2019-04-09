@@ -418,14 +418,14 @@ $.ajax({
                             "<div class='col-xs-6 col-md-2'><a href="+alink+">Ficha</a></div>"+
                             "<div class='col-xs-6 col-md-2'><a href="+alinkdel+">Eliminar</a></div>"+
                             "<div class='col-xs-12 col-md-4'>"+
-                                "<button type='button' class='btn btn-block btn-primary btn-xs' data-toggle='modal' data-target='#modalDocument'>"+
+                                "<button type='button' class='btn btn-block btn-primary btn-xs' data-toggle='modal' data-target='#modalDocument"+(i+1)+"'>"+
                                     "Mostrar información"+
                                 "</button>"+
                             "</div>"+
                         "</div>"+
                     "</div>"+
                 "</div><br>"+
-                "<div class='modal fade' id='modalDocument' tabindex='-1' role='dialog' aria-labelledby='modalDocumentLabel'>"+
+                "<div class='modal fade' id='modalDocument"+(i+1)+"' tabindex='-1' role='dialog' aria-labelledby='modalDocumentLabel"+(i+1)+"'>"+
                     "<div class='modal-dialog' role='document'>"+
                         "<div class='modal-content'>"+
                             "<div class='modal-header'>"+
