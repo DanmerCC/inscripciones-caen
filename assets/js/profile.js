@@ -407,7 +407,7 @@ $.ajax({
 
                 var alink = "/postulante/pdf/"+datos[i].idSolicitud;
                 var alinkdel = "/postulante/solicitud/eliminar/"+datos[i].idSolicitud;
-                var alinknotification = ((!datos[i].completeFile)?"<div class='col-xs-12 col-md-12'><a href='#'><button class='btn btn-sm bg-light-blue disabled color-palette' data-toggle='collapse' data-parent='#accordion' href='#collapse9' data-target=''>"+datos[i].msgUploadFile+"</button></a></div>":"");
+                var alinknotification = ((!datos[i].completeFile)?"<div class='col-xs-12 col-md-12'><a href='#'><button class='btn btn-sm bg-light-blue disabled color-palette' data-dismiss='modal' data-toggle='collapse' data-parent='#accordion' href='#collapse9' data-target=''>"+datos[i].msgUploadFile+"</button></a></div>":"");
 
                 var diseño = 
                 "<div class='row'>"+
@@ -418,14 +418,14 @@ $.ajax({
                             "<div class='col-xs-6 col-md-2'><a href="+alink+">Ficha</a></div>"+
                             "<div class='col-xs-6 col-md-2'><a href="+alinkdel+">Eliminar</a></div>"+
                             "<div class='col-xs-12 col-md-4'>"+
-                                "<button type='button' class='btn btn-block btn-primary btn-xs' data-toggle='modal' data-target='#exampleModal'>"+
+                                "<button type='button' class='btn btn-block btn-primary btn-xs' data-toggle='modal' data-target='#modalDocument'>"+
                                     "Mostrar información"+
                                 "</button>"+
                             "</div>"+
                         "</div>"+
                     "</div>"+
                 "</div><br>"+
-                "<div class='modal fade' id='exampleModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel'>"+
+                "<div class='modal fade' id='modalDocument' tabindex='-1' role='dialog' aria-labelledby='modalDocumentLabel'>"+
                     "<div class='modal-dialog' role='document'>"+
                         "<div class='modal-content'>"+
                             "<div class='modal-header'>"+
