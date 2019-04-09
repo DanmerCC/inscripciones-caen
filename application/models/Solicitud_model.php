@@ -256,15 +256,15 @@ class Solicitud_model extends CI_Model
 		return ["result"=>$result];
 	}
 
-/**
- * Set check Proyect of Investigation to 1
- */
+	/**
+ 	* Set check Proyect of Investigation to 1
+ 	*/
 	function setCheckProyectInvestigacion($id){
 		return $this->setCheckColumnByName($id,$this->check_proyect_invs);
 	}
-/**
- * Set a 1 in the @column especificated
- */
+	/**
+	 * Set a 1 in the @column especificated
+	 */
 	function setCheckColumnByName($id,$column){
 		$data = array(
 		    $column => 1
