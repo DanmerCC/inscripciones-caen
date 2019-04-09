@@ -26,13 +26,13 @@ function initComponent(target,options=optionsDefault){
 
 	var minimalistTemplateGenerator=function (options){
 		var stringTemplate=''+
-			'<div id="hasFile" '+((options.state)?'':'hidden')+'>'+
+			'<div id="hasFile" '+((options.state)?'':'hidden')+' class="probe">'+
 				'<a id="alinktarget" class="btn btn-success btn-sm"  target="_blank">'+
 					'<i class="fa fa-eye"></i><font style="vertical-align: inherit;"> '+options.tittle+' </font>'+
 				'</a>'+
 				'<label id="deleteFileOption"><a id="" href="#" class="btn btn-danger btn-xsm"><i class="fa fa-trash" aria-hidden="true"></i></a></label>'+
 			'</div>'+
-			'<div id="hasNotFile"'+((options.state)?'hidden':'')+' >'+
+			'<div id="hasNotFile"'+((options.state)?'hidden':'')+' class="probe">'+
 				'<form id="frmUploadCv">'+
 					'<label class="btn btn-danger btn-sm" for="'+options.target+'_file">'+options.tittle+'<i class="fa fa-fw fa-upload" for="file_cv"></i></label>'+
 					'<input type="file" class="form-control" id="'+options.target+'_file" name="file_cv" value="" accept="pdf" style="visibility:hidden; position: fixed;">'+

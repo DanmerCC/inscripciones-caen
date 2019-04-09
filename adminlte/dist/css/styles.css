@@ -2,8 +2,11 @@ html{
     overflow-y: auto;
 }
 body{
-    min-width: 525px;
+    min-width: 460px;
 }
 .form-create {
     margin: 0;
+}
+.probe {
+    padding-bottom: 5px;
 }

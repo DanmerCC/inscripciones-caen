@@ -840,9 +840,9 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
 
-                                        </div>
+                                        </div> -->
                                     
                                 </div>
                             </form>         
