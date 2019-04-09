@@ -819,7 +819,7 @@
                                                 <div class="col-sm-12">
                                                     <label>Lista de solicitudes hechas por usted <span style="color: red">(*)</span></label>
                                                 </div>
-                                            </div>
+                                            </div><br>
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-xs-12 col-md-12">
@@ -827,7 +827,7 @@
                                                             <div class="col-xs-3 col-md-4"><strong>Programa</strong></div>
                                                             <div class="col-xs-4 col-md-2"><strong>Financiamiento</strong></div>
                                                             <div class="col-xs-5 col-md-6"><strong>Ficha de Inscripción</strong></div>
-                                                        </div>
+                                                        </div><br>
                                                         <div id="contentSolicitudes">
                                                         </div>
                                                     </div>

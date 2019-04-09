@@ -1,8 +1,8 @@
-body{
-    min-width: 478px;
+html{
+    overflow-y: auto;
 }
-.table-responsive {
-    overflow-x: hidden;
+body{
+    min-width: 525px;
 }
 .form-create {
     margin: 0;

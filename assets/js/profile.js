@@ -407,7 +407,7 @@ $.ajax({
 
                 var alink = "/postulante/pdf/"+datos[i].idSolicitud;
                 var alinkdel = "/postulante/solicitud/eliminar/"+datos[i].idSolicitud;
-                var alinknotification = ((!datos[i].completeFile)?"<div class='col-xs-12 col-md-4'><a href='#'><button class='btn btn-sm bg-light-blue disabled color-palette' data-toggle='collapse' data-parent='#accordion' href='#collapse9' data-target=''>"+datos[i].msgUploadFile+"</button></a></div>":"");
+                var alinknotification = ((!datos[i].completeFile)?"<div class='col-xs-12 col-md-12'><a href='#'><button class='btn btn-sm bg-light-blue disabled color-palette' data-toggle='collapse' data-parent='#accordion' href='#collapse9' data-target=''>"+datos[i].msgUploadFile+"</button></a></div>":"");
 
                 var diseño = 
                 "<div class='row'>"+
@@ -417,14 +417,38 @@ $.ajax({
                         "<div class='row'>"+
                             "<div class='col-xs-6 col-md-2'><a href="+alink+">Ficha</a></div>"+
                             "<div class='col-xs-6 col-md-2'><a href="+alinkdel+">Eliminar</a></div>"+
-                            "<div class='col-xs-12 col-md-4' id='SolicitudFileComponent"+(i+1)+"'></div>"+
-                            "<div class='col-xs-12 col-md-4' id='SolicitudFormalFileComponent"+(i+1)+"'></div>"+
-                            "<div class='col-md-4' id='proInvest"+(i+1)+"'></div>"+
-                            alinknotification+
+                            "<div class='col-xs-12 col-md-4'>"+
+                                "<button type='button' class='btn btn-block btn-primary btn-xs' data-toggle='modal' data-target='#exampleModal'>"+
+                                    "Mostrar información"+
+                                "</button>"+
+                            "</div>"+
                         "</div>"+
                     "</div>"+
-                "</div>"+
-                "<hr noshade>";
+                "</div><br>"+
+                "<div class='modal fade' id='exampleModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel'>"+
+                    "<div class='modal-dialog' role='document'>"+
+                        "<div class='modal-content'>"+
+                            "<div class='modal-header'>"+
+                                "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>"+
+                                    "<span aria-hidden='true'>&times;</span>"+
+                                "</button>"+
+                                "<h4 class='modal-title' id='myModalLabel'>Documentos para solicitud</h4>"+
+                            "</div>"+
+                            "<div class='modal-body'>"+
+                                "<div class='col-xs-12 col-md-12'>"+
+                                    "<div class='row'>"+
+                                        "<div class='col-xs-12 col-md-12' id='SolicitudFileComponent"+(i+1)+"'></div>"+
+                                        "<div class='col-xs-12 col-md-12' id='SolicitudFormalFileComponent"+(i+1)+"'></div>"+
+                                        "<div class='col-xs-12 col-md-12' id='proInvest"+(i+1)+"'></div>"+
+                                        alinknotification+
+                                    "</div>"+
+                                "</div>"+
+                            "<div class='modal-footer'>"+
+                                "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>"+
+                            "</div>"+
+                        "</div>"+
+                    "</div>"+
+                "</div>";
                 
                 $("#contentSolicitudes").append(diseño);
 
