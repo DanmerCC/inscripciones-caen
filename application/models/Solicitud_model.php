@@ -7,6 +7,7 @@ class Solicitud_model extends CI_Model
 	private $id_programa='programa';
 	private $check_sol_ad='check_sol_ad';
 	private $alumno_id='alumno';
+	private $check_hdatos='check_hdatos';
 
 	/**
 	 * var @sent cuando la solicitud ya esta enviada
@@ -250,6 +251,19 @@ class Solicitud_model extends CI_Model
 
 		$data = array(
 		    $this->check_sol_ad => 1
+		);
+
+		$this->db->where($this->id, $id);
+		$this->db->update($this->tbl_solicitud, $data);
+		$result=($this->db->affected_rows()==1)?1:0;
+
+		return ["result"=>$result];
+	}
+
+	function setCheckHojadatos($id){
+
+		$data = array(
+		    $this->check_hdatos =>date('Y/m/d H:i:s')
 		);
 
 		$this->db->where($this->id, $id);

@@ -232,8 +232,15 @@ class Solicitud extends CI_Controller
 			[
 				"name"=>"Solicitud de Inscripcion",
 				"identifier"=>"solad",
-				"statechecked"=>(boolean)$alumno["check_sins_pdf"],
+				"statechecked"=>(boolean)$solicitud["check_sol_ad"],
 				"stateUpload"=>file_exists(CC_BASE_PATH."/files/sol-ad/".$solicitud["idSolicitud"].".pdf"),
+				"fileName"=>$solicitud["idSolicitud"]
+            ],
+            [
+				"name"=>"Hoja de datos",
+				"identifier"=>"hdatos",
+				"statechecked"=>(boolean)$solicitud["check_hdatos"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/hojadatos/".$solicitud["idSolicitud"].".pdf"),
 				"fileName"=>$solicitud["idSolicitud"]
 			]
 

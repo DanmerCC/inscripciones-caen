@@ -66,12 +66,17 @@ class FilesController extends CI_Controller {
 				$idNameAndRegist=$result["id_alumno"];
 				break;
 			case 'hdatos':
-				$pathFile=CC_BASE_PATH."/files/hdatos/".$id.".pdf";
+				$pathFile=CC_BASE_PATH."/files/hojadatos/".$id.".pdf";
 				$result=$this->Solicitud_model->getAllColumnsById($id);
 				$idNameAndRegist=$result["idSolicitud"];
 				break;
 			case 'solad':
 				$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
+				$result=$this->Solicitud_model->getAllColumnsById($id);
+				$idNameAndRegist=$result["idSolicitud"];
+				break;
+			case 'pinvs':
+				$pathFile=CC_BASE_PATH."/files/proinves/".$id.".pdf";
 				$result=$this->Solicitud_model->getAllColumnsById($id);
 				$idNameAndRegist=$result["idSolicitud"];
 				break;
