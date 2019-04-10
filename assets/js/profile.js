@@ -347,7 +347,9 @@ var configuracion = function(){
         		$("#telefono_seguro").val(datos[i].telefono_seguro);
         		$("#emergencia_familiar").val(datos[i].emergencia_familiar);
         		$("#telefono_familiar").val(datos[i].telefono_familiar);
-        		$("#parentesco").val(datos[i].parentesco);
+                $("#parentesco").val(datos[i].parentesco);
+                
+                consultaVacio();
 
                 // function crearModal(data){
                 //     var modal =
@@ -373,20 +375,7 @@ var configuracion = function(){
                 //     return modal;
                 // }
 
-                // $("#collapse2").each(function(){
-                //     console.log("Aqui estoy");
-                //     var git = $().val();
-                //     var nana = "otraenfermedad";
-                //     var dfgit = "#t_enfermedad_otros";
-                //     var git = $(dfgit).val();
-                //     console.log(dfgit);
-                //     console.log(git);
-                //     if( git === ''){
-                //         $('#comment').append(crearModal(nana));
-                //         $("#myModal").modal("show");
-                //     }
-                // });
-
+                
         		// $("#").val(datos[i].gradoMilitar);
         		// $("#").val(datos[i].planaMilitar);
         		// $("#").val(datos[i].tipodocumento);
@@ -399,6 +388,23 @@ var configuracion = function(){
 		}
     });
 
+function consultaVacio(){
+    var cont=0;
+    var excepciones=[];
+    var pivotInput;
+    $("#accordion input").each(function(){
+        if((!excepciones.includes($(this).attr("name"))) && ($(this).val()=="")){
+            if($(this).val()!=pivotInput){
+                pivotInput=$(this).attr("name");
+            }
+            cont++;
+        }
+    });
+                
+    alert("Aun te quedan "+cont+" por registrar");
+    console.log("#"+pivotInput+"");
+    $("#"+pivotInput+"").focus();
+}
 
 $.ajax({
         url: "/api/programas",
