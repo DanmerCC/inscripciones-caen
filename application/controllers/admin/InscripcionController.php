@@ -36,15 +36,33 @@ class InscripcionController extends CI_Controller {
 
 	public function create(){
 		$idSolicitud=$this->input->post('id_sol');
+		$this->load->model('Solicitud_model');
+		$rows_afected=$this->Solicitud_model->set_sent_date($idSolicitud);
+		
+		if($rows_afected!=1){
+			show_error("Error al establecer como inscrito");
+			die();
+		}
 		if(empty($idSolicitud)){
 			show_error("Error en la espera de un registro");
+			die();
 		}
-		try{
-			$id_result=$this->Inscripcion_model->create($idSolicitud);
-			echo  $id_result;
-		}catch(Exception $e){
-			echo $e->getMessage();
+		if($this->nativesession->get('tipo')!='admin'){
+			show_error("No tiene permisos necesarios");
+			die();
 		}
+		$data["result"]=true;
+		$data["status"]="";
+
+		if($this->Inscripcion_model->create($idSolicitud,$this->nativesession->get('idUsuario'))){
+			header('Content-Type: application/json');
+			$data["result"]=true;
+			$data["status"]="200";
+		}else{
+			$data["result"]=false;
+			$data["status"]="500";
+		}
+		echo json_encode($data);
 		
 	}
 

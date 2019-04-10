@@ -1,0 +1,1 @@
+ALTER TABLE `solicitud` ADD `sent_to_inscripcion` DATETIME NULL DEFAULT NULL

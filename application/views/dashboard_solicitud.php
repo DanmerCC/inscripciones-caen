@@ -236,6 +236,7 @@
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 
+<script src="/assets/plugins/bootbox/bootbox.all.min.js"></script>
 <!-- <script src="/assets/js/dboardAlumno.js"></script> -->
 <script src="/assets/js/dbSolicitudes.js"></script>
 </body>
