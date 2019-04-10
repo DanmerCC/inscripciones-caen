@@ -8,6 +8,10 @@ class Solicitud_model extends CI_Model
 	private $check_sol_ad='check_sol_ad';
 	private $alumno_id='alumno';
 
+	/**
+	 * var @sent cuando la solicitud ya esta enviada
+	 */
+	private $sent='sent_to_inscripcion';
 
 	function __construct()
 	{
@@ -16,7 +20,7 @@ class Solicitud_model extends CI_Model
 	}
 
 	public function existe($idAlumno,$programa){
-		$result=$this->db->query("SELECT * FROM solicitud WHERE (programa='$programa') AND (alumno ='$idAlumno')");
+		$result=$this->db->query("SELECT * FROM solicitud WHERE (programa='$programa') AND (alumno ='$idAlumno') AND ($this->sent IS NULL)");
 		if ($result->num_rows()==1) {
 			return true;
 		}else{
@@ -57,7 +61,7 @@ class Solicitud_model extends CI_Model
 	}
 
 	public function getAllOrderByIdSolicitud(){
-		$result=$this->db->query("SELECT tc.nombre as nombretipoCurso,s.idSolicitud as idSolicitud,s.estado estado,s.programa,s.alumno as alumno,s.tipo_financiamiento,s.fecha_registro,a.documento,a.nombres,a.apellido_paterno,a.apellido_materno,c.nombre curso_nombre,c.numeracion curso_numeracion ,s.marcaPago , s.comentario FROM solicitud s left join alumno a on s.alumno=a.id_alumno left join curso c on s.programa=c.id_curso left join tipo_curso tc on c.idTipo_curso=tc.idTipo_Curso ORDER BY s.idSolicitud");
+		$result=$this->db->query("SELECT tc.nombre as nombretipoCurso,s.idSolicitud as idSolicitud,s.estado estado,s.programa,s.alumno as alumno,s.tipo_financiamiento,s.fecha_registro,a.documento,a.nombres,a.apellido_paterno,a.apellido_materno,c.nombre curso_nombre,c.numeracion curso_numeracion ,s.marcaPago , s.comentario FROM solicitud s left join alumno a on s.alumno=a.id_alumno left join curso c on s.programa=c.id_curso left join tipo_curso tc on c.idTipo_curso=tc.idTipo_Curso  where (s.$this->sent IS NULL) ORDER BY s.idSolicitud");
 		return $result;
 	}
 
@@ -75,7 +79,7 @@ class Solicitud_model extends CI_Model
 
 	public function quitarMarca(){
 		$id=$this->input->post('id');
-		$sql = "UPDATE solicitud SET estado='0' WHERE idSolicitud=?";
+		$sql = "UPDATE solicitud SET estado='0' WHERE (idSolicitud = ? ) AND  ($this->sent = NULL)";
 		$result=$this->db->query($sql,$id);
 		if ($result) {
 			echo "Marca quitada";
@@ -112,7 +116,7 @@ class Solicitud_model extends CI_Model
 	}
 
 	public function delete($id){
-		$sql = "DELETE FROM `solicitud` WHERE idSolicitud = ?";
+		$sql = "DELETE FROM `solicitud` WHERE ( idSolicitud = ?) AND ($this->sent = NULL)";
 		$result=$this->db->query($sql,$id);
 		return $result;
 	}
@@ -265,5 +269,15 @@ class Solicitud_model extends CI_Model
 		$cant_result_rows=$result->num_rows();
 
 		return ($cant_result_rows===1);
+	}
+
+	public function set_sent_date($id){
+		$data = array(
+			$this->sent=>date('Y/m/d H:i:s')
+		);
+
+		$this->db->where($this->id, $id);
+		$this->db->update($this->tbl_solicitud, $data);
+		return $this->db->affected_rows();
 	}
 }

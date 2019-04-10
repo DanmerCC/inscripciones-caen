@@ -293,3 +293,40 @@ function makeTemplateIconsDocuments(nombre,estado,identifier,nameFile){
     ((estado)?'</a>':"");
     return template;
 }
+
+
+function request_bootbox(id){
+	bootbox.confirm({
+		title: "Desea inscribir",
+		message: "Esta seguro de enviar a INSCRITOS esta solicitud",
+		buttons: {
+			cancel: {
+				label: '<i class="fa fa-times"></i> Cancelar'
+			},
+			confirm: {
+				label: '<i class="fa fa-check"></i> Enviar'
+			}
+		},
+		callback: function (result) {
+            if(result){
+                $.ajax({
+                    type: "post",
+                    url: "/admin/inscr/create",
+                    dataType: "json",
+                    data: {
+                        "id_sol":id
+                    },
+                    success: function (response) {
+                        console.log(response)
+                    }
+                });
+            }
+			
+		}
+	});
+}
+
+
+function inscription_call_back(result){
+
+}

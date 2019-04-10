@@ -7,7 +7,7 @@ class Inscripcion_model extends CI_Model
 	private $table='inscripcion';
 	private $id='id_inscripcion';
 	private $solicitud_id='solicitud_id';
-	private $user_id='user_id';
+	private $created_user_id='created_user_id';
 	private $created='created';
 	//** Determina si el registro existe */
 	private $deleted='deleted';
@@ -23,21 +23,22 @@ class Inscripcion_model extends CI_Model
 		$this->public_columns=[
 			$this->id,
 			$this->solicitud_id,
-			$this->user_id
+			$this->created_user_id
 		];
 	}
 
-	public function create($idSolicitud){
+	public function create($idSolicitud,$created_user_id){
 		$this->load->model('Solicitud_model');
 		if($this->Solicitud_model->verify_requeriments($idSolicitud)){
 			$data=array(
-				$this->solicitud_id=>$idSolicitud
+				$this->solicitud_id=>$idSolicitud,
+				$this->created_user_id=>$created_user_id
 			);
 			$this->db->insert($this->table,$data);
 			$id_row_inserted=$this->db->insert_id();
-			return $id_row_inserted;
+			return ($this->db->affected_rows()==1);
 		}else{
-			throw new Exception('Error verificar la solicitud con de ID '.var_dump($idSolicitud));
+			return false;
 		}
 		
 		
@@ -92,8 +93,13 @@ class Inscripcion_model extends CI_Model
 		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
 		$this->db->join('curso c','c.id_curso = s.programa','left');
 		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
-		$this->db->where('ins.'.$this->deleted,NULL);
-        $this->db->limit($limit,$start);
+		$this->db->where(
+			array(
+				'ins.'.$this->deleted=>NULL
+			)
+		);
+		$this->db->limit($limit,$start);
+		
         return resultToArray($this->db->get());
 	}
 
@@ -107,8 +113,12 @@ class Inscripcion_model extends CI_Model
 		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
 		$this->db->join('curso c','c.id_curso = s.programa','left');
 		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
-		$this->db->where('ins.'.$this->deleted,NULL);
-        $this->db->limit($limit,$start);
+		$this->db->where(
+			array(
+				'ins.'.$this->deleted=>NULL
+			)
+		);
+		$this->db->limit($limit,$start);
         return resultToArray($this->db->get());
 	}
 	

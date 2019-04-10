@@ -1,7 +1,7 @@
 function cargarDataTable(){
 	tabla = $('#dataTable1').dataTable({
 	"aProcessing": true, //activamos el procesamiento del datatables
-	"aServerSide": true, //paginacion y filtrado realizados por el servidor 
+	"serverSide": true, //paginacion y filtrado realizados por el servidor 
 	dom: 'Bfrtip', //definimos los elementos del contro la tabla
 	buttons: [
 		'copyHtml5',
