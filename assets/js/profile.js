@@ -349,8 +349,18 @@ var configuracion = function(){
         		$("#telefono_familiar").val(datos[i].telefono_familiar);
         		$("#parentesco").val(datos[i].parentesco);
 
+                
 
-
+                // $("#collapse2").each(function(){
+                //     console.log("Aqui estoy");
+                //     var git = $("#t_enfermedad_otros").val();
+                //     if( git === ''){
+                //         alert('Prueba');
+                //     }
+                //     else{
+                //         console.log("Fuera");
+                //     }
+                // });
 
         		// $("#").val(datos[i].gradoMilitar);
         		// $("#").val(datos[i].planaMilitar);
@@ -408,7 +418,8 @@ $.ajax({
                 var alink = "/postulante/pdf/"+datos[i].idSolicitud;
                 var alinkdel = "/postulante/solicitud/eliminar/"+datos[i].idSolicitud;
                 var alinknotification = ((!datos[i].completeFile)?"<div class='col-xs-12 col-md-6'><a href='#'><button class='btn btn-sm bg-light-blue disabled color-palette' data-dismiss='modal' data-toggle='collapse' data-parent='#accordion' href='#collapse9' data-target=''>"+datos[i].msgUploadFile+"</button></a></div>":"");
-
+                
+                //Creacion de modal a mostrar en Despegable SOLICITUDES
                 var modal =
                 "<div class='modal fade' id='modalDocument"+(i+1)+"' tabindex='-1' role='dialog' aria-labelledby='modalDocumentLabel"+(i+1)+"'>"+
                     "<div class='modal-dialog' role='document'>"+
@@ -435,7 +446,8 @@ $.ajax({
                         "</div>"+
                     "</div>"+
                 "</div>";
-
+                
+                //Creacion de diseño de Despegable SOLICITUDES
                 var diseño = 
                 "<div class='row'>"+
                     "<div class='col-xs-3 col-md-4'>"+datos[i].numeracion+" "+datos[i].tipoCurso+" "+datos[i].nombreCurso+"</div>"+
@@ -454,6 +466,7 @@ $.ajax({
                 "</div><br>"+
                 modal;
                 
+                //Insercion en Despegable SOLICITUDES
                 $("#contentSolicitudes").append(diseño);
 
                 solicitudComponets["SolicitudFileComponent"+(i+1)]=cc.fileComponent("#SolicitudFileComponent"+(i+1),{
@@ -568,8 +581,6 @@ function desactStateMil(val){
 
 }
 
-
-
 /*Definicion de funciones*/
 function relacionarColapseLi(idelemento,collapse){
 /*Manipula clase li que contiene el elemento 'li'*/
@@ -581,10 +592,8 @@ function relacionarColapseLi(idelemento,collapse){
 	});
 }
 
-
 /*Copia de datos alos especificados en data-pointed*/
 function reflejarDatos(idelemento){
-
 	if($(idelemento).attr('type')=='checkbox'){
 		$(idelemento).on('change',function(){
 			if ($(idelemento).prop('checked')) {
@@ -603,35 +612,28 @@ function reflejarDatos(idelemento){
 
 }
 
+/*MOSTRAR IMAGENES*/
+$('#foto').change(function(e) {
+    addImage(e); 
+});
 
+function addImage(e){
+    var file = e.target.files[0],
+    imageType = /image.*/;
 
+    if (!file.type.match(imageType))
+    return;
 
-    /*MOSTRAR IMAGENES*/
-
-    $('#foto').change(function(e) {
-
-        addImage(e); 
-    });
-
-     function addImage(e){
-        var file = e.target.files[0],
-        imageType = /image.*/;
-
-        if (!file.type.match(imageType))
-        return;
-
-        var reader = new FileReader();
-        reader.onload = fileOnload;
-        reader.readAsDataURL(file);
-     }
+    var reader = new FileReader();
+    reader.onload = fileOnload;
+    reader.readAsDataURL(file);
+}
   
-     function fileOnload(e) {
-        var result=e.target.result;
-        $('#imagenpersona').attr("src",result);
-     }
-     
-     
-     
+function fileOnload(e) {
+    var result=e.target.result;
+    $('#imagenpersona').attr("src",result);
+}
+ 
 function sendCv(){
 	var fileSelect = document.getElementById('file_cv');
 	var formData= new FormData();
@@ -698,8 +700,7 @@ function openPDFv2(cadena) {
 	//console.log('click now!', tempLink.click);
 	//container.append(tempLink);
 	tempLink.click();
-  }
-
+}
 
 function configInputsFile(target,url){
     $(target).change(function(){
