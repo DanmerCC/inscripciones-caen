@@ -166,6 +166,9 @@ $route['administracion/vista/inscripciones'] ='admin/InscripcionController/index
 
 $route['admin/parts/nuevoprograma'] = 'admin/Programa/newPrograma';
 
+//**Models with inscription */
+$route['admin/inscr/create'] = 'admin/InscripcionController/create';
+
 $route['test'] = 'Solicitud/test';
 
 
