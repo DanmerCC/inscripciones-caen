@@ -349,16 +349,41 @@ var configuracion = function(){
         		$("#telefono_familiar").val(datos[i].telefono_familiar);
         		$("#parentesco").val(datos[i].parentesco);
 
-                
+                // function crearModal(data){
+                //     var modal =
+                //     "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='basicModal' aria-hidden='true'>"+
+                //         "<div class='modal-dialog'>"+
+                //             "<div class='modal-content'>"+
+                //                 "<div class='modal-header'>"+
+                //                     "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>"+
+                //                     "<h3>Cabezera de la ventana</h3>"+
+                //                 "</div>"+
+                //                 "<div class='modal-body'>"+
+                //                     "<h4>Texto de la ventana</h4>"+
+                //                     "<p>Más texto en la ventana</p>"+ 
+                //                 "</div>"+
+                //                 "<div class='modal-footer'>"+
+                //                     "<button type='button' class='close' data-dismiss='modal' aria-hidden='true' href='"+data+"'>&times;</button>"+
+                                    
+                //                     "<a href='"+data+"' data-dismiss='modal' class='btn btn-danger'>Cerrar</a>"+
+                //                 "</div>"+
+                //             "</div>"+
+                //         "</div>"+
+                //     "</div>";
+                //     return modal;
+                // }
 
                 // $("#collapse2").each(function(){
                 //     console.log("Aqui estoy");
-                //     var git = $("#t_enfermedad_otros").val();
+                //     var git = $().val();
+                //     var nana = "otraenfermedad";
+                //     var dfgit = "#t_enfermedad_otros";
+                //     var git = $(dfgit).val();
+                //     console.log(dfgit);
+                //     console.log(git);
                 //     if( git === ''){
-                //         alert('Prueba');
-                //     }
-                //     else{
-                //         console.log("Fuera");
+                //         $('#comment').append(crearModal(nana));
+                //         $("#myModal").modal("show");
                 //     }
                 // });
 
