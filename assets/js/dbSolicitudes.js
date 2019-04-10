@@ -317,8 +317,18 @@ function request_bootbox(id){
                         "id_sol":id
                     },
                     success: function (response) {
-                        console.log(response)
-                    }
+                        console.log(response);
+                        if(response.result){
+                            tabla.ajax.reload();
+                            alert("Completado correctamente");
+                        }else{
+                            alert("verifica que la solicitud esta procesada");
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
+                      }
                 });
             }
 			

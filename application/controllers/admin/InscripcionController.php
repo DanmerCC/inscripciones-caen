@@ -51,11 +51,18 @@ class InscripcionController extends CI_Controller {
 			show_error("No tiene permisos necesarios");
 			die();
 		}
+		$data["result"]=true;
+		$data["status"]="";
+
 		if($this->Inscripcion_model->create($idSolicitud,$this->nativesession->get('idUsuario'))){
-			echo  "Es correcto";
+			header('Content-Type: application/json');
+			$data["result"]=true;
+			$data["status"]="200";
 		}else{
-			echo  "Error";
+			$data["result"]=false;
+			$data["status"]="500";
 		}
+		echo json_encode($data);
 		
 	}
 
