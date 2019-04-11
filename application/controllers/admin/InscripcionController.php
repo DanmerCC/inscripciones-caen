@@ -66,8 +66,19 @@ class InscripcionController extends CI_Controller {
 		
 	}
 
-	public function delete($idInscripcion){
-		$this->Inscripcion_model->delete($idInscripcion);
+	public function delete(){
+		$idInscripcion=$this->input->post('id');
+		if(!empty($idInscripcion)){
+			
+			$row_afected= $this->Inscripcion_model->delete($idInscripcion);
+			if($row_afected==1){
+				$result['status']="200";
+				$result['content']="OK";
+				echo  json_encode($result);
+				exit;
+			}
+		}
+		//show_404();
 		
 	}
 

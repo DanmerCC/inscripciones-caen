@@ -168,6 +168,7 @@ $route['admin/parts/nuevoprograma'] = 'admin/Programa/newPrograma';
 
 //**Models with inscription */
 $route['admin/inscr/create'] = 'admin/InscripcionController/create';
+$route['admin/inscr/cancel'] = 'admin/InscripcionController/delete';
 
 $route['test'] = 'Solicitud/test';
 

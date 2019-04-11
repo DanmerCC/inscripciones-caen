@@ -48,7 +48,7 @@ class Inscripcion_model extends CI_Model
 		
 		$conditions=array(
 			$this->id=>$id,
-			$this->deleted=>NULL
+			$this->deleted.' IS NULL'=>NULL
 		);
 
 		$result=$this->db
@@ -68,7 +68,7 @@ class Inscripcion_model extends CI_Model
 	public function count(){
 		$this->db->select(implode(',',$this->public_columns))
 		->from($this->table)
-		->where($this->deleted,NULL);
+		->where($this->deleted." IS NULL");
 		$result=$this->db->get();
 		return $result->num_rows();
 	}
@@ -78,10 +78,10 @@ class Inscripcion_model extends CI_Model
 	 */
 	public function delete($id){
 		$data=array(
-			$this->deleted=date('m/d/Y h:i:s a', time())
+			$this->deleted=>date('Y/m/d H:i:s')
 		);
 		$this->db->where($this->id, $id);
-        return $this->db->update('alumno', $data);
+        return $this->db->update($this->table, $data);
 	}
 
 	/**

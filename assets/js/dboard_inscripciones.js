@@ -1,3 +1,4 @@
+var tabla;
 function cargarDataTable(){
 	tabla = $('#dataTable1').dataTable({
 	"aProcessing": true, //activamos el procesamiento del datatables
@@ -31,3 +32,28 @@ $(document).ready(function(){
 
 
 });
+
+ins={
+	"cancel":cancelarById
+};
+
+function cancelarById(id){
+	$.ajax({
+		type: "post",
+		url: "/admin/inscr/cancel",
+		data: {
+			"id":id
+		},
+		dataType: "json",
+		success: function (response) {
+			console.log(response);
+			if(response.content=="OK"){
+				alert("Anulado correctamente");
+				tabla.ajax.reload();
+			}
+		},
+		error: function (e) {
+			console.log(e.responseText);
+		}
+	});
+}

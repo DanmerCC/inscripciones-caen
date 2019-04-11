@@ -81,7 +81,7 @@ class Solicitud_model extends CI_Model
 
 	public function quitarMarca(){
 		$id=$this->input->post('id');
-		$sql = "UPDATE solicitud SET estado='0' WHERE (idSolicitud = ? ) AND  ($this->sent = NULL)";
+		$sql = "UPDATE solicitud SET estado='0' WHERE (idSolicitud = ? ) AND  ($this->sent IS NULL)";
 		$result=$this->db->query($sql,$id);
 		if ($result) {
 			echo "Marca quitada";
@@ -118,7 +118,7 @@ class Solicitud_model extends CI_Model
 	}
 
 	public function delete($id){
-		$sql = "DELETE FROM `solicitud` WHERE ( idSolicitud = ?) AND ($this->sent = NULL)";
+		$sql = "DELETE FROM `solicitud` WHERE ( idSolicitud = ?) AND ($this->sent IS NULL)";
 		$result=$this->db->query($sql,$id);
 		return $result;
 	}
