@@ -300,12 +300,9 @@ class Solicitud_model extends CI_Model
 			$this->check_sol_ad=>1,
 			//Aqui completar condiciones de que hacer a una solicitud este verificada
 		);
-
-		$this->db->where($this->id, $id);
-		$this->db->update($this->tbl_solicitud, $data);
-		$result=($this->db->affected_rows()==1)?1:0;
-
-		return ["result"=>$result];
+		$result=$this->db->select()->from($this->tbl_solicitud)->where($conditions)->get();
+		$cant_result_rows=$result->num_rows();
+		return ($cant_result_rows===1);
 	}
 
 	public function set_sent_date($id){

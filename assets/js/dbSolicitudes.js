@@ -326,8 +326,8 @@ function request_bootbox(id){
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                        alert(xhr.status);
-                        alert(thrownError);
+                        alert("No es posible inscribir ");
+                        console.log("Error: "+xhr);
                       }
                 });
             }
