@@ -1,0 +1,1 @@
+ALTER TABLE `inscripcion` CHANGE `deleted` `deleted` TIMESTAMP NULL DEFAULT NULL;
