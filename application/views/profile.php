@@ -45,7 +45,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">DATOS PERSONALES</a>
                             </h4>
                         </div>
-                        <div id="collapse1" class="panel-collapse collapse">
+                        <div id="collapse1" class="panel-collapse collapse in">
                             <div class="panel-body">
 
                                 <div class="panel-body">

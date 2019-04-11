@@ -351,31 +351,6 @@ var configuracion = function(){
                 
                 consultaVacio();
 
-                // function crearModal(data){
-                //     var modal =
-                //     "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='basicModal' aria-hidden='true'>"+
-                //         "<div class='modal-dialog'>"+
-                //             "<div class='modal-content'>"+
-                //                 "<div class='modal-header'>"+
-                //                     "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>"+
-                //                     "<h3>Cabezera de la ventana</h3>"+
-                //                 "</div>"+
-                //                 "<div class='modal-body'>"+
-                //                     "<h4>Texto de la ventana</h4>"+
-                //                     "<p>Más texto en la ventana</p>"+ 
-                //                 "</div>"+
-                //                 "<div class='modal-footer'>"+
-                //                     "<button type='button' class='close' data-dismiss='modal' aria-hidden='true' href='"+data+"'>&times;</button>"+
-                                    
-                //                     "<a href='"+data+"' data-dismiss='modal' class='btn btn-danger'>Cerrar</a>"+
-                //                 "</div>"+
-                //             "</div>"+
-                //         "</div>"+
-                //     "</div>";
-                //     return modal;
-                // }
-
-                
         		// $("#").val(datos[i].gradoMilitar);
         		// $("#").val(datos[i].planaMilitar);
         		// $("#").val(datos[i].tipodocumento);
@@ -393,17 +368,49 @@ function consultaVacio(){
     var excepciones=[];
     var pivotInput;
     $("#accordion input").each(function(){
-        if((!excepciones.includes($(this).attr("name"))) && ($(this).val()=="")){
+        if((!excepciones.includes($(this).attr("id"))) && ($(this).val()=="")){
             if($(this).val()!=pivotInput){
-                pivotInput=$(this).attr("name");
+                cont++;
+                if(cont == 2){
+                    pivotInput = $(this).attr("id");
+                    var first = document.getElementById(pivotInput).parentNode;           
+                    // var second = document.getElementById(first).parentNode;
+                    console.log(first);
+                }
             }
-            cont++;
+            
         }
-    });
-                
-    alert("Aun te quedan "+cont+" por registrar");
-    console.log("#"+pivotInput+"");
-    $("#"+pivotInput+"").focus();
+    }); 
+
+    // $("#accordion ")
+
+    $("#comment").append(crearModal(cont, pivotInput)); 
+    $("#myModal").modal("show");
+}
+
+function crearModal(contador, data){
+    var modal =
+        "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='basicModal' aria-hidden='true'>"+
+            "<div class='modal-dialog'>"+
+                "<div class='modal-content'>"+
+                    "<div class='modal-header'>"+
+                        "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>"+
+                        "<h3>Cabezera de la ventana</h3>"+
+                    "</div>"+
+                    "<div class='modal-body'>"+
+                        "<h4>Texto de la ventana</h4>"+
+                        "<p>Aun te quedan "+contador+" campos por completar</p>"+ 
+                    "</div>"+
+                    "<div class='modal-footer'>"+
+                        "<a href='#'>"+
+                            "<button class='btn btn-primary' data-dismiss='modal' data-toggle='collapse' href='#indicar2'>Click aqui</button>"+
+                            "<button class='btn btn-primary' type='button' data-dismiss='modal' data-toggle='collapse' data-target='#"+data+"2' aria-expanded='false' aria-controls='#collapse2'>Toggle second</button>"+
+                        "</a>"+
+                    "</div>"+
+                "</div>"+
+            "</div>"+
+        "</div>";
+    return modal;
 }
 
 $.ajax({
