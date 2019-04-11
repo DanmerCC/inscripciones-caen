@@ -38,22 +38,41 @@ ins={
 };
 
 function cancelarById(id){
-	$.ajax({
-		type: "post",
-		url: "/admin/inscr/cancel",
-		data: {
-			"id":id
-		},
-		dataType: "json",
-		success: function (response) {
-			console.log(response);
-			if(response.content=="OK"){
-				alert("Anulado correctamente");
-				tabla.ajax.reload();
+
+	bootbox.confirm({
+		message: "Esta seguro de querer anular esta inscripcion?",
+		buttons: {
+			confirm: {
+				label: 'Si',
+				className: 'btn-success'
+			},
+			cancel: {
+				label: 'Cancelar',
+				className: 'btn-danger'
 			}
 		},
-		error: function (e) {
-			console.log(e.responseText);
+		callback: function (result) {
+			if(result){
+				$.ajax({
+					type: "post",
+					url: "/admin/inscr/cancel",
+					data: {
+						"id":id
+					},
+					dataType: "json",
+					success: function (response) {
+						console.log(response);
+						if(response.content=="OK"){
+							alert("Anulado correctamente");
+							tabla.ajax.reload();
+						}
+					},
+					error: function (e) {
+						console.log(e.responseText);
+					}
+				});
+			}
 		}
 	});
+	
 }

@@ -98,7 +98,7 @@ class InscripcionController extends CI_Controller {
 			$i++;
 	
 				$data[] = array(
-				"0" => "<button class='btn btn-danger' onclick='ins.cancel(".$value["id_inscripcion"].");'>Anular</button>",
+				"0" => "<button class='btn btn-danger' onclick='ins.cancel(".$value["id_inscripcion"].");'><i class='fa fa-trash-o' aria-hidden='true'></i> Anular</button>",
 				"1" => $value["nombres"],
 				"2" => $value["apellido_paterno"]." ".$value["apellido_materno"],
 				"3" => $value["nombre_curso"],
