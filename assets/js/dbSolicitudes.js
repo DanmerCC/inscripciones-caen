@@ -334,7 +334,7 @@ function request_bootbox(id){
                             tabla.ajax.reload(null,false);
                             alert("Completado correctamente");
                         }else{
-							$("#mdl_danger_msg #msg-modal").val("Verifique el estado de la solicitud");
+							$("#mdl_danger_msg #msg-modal").html("Verifique el estado de la solicitud");
 							$("#mdl_danger_msg").modal('show');
 							setTimeout(function(){
 								$("#mdl_danger_msg").modal('hide');
