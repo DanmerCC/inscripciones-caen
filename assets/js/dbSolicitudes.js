@@ -213,6 +213,16 @@ var modalDataAlumno={
 
 }
 
+var modalMensaje={
+	target:"#mdl_danger_msg",
+	init:function(){
+		var targered=this.target;
+		$(this.targered).on('hide.bs.modal', function (event) {
+			$(targered+' #msg-modal').val("");
+		});
+	}
+}
+
 function inicio(){
     var idquerytarget=this.target;
 	$(this.target).on('hide.bs.modal', function (event) {
@@ -228,6 +238,8 @@ function inicio(){
 }
 
 modalDataAlumno.init();
+
+modalMensaje.init();
 
 function eliminarContenido(){
     var idquerytarget=this.target;
@@ -322,7 +334,12 @@ function request_bootbox(id){
                             tabla.ajax.reload(null,false);
                             alert("Completado correctamente");
                         }else{
-                            alert("verifica que la solicitud esta procesada");
+							$("#mdl_danger_msg #msg-modal").val("Verifique el estado de la solicitud");
+							$("#mdl_danger_msg").modal('show');
+							setTimeout(function(){
+								$("#mdl_danger_msg").modal('hide');
+							},1000)
+                            //alert("verifica que la solicitud esta procesada");
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
