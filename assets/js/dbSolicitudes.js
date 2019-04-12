@@ -88,7 +88,7 @@ function marcar(valor){
         if (result) {
             $.post('/admin/solicitud/marcar', {id: valor}, function (e) {
                 bootbox.alert(e);
-                tabla.ajax.reload();
+                tabla.ajax.reload(null,false);
                 console.log(e);
                 console.log(result);
             });
@@ -102,7 +102,7 @@ function quitarmarca(valor){
         if (result) {
             $.post('/admin/solicitud/quitarmarca', {id: valor}, function (e) {
                 bootbox.alert(e);
-                tabla.ajax.reload();
+                tabla.ajax.reload(null,false);
                 console.log(e);
                 console.log(result);
             });
@@ -120,7 +120,7 @@ function marcarPago(valor){
         if (result) {
             $.post('/admin/solicitud/marcarPago', {id: valor}, function (e) {
                 bootbox.alert(e);
-                tabla.ajax.reload();
+                tabla.ajax.reload(null,false);
                 console.log(e);
                 console.log(result);
             });
@@ -134,7 +134,7 @@ function quitarmarcaPago(valor){
         if (result) {
             $.post('/admin/solicitud/quitarmarcaPago', {id: valor}, function (e) {
                 bootbox.alert(e);
-                tabla.ajax.reload();
+                tabla.ajax.reload(null,false);
                 console.log(e);
                 console.log(result);
             });
@@ -319,7 +319,7 @@ function request_bootbox(id){
                     success: function (response) {
                         console.log(response);
                         if(response.result){
-                            tabla.ajax.reload();
+                            tabla.ajax.reload(null,false);
                             alert("Completado correctamente");
                         }else{
                             alert("verifica que la solicitud esta procesada");

@@ -51,7 +51,7 @@ function marcar(valor){
         if (result) {
             $.post('/admin/solicitud/marcar', {id: valor}, function (e) {
                 bootbox.alert(e);
-                tabla.ajax.reload();
+                tabla.ajax.reload(null,false);
                 console.log(e);
                 console.log(result);
             });
@@ -65,7 +65,7 @@ function quitarmarca(valor){
         if (result) {
             $.post('/admin/solicitud/quitarmarca', {id: valor}, function (e) {
                 bootbox.alert(e);
-                tabla.ajax.reload();
+                tabla.ajax.reload(null,false);
                 console.log(e);
                 console.log(result);
             });

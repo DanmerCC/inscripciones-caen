@@ -64,7 +64,7 @@ function cancelarById(id){
 						console.log(response);
 						if(response.content=="OK"){
 							alert("Anulado correctamente");
-							tabla.ajax.reload();
+							tabla.ajax.reload(null,false);
 						}
 					},
 					error: function (e) {
