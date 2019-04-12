@@ -37,12 +37,6 @@ class InscripcionController extends CI_Controller {
 	public function create(){
 		$idSolicitud=$this->input->post('id_sol');
 		$this->load->model('Solicitud_model');
-		$rows_afected=$this->Solicitud_model->set_sent_date($idSolicitud);
-		
-		if($rows_afected!=1){
-			show_error("Error al establecer como inscrito");
-			die();
-		}
 		if(empty($idSolicitud)){
 			show_error("Error en la espera de un registro");
 			die();
@@ -51,17 +45,34 @@ class InscripcionController extends CI_Controller {
 			show_error("No tiene permisos necesarios");
 			die();
 		}
+		
+		$idUsuario=$this->nativesession->get('idUsuario');
+		$this->db->trans_start();
+		$this->db->trans_strict(FALSE);
+			$created=$this->Inscripcion_model->create($idSolicitud,$idUsuario);
+			if($created){
+				$result2=$this->Solicitud_model->set_sent_date($idSolicitud);
+			}else{
+				$result2=0;
+			}
+			
+		$this->db->trans_complete();
+
 		$data["result"]=true;
 		$data["status"]="";
-
-		if($this->Inscripcion_model->create($idSolicitud,$this->nativesession->get('idUsuario'))){
-			header('Content-Type: application/json');
-			$data["result"]=true;
-			$data["status"]="200";
-		}else{
+		header('Content-Type: application/json');
+		if ($this->db->trans_status() === FALSE || !$created ||($result2!=1)) {
+			# Something went wrong.
+			$this->db->trans_rollback();
 			$data["result"]=false;
 			$data["status"]="500";
+		} 
+		else {
+			$this->db->trans_commit();
+			$data["result"]=true;
+			$data["status"]="200";
 		}
+		
 		echo json_encode($data);
 		
 	}
