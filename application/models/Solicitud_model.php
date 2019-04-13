@@ -9,6 +9,7 @@ class Solicitud_model extends CI_Model
 	private $check_proyect_invs='check_proyect_invest';
 	private $alumno_id='alumno';
 	private $check_hdatos='check_hdatos';
+	private $state='estado';
 
 	/**
 	 * var @sent cuando la solicitud ya esta enviada
@@ -298,6 +299,7 @@ class Solicitud_model extends CI_Model
 		$conditions=array(
 			$this->id=>$id,
 			$this->check_sol_ad=>1,
+			$this->state=>1
 			//Aqui completar condiciones de que hacer a una solicitud este verificada
 		);
 		$result=$this->db->select()->from($this->tbl_solicitud)->where($conditions)->get();
