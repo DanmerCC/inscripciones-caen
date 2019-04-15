@@ -37,6 +37,15 @@
     <section class="content">
       <div class=""><!-- container -->
           <div class="panel-body table-responsive" id="listadoregistros">
+            <div class='row'>
+              <div class='col-sm-6'></div>
+              <div class='col-sm-6'>
+                <select class="form-control" name="prueba1" id="selectProgram">
+                  <!-- container -->
+                </select>
+              </div>
+              
+            </div>
             <table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
               <thead>
                 <th>Opciones</th>
