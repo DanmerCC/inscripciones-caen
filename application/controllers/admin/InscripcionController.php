@@ -112,7 +112,7 @@ class InscripcionController extends CI_Controller {
 				"0" => "<button class='btn btn-danger' onclick='ins.cancel(".$value["id_inscripcion"].");'><i class='fa fa-trash-o' aria-hidden='true'></i> Anular</button>",
 				"1" => $value["nombres"],
 				"2" => $value["apellido_paterno"]." ".$value["apellido_materno"],
-				"3" => $value["numeracion"]." ".$value["nombre_curso"],
+				"3" => $value["numeracion"]." ".$value["tipo_curso"]." ".$value["nombre_curso"],
 				"4" => $value["nombre_user"],
 				"5" => $value["created"],
 				"6" => ""

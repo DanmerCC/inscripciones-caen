@@ -88,11 +88,12 @@ class Inscripcion_model extends CI_Model
 	* get a page only no deleted marked
 	*/
 	public function get_page($start,$limit = 10){
-		$this->db->select('ins.id_inscripcion,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created ,ins.id_inscripcion');
+		$this->db->select('ins.id_inscripcion,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created ,ins.id_inscripcion');
 		$this->db->from($this->table.' ins');
 		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
 		$this->db->join('usuario u','ins.created_user_id = u.id','left');
 		$this->db->join('curso c','c.id_curso = s.programa','left');
+		$this->db->join('tipo_curso tc','c.idTipo_curso = tc.idTipo_curso','left');
 		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
 		$this->db->where(
 			array(
@@ -109,7 +110,7 @@ class Inscripcion_model extends CI_Model
 	 * SELECT ins.*,a.nombres,a.apellido_paterno,a.apellido_materno FROM  inscripcion ins left JOIN solicitud s ON ins.solicitud_id = s.idSolicitud left JOIN curso c on c.id_curso = s.programa left JOIN alumno a on s.alumno = a.id_alumno LIMIT ?,?
 	 */
 	public function get_page_and_filter($start,$limit,$text){
-		$this->db->select('ins.id_inscripcion,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created');
+		$this->db->select('ins.id_inscripcion,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created');
 		$this->db->from($this->table.' ins');
 		$this->db->like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
 		$this->db->or_like('a.nombres',$text);
