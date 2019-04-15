@@ -65,16 +65,7 @@ var configuracion = function(){
         "pathInfo":"/file/info",
         "pathDelete":"/file/delete"
     });
-    var cargaDJ=cc.fileComponent("#containerBoxSolicitud",{
-        "state":false,
-        "target":null,
-        "urlUpload":"/postulante/upload/sins",
-        "tittle":"Solicitud de Admision",
-        "identifier":"sins",
-		"urlview":"/admin/view/pdf",           
-        "pathInfo":"/file/info",
-        "pathDelete":"/file/delete"
-    });
+
     //configuracion de uploads
     //configInputsFile("#frmUploadCv input[type='file']","/postulante/upload/cv");
 

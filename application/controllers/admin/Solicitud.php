@@ -230,7 +230,7 @@ class Solicitud extends CI_Controller
 
 		$data["solicitudFiles"]=[
 			[
-				"name"=>"Solicitud de Inscripcion",
+				"name"=>"Solicitud de Admision",
 				"identifier"=>"solad",
 				"statechecked"=>(boolean)$solicitud["check_sol_ad"],
 				"stateUpload"=>file_exists(CC_BASE_PATH."/files/sol-ad/".$solicitud["idSolicitud"].".pdf"),
