@@ -116,6 +116,7 @@ $route['api/documents'] = 'ApiAlumno/documents';
 $route['mensaje'] = 'Mensajes';
 
 $route['administracion'] = 'admin/Panel';
+$route['administracion/home'] = 'admin/Panel/home';
 $route['administracion/salir'] = 'admin/Panel/cerrarSession';
 $route['administracion/login'] = 'admin/Panel/login';
 $route['administracion/validacion'] = 'admin/Panel/validacion';
