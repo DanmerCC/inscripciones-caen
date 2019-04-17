@@ -129,5 +129,26 @@ class Inscripcion_model extends CI_Model
 		$this->db->limit($limit,$start);
         return resultToArray($this->db->get());
 	}
+
+	/**
+	 * get all inscriptions array value format
+	 */
+
+	public function get_all(){
+		$this->db->select($this->list_public_columns());
+		$this->db->from($this->table);
+		return resultToArray($this->db->get());
+	}
+
+	public function get_by_id($id){
+		$this->db->select($this->list_public_columns());
+		$this->db->from($this->table);
+		$this->db->where($this->id,$id);
+		return resultToArray($this->db->get());
+	}
+
+	private function list_public_columns(){
+		return implode(',',$this->public_columns);
+	}
 	
 }

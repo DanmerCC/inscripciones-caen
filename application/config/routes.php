@@ -205,3 +205,15 @@ $route['dashboard/reporte/informes'] = 'dashboard/InformesController/report';
 $route['dashboard/reporte/solicitudes'] = 'dashboard/SolicitudController/report';
 $route['dashboard/reporte/solicitudes/(:num)'] = 'dashboard/SolicitudController/reportFilter/$1';
 $route['dashboard/reporte/programas'] = 'dashboard/ProgramasController/report';
+
+//rest
+///$route['api/inscrito/inscripciones/'] = 'rest/apiinscrito_Controller/inscripciones/id/$1';
+$route['api/inscrito/inscripciones/(:num)'] = 'rest/apiinscrito_Controller/inscripciones/id/$1';
+$route['api/inscrito/inscripciones'] = 'rest/apiinscrito_Controller/inscripciones/id/';
+
+
+/**
+ * Persona 
+ */
+$route['api/inscrito/persona/(:num)'] = 'rest/apipersona_Controller/persona/id/$1';
+$route['api/inscrito/persona'] = 'rest/apipersona_Controller/persona/id/';
