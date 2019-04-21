@@ -158,6 +158,7 @@ $route['admin/comentario/guardar/(:num)'] = 'admin/Solicitud/setComentario/$1';
 $route['administracion/vista/solicitantes'] = 'admin/Solicitud';
 $route['administracion/vista/matriculas'] = 'admin/Matricula';
 $route['administracion/vista/programas'] = 'admin/Programa';
+$route['administracion/vista/programascalendar'] = 'admin/Programa/viewCalendar';
 $route['administracion/vista/beneficios'] = 'admin/Beneficio';
 $route['administracion/vista/alumnos'] = 'admin/Alumno';
 $route['administracion/vista/solicitudes'] = 'admin/Solicitud';
