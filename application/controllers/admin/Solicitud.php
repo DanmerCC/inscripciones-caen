@@ -16,7 +16,8 @@ class Solicitud extends CI_Controller
 		$this->load->model('Solicitud_model');
         $this->load->library('opciones');
         $this->load->library('Pdf');
-        $this->load->model('Permiso_model');
+		$this->load->model('Permiso_model');
+		$this->load->helper('mihelper');
 	}
     public function index(){
         if ($this->nativesession->get('tipo')=='admin') {
@@ -274,6 +275,50 @@ class Solicitud extends CI_Controller
 				"result"=>$data
 					
 			],JSON_UNESCAPED_UNICODE);
+	}
+
+
+	public function test(){
+		$this->load->library('mergerpdf');
+		$this->mergerpdf->addFile(CC_BASE_PATH."/PDF1.pdf");
+		$this->mergerpdf->addFile(CC_BASE_PATH."/PDF2.pdf");
+		$this->mergerpdf->setFileName("PDFCombinado.pdf");
+		//header("Content-type:application/pdf");
+		//header("Content-Disposition:attachment;filename=$this->name");
+		$resultado= $this->mergerpdf->getMergedFiles();
+		$que_paso=file_put_contents(CC_BASE_PATH."/completado.pdf",$resultado);
+		echo $que_paso;
+	}
+
+	public function generarLegajo($idSolicitud){
+		$this->load->model('Legajo_model');
+		$solicitud=resultToArray($this->Solicitud_model->solicitud_porId($idSolicitud));
+		//$this
+		//$this->Legajo_model->insert();
+
+	}
+
+	public function generarLegajoPdf($documentos,$newFile){
+		$this->load->library('mergerpdf');
+		$this->mergerpdf->setFileName($newFile["nombre"]);
+		for ($i=0; $i < count($documentos); $i++) { 
+			$this->mergerpdf->addFile($documentos[i]->path);
+		}
+
+		$resultado= $this->mergerpdf->getMergedFiles();
+		if(file_put_contents(CC_BASE_PATH."/".$this->mergerpdf->getFileName().".pdf",$resultado)===FALSE){
+			$output["result"]="correcto";
+			$output["content"]=array(
+				"texto"=>"Documentos creado correctamente ".$this->mergerpdf->getNameFile()
+			);
+			$output["status"]="200";
+			return $output;
+		}else{
+            $output["result"]="Error";
+            $output["content"]="";
+			$output["status"]="500";
+			return $output;
+		}
 	}
 
 }

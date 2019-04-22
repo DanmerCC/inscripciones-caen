@@ -233,7 +233,8 @@ function inicio(){
         $(idquerytarget+' #mdl-solicitudes').html("");
         $(idquerytarget+' #mdl-educacion').html("");
         $(idquerytarget+' #mdl-celphone').html("");
-        $(idquerytarget+' #mdl-icons-documents').html("");
+		$(idquerytarget+' #mdl-icons-documents').html("");
+		$(idquerytarget+' #mdl-email').html("");
 	});
 }
 
