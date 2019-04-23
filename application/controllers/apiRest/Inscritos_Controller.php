@@ -15,6 +15,9 @@ class Inscritos_Controller extends MY_Controller {
      */
     public function get(){
         $inscritos=NULL;
+        if(!$this->verify_token()){
+            $this->response("No permitido",401);
+        }
 
         if(isset($_GET["size"])){
             $page=isset($_GET["page"])?$_GET["page"]:10;
@@ -34,7 +37,6 @@ class Inscritos_Controller extends MY_Controller {
         }
         
         $inscrito=$this->Inscripcion_model->get_by_id($id)[0];
-        array_push($inscrito,array("sdasd"=>$this->verify_token()));
         $this->response($inscrito,200);
         
     }
