@@ -1,12 +1,15 @@
 <?php
 class MY_Model extends CI_Model {
 
-
+	private $id='';
+	private $table='';
 	private $public_arguments;
 
-    function __construct()
-    {
+	function __construct($table_name)
+	{
 		parent::__construct();
+		$this->table=$table_name;
+		$this->id=$table_name.'_id';
 		$this->setPublicColumns();
 	}
 	
@@ -45,5 +48,21 @@ class MY_Model extends CI_Model {
 			}
 			return $arraynew;
 		}
+	}
+
+	private function get(){
+		$this->db->select(
+			implode(',',$this->getPublicColumns())
+		)->from($this->table);
+		return $this->db->get();
+	}
+
+	private function save($data,$id){
+		$this->where($this->id,$id);
+		$this->db->update($data);
+	}
+
+	private function delete(){
+		
 	}
 }
