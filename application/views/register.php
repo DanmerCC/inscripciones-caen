@@ -71,13 +71,16 @@
         </select>
       </div>
       <div class="form-group has-feedback">
-        <form action="<?php echo base_url();?>captcha/validarCaptcha" method="POST">
           <p id="captImg"><?php echo $captcha['image']?></p>
           <input type="text" name="captcha">
-          <p>Can't read the image? click <a href="javascript:void(0);" class="refreshCaptcha">here</a> to refresh.</p>
+          <p>¿No puedes leer la imagen? Haga <a href="javascript:void(0);" class="refreshCaptcha">click aquí</a> para actualizar.</p>
+          <?php
+            if(isset($success)) {
+              echo '<p class="text-success">'.$success.'</p>';
+            } 
+          ?>
           <!-- <input type="submit" value="Enviar"> -->
           <!-- <input type="text" value="<?php echo $captcha['word']?>" name="string_captcha"> -->
-        </form>
       </div>
       <div class="form-group">
         <div class="col-xs-8">

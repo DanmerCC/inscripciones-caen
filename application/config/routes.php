@@ -220,4 +220,4 @@ $route['api/inscrito/persona'] = 'rest/apipersona_Controller/persona/id/';
 
 /* Captcha */
 $route['captcha/refresh'] = 'Registro/refresh';
-$route['captcha/validarCaptcha'] = 'Registro/validarCaptcha';
+// $route['captcha/validarCaptcha'] = 'Registro/validarCaptcha';
