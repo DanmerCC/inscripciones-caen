@@ -22,4 +22,4 @@ files
 files/*.*
 publicFiles/foto/*.*
 error_log
-captcha_images/*.*
+/captcha_images/*.*
