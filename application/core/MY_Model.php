@@ -56,7 +56,7 @@ class MY_Model extends CI_Model {
 		)->from($this->table);
 		return $this->db->get();
 	}
-
+	/*
 	private function save($data,$id){
 		$this->where($this->id,$id);
 		$this->db->update($data);
@@ -65,4 +65,5 @@ class MY_Model extends CI_Model {
 	private function delete(){
 		
 	}
+	 */
 }

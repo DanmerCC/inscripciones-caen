@@ -22,9 +22,9 @@ class Inscritos_Controller extends MY_Controller {
         if(isset($_GET["size"])){
             $page=isset($_GET["page"])?$_GET["page"]:10;
             $size=$_GET["size"];
-            $inscritos=$this->Inscripcion_model->get_page(($size*$page),$size);
+            $inscritos=$this->Inscripcion_model->get_page_api(($size*$page),$size);
         }else{
-            $inscritos=$this->Inscripcion_model->get_all();
+            $inscritos=$this->Inscripcion_model->get_all_api();
         }
         
         $this->response($inscritos,200);
@@ -36,7 +36,7 @@ class Inscritos_Controller extends MY_Controller {
             $this->response("No permitido",401);
         }
         
-        $inscrito=$this->Inscripcion_model->get_by_id($id)[0];
+        $inscrito=$this->Inscripcion_model->get_one_api($id)[0];
         $this->response($inscrito,200);
         
     }
