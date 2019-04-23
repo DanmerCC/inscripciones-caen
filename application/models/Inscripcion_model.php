@@ -169,7 +169,7 @@ class Inscripcion_model extends CI_Model
 	public function get_page_api($start,$limit = 10){
 		$this->db->select(
 			implode(',',$this->getApicColumns('ins')).
-			',s.idSolicitud,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
+			',c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
 		);
 		$this->db->from($this->table.' ins');
 		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
@@ -190,7 +190,7 @@ class Inscripcion_model extends CI_Model
 	public function get_all_api(){
 		$this->db->select(
 			implode(',',$this->getApicColumns('ins')).
-			',s.idSolicitud,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
+			',c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
 		);
 		$this->basic_query('ins');
 		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
@@ -216,7 +216,7 @@ class Inscripcion_model extends CI_Model
 	public function get_one_api($id){
 		$this->db->select(
 			implode(',',$this->getApicColumns('ins')).
-			',s.idSolicitud,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
+			',c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
 		);
 		$this->db->from($this->table.' ins');
 		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
