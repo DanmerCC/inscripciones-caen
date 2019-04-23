@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Casede</title>
 <?php $this->load->view('adminlte/linksHead');?>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css">
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css"> -->
+<link rel="stylesheet" href="/dist/css/jquery-externs/jquery.dataTables.min.css">
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 <!-- Site wrapper -->
@@ -100,15 +101,24 @@
 <!-- ./wrapper -->
 <?php $this->load->view('adminlte/scriptsFooter');?>
 
-<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<!-- <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script> -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+<script src="/dist/js/jquery-externs/jquery.dataTables.min.js"></script>
+<script src="/dist/js/jquery-externs/bootbox.min.js"></script>
+<script src="/dist/js/jquery-externs/dataTables.buttons.min.js"></script>
+<script src="/dist/js/jquery-externs/buttons.flash.min.js"></script>
+<script src="/dist/js/jquery-externs/jszip.min.js"></script>
+<script src="/dist/js/jquery-externs/pdfmake.min.js"></script>
+<script src="/dist/js/jquery-externs/buttons.html5.min.js"></script>
+<script src="/dist/js/jquery-externs/buttons.print.min.js"></script>
+
 <script src="/assets/js/dboardCasede.js"></script>
 
 </body>

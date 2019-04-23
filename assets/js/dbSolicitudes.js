@@ -262,7 +262,7 @@ function cargarData(id){
         dataType: "json",
         success: function (response) {
             if(response.status=="NO FOUND"){
-                alert("Ocurrio un error el alumno no pudo ser encontrado");
+                alert("Ocurrio un error. El alumno no pudo ser encontrado");
             }else{
                 alumno=response.result;
                 $(idquerytarget+' #mdl-name').html(((alumno.nombres!=null)?alumno.nombres:'')+' '+((alumno.apellido_paterno!=null)?alumno.apellido_paterno:'')+' '+((alumno.apellido_materno!=null)?alumno.apellido_materno:''));
