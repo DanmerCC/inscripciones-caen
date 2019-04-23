@@ -6,10 +6,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class MY_Controller extends CI_Controller
 {
-    public const OK = 200;
-    public const NO_FOUND = 404;
-    public const SERVER_ERROR = 500;
-    public const UNAUTHORIZED = 401;
+    const OK = 200;
+    const NO_FOUND = 404;
+    const SERVER_ERROR = 500;
+    const UNAUTHORIZED = 401;
 
     function __construct()
 	{
