@@ -184,6 +184,19 @@ class Alumno extends CI_Controller
 					$result["solicitudes"]=$cantSolicitud;
 					$result=$this->Solicitud_model->setCheckSolicitudInscripcion($solicitud["idSolicitud"]);
 					break;
+				case 'hdatos':
+					$solicitud=$this->Solicitud_model->getAllColumnsById($id);
+					$cantSolicitud=$this->Solicitud_model->countByAlumno($solicitud["alumno"]);
+					$result["solicitudes"]=$cantSolicitud;
+					$result=$this->Solicitud_model->setCheckHojadatos($solicitud["idSolicitud"]);
+					break;
+
+				case 'pinvs':
+					$solicitud=$this->Solicitud_model->getAllColumnsById($id);
+					$cantSolicitud=$this->Solicitud_model->countByAlumno($solicitud["alumno"]);
+					$result["solicitudes"]=$cantSolicitud;
+					$result["check_pinvs"]=$this->Solicitud_model->setCheckProyectInvestigacion($solicitud["idSolicitud"]);
+					break;
 
 				default:
 					$result=0;

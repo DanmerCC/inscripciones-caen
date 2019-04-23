@@ -238,15 +238,15 @@
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <label>Lugar de Trabajo/Institución<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="lugar_trabajo" name="lugar_trabajo" value="">
+                                                <input type="text" class="form-control" id="lugar_trabajo" name="lugar_trabajo" value="" required>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Área/Dirección/Oficina/Dpto<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="area_direccion" name="area_direccion" value="">
+                                                <input type="text" class="form-control" id="area_direccion" name="area_direccion" value="" required>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Tiempo de Servicio<span style="color: red">(*)</span></label>
-                                                <input type="text" class="form-control" id="tiempo_servicio" name="tiempo_servicio" value="">
+                                                <input type="text" class="form-control" id="tiempo_servicio" name="tiempo_servicio" value="" required>
                                             </div>
                                         </div>
                                     </div>
@@ -754,7 +754,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <button type="sumbit" class="btn btn-primary btn-lg right" id="btnSalud">Guardar</button>
+                                                <button type="submit" class="btn btn-primary btn-lg right" id="btnSalud">Guardar</button>
                                             </div>
                                         </div>
                                     </div>
@@ -819,7 +819,7 @@
                                                 <div class="col-sm-12">
                                                     <label>Lista de solicitudes hechas por usted <span style="color: red">(*)</span></label>
                                                 </div>
-                                            </div>
+                                            </div><br>
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-xs-12 col-md-12">
@@ -827,7 +827,7 @@
                                                             <div class="col-xs-3 col-md-4"><strong>Programa</strong></div>
                                                             <div class="col-xs-4 col-md-2"><strong>Financiamiento</strong></div>
                                                             <div class="col-xs-5 col-md-6"><strong>Ficha de Inscripción</strong></div>
-                                                        </div>
+                                                        </div><br>
                                                         <div id="contentSolicitudes">
                                                         </div>
                                                     </div>
@@ -840,9 +840,9 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
 
-                                        </div>
+                                        </div> -->
                                     
                                 </div>
                             </form>         
@@ -859,7 +859,7 @@
                             </h4>
                         </div>
                         <div id="collapse11" class="panel-collapse collapse">
-                            <form action="postulante/guardar/otros" method="post" name="formulario" id="formulario" class="form-horizontal">
+                            <form action="postulante/guardar/otros" method="post" name="formOtros" id="formOtros" class="form-horizontal">
                                 <div class=" panel-body">
                                         <div class="container form-group">
                                             <div class="row">
@@ -881,7 +881,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-12">
-                                                    <button type="sumbit" class="btn btn-primary btn-lg right" id="btnSalud">Guardar</button>
+                                                    <button type="sumbit" class="btn btn-primary btn-lg right" id="btnOtros">Guardar</button>
                                                 </div>
                                             </div>
                                         </div>

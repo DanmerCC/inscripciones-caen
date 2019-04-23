@@ -65,21 +65,13 @@ var configuracion = function(){
         "pathInfo":"/file/info",
         "pathDelete":"/file/delete"
     });
-    var cargaDJ=cc.fileComponent("#containerBoxSolicitud",{
-        "state":false,
-        "target":null,
-        "urlUpload":"/postulante/upload/sins",
-        "tittle":"Solicitud de Admision",
-        "identifier":"sins",
-		"urlview":"/admin/view/pdf",           
-        "pathInfo":"/file/info",
-        "pathDelete":"/file/delete"
-    });
+
     //configuracion de uploads
     //configInputsFile("#frmUploadCv input[type='file']","/postulante/upload/cv");
 
 	var solicitudComponets=[];
 	var solicitudFormalComponets=[];
+    var proInvest=[];
 
     $("#formChangePwd").submit(function(evt){
         evt.preventDefault();
@@ -348,8 +340,18 @@ var configuracion = function(){
         		$("#telefono_familiar").val(datos[i].telefono_familiar);
         		$("#parentesco").val(datos[i].parentesco);
 
+                
 
-
+                // $("#collapse2").each(function(){
+                //     console.log("Aqui estoy");
+                //     var git = $("#t_enfermedad_otros").val();
+                //     if( git === ''){
+                //         alert('Prueba');
+                //     }
+                //     else{
+                //         console.log("Fuera");
+                //     }
+                // });
 
         		// $("#").val(datos[i].gradoMilitar);
         		// $("#").val(datos[i].planaMilitar);
@@ -406,8 +408,37 @@ $.ajax({
 
                 var alink = "/postulante/pdf/"+datos[i].idSolicitud;
                 var alinkdel = "/postulante/solicitud/eliminar/"+datos[i].idSolicitud;
-                var alinknotification = ((!datos[i].completeFile)?"<div class='col-xs-12 col-md-4'><a href='#'><button class='btn btn-sm bg-light-blue disabled color-palette' data-toggle='collapse' data-parent='#accordion' href='#collapse9' data-target=''>"+datos[i].msgUploadFile+"</button></a></div>":"");
-
+                var alinknotification = ((!datos[i].completeFile)?"<div class='col-xs-12 col-md-6'><a href='#'><button class='btn btn-sm bg-light-blue disabled color-palette' data-dismiss='modal' data-toggle='collapse' data-parent='#accordion' href='#collapse9' data-target=''>"+datos[i].msgUploadFile+"</button></a></div>":"");
+                
+                //Creacion de modal a mostrar en Despegable SOLICITUDES
+                var modal =
+                "<div class='modal fade' id='modalDocument"+(i+1)+"' tabindex='-1' role='dialog' aria-labelledby='modalDocumentLabel"+(i+1)+"'>"+
+                    "<div class='modal-dialog' role='document'>"+
+                        "<div class='modal-content'>"+
+                            "<div class='modal-header'>"+
+                                "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>"+
+                                    "<span aria-hidden='true'>&times;</span>"+
+                                "</button>"+
+                                "<h4 class='modal-title' id='myModalLabel'><strong>Documentos para: </strong>"+
+                                    datos[i].numeracion+" "+datos[i].tipoCurso+" "+datos[i].nombreCurso+
+                                "</h4>"+
+                            "</div>"+
+                            "<div class='modal-body'>"+
+                                "<div class='row'>"+
+                                    "<div class='col-xs-12 col-md-6' id='SolicitudFileComponent"+(i+1)+"'></div>"+
+                                    "<div class='col-xs-12 col-md-6' id='SolicitudFormalFileComponent"+(i+1)+"'></div>"+
+                                    "<div class='col-xs-12 col-md-6' id='proInvest"+(i+1)+"'></div>"+
+                                    alinknotification+
+                                "</div>"+    
+                            "</div>"+
+                            "<div class='modal-footer'>"+
+                                "<button type='button' class='btn btn-primary' data-dismiss='modal'>Cerrar</button>"+
+                            "</div>"+
+                        "</div>"+
+                    "</div>"+
+                "</div>";
+                
+                //Creacion de diseño de Despegable SOLICITUDES
                 var diseño = 
                 "<div class='row'>"+
                     "<div class='col-xs-3 col-md-4'>"+datos[i].numeracion+" "+datos[i].tipoCurso+" "+datos[i].nombreCurso+"</div>"+
@@ -416,14 +447,17 @@ $.ajax({
                         "<div class='row'>"+
                             "<div class='col-xs-6 col-md-2'><a href="+alink+">Ficha</a></div>"+
                             "<div class='col-xs-6 col-md-2'><a href="+alinkdel+">Eliminar</a></div>"+
-                            "<div class='col-xs-12 col-md-4' id='SolicitudFileComponent"+(i+1)+"'></div>"+
-                            "<div class='col-xs-12 col-md-4' id='SolicitudFormalFileComponent"+(i+1)+"'></div>"+
-                            alinknotification+
+                            "<div class='col-xs-12 col-md-4'>"+
+                                "<button type='button' class='btn btn-block btn-primary btn-xs' data-toggle='modal' data-target='#modalDocument"+(i+1)+"'>"+
+                                    "Información requerida"+
+                                "</button>"+
+                            "</div>"+
                         "</div>"+
                     "</div>"+
-                "</div>"+
-                "<hr noshade>";
+                "</div><br>"+
+                modal;
                 
+                //Insercion en Despegable SOLICITUDES
                 $("#contentSolicitudes").append(diseño);
 
                 solicitudComponets["SolicitudFileComponent"+(i+1)]=cc.fileComponent("#SolicitudFileComponent"+(i+1),{
@@ -449,6 +483,21 @@ $.ajax({
 
 					"tittle":"Solicitud admisión",
 					"identifier":"solad",
+					"sizeTemplate":"min",
+                    "urlview":"/solicitud/view/pdf",                      
+                    "pathInfo":"/file/info",
+                    "pathDelete":"/file/delete",
+                    "id":datos[i].idSolicitud
+                });
+
+                proInvest["proInvest"+(i+1)]=cc.fileComponent("#proInvest"+(i+1),{
+					"state":false,
+					"target":"proInvest"+(i+1),
+					"urlUpload":"/proinves/upload/"+datos[i].idSolicitud,
+					"urlVerify":"/proinves/stateFile/"+datos[i].idSolicitud,
+
+					"tittle":"Proyecto de Investigacion",
+					"identifier":"pinvs",
 					"sizeTemplate":"min",
                     "urlview":"/solicitud/view/pdf",                      
                     "pathInfo":"/file/info",
@@ -523,8 +572,6 @@ function desactStateMil(val){
 
 }
 
-
-
 /*Definicion de funciones*/
 function relacionarColapseLi(idelemento,collapse){
 /*Manipula clase li que contiene el elemento 'li'*/
@@ -536,10 +583,8 @@ function relacionarColapseLi(idelemento,collapse){
 	});
 }
 
-
 /*Copia de datos alos especificados en data-pointed*/
 function reflejarDatos(idelemento){
-
 	if($(idelemento).attr('type')=='checkbox'){
 		$(idelemento).on('change',function(){
 			if ($(idelemento).prop('checked')) {
@@ -558,35 +603,28 @@ function reflejarDatos(idelemento){
 
 }
 
+/*MOSTRAR IMAGENES*/
+$('#foto').change(function(e) {
+    addImage(e); 
+});
 
+function addImage(e){
+    var file = e.target.files[0],
+    imageType = /image.*/;
 
+    if (!file.type.match(imageType))
+    return;
 
-    /*MOSTRAR IMAGENES*/
-
-    $('#foto').change(function(e) {
-
-        addImage(e); 
-    });
-
-     function addImage(e){
-        var file = e.target.files[0],
-        imageType = /image.*/;
-
-        if (!file.type.match(imageType))
-        return;
-
-        var reader = new FileReader();
-        reader.onload = fileOnload;
-        reader.readAsDataURL(file);
-     }
+    var reader = new FileReader();
+    reader.onload = fileOnload;
+    reader.readAsDataURL(file);
+}
   
-     function fileOnload(e) {
-        var result=e.target.result;
-        $('#imagenpersona').attr("src",result);
-     }
-     
-     
-     
+function fileOnload(e) {
+    var result=e.target.result;
+    $('#imagenpersona').attr("src",result);
+}
+ 
 function sendCv(){
 	var fileSelect = document.getElementById('file_cv');
 	var formData= new FormData();
@@ -653,8 +691,7 @@ function openPDFv2(cadena) {
 	//console.log('click now!', tempLink.click);
 	//container.append(tempLink);
 	tempLink.click();
-  }
-
+}
 
 function configInputsFile(target,url){
     $(target).change(function(){

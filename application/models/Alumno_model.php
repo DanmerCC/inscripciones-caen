@@ -27,10 +27,20 @@ class Alumno_model extends CI_Model
 	private $documento='documento';
 	private $email='email';
 
+	private $public_columns=[];
+
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->helper('mihelper');
+		$this->public_columns=[
+			$this->nombres,
+			$this->apellido_paterno,
+			$this->apellido_materno,
+			$this->documento,
+			$this->email,
+			$this->desc_discapacidad
+		];
 	}
 
 	public function registrar($apellido_paterno,$apellido_materno,$nombres,$documento,$email,$celphone,$idTipoDocumento=1){
@@ -363,5 +373,24 @@ class Alumno_model extends CI_Model
 		$this->db->order_by("id_alumno", "desc");
         $this->db->limit($limit,$start);
         return resultToArray($this->db->get());
+	}
+
+	public function get_all(){
+		$this->db->select($this->list_public_columns());
+		$this->db->from($this->table);
+		return resultToArray($this->db->get());
+	}
+
+
+
+	public function get_by_id($id){
+		$this->db->select($this->list_public_columns());
+		$this->db->from($this->table);
+		$this->db->where($this->id,$id);
+		return resultToArray($this->db->get());
+	}
+
+	public function list_public_columns(){
+		return implode(',',$this->public_columns);
 	}
 }

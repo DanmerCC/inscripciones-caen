@@ -34,6 +34,23 @@ class Panel extends CI_Controller
 		
 	}
 
+	public function home(){
+		if ($this->nativesession->get('tipo')=='admin') {
+			$identidad["rutaimagen"]="/dist/img/avatar5.png";
+			$identidad["nombres"]="Nombre de prueba para administracion";
+			$opciones["rutaimagen"]=$identidad["rutaimagen"];
+			$opciones["menu"]=$opciones["menu"]=$this->opciones->segun($this->Permiso_model->lista($this->nativesession->get('idUsuario')),'');
+			$data['cabecera']=$this->load->view('adminlte/linksHead','',TRUE);
+			$data['footer']=$this->load->view('adminlte/scriptsFooter','',TRUE);
+			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
+			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
+			$this->load->view('dashboard',$data);
+		}else
+		{
+			redirect('administracion/login');
+		}
+	}
+
 	public function login(){
 		$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
 		$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
@@ -70,7 +87,7 @@ class Panel extends CI_Controller
 				    //redirect(base_url().'administracion/login', 'refresh');
 				    //end bloqueo
 				}else if($result->result()[0]->tipo=='admin'){
-				    redirect(base_url().'administracion/vista/alumnos', 'refresh');
+				    redirect(base_url().'administracion/home', 'refresh');
 				}
 				
 			}else{

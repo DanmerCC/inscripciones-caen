@@ -97,6 +97,12 @@ $route['soladmision/upload/(:num)'] = 'Solicitud/upload_sol_admision/$1';
 $route['solicitud/stateFile/(:num)'] = 'Solicitud/stateFile/$1';
 $route['soladmision/stateFile/(:num)'] = 'Solicitud/stateFile_sol_admision/$1';
 
+/**
+ *  Proyecto de investigacion
+ */
+$route['proinves/upload/(:num)'] = 'Solicitud/upload_pro_inves/$1';
+$route['proinves/stateFile/(:num)'] = 'Solicitud/stateFile_spro_inves/$1';
+
 $route['file/delete/([a-zA-Z]+)/(:num)'] = 'admin/FilesController/eliminar/$1/$2';
 $route['file/info/([a-zA-Z]+)'] = 'admin/FilesController/info/$1';
 
@@ -110,6 +116,7 @@ $route['api/documents'] = 'ApiAlumno/documents';
 $route['mensaje'] = 'Mensajes';
 
 $route['administracion'] = 'admin/Panel';
+$route['administracion/home'] = 'admin/Panel/home';
 $route['administracion/salir'] = 'admin/Panel/cerrarSession';
 $route['administracion/login'] = 'admin/Panel/login';
 $route['administracion/validacion'] = 'admin/Panel/validacion';
@@ -130,6 +137,7 @@ $route['admin/dataTable/solicitud'] = 'admin/Solicitud/dataTable';
 $route['admin/dataTable/solicitudaceptada'] = 'admin/Solicitud/dataTableAtendidas';
 $route['admin/dataTable/inscritos'] = 'admin/Alumno/datatable';
 $route['admin/dataTable/informes'] = 'admin/InformeController/dataTable';
+$route['admin/dataTable/inscripciones'] = 'admin/InscripcionController/datatable_dashboard';
 
 $route['admin/dataTable/programa'] = 'admin/Programa/dataTable';
 $route['admin/dataTable/beneficio'] = 'admin/Beneficio/dataTable';
@@ -155,8 +163,13 @@ $route['administracion/vista/alumnos'] = 'admin/Alumno';
 $route['administracion/vista/solicitudes'] = 'admin/Solicitud';
 $route['administracion/vista/informes'] = 'admin/InformeController';
 $route['administracion/vista/reportes'] = 'admin/ReportesController';
+$route['administracion/vista/inscripciones'] ='admin/InscripcionController/index';
 
 $route['admin/parts/nuevoprograma'] = 'admin/Programa/newPrograma';
+
+//**Models with inscription */
+$route['admin/inscr/create'] = 'admin/InscripcionController/create';
+$route['admin/inscr/cancel'] = 'admin/InscripcionController/delete';
 
 $route['test'] = 'Solicitud/test';
 
@@ -192,3 +205,15 @@ $route['dashboard/reporte/informes'] = 'dashboard/InformesController/report';
 $route['dashboard/reporte/solicitudes'] = 'dashboard/SolicitudController/report';
 $route['dashboard/reporte/solicitudes/(:num)'] = 'dashboard/SolicitudController/reportFilter/$1';
 $route['dashboard/reporte/programas'] = 'dashboard/ProgramasController/report';
+
+//rest
+///$route['api/inscrito/inscripciones/'] = 'rest/apiinscrito_Controller/inscripciones/id/$1';
+$route['api/inscrito/inscripciones/(:num)'] = 'rest/apiinscrito_Controller/inscripciones/id/$1';
+$route['api/inscrito/inscripciones'] = 'rest/apiinscrito_Controller/inscripciones/id/';
+
+
+/**
+ * Persona 
+ */
+$route['api/inscrito/persona/(:num)'] = 'rest/apipersona_Controller/persona/id/$1';
+$route['api/inscrito/persona'] = 'rest/apipersona_Controller/persona/id/';

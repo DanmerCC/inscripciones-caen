@@ -88,7 +88,7 @@ function marcar(valor){
         if (result) {
             $.post('/admin/solicitud/marcar', {id: valor}, function (e) {
                 bootbox.alert(e);
-                tabla.ajax.reload();
+                tabla.ajax.reload(null,false);
                 console.log(e);
                 console.log(result);
             });
@@ -102,7 +102,7 @@ function quitarmarca(valor){
         if (result) {
             $.post('/admin/solicitud/quitarmarca', {id: valor}, function (e) {
                 bootbox.alert(e);
-                tabla.ajax.reload();
+                tabla.ajax.reload(null,false);
                 console.log(e);
                 console.log(result);
             });
@@ -120,7 +120,7 @@ function marcarPago(valor){
         if (result) {
             $.post('/admin/solicitud/marcarPago', {id: valor}, function (e) {
                 bootbox.alert(e);
-                tabla.ajax.reload();
+                tabla.ajax.reload(null,false);
                 console.log(e);
                 console.log(result);
             });
@@ -134,7 +134,7 @@ function quitarmarcaPago(valor){
         if (result) {
             $.post('/admin/solicitud/quitarmarcaPago', {id: valor}, function (e) {
                 bootbox.alert(e);
-                tabla.ajax.reload();
+                tabla.ajax.reload(null,false);
                 console.log(e);
                 console.log(result);
             });
@@ -213,6 +213,16 @@ var modalDataAlumno={
 
 }
 
+var modalMensaje={
+	target:"#mdl_danger_msg",
+	init:function(){
+		var targered=this.target;
+		$(this.targered).on('hide.bs.modal', function (event) {
+			$(targered+' #msg-modal').val("");
+		});
+	}
+}
+
 function inicio(){
     var idquerytarget=this.target;
 	$(this.target).on('hide.bs.modal', function (event) {
@@ -228,6 +238,8 @@ function inicio(){
 }
 
 modalDataAlumno.init();
+
+modalMensaje.init();
 
 function eliminarContenido(){
     var idquerytarget=this.target;
@@ -292,4 +304,56 @@ function makeTemplateIconsDocuments(nombre,estado,identifier,nameFile){
     '</span>'+
     ((estado)?'</a>':"");
     return template;
+}
+
+
+function request_bootbox(id){
+	bootbox.confirm({
+		title: "Desea inscribir",
+		message: "Esta seguro de enviar a INSCRITOS esta solicitud",
+		buttons: {
+			cancel: {
+				label: '<i class="fa fa-times"></i> Cancelar'
+			},
+			confirm: {
+				label: '<i class="fa fa-check"></i> Enviar'
+			}
+		},
+		callback: function (result) {
+            if(result){
+                $.ajax({
+                    type: "post",
+                    url: "/admin/inscr/create",
+                    dataType: "json",
+                    data: {
+                        "id_sol":id
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        if(response.result){
+                            tabla.ajax.reload(null,false);
+                            alert("Completado correctamente");
+                        }else{
+							$("#mdl_danger_msg #msg-modal").html("Verifique el estado de la solicitud");
+							$("#mdl_danger_msg").modal('show');
+							setTimeout(function(){
+								$("#mdl_danger_msg").modal('hide');
+							},1000)
+                            //alert("verifica que la solicitud esta procesada");
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert("No es posible inscribir ");
+                        console.log("Error: "+xhr);
+                      }
+                });
+            }
+			
+		}
+	});
+}
+
+
+function inscription_call_back(result){
+
 }

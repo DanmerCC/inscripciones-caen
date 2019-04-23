@@ -71,8 +71,18 @@ class Solicitud extends CI_Controller
         for ($i=0;$i<count($rspta);$i++) {
                 $data[$i] = array(
                 "0" => ($i+1),
-                "1" => '<a href="'.base_url()."postulante/pdf/".$rspta[$i]["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a> <div class="btn btn-info" data-toggle="modal" data-target="#mdl_datos_alumno" onclick="modalDataAlumno.loadData('.$rspta[$i]["idSolicitud"].');"><i class="fa fa-eye"></i></div>'.(($rspta[$i]["estado"]=='0')?' <button class="btn btn-alert"   title="click para marcar como verificado" onclick="marcar('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-square-o" aria-hidden="true"></i></button>':
-                ' <button class="btn btn-primary" onclick="quitarmarca('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>'),
+                "1" => '<a href="'.base_url()."postulante/pdf/".$rspta[$i]["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a>'.
+                            ' <div class="btn btn-info" data-toggle="modal" data-target="#mdl_datos_alumno" onclick="modalDataAlumno.loadData('.$rspta[$i]["idSolicitud"].');"><i class="fa fa-eye"></i></div>'.
+                            (
+                                ($rspta[$i]["estado"]=='0')?
+                                    ' <button class="btn btn-alert"   title="click para marcar como verificado" onclick="marcar('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-square-o" aria-hidden="true"></i></button>':
+                                    ' <button class="btn btn-primary" onclick="quitarmarca('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>'
+                            ).
+                            ' <button class="btn btn-warning" onclick="request_bootbox('.
+                                $rspta[$i]["idSolicitud"].
+                            ');">'.
+                            '<i class="fa fa-user-plus" aria-hidden="true"></i></button>'
+                            ,
                 "2" => $rspta[$i]["nombres"],
                 "3" => $rspta[$i]["apellido_paterno"],
                 "4" => $rspta[$i]["apellido_materno"],
@@ -220,10 +230,24 @@ class Solicitud extends CI_Controller
 
 		$data["solicitudFiles"]=[
 			[
-				"name"=>"Solicitud de Inscripcion",
+				"name"=>"Solicitud de Admision",
 				"identifier"=>"solad",
-				"statechecked"=>(boolean)$alumno["check_sins_pdf"],
+				"statechecked"=>(boolean)$solicitud["check_sol_ad"],
 				"stateUpload"=>file_exists(CC_BASE_PATH."/files/sol-ad/".$solicitud["idSolicitud"].".pdf"),
+				"fileName"=>$solicitud["idSolicitud"]
+            ],
+            [
+				"name"=>"Proyecto de Investigacion",
+				"identifier"=>"pinvs",
+				"statechecked"=>(boolean)$solicitud["check_proyect_invest"],
+                "stateUpload"=>file_exists(CC_BASE_PATH."/files/pinvs/".$solicitud["idSolicitud"].".pdf"),
+                "fileName"=>$solicitud["idSolicitud"]
+            ],
+            [
+                "name"=>"Hoja de datos",
+				"identifier"=>"hdatos",
+				"statechecked"=>(boolean)$solicitud["check_hdatos"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/hojadatos/".$solicitud["idSolicitud"].".pdf"),
 				"fileName"=>$solicitud["idSolicitud"]
 			]
 

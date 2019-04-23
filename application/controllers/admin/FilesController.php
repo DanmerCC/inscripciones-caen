@@ -66,12 +66,17 @@ class FilesController extends CI_Controller {
 				$idNameAndRegist=$result["id_alumno"];
 				break;
 			case 'hdatos':
-				$pathFile=CC_BASE_PATH."/files/hdatos/".$id.".pdf";
+				$pathFile=CC_BASE_PATH."/files/hojadatos/".$id.".pdf";
 				$result=$this->Solicitud_model->getAllColumnsById($id);
 				$idNameAndRegist=$result["idSolicitud"];
 				break;
 			case 'solad':
 				$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
+				$result=$this->Solicitud_model->getAllColumnsById($id);
+				$idNameAndRegist=$result["idSolicitud"];
+				break;
+			case 'pinvs':
+				$pathFile=CC_BASE_PATH."/files/proinves/".$id.".pdf";
 				$result=$this->Solicitud_model->getAllColumnsById($id);
 				$idNameAndRegist=$result["idSolicitud"];
 				break;
@@ -125,6 +130,9 @@ class FilesController extends CI_Controller {
 				break;
 			case 'solad':
 				$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
+				break;
+			case 'pinvs':
+				$pathFile=CC_BASE_PATH."/files/proinves/".$id.".pdf";
 				break;
 			default:
 				$pathFile="";
@@ -256,6 +264,17 @@ class FilesController extends CI_Controller {
 				$resultModel["identifier"]='solad';
 				$resultModel["id"]=$id;
 				break;
+			case 'pinvs':
+				$id=$this->input->post('id');
+				$pathFile=CC_BASE_PATH."/files/proinves/".$id.".pdf";
+				
+				$resultModel["name"]=$this->nativesession->get('idAlumno');
+				$resultModel["urlDeleting"]="/file/delete/$fileName/$id";
+				$resultModel["removable"]=(file_exists($pathFile));
+				$resultModel["properties"]=[""];
+				$resultModel["identifier"]='pinvs';
+				$resultModel["id"]=$id;
+				break;
 			default:
 				$pathFile="";
 				show_404();
@@ -311,6 +330,10 @@ public function eliminar($FileType,$id){
 			break;
 		case 'solad':
 			$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
+			$nameFile=$id;
+			break;
+		case 'pinvs':
+			$pathFile=CC_BASE_PATH."/files/proinves/".$id.".pdf";
 			$nameFile=$id;
 			break;
 		default:

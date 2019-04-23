@@ -42,7 +42,7 @@ function marcarInfo(valor){
         if (result) {
             $.post('/admin/informes/marcarInfo', {id: valor}, function (e) {
                 bootbox.alert(e);
-                tabla.ajax.reload();
+                tabla.ajax.reload(null,false);
                 console.log(e);
                 console.log(result);
             });
@@ -56,7 +56,7 @@ function quitarmarcaInfo(valor){
         if (result) {
             $.post('/admin/informes/quitarMarcaInfo', {id: valor}, function (e) {
                 bootbox.alert(e);
-                tabla.ajax.reload();
+                tabla.ajax.reload(null,false);
                 console.log(e);
                 console.log(result);
             });

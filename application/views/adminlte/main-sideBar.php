@@ -8,7 +8,7 @@
         </div>
         <div class="pull-left info">
           <p></p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <a href="#"><i class="fa fa-circle text-success"></i>En línea</a>
         </div>
       </div>
       <!-- search form -->
@@ -24,7 +24,7 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
+        <li class="header">MENÚ PRINCIPAL</li>
         <?php for ($i=0;$i<count($menu);$i++) { ?>
             <li class='<?=(($menu[$i]['active'])?"treeview active":"") ?>'>
               <a href="<?php echo isset($menu[$i]['href'])?$menu[$i]['href']:'#'; ?>">
