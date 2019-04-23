@@ -24,11 +24,41 @@ class Programa extends CI_Controller
 	}
 
     public function dataTable(){
-        $rspta = $this->mihelper->resultToArray($this->Programa_model->all());
+		$search=$this->input->post("search[]");
+		$start=$this->input->post('start');
+		$length=$this->input->post('length');
+		$columns=$this->input->post('columns');
+		$activeSearch=!(strlen($search["value"])==0);
+		$cantidad=$this->Programa_model->count();
+		$visibility='';
+		/**
+		 * valida el texto del search 
+		 * si el valor no coincide con visible o no visible se guarda como ''
+		 */
+		switch ($columns[8]["search"]["value"]) {
+			case 'visible':
+				$visibility='visible';
+				break;
+			case 'no visible':
+				$visibility='no visible';
+				break;
+			default:
+				$visibility='';
+				break;
+		}
+		$this->Programa_model->onlyVisibleFilter($visibility);
+		if(strlen($search["value"])>0){
+			$rspta = $this->Programa_model->page_with_filter($start,$length,$search["value"]);
+		}else{
+			$rspta = $this->Programa_model->page($start,$length);
+		}
 	    //vamos a declarar un array
-	    $data = Array();
+		$data = Array();
+		//echo var_dump($rspta);
+		//exit;
 	    header("Content-type: application/json");
-	    $i=0;
+		$i=0;
+		
 	    foreach ($rspta as $value) {
 	            $data[] = array(
 	            "0" => ' <button class="btn btn-warning" onclick="mostrarFormPro(' .$value["id_curso"]. ')"><i class= "fa fa-pencil"></i></button>'.(($value["estado"]=='0')?' <button class="btn btn-alert"   title="" onclick="activarPrograma('.$value["id_curso"].')"><i class="fa fa-square-o" aria-hidden="true"></i></button>':
@@ -44,9 +74,9 @@ class Programa extends CI_Controller
 	        );
 	     }        
 	    $results = array(
-	        "sEcho" => 1, //Informacion para datatables
+	        "sEcho" => $this->input->post('sEcho'), //Informacion para datatables
 	        "iTotalRecords" => count($data), //enviamos el total de registros al datatables
-	        "iTotalDisplayRecords" => count($data), //enviamos total de registros a visualizar
+	        "iTotalDisplayRecords" => $this->Programa_model->countWithStateFilter(), //enviamos total de registros a visualizar
 	        "aaData" => $data);
 	    echo json_encode($results);
     }
@@ -56,7 +86,7 @@ class Programa extends CI_Controller
 			$identidad["rutaimagen"]="/dist/img/avatar5.png";
 			$identidad["nombres"]=$this->nativesession->get('acceso');
 			$opciones["rutaimagen"]=$identidad["rutaimagen"];
-				$opciones["menu"]=$opciones["menu"]=$this->opciones->segun($this->Permiso_model->lista($this->nativesession->get('idUsuario')),'Programas');
+			$opciones["menu"]=$this->opciones->segun($this->Permiso_model->lista($this->nativesession->get('idUsuario')),'Programas');
 			$data['cabecera']=$this->load->view('adminlte/linksHead','',TRUE);
 			$data['footer']=$this->load->view('adminlte/scriptsFooter','',TRUE);
 			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
@@ -67,7 +97,24 @@ class Programa extends CI_Controller
 			redirect('administracion/login');
 		}
 
-    }
+	}
+	
+	public function viewCalendar(){
+		if ($this->nativesession->get('tipo')=='admin') {
+			$identidad["rutaimagen"]="/dist/img/avatar5.png";
+			$identidad["nombres"]=$this->nativesession->get('acceso');
+			$opciones["rutaimagen"]=$identidad["rutaimagen"];
+			$opciones["menu"]=$this->opciones->segun($this->Permiso_model->lista($this->nativesession->get('idUsuario')),'Programas');
+			$data['cabecera']=$this->load->view('adminlte/linksHead','',TRUE);
+			$data['footer']=$this->load->view('adminlte/scriptsFooter','',TRUE);
+			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
+			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
+			$this->load->view('dashboard_programa_calendar',$data);
+		}else
+		{
+			redirect('administracion/login');
+		}
+	}
 
     public function get($id){
     	$result=$this->Programa_model->getById($id);

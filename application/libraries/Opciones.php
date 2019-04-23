@@ -5,10 +5,13 @@
 class Opciones
 {
 	public $arreglo=null;
-    public $opciones=null;
+	public $opciones=null;
+	public $ci;
     //public $lista=null;
 	function __construct()
 	{
+		$this->ci=&get_instance();
+		$this->ci->load->helper('url');
     $this->arreglo=[];
     $this->opciones=array();
     $this->opciones['alumnos']=[
@@ -34,11 +37,15 @@ class Opciones
                     "submenu"=>[
                             [
                                 "text"=>"Todos",
-                                "atributos"=>"id='programas' data-toggle='collapse' data-parent='#accordion' href='#collapse8'"
+                                "atributos"=>"id='programas' href='".base_url()."administracion/vista/programas#collapse8'"
                             ],
                             [
                                 "text"=>"Nuevo",
                                 "atributos"=>"id='formNuevoPro' data-toggle='collapse' data-parent='#accordion' href='#collapse8'"
+							],
+                            [
+                                "text"=>"calendario(beta)",
+                                "atributos"=>"id='calendar-view' href='".base_url()."administracion/vista/programascalendar'"
                             ]
                         ],
                      "active"=>false
