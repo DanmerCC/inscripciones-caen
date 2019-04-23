@@ -8,14 +8,84 @@ class Registro extends CI_Controller
     {
         parent::__construct();
         $this->load->helper('url');
+
+        //Load the captcha helper
+        $this->load->helper('captcha');
+
+        // Load session library
+        $this->load->library('session');
+        
+        //Se crea randon de 5 para captcha y sesion
+        $this->load->helper('string');
+        $this->rand = random_string('alnum', 5);
+        $this->load->model('Captcha_model');
     }
 
     public function index()
     {
         $data['cabecera'] = $this->load->view('adminlte/linksHead', '', true);
         $data['footer']   = $this->load->view('adminlte/scriptsFooter', '', true);
+        $data['captcha'] = $this->generarCaptcha();
+        $this->session->set_userdata('captcha', $this->rand);
 
         $this->load->view('register', $data);
+    }
+
+    public function generarCaptcha(){
+        $font = 'AlfaSlabOne-Regular';
+        $config = array(
+            'word' => $this->rand,
+            'img_path' => './captcha_images/',
+            'img_url' => base_url().'captcha_images/',
+            'font_path' => $font,
+            'img_width' => '100',
+            'img_height' => 50,
+            'expiration' => 60,
+            'font_size' => 20,
+
+            'colors' => array(
+                'background' => array(200,80,50),
+                'border' => array(255,255,255),
+                'text' => array(255,255,255),
+                'grid' => array(0,40,40) 
+            )
+        );
+
+        $captcha = create_captcha($config);
+        $this->Captcha_model->saveCaptcha($captcha);
+        return $captcha;
+    }
+
+    public function validarCaptcha(){
+        //Si es diferente
+        if($this->input->post('captcha') != $this->session->userdata('captcha')){
+            $this->index();
+        }else{
+            $expiration = time()-60; //Limite de un minuto
+            $ip = $this->input->ip_address();
+            $captcha = $this->input->post('captcha');
+
+            $this->Captcha_model->deleteOldCaptcha($expiration);
+
+            $last = $this->Captcha_model->check($ip, $expiration, $captcha);
+
+            if($last == 1){
+                echo "Correcto";
+            }else{
+                echo "ERROR";
+            }
+        }
+
+    }
+
+    public function refresh(){
+        $expiration = time()-60;
+        $this->Captcha_model->deleteOldCaptcha($expiration);
+        $data = $this->generarCaptcha();
+        $this->session->unset_userdata('captchaCode');
+        $this->session->set_userdata('captcha', $this->rand);
+
+        echo $data['image'];
     }
 
     public function guardar()
@@ -91,6 +161,7 @@ class Registro extends CI_Controller
         return $result;
     }
 
+    
     
 
 }

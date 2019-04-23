@@ -217,3 +217,7 @@ $route['api/inscrito/inscripciones'] = 'rest/apiinscrito_Controller/inscripcione
  */
 $route['api/inscrito/persona/(:num)'] = 'rest/apipersona_Controller/persona/id/$1';
 $route['api/inscrito/persona'] = 'rest/apipersona_Controller/persona/id/';
+
+/* Captcha */
+$route['captcha/refresh'] = 'Registro/refresh';
+$route['captcha/validarCaptcha'] = 'Registro/validarCaptcha';
