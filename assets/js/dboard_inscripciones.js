@@ -143,10 +143,20 @@ function eliminarContenido(){
 	$(idquerytarget+' #mdl-email').html("");
 }
 
+function makeTemplateIconsDocuments(nombre,estado,identifier,nameFile){
+    template=''+
+    ((estado)?"<a href='/admin/view/pdf/"+identifier+"/"+nameFile+"' target='_blank'>":"")+
+    '<span class="'+((estado)?"label label-primary":"label label-danger")+'">'+
+    nombre+
+    '</span>'+
+    ((estado)?'</a>':"");
+    return template;
+}
+
 function cargarData(id){
 	
 	var idquerytarget=this.target;
-	console.log(idquerytarget);
+	console.log(id);
     $.ajax({
         type: "get",
         url: "/secure/inscrito/"+id,
@@ -163,14 +173,14 @@ function cargarData(id){
                 $(idquerytarget+' #mdl-solicitudes').html(alumno.solicitudes);
                 $(idquerytarget+' #mdl-educacion').html(alumno.grado_profesion);
                 $(idquerytarget+' #mdl-celphone').html(' - '+alumno.celular+' - '+alumno.telefono_casa+' - ');
-                // $(idquerytarget+' #mdl-icons-documents').html(makeTemplateIconsDocuments(alumno.estado));
+                $(idquerytarget+' #mdl-icons-documents').html(makeTemplateIconsDocuments(alumno.estado));
 				$(idquerytarget+' #mdl-email').html(alumno.email);
 				//fotoData
 				$(idquerytarget+' #mdl-foto').prop("src",alumno.fotoData);
 				var documentos=alumno.documentosObject;
 				var htmlDocuments="";
 				for (var i = 0; i < documentos.length; i++) {
-					// htmlDocuments=htmlDocuments+makeTemplateIconsDocuments(documentos[i].name,documentos[i].stateUpload,documentos[i].identifier,documentos[i].fileName);
+					htmlDocuments=htmlDocuments+makeTemplateIconsDocuments(documentos[i].name,documentos[i].stateUpload,documentos[i].identifier,documentos[i].fileName);
 					
 				}
 
@@ -178,7 +188,7 @@ function cargarData(id){
 				var filesOfSol =alumno.solicitudFiles;
 				var htmlfilesOfSol="";
 				for (var ii = 0; ii < filesOfSol.length; ii++) {
-					// htmlfilesOfSol += makeTemplateIconsDocuments(filesOfSol[ii].name,filesOfSol[ii].stateUpload,filesOfSol[ii].identifier,filesOfSol[ii].fileName);
+					htmlfilesOfSol += makeTemplateIconsDocuments(filesOfSol[ii].name,filesOfSol[ii].stateUpload,filesOfSol[ii].identifier,filesOfSol[ii].fileName);
 					
 				}
 				$(idquerytarget+' #mdl-icons-filesOfSol').html(htmlfilesOfSol);

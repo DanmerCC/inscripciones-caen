@@ -186,21 +186,21 @@ class InscripcionController extends CI_Controller {
 			[
 				"name"=>"Solicitud de Admision",
 				"identifier"=>"solad",
-				// "statechecked"=>(boolean)$solicitud["check_sol_ad"],
+				"statechecked"=>(boolean)$solicitud["check_sol_ad"],
 				"stateUpload"=>file_exists(CC_BASE_PATH."/files/sol-ad/".$solicitud["idSolicitud"].".pdf"),
 				"fileName"=>$solicitud["idSolicitud"]
             ],
             [
 				"name"=>"Proyecto de Investigacion",
 				"identifier"=>"pinvs",
-				// "statechecked"=>(boolean)$solicitud["check_proyect_invest"],
+				"statechecked"=>(boolean)$solicitud["check_proyect_invest"],
                 "stateUpload"=>file_exists(CC_BASE_PATH."/files/pinvs/".$solicitud["idSolicitud"].".pdf"),
                 "fileName"=>$solicitud["idSolicitud"]
             ],
             [
                 "name"=>"Hoja de datos",
 				"identifier"=>"hdatos",
-				// "statechecked"=>(boolean)$solicitud["check_hdatos"],
+				"statechecked"=>(boolean)$solicitud["check_hdatos"],
 				"stateUpload"=>file_exists(CC_BASE_PATH."/files/hojadatos/".$solicitud["idSolicitud"].".pdf"),
 				"fileName"=>$solicitud["idSolicitud"]
 			]
