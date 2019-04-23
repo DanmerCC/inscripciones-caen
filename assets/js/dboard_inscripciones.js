@@ -1,4 +1,5 @@
 var tabla;
+
 function cargarDataTable(){
 	tabla = $('#dataTable1').dataTable({
 	"aProcessing": true, //activamos el procesamiento del datatables
@@ -56,7 +57,7 @@ function loadDataToSelect(){
         data: "",
         dataType: "json",
         success: function (response) {
-            console.log(response);
+            // console.log(response);
             $("#selectProgram").html(listProgramasActivos(response));
         }
     });
@@ -105,3 +106,90 @@ function cancelarById(id){
 	});
 	
 }
+
+var modalDataInscrito={
+    target:"#mdl_datos_inscritos",
+    limpiar:eliminarContenido,
+    loadData:cargarData,
+    init:inicio
+}
+
+function inicio(){
+    var idquerytarget=this.target;
+	$(this.target).on('hide.bs.modal', function (event) {
+		$(idquerytarget+' #mdl-foto').prop("src","");
+        $(idquerytarget+' #mdl-name').html("");
+        $(idquerytarget+' #mdl-name').html("");
+        $(idquerytarget+' #mdl-profesion').html("");
+        $(idquerytarget+' #mdl-solicitudes').html("");
+        $(idquerytarget+' #mdl-educacion').html("");
+        $(idquerytarget+' #mdl-celphone').html("");
+        $(idquerytarget+' #mdl-icons-documents').html("");
+	});
+}
+
+modalDataInscrito.init();
+
+function eliminarContenido(){
+    var idquerytarget=this.target;
+    $(idquerytarget+' #mdl-foto').prop("src","");
+    $(idquerytarget+' #mdl-name').html("");
+    $(idquerytarget+' #mdl-name').html("");
+    $(idquerytarget+' #mdl-profesion').html("");
+    $(idquerytarget+' #mdl-solicitudes').html("");
+    $(idquerytarget+' #mdl-educacion').html("");
+    $(idquerytarget+' #mdl-celphone').html("");
+	$(idquerytarget+' #mdl-icons-documents').html("");
+	$(idquerytarget+' #mdl-email').html("");
+}
+
+function cargarData(id){
+	
+	var idquerytarget=this.target;
+	console.log(idquerytarget);
+    $.ajax({
+        type: "get",
+        url: "/secure/inscrito/"+id,
+        data: "",
+        dataType: "json",
+        success: function (response) {
+			console.log(response);
+            if(response.status=="NO FOUND"){
+                alert("Ocurrio un error. El alumno no pudo ser encontrado");
+            }else{
+				alumno=response.result;
+                $(idquerytarget+' #mdl-name').html(((alumno.nombres!=null)?alumno.nombres:'')+' '+((alumno.apellido_paterno!=null)?alumno.apellido_paterno:'')+' '+((alumno.apellido_materno!=null)?alumno.apellido_materno:''));
+                $(idquerytarget+' #mdl-profesion').html(alumno.grado_profesion);
+                $(idquerytarget+' #mdl-solicitudes').html(alumno.solicitudes);
+                $(idquerytarget+' #mdl-educacion').html(alumno.grado_profesion);
+                $(idquerytarget+' #mdl-celphone').html(' - '+alumno.celular+' - '+alumno.telefono_casa+' - ');
+                // $(idquerytarget+' #mdl-icons-documents').html(makeTemplateIconsDocuments(alumno.estado));
+				$(idquerytarget+' #mdl-email').html(alumno.email);
+				//fotoData
+				$(idquerytarget+' #mdl-foto').prop("src",alumno.fotoData);
+				var documentos=alumno.documentosObject;
+				var htmlDocuments="";
+				for (var i = 0; i < documentos.length; i++) {
+					// htmlDocuments=htmlDocuments+makeTemplateIconsDocuments(documentos[i].name,documentos[i].stateUpload,documentos[i].identifier,documentos[i].fileName);
+					
+				}
+
+				//documents for solicitud
+				var filesOfSol =alumno.solicitudFiles;
+				var htmlfilesOfSol="";
+				for (var ii = 0; ii < filesOfSol.length; ii++) {
+					// htmlfilesOfSol += makeTemplateIconsDocuments(filesOfSol[ii].name,filesOfSol[ii].stateUpload,filesOfSol[ii].identifier,filesOfSol[ii].fileName);
+					
+				}
+				$(idquerytarget+' #mdl-icons-filesOfSol').html(htmlfilesOfSol);
+				$(idquerytarget+' #mdl-icons-documents').html(htmlDocuments);
+            }
+            
+		},
+		error: function (e) {
+			console.log(e.responseText);
+		}
+    });
+}
+
+
