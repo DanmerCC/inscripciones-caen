@@ -38,9 +38,9 @@ class Registro extends CI_Controller
             'img_path' => './captcha_images/',
             'img_url' => base_url().'captcha_images/',
             'font_path' => $font,
-            'img_width' => '100',
-            'img_height' => 50,
-            'expiration' => 60,
+            'img_width' => 100,
+            'img_height' => 35,
+            'expiration' => 120,
             'font_size' => 20,
 
             'colors' => array(
@@ -70,9 +70,17 @@ class Registro extends CI_Controller
     {
         //Si es diferente
         if($this->input->post('captcha') != $this->session->userdata('captcha')){
-            $this->index();
+            // $data['cabecera'] = $this->load->view('adminlte/linksHead', '', true);
+            // $data['footer']   = $this->load->view('adminlte/scriptsFooter', '', true);
+            // $data['captcha'] = $this->generarCaptcha();
+            // $data['error'] = "Mensaje de error";
+            // $this->session->set_userdata('captcha', $this->rand);
+
+            // $this->load->view('register', $data);
+            $error_nombre = "Por favor ingrese su nombre.";
+            
         }else{
-            $expiration = time()-60; //Limite de un minuto
+            $expiration = time()-120; //Limite de un minuto
             $ip = $this->input->ip_address();
             $captcha = $this->input->post('captcha');
     
@@ -136,7 +144,7 @@ class Registro extends CI_Controller
                     
                 }
             }else{
-                echo $success['Hola'];
+                echo $data['Este es un mensaje'];
             }
         }
     }

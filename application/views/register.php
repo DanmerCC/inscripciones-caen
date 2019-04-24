@@ -8,12 +8,12 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
 	<?=$cabecera?>
-	<link rel="stylesheet" href="assets/css/login.css">
+	<link rel="stylesheet" href="/assets/css/login.css">
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">
   <div class="register-logo">
-    <img src="assets/img/logo-caen.png" alt="">
+    <img src="/assets/img/logo-caen.png" alt="">
   </div>
 
   <div class="sin-bordes register-box-body ">
@@ -71,13 +71,14 @@
         </select>
       </div>
       <div class="form-group has-feedback">
-          <p id="captImg"><?php echo $captcha['image']?></p>
-          <input type="text" name="captcha">
-          <p>¿No puedes leer la imagen? Haga <a href="javascript:void(0);" class="refreshCaptcha">click aquí</a> para actualizar.</p>
+          <p id="captImg" class="col-sm-6"><?php echo $captcha['image']?></p>
+          <input type="text" name="captcha" class="col-sm-6">
+          <p class="col-sm-12">¿No puedes leer la imagen? Haga <a href="javascript:void(0);" class="refreshCaptcha">click aquí</a> para actualizar.</p>
+          <?php  if(!empty($error_nombre)) echo $error_nombre;?>
           <?php
-            if(isset($success)) {
-              echo '<p class="text-success">'.$success.'</p>';
-            } 
+            // if(isset($error)) {
+            //   echo '<p class="text-danger">'.$error.'</p>';
+            // }
           ?>
           <!-- <input type="submit" value="Enviar"> -->
           <!-- <input type="text" value="<?php echo $captcha['word']?>" name="string_captcha"> -->
@@ -92,7 +93,7 @@
         </div>
       </div>
       <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Registrarse</button>
+          <button type="submit" name="btnRegister" class="btn btn-primary btn-block btn-flat">Registrarse</button>
         </div>
     </form>
 
@@ -117,6 +118,11 @@
         $.get('<?php echo base_url().'captcha/refresh'; ?>', function(data){
             $('#captImg').html(data);
         });
+    });
+    $('#btnRegister').on('click', function(){
+      $.get('<?php echo base_url().'registro/enviar'; ?>', function(data){
+      $('#message').html(data);
+    });
     });
   });
 </script>

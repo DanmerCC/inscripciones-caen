@@ -113,7 +113,7 @@ class Login extends CI_Controller {
 					$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
 					$this->load->view('recover_password/restablecer_contrasena',$data);
 				} else {
-					$data['error'] = 'Hubo un problema con tu enlace. Por favor haga clic nuevamente o solicite restablecer su contraseña nuevamente.';
+					$data['error'] = 'Hubo un problema con tu enlace. Por favor intente restablecer su contraseña nuevamente.';
 					$data['email'] = $email;
 					$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
 					$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
