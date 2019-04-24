@@ -43,7 +43,7 @@ class Registro extends CI_Controller
         $ql = $this->db->select('documento')->from('alumno')->where('documento',$id_usuario_dni)->or_where('email',$email)->get();
         if ($ql->num_rows() > 0) {
             $data["heading"]=" YA ESTA REGISTRADO";
-            $data["message"]="Ya existe un registro con el mismo numero de Numero de documento o correo electronico";
+            $data["message"]="<h1><strong>Ya existe </strong> un registro con el mismo numero de Numero de documento o correo electronico</h1> intentelo nuevamente";
 			$data["seconds"]="5";
 			$data["url"]="/registro";
         	echo $this->load->view('errors/custom/flash_msg',$data,TRUE);

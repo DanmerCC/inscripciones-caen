@@ -30,11 +30,10 @@ class CorreoController extends CI_Controller
 		$this->email->from('danmerccoscco@gmail.com');
 		$this->email->to("programador2@caen.edu.pe");
 		$this->email->subject('Prueba');
-		$this->email->message('<h2>Email enviado con codeigniter haciendo uso del smtp de gmail</h2><hr><br> Hola amiguita');
+		$this->email->message('<h2>Email enviado con codeigniter haciendo uso del smtp de gmail</h2><hr><br>');
 		$this->email->send();
 		//con esto podemos ver el resultado
 		var_dump($this->email->print_debugger());
-		echo "Hola mundo";
 	}
 
 	public function sendMailYahoo()
