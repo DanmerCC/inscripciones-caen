@@ -37,6 +37,7 @@
     <!-- Main content -->
     <section class="content">
               <div class="container">   
+                  <h2>No se olvide de desplegar cada menú para completar su inscripción.</h2>
                   <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
