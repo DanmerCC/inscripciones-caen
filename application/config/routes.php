@@ -123,6 +123,7 @@ $route['administracion/validacion'] = 'admin/Panel/validacion';
 $route['administracion/perfil'] = 'admin/Panel';
 $route['administracion/programa/(:num)'] = 'admin/Programa/get/$1';
 $route['secure/alumno/(:num)'] = 'admin/Solicitud/getResumenSolicitudById/$1';
+$route['secure/inscrito/(:num)'] = 'admin/InscripcionController/getResumenSolicitudById/$1';
 
 /*send id for post*/
 $route['administracion/programa/activar'] = 'admin/Programa/activar';
@@ -158,6 +159,7 @@ $route['admin/comentario/guardar/(:num)'] = 'admin/Solicitud/setComentario/$1';
 $route['administracion/vista/solicitantes'] = 'admin/Solicitud';
 $route['administracion/vista/matriculas'] = 'admin/Matricula';
 $route['administracion/vista/programas'] = 'admin/Programa';
+$route['administracion/vista/programascalendar'] = 'admin/Programa/viewCalendar';
 $route['administracion/vista/beneficios'] = 'admin/Beneficio';
 $route['administracion/vista/alumnos'] = 'admin/Alumno';
 $route['administracion/vista/solicitudes'] = 'admin/Solicitud';
@@ -171,7 +173,7 @@ $route['admin/parts/nuevoprograma'] = 'admin/Programa/newPrograma';
 $route['admin/inscr/create'] = 'admin/InscripcionController/create';
 $route['admin/inscr/cancel'] = 'admin/InscripcionController/delete';
 
-$route['test'] = 'Solicitud/test';
+$route['test'] = 'admin/Solicitud/test';
 
 
 $route['mdf/api/programa'] = 'apiMindef/Programa';
@@ -217,3 +219,8 @@ $route['api/inscrito/inscripciones'] = 'rest/apiinscrito_Controller/inscripcione
  */
 $route['api/inscrito/persona/(:num)'] = 'rest/apipersona_Controller/persona/id/$1';
 $route['api/inscrito/persona'] = 'rest/apipersona_Controller/persona/id/';
+
+
+//**Rest codigo propio  v 0.1*/
+$route['api/v1/inscritos'] = 'apiRest/Inscritos_Controller/get';
+$route['api/v1/inscrito/(:num)'] = 'apiRest/Inscritos_Controller/getById/$1';
