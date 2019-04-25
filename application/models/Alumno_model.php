@@ -26,6 +26,24 @@ class Alumno_model extends CI_Model
 	private $nombres='nombres';
 	private $documento='documento';
 	private $email='email';
+	private $grado_profesion='grado_profesion';
+	private $estado_civil='estado_civil';
+	private $fecha_nac='fecha_nac';
+	private $telefono_casa='telefono_casa';
+	private $distrito_nac='distrito_nac';
+	private $provincia='provincia';
+	private $departamento='departamento';
+	private $direccion='direccion';
+	private $distrito='distrito';
+	private $lugar_trabajo='lugar_trabajo';
+	private $area_direccion='area_direccion';
+	private $tiempo_servicio='tiempo_servicio';
+	private $cargo_actual='cargo_actual';
+	private $direccion_laboral='direccion_laboral';
+	private $distrito_laboral='distrito_laboral';
+	private $cambiar='cambiar';
+	private $seguro_medico='seguro_medico';
+	private $nombre_seguro='nombre_seguro';
 
 	private $public_columns=[];
 
@@ -392,5 +410,37 @@ class Alumno_model extends CI_Model
 
 	public function list_public_columns(){
 		return implode(',',$this->public_columns);
+	}
+
+
+	/**
+	 * @return columns retorna un array con los campos para el filtrado de estadisticas
+	 * 
+	 */
+	public function getColumnsForAnalisis(){
+		return [
+			$this->estado_civil,
+			$this->distrito_laboral,
+			$this->distrito,
+			$this->distrito_nac,
+			$this->provincia,
+			$this->departamento,
+			$this->seguro_medico,
+			$this->nombre_seguro
+		];
+	}
+
+	/**
+	 * @var columns array de columnas
+	 */
+	public function getCountForAnalisis($columns){
+		$sql_count_columns=[];
+
+		foreach ($columns as $key => $value) {
+			array_push($sql_count_columns,'COUNT('.$columns[$key].') as '.$columns[$key]);
+		}
+
+		$this->db->select(implode(',',$sql_count_columns))->from($this->table);
+		return $this->db->get();
 	}
 }
