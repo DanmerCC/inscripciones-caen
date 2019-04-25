@@ -28,7 +28,7 @@ class DataSource_model extends CI_Model
     public function getDataByName($data_sets){
         $this->load->model($this->model_target);
         $thismodelo_target=$this->model_target;
-        return $this->$thismodelo_target->getCountForAnalisis();
+        return $this->$thismodelo_target->getCountForAnalisis($data_sets);
     }
     //Modelo
     //Columnas

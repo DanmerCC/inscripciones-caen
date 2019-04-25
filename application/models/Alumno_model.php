@@ -426,7 +426,8 @@ class Alumno_model extends CI_Model
 			$this->provincia,
 			$this->departamento,
 			$this->seguro_medico,
-			$this->nombre_seguro
+			$this->nombre_seguro,
+			$this->situacion_militar
 		];
 	}
 
@@ -437,10 +438,11 @@ class Alumno_model extends CI_Model
 		$sql_count_columns=[];
 
 		foreach ($columns as $key => $value) {
-			array_push($sql_count_columns,'COUNT('.$columns[$key].') as '.$columns[$key]);
+			array_push($sql_count_columns,$columns[$key]);
 		}
 
-		$this->db->select(implode(',',$sql_count_columns))->from($this->table);
-		return $this->db->get();
+		$this->db->select('COUNT('.$this->id.') as conteo,'.implode(',',$columns))->from($this->table);
+		$this->db->group_by($columns);
+		return resultToArray($this->db->get());
 	}
 }
