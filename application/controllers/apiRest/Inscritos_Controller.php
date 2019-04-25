@@ -35,9 +35,15 @@ class Inscritos_Controller extends MY_Controller {
         if(!$this->verify_token()){
             $this->response("No permitido",401);
         }
+        if(COUNT($this->Inscripcion_model->get_one_api($id))==1){
+            $inscrito=$this->Inscripcion_model->get_one_api($id)[0];
+        }
         
-        $inscrito=$this->Inscripcion_model->get_one_api($id)[0];
-        $this->response($inscrito,200);
+        if(isset($inscrito)){
+            $this->response($inscrito,200);
+        }else{
+            $this->response(array("response"=>"No encontrado"),404);
+        }
         
     }
 }
