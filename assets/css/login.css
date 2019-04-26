@@ -12,3 +12,8 @@ body.login-page{
     background: url(/assets/img/background.jpg) center;
     background-size: cover;
 }
+.box-title {
+    font-size: 18px;
+    font-weight: 550;
+    text-align: center;
+}

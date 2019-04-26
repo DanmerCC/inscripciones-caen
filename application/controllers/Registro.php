@@ -40,7 +40,7 @@ class Registro extends CI_Controller
             'font_path' => $font,
             'img_width' => 100,
             'img_height' => 35,
-            'expiration' => 120,
+            'expiration' => 180,
             'font_size' => 20,
 
             'colors' => array(
@@ -57,7 +57,7 @@ class Registro extends CI_Controller
     }
 
     public function refresh(){
-        $expiration = time()-60;
+        $expiration = time()-180;
         $this->Captcha_model->deleteOldCaptcha($expiration);
         $data = $this->generarCaptcha();
         $this->session->unset_userdata('captchaCode');
@@ -70,17 +70,16 @@ class Registro extends CI_Controller
     {
         //Si es diferente
         if($this->input->post('captcha') != $this->session->userdata('captcha')){
-            // $data['cabecera'] = $this->load->view('adminlte/linksHead', '', true);
-            // $data['footer']   = $this->load->view('adminlte/scriptsFooter', '', true);
-            // $data['captcha'] = $this->generarCaptcha();
-            // $data['error'] = "Mensaje de error";
-            // $this->session->set_userdata('captcha', $this->rand);
+            $data['cabecera'] = $this->load->view('adminlte/linksHead', '', true);
+            $data['footer']   = $this->load->view('adminlte/scriptsFooter', '', true);
+            $data['captcha'] = $this->generarCaptcha();
+            $this->session->set_userdata('captcha', $this->rand);
 
-            // $this->load->view('register', $data);
-            $error_nombre = "Por favor ingrese su nombre.";
+            $this->session->set_flashdata('captcha_failed', 'CAPTCHA INGRESADO NO VÁLIDO');
+            return redirect('registro', $data);
             
         }else{
-            $expiration = time()-120; //Limite de un minuto
+            $expiration = time()-180; //Limite de un minuto
             $ip = $this->input->ip_address();
             $captcha = $this->input->post('captcha');
     
@@ -144,7 +143,13 @@ class Registro extends CI_Controller
                     
                 }
             }else{
-                echo $data['Este es un mensaje'];
+                $data['cabecera'] = $this->load->view('adminlte/linksHead', '', true);
+                $data['footer']   = $this->load->view('adminlte/scriptsFooter', '', true);
+                $data['captcha'] = $this->generarCaptcha();
+                $this->session->set_userdata('captcha', $this->rand);
+
+                $this->session->set_flashdata('captcha_failed', 'HUBO UN ERROR AL GUARDAR LOS DATOS');
+                return redirect('registro', $data);
             }
         }
     }

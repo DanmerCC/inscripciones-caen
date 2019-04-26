@@ -18,6 +18,9 @@
 
   <div class="sin-bordes register-box-body ">
     <p class="login-box-msg">Registrate aqui</p>
+    <?php if($error = $this->session->flashdata('captcha_failed')):?>
+      <h1 class="text-danger box-title"><?= $error ?></h1>
+    <?php endif; ?>
 
     <form id="frmRegistro" action="registro/enviar" method="post">
       <div class="form-group has-feedback">
@@ -74,14 +77,6 @@
           <p id="captImg" class="col-sm-6"><?php echo $captcha['image']?></p>
           <input type="text" name="captcha" class="col-sm-6">
           <p class="col-sm-12">¿No puedes leer la imagen? Haga <a href="javascript:void(0);" class="refreshCaptcha">click aquí</a> para actualizar.</p>
-          <?php  if(!empty($error_nombre)) echo $error_nombre;?>
-          <?php
-            // if(isset($error)) {
-            //   echo '<p class="text-danger">'.$error.'</p>';
-            // }
-          ?>
-          <!-- <input type="submit" value="Enviar"> -->
-          <!-- <input type="text" value="<?php echo $captcha['word']?>" name="string_captcha"> -->
       </div>
       <div class="form-group">
         <div class="col-xs-8">
