@@ -44,6 +44,7 @@ class Alumno_model extends CI_Model
 	private $cambiar='cambiar';
 	private $seguro_medico='seguro_medico';
 	private $nombre_seguro='nombre_seguro';
+	private $situacion_militar='situacion_militar';
 
 	private $public_columns=[];
 

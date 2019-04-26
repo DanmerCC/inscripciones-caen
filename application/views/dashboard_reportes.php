@@ -111,74 +111,19 @@
 
     <!-- ./col -->
     <div class="col-lg-3 col-xs-6">
-    <canvas id="myChart" width="400" height="400"></canvas>
+        <select name="model-chart" id="model-chart">
+            <option value="alumnos">Alumnos</option>
+        </select>
+        <select name="datasets-chart" id="datasets-chart"></select>
+        <div id="checks">
+        </div>
+        <canvas id="myChart" width="400" height="400"></canvas>
     </div>
     <!-- ./col -->
 </div>
 <!-- /.row -->
 
 <!--<script src="/assets/charts.js"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
-<script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -232,7 +177,117 @@ var myChart = new Chart(ctx, {
 <script src="/dist/js/jquery-externs/buttons.html5.min.js"></script>
 <script src="/dist/js/jquery-externs/buttons.print.min.js"></script>
 
-<!-- <script src="/assets/js/dboardAlumno.js"></script> -->
-<script src="/assets/js/dboardInformes.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+<script>
+
+$(document).ready(function(){
+    $("#model-chart").change(function(){
+        getColumns($(this).children("option:selected").val(),makeOptionByResponse)
+    });
+});
+
+function getDataset(array_column,callback){
+    $.ajax({
+        type: "post",
+        url: "/chart/alumnos/data",
+        data: $("#checks input[type=checkbox]:checked").map(
+            function(){
+                        return $(this).val();
+                    }
+            ),
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+        }
+    });
+}
+
+function makeOptionByResponse(response){
+    var i=0;
+    var content="";
+    response.forEach(element => {
+        content+=makeCheck(i+"check",element,element);
+        i++;
+    });
+
+    $("#checks").append("<div class='container'>"+content+"</div>");
+}
+
+function makeCheck(id,name,value){
+    return '<input type="checkbox" id="'+id+'" value="'+value+'"><label for="'+id+'">'+value+'</label>';
+}
+function getColumns(model,callback){
+    $.ajax({
+        type: "post",
+        url: "/chart/"+model,
+        data: "",
+        dataType: "json",
+        success: callback
+    });
+}
+
+function addOptions(select,opciones){
+    select.html("");
+    opciones.forEach(element => {
+        select.append("<option value="+element.value+">"+element.nombre+"</option>");
+    });
+}
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [],
+        datasets: []
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+/*var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});*/
+</script>
 </body>
 </html>
