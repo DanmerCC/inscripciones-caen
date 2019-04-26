@@ -1,3 +1,7 @@
+IF NOT EXIST captcha_images (
+	mkdir captcha_images
+)
+
 IF EXIST publicFiles (
 	cd publicFiles
 	IF NOT EXIST foto (
