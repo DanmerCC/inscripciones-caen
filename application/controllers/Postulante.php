@@ -7,6 +7,7 @@ class Postulante extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->library('Nativesession');
+		$this->load->library('session');
 	}
 
 	public function index()
@@ -308,7 +309,7 @@ class Postulante extends CI_Controller {
 					$situacion_militar,
 					$si_militar
 				);
-		$this->session->set_flashdata('flashError');	
+		$this->session->set_flashdata('flashError', 'Este es un mensaje');	
 		redirect(base_url().'postulante', 'refresh');
 
 	}
