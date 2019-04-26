@@ -350,6 +350,8 @@ var configuracion = function(){
                 $("#parentesco").val(datos[i].parentesco);
                 
                 consultaVacio();
+
+                
                 
                 // $("#").val(datos[i].gradoMilitar);
         		// $("#").val(datos[i].planaMilitar);
@@ -362,20 +364,6 @@ var configuracion = function(){
             console.log(thrownError);
 		}
     });
-
-//btnPersonal
-$("#btnPersonal").click(function(e){
-    var acordeon1 = document.getElementById("collapse1");
-    console.log(acordeon1);
-    acordeon1.classList.remove("in");
-    console.log(acordeon1);
-
-    var acordeon2 = document.getElementById("collapse2");
-    console.log(acordeon2);
-    acordeon2.classList.add("in");
-    console.log(acordeon2);
-});
-
 
 function consultaVacio(){
     var cont=0;

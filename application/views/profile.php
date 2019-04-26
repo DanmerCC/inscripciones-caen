@@ -965,6 +965,21 @@
     </form>
   </div>
 </div>
+
+<?php if($this->session->flashdata('flashError')):?>
+    <script type="text/javascript">
+        //btnPersonal
+        var acordeon1 = document.getElementById("collapse1");
+        console.log(acordeon1);
+        acordeon1.classList.remove("in");
+        console.log(acordeon1);
+
+        var acordeon2 = document.getElementById("collapse2");
+        console.log(acordeon2);
+        acordeon2.classList.add("in");
+        console.log(acordeon2);
+    </script>
+<?php endif; ?>
 <!-- Modal -->
 <?php $this->load->view('adminlte/scriptsFooter');?>
 <script src="/assets/js/profile.js"></script>
