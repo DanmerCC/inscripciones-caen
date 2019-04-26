@@ -398,8 +398,8 @@ function consultaVacio(){
 
     // $("#accordion ")
 
-    $("#comment").append(crearModal(cont, pivotInput)); 
-    $("#myModal").modal("show");
+    // $("#comment").append(crearModal(cont, pivotInput)); 
+    // $("#myModal").modal("show");
 }
 
 function crearModal(contador, data){
