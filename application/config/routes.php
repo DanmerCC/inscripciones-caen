@@ -234,3 +234,5 @@ $route['chart/([a-zA-Z]+)/data'] = 'ChartsController/get_data_source';
 */
 
 $route['chart/alumno'] = 'ChartsController/alumno_columns';
+$route['chart/alumno/metadata'] = 'ChartsController/alumno_get_group_data';
+$route['chart/alumno/count'] = 'ChartsController/get_count_data';

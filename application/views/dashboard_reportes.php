@@ -186,9 +186,54 @@ $(document).ready(function(){
     $("#model-chart").change(function(){
         getColumns($(this).children("option:selected").val(),makeOptionByResponse)
     });
-	
+    $("#datasets-chart").change(function (){
+        getGroupData($(this).val());
+    });
+	$("#model-chart").trigger("change");
 });
 
+function getGroupData(column,model){
+    $.ajax({
+        type: "post",
+        url: "/chart/alumno/metadata",
+        data: {
+            "model":model,
+            "column":column
+        },
+        dataType: "json",
+        success: function (response) {
+            //console.log(response);
+            renderChart(response);
+        }
+    });
+    getDataSet(column,model);
+}
+
+function getDataSet(column,model){
+    $.ajax({
+        type: "post",
+        url: "/chart/alumno/count",
+        data: {
+            "model":model,
+            "column":column
+        },
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+            //renderChart(response);
+            var array_in_order=[];
+            var labels_in_order=myChart.data.labels;
+            for (var index = 0; index < labels_in_order.length; index++) {
+                //
+            }
+        }
+    });
+}
+
+function renderChart(labels){
+    myChart.data.labels=labels;
+    myChart.update();
+}
 function getColumns(){
 	$.ajax({
 		type: "post",
@@ -198,9 +243,16 @@ function getColumns(){
 		},
 		dataType: "json",
 		success: function (response) {
-			console.log(response);
+            $("#datasets-chart").html("");
+            response.forEach(element =>{
+                $("#datasets-chart").append(makeOption(element,element));
+            });
 		}
 	});
+}
+
+function makeOption(text,value){
+    return "<option value='"+value+"'>"+text+"</option>"
 }
 
 function getDataset(array_column,callback){
@@ -279,7 +331,7 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
+                'rgba(75, 192, 192, 0.2)', 
                 'rgba(153, 102, 255, 0.2)',
                 'rgba(255, 159, 64, 0.2)'
             ],
