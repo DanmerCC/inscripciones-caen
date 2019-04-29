@@ -228,6 +228,9 @@ $route['api/v1/inscrito/(:num)'] = 'apiRest/Inscritos_Controller/getById/$1';
 
 /***
  * Chart estadistics
- */
+ 
 $route['chart/([a-zA-Z]+)'] = 'ChartsController/get_data_source_names';
 $route['chart/([a-zA-Z]+)/data'] = 'ChartsController/get_data_source';
+*/
+
+$route['chart/alumno'] = 'ChartsController/alumno_columns';

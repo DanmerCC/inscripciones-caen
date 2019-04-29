@@ -186,7 +186,22 @@ $(document).ready(function(){
     $("#model-chart").change(function(){
         getColumns($(this).children("option:selected").val(),makeOptionByResponse)
     });
+	
 });
+
+function getColumns(){
+	$.ajax({
+		type: "post",
+		url: "/chart/alumno",
+		data: {
+			"model":"alumno"
+		},
+		dataType: "json",
+		success: function (response) {
+			console.log(response);
+		}
+	});
+}
 
 function getDataset(array_column,callback){
     $.ajax({
@@ -218,6 +233,7 @@ function makeOptionByResponse(response){
 function makeCheck(id,name,value){
     return '<input type="checkbox" id="'+id+'" value="'+value+'"><label for="'+id+'">'+value+'</label>';
 }
+/*
 function getColumns(model,callback){
     $.ajax({
         type: "post",
@@ -227,7 +243,7 @@ function getColumns(model,callback){
         success: callback
     });
 }
-
+*/
 function addOptions(select,opciones){
     select.html("");
     opciones.forEach(element => {

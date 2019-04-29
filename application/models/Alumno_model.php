@@ -433,17 +433,18 @@ class Alumno_model extends CI_Model
 	}
 
 	/**
-	 * @var columns array de columnas
+	 * @var column name of column
 	 */
-	public function getCountForAnalisis($columns){
-		$sql_count_columns=[];
-
-		foreach ($columns as $key => $value) {
-			array_push($sql_count_columns,$columns[$key]);
+	public function getCountForAnalisis($column,$where_data=NULL){
+		$this->db->select('COUNT('.$this->id.') as conteo,'.$column)->from($this->table);
+		if(isset($where_data)){
+			$this->db->where($column,$where_data);
 		}
-
-		$this->db->select('COUNT('.$this->id.') as conteo,'.implode(',',$columns))->from($this->table);
-		$this->db->group_by($columns);
+		
+		return resultToArray($this->db->get());
+	}
+	public function getDataGroupColumn($column_name){
+		$this->db->select($column_name)->from($this->table)->group_by($column_name);
 		return resultToArray($this->db->get());
 	}
 }
