@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Postulante CAEN</title>
 <?php $this->load->view('adminlte/linksHead');?>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css">
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css"> -->
+<link rel="stylesheet" href="/dist/css/jquery-externs/jquery.dataTables.min.css">
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 <!-- Site wrapper -->
@@ -70,8 +71,76 @@
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
 
+  <!-- Creacion de Modal para ver datos -->
+  <div class="modal fade" id="mdl_datos_inscritos">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">X</span>
+          </button>
+          <h4 class="modal-title">Datos del alumno</h4>
+        </div>
+        <div class="modal-body">
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+              <img class="profile-user-img img-responsive img-circle" id="mdl-foto" src="" alt="User profile picture">
+              <h3 class="profile-username text-center" id="mdl-name">Nina Mcintire</h3>
+              <p class="text-muted text-center" id="mdl-profesion">Software Engineer</p>
+              <ul class="list-group list-group-unbordered">
+                <li class="list-group-item">
+                  <b >Solicitudes</b> <a class="pull-right" id="mdl-solicitudes">1,322</a>
+                </li>
+              </ul>
+
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Otros datos</h3>
+                </div>
+                <div class="box body">
+                  <strong><i class="fa fa-book margin-r-5"></i> Educacion</strong>
+                  <p class="text-muted" id="mdl-educacion">
+                    B.S. in Computer Science from the University of Tennessee at Knoxville
+                  </p>
+                  <hr>
+                  <strong><i class="fa fa-phone margin-r-5"></i> Numeros de celular</strong>
+                  <p class="text-muted" id="mdl-celphone">
+                    55555-5555
+                  </p>
+                  <hr>
+                  <strong><i class="fa fa-envelope margin-r-5"></i> Email</strong>
+                  <p class="text-muted" id="mdl-email"></p>
+                  <hr>
+                  <strong><i class="fa fa-pencil margin-r-5"></i> Documentos</strong>
+                  <p>
+                    <div id="mdl-icons-documents">
+                      <span class="label label-danger">UI Design</span>
+                      <span class="label label-success">Coding</span>
+                      <span class="label label-info">Javascript</span>
+                      <span class="label label-warning">PHP</span>
+                      <span class="label label-primary">Node.js</span>
+                    </div>
+                  </p>
+                  <strong><i class="fa fa-pencil margin-r-5"></i> Documentos De solicitud</strong>
+                  <p>
+                    <div id="mdl-icons-filesOfSol"></div>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Final de Modal -->
+
+
+  <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
@@ -89,27 +158,33 @@
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 
-  <div id="contentModals">
-    
-    
-  </div><!-- /.modal -->
-
+  <div id="contentModals"></div>
+  <!-- /.modal -->
+<!-- 
   </div>
-</div>
+</div> -->
 
 
 <!-- ./wrapper -->
 <?php $this->load->view('adminlte/scriptsFooter');?>
 
-<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<!-- <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script> -->
+
+<script src="/dist/js/jquery-externs/jquery.dataTables.min.js"></script>
+<script src="/dist/js/jquery-externs/bootbox.min.js"></script>
+<script src="/dist/js/jquery-externs/dataTables.buttons.min.js"></script>
+<script src="/dist/js/jquery-externs/buttons.flash.min.js"></script>
+<script src="/dist/js/jquery-externs/jszip.min.js"></script>
+<script src="/dist/js/jquery-externs/pdfmake.min.js"></script>
+<script src="/dist/js/jquery-externs/buttons.html5.min.js"></script>
+<script src="/dist/js/jquery-externs/buttons.print.min.js"></script>
 
 <script src="/assets/js/dboard_inscripciones.js"></script>
 

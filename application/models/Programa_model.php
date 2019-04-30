@@ -4,11 +4,27 @@
 
 class Programa_model extends CI_Model
 {
-	
+	private $table='curso';
+	private $id='id_curso';
+	private $name='nombre';
+	private $duracion='duracion';
+	private $costo_total='costo_total';
+	private $vacantes='vacantes';
+	private $fecha_inicio='fecha_inicio';
+	private $fecha_final='fecha_final';
+	private $tipo='idTipo_curso';
+	private $estado='estado';
+	private $numeracion='numeracion';
+
+	private $state_filter="";
+
+	private $public_columns=[];
+
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->helper('mihelper');
+
 	}
 
 	public function all(){
@@ -95,4 +111,88 @@ class Programa_model extends CI_Model
 		$this->db->where('estado',1);
 		return resultToArray($this->db->get());
 	}
+/**
+ * prefix or alias example c in c.column
+ */
+	private function getPublicColumns($prefix=""){
+		$real_prefix=(!empty($prefix))?$prefix.'.':'';
+
+		return [
+			$real_prefix.$this->id,
+			$real_prefix.$this->name,
+			$real_prefix.$this->numeracion,
+			$real_prefix.$this->duracion,
+			$real_prefix.$this->costo_total,
+			$real_prefix.$this->vacantes,
+			$real_prefix.$this->fecha_inicio,
+			$real_prefix.$this->fecha_final,
+			$real_prefix.$this->estado
+		];
+	}
+
+
+	public function page($start,$limit){
+		$this->db->select(implode(',',$this->getPublicColumns('p')).', tc.nombre as tipoNombre')
+				->join('tipo_curso tc','p.'.$this->tipo.'=tc.idTipo_curso')
+				->order_by($this->id, "desc")
+				->from($this->table.' p');
+			if($this->state_filter!=''){
+				$this->db->where($this->estado,$this->state_filter=="visible");
+			}
+			$this->db->limit($limit,$start);
+		return resultToArray($this->db->get());
+	}
+
+	public function page_with_filter($start,$limit,$filter_text){
+			$this->db->select(implode(',',$this->getPublicColumns('p')).', tc.nombre as tipoNombre')
+					->from($this->table.' p');
+		if($this->state_filter!=''){
+			$this->db->where($this->estado,$this->state_filter=="visible");
+		}
+			$this->db->join('tipo_curso tc','p.'.$this->tipo.'=tc.idTipo_curso','left')
+					->like('p.'.$this->name,$filter_text);
+		if(is_numeric($filter_text)){
+			$this->db->or_like('p.'.$this->numeracion,$filter_text);
+		}
+			$this->db
+					->or_like('p.'.$this->numeracion,$filter_text)
+					->or_like('p.'.$this->vacantes,$filter_text);
+		if(is_numeric($filter_text)){
+			$this->db->or_like('p.'.$this->costo_total,$filter_text);
+		}
+			$this->db
+					->order_by($this->id, "desc")
+					->limit($limit,$start);
+			return resultToArray($this->db->get());
+	}
+
+	public function count(){
+		$this->db->select($this->id)
+				->from($this->table);
+		$result=$this->db->get();
+		return $result->num_rows();
+	}
+
+	/**
+	 * @method 
+	 * cuenta tomando en cuenta el filtro de estado en modelo
+	 */
+	public function countWithStateFilter(){
+			$this->db->select($this->id)
+					->from($this->table);
+		if($this->state_filter!=''){
+			$this->db->where($this->estado,$this->state_filter=="visible");
+		}
+		return	$this->db->get()->num_rows();
+	}
+
+	/**
+	 * set a 	"visible" or
+	 * 			"no visible" or
+	 * 			"" default value
+	 */
+	public function onlyVisibleFilter($value){
+		$this->state_filter=$value;
+	}
+
 }

@@ -3,8 +3,15 @@ $("#btn-salir").prop('href','/administracion/salir');
 $(document).ready(function(){
 
     ajaxCPws();
-    cargarDtProgramas();
-
+	cargarDtProgramas();
+	$("div.toolbar").html('<select id="slct-visibility">'+
+								'<option value selected>'+'Todos'+'</option>'+
+								'<option value="visible">'+'Visible'+'</option>'+
+								'<option value="no visible">'+'No VIsible'+'</option>'+
+							'</select>');
+	$("#slct-visibility").change(function(){
+		tabla2.column(8).search($(this).val()).draw();
+	});
     $.ajax({
         url: '/api/programas/tipos',
         type: 'post',
@@ -44,10 +51,10 @@ $(document).ready(function(){
             },
             success:function(msg){
                 limpiar();
-                tabla2.ajax.reload();
+                //tabla2.ajax.reload();
                 bootbox.alert(msg);
                 $('#form_programa').modal('hide');
-                tabla2.ajax.reload();
+                tabla2.ajax.reload(null,false);
             }
         })
         .fail(function() {
@@ -132,8 +139,9 @@ $(document).ready(function(){
 
 function cargarDtProgramas(){
     tabla2 = $('#dataTable2').dataTable({
-        "aProcessing": true, //activamos el procesamiento del datatables
-        "aServerSide": true, //paginacion y filtrado realizados por el servidor 
+        "Processing": true, //activamos el procesamiento del datatables
+		"serverSide": true, //paginacion y filtrado realizados por el servidor
+		"sEcho":"1", 
         dom: 'Bfrtip', //definimos los elementos del contro la tabla
         buttons: [
             'copyHtml5',
@@ -152,7 +160,8 @@ function cargarDtProgramas(){
                 },
         "bDestroy": true,
         "iDisplayLength": 15, // paginacion
-        "order": [[0, "desc"]] //ordenar(columna, orden)
+		"order": [[0, "desc"]], //ordenar(columna, orden)
+		"dom": '<"toolbar">frtip'
     }).DataTable();
 }
 
@@ -165,7 +174,7 @@ function activarPrograma(valor){
                 bootbox.alert(e);
                 console.log(e);
                 console.log(result);
-                tabla2.ajax.reload();
+                tabla2.ajax.reload(null,false);
             });
         }
     })
@@ -179,7 +188,7 @@ function desactivarPrograma(valor){
                 bootbox.alert(e);
                 console.log(e);
                 console.log(result);
-                tabla2.ajax.reload();
+                tabla2.ajax.reload(null,false);
             });
         }
     })

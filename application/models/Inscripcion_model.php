@@ -88,7 +88,7 @@ class Inscripcion_model extends CI_Model
 	* get a page only no deleted marked
 	*/
 	public function get_page($start,$limit = 10){
-		$this->db->select('ins.id_inscripcion,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created ,ins.id_inscripcion');
+		$this->db->select('s.idSolicitud,ins.id_inscripcion,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created ,ins.id_inscripcion');
 		$this->db->from($this->table.' ins');
 		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
 		$this->db->join('usuario u','ins.created_user_id = u.id','left');
@@ -149,6 +149,88 @@ class Inscripcion_model extends CI_Model
 
 	private function list_public_columns(){
 		return implode(',',$this->public_columns);
+	}
+
+	private function getApicColumns($alias=NULL){
+		if($alias===NULL){
+			return $this->public_columns;
+		}else{
+			$arraynew=[];
+			for ($i=0; $i < count($this->public_columns); $i++) { 
+				$arraynew[$i]=$alias.'.'.$this->public_columns[$i];
+			}
+			return $arraynew;
+		}
+	}
+
+	/**
+	* get a page only no deleted marked for api
+	*/
+	public function get_page_api($start,$limit = 10){
+		$this->db->select(
+			implode(',',$this->getApicColumns('ins')).
+			',c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
+		);
+		$this->db->from($this->table.' ins');
+		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
+		$this->db->join('usuario u','ins.created_user_id = u.id','left');
+		$this->db->join('curso c','c.id_curso = s.programa','left');
+		$this->db->join('tipo_curso tc','c.idTipo_curso = tc.idTipo_curso','left');
+		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
+		$this->db->where(
+			array(
+				'ins.'.$this->deleted=>NULL
+			)
+		);
+		$this->db->limit($limit,$start);
+		
+        return resultToArray($this->db->get());
+	}
+
+	public function get_all_api(){
+		$this->db->select(
+			implode(',',$this->getApicColumns('ins')).
+			',c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
+		);
+		$this->basic_query('ins');
+		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
+		$this->db->join('usuario u','ins.created_user_id = u.id','left');
+		$this->db->join('curso c','c.id_curso = s.programa','left');
+		$this->db->join('tipo_curso tc','c.idTipo_curso = tc.idTipo_curso','left');
+		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
+		return resultToArray($this->db->get());
+	}
+
+	private function basic_query($alias=NULL){
+		$this->db->from($this->table.(isset($alias)?' '.$alias:''));
+		$this->db->where(
+			array(
+				'ins.'.$this->deleted=>NULL
+			)
+		);
+	}
+
+	/**
+	* get a page only no deleted marked for api
+	*/
+	public function get_one_api($id){
+		$this->db->select(
+			implode(',',$this->getApicColumns('ins')).
+			',c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
+		);
+		$this->db->from($this->table.' ins');
+		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
+		$this->db->join('usuario u','ins.created_user_id = u.id','left');
+		$this->db->join('curso c','c.id_curso = s.programa','left');
+		$this->db->join('tipo_curso tc','c.idTipo_curso = tc.idTipo_curso','left');
+		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
+		$this->db->where(
+			array(
+				'ins.'.$this->deleted=>NULL
+			)
+		);
+		$this->db->where('ins.'.$this->id.'=',(int)$id);
+        return resultToArray($this->db->get());
 	}
 	
 }

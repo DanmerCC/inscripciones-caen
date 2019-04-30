@@ -21,7 +21,7 @@
     
     <form action=<?=$action ?> method="post">
       <div class="form-group has-feedback">
-        <input type="text" name="usuario" class="form-control" placeholder="Número de usuario" required>
+        <input type="text" name="usuario" class="form-control" placeholder="Numero de documento o Usuario" required>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
