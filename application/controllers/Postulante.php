@@ -309,7 +309,7 @@ class Postulante extends CI_Controller {
 					$situacion_militar,
 					$si_militar
 				);
-		$this->session->set_flashdata('flashError', 'Este es un mensaje');	
+		$this->session->set_flashdata('flashError', 'collapse');	
 		redirect(base_url().'postulante', 'refresh');
 
 	}

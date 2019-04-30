@@ -36,8 +36,7 @@
 
     <!-- Main content -->
     <section class="content">
-              <div class="container">   
-                  <h2>No se olvide de desplegar cada menú para completar su inscripción.</h2>
+              <div class="container">
                   <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -966,23 +965,15 @@
   </div>
 </div>
 
-<?php if($this->session->flashdata('flashError')):?>
-    <script type="text/javascript">
-        //btnPersonal
-        var acordeon1 = document.getElementById("collapse1");
-        console.log(acordeon1);
-        acordeon1.classList.remove("in");
-        console.log(acordeon1);
-
-        var acordeon2 = document.getElementById("collapse2");
-        console.log(acordeon2);
-        acordeon2.classList.add("in");
-        console.log(acordeon2);
-    </script>
-<?php endif; ?>
 <!-- Modal -->
 <?php $this->load->view('adminlte/scriptsFooter');?>
 <script src="/assets/js/profile.js"></script>
 <script src="/assets/js/fileComponent.js"></script>
+<?php if($data = $this->session->flashdata('flashError')):?>
+    <script type="text/javascript">
+        pruebaScript("<?=$data?>");
+        $(document).ready(configuracion, );
+    </script>
+<?php endif; ?>
 </body>
 </html>

@@ -348,10 +348,7 @@ var configuracion = function(){
         		$("#emergencia_familiar").val(datos[i].emergencia_familiar);
         		$("#telefono_familiar").val(datos[i].telefono_familiar);
                 $("#parentesco").val(datos[i].parentesco);
-                
-                consultaVacio();
-
-                
+                       
                 
                 // $("#").val(datos[i].gradoMilitar);
         		// $("#").val(datos[i].planaMilitar);
@@ -364,56 +361,6 @@ var configuracion = function(){
             console.log(thrownError);
 		}
     });
-
-function consultaVacio(){
-    var cont=0;
-    var excepciones=[];
-    var pivotInput;
-    $("#accordion input").each(function(){
-        if((!excepciones.includes($(this).attr("id"))) && ($(this).val()=="")){
-            if($(this).val()!=pivotInput){
-                cont++;
-                if(cont == 2){
-                    pivotInput = $(this).attr("id");
-                    var first = document.getElementById(pivotInput).parentNode;           
-                    // var second = document.getElementById(first).parentNode;
-                    console.log(first);
-                }
-            }
-            
-        }
-    }); 
-
-    // $("#accordion ")
-
-    // $("#comment").append(crearModal(cont, pivotInput)); 
-    // $("#myModal").modal("show");
-}
-
-function crearModal(contador, data){
-    var modal =
-        "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='basicModal' aria-hidden='true'>"+
-            "<div class='modal-dialog'>"+
-                "<div class='modal-content'>"+
-                    "<div class='modal-header'>"+
-                        "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>"+
-                        "<h3>Cabezera de la ventana</h3>"+
-                    "</div>"+
-                    "<div class='modal-body'>"+
-                        "<h4>Texto de la ventana</h4>"+
-                        "<p>Aun te quedan "+contador+" campos por completar</p>"+ 
-                    "</div>"+
-                    "<div class='modal-footer'>"+
-                        "<a href='#'>"+
-                            "<button class='btn btn-primary' data-dismiss='modal' data-toggle='collapse' href='#indicar2'>Click aqui</button>"+
-                            "<button class='btn btn-primary' type='button' data-dismiss='modal' data-toggle='collapse' data-target='#"+data+"2' aria-expanded='false' aria-controls='#collapse2'>Toggle second</button>"+
-                        "</a>"+
-                    "</div>"+
-                "</div>"+
-            "</div>"+
-        "</div>";
-    return modal;
-}
 
 $.ajax({
         url: "/api/programas",
@@ -650,6 +597,17 @@ function reflejarDatos(idelemento){
 
 	}
 
+}
+
+function pruebaScript(data){
+    //btnPersonal
+    var acordeon1 = document.getElementById(data+"1");
+    acordeon1.classList.remove("in");
+    console.log(acordeon1);
+
+    var acordeon2 = document.getElementById(data+"2");
+    acordeon2.classList.add("in");
+    console.log(acordeon2);
 }
 
 /*MOSTRAR IMAGENES*/
