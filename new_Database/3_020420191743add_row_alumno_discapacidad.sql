@@ -1,0 +1,1 @@
+ALTER TABLE `alumno` ADD `espec_discapacidad` VARCHAR(50) NULL DEFAULT NULL AFTER `check_sins_pdf`;

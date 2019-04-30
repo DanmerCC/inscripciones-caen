@@ -1,0 +1,1 @@
+ALTER TABLE `solicitud` ADD `check_proyect_invest` BOOLEAN NOT NULL DEFAULT FALSE AFTER `comentario`;

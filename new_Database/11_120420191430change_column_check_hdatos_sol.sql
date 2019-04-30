@@ -1,0 +1,1 @@
+ALTER TABLE `solicitud` CHANGE `check_hdatos` `check_hdatos` DATETIME NULL DEFAULT NULL;
