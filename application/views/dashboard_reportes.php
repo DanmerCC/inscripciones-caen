@@ -110,13 +110,14 @@
     <!-- ./col -->
 
     <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
+    <div class="col-lg-12 col-xs-12">
         <select name="model-chart" id="model-chart">
-            <option value="alumnos">Alumnos</option>
+            <option value="alumno">Alumnos</option>
         </select>
         <select name="datasets-chart" id="datasets-chart"></select>
         <div id="checks">
         </div>
+        <button class="btn" onclick="constructChart();">Contruir</button>
         <canvas id="myChart" width="400" height="400"></canvas>
     </div>
     <!-- ./col -->
@@ -188,10 +189,13 @@ $(document).ready(function(){
     });
     $("#datasets-chart").change(function (){
         getGroupData($(this).val());
+        //getGroupData($("#situacion_militar option:selected").val(),$("#model-chart option:selected").val());
     });
 	$("#model-chart").trigger("change");
 });
-
+function constructChart(){
+    getGroupData($("#datasets-chart option:selected").val(),$("#model-chart option:selected").val());
+}
 function getGroupData(column,model){
     $.ajax({
         type: "post",
@@ -203,7 +207,8 @@ function getGroupData(column,model){
         dataType: "json",
         success: function (response) {
             //console.log(response);
-            renderChart(response);
+            myChart.data.labels=response;
+            myChart.update();
         }
     });
     getDataSet(column,model);
@@ -219,19 +224,21 @@ function getDataSet(column,model){
         },
         dataType: "json",
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             //renderChart(response);
-            var array_in_order=[];
-            var labels_in_order=myChart.data.labels;
-            for (var index = 0; index < labels_in_order.length; index++) {
-                //
-            }
+            
+            var dataset=[];
+            response.forEach(obj=>{
+                dataset.push(obj.conteo);
+            });
+            renderChart({data:dataset});
         }
     });
 }
 
-function renderChart(labels){
-    myChart.data.labels=labels;
+function renderChart(dataset){
+    myChart.data.datasets=[];
+    myChart.data.datasets.push(dataset);
     myChart.update();
 }
 function getColumns(){
