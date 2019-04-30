@@ -73,11 +73,14 @@
             <option value="Cuotas">Cuotas</option>
         </select>
       </div>
-      <div class="form-group has-feedback">
-          <p id="captImg" class="col-sm-6"><?php echo $captcha['image']?></p>
-          <input type="text" name="captcha" class="col-sm-6">
-          <p class="col-sm-12">¿No puedes leer la imagen? Haga <a href="javascript:void(0);" class="refreshCaptcha">click aquí</a> para actualizar.</p>
-      </div>
+      <?php if(isset($captcha['image'])): ?>
+        <div class="form-group has-feedback">
+            <p id="captImg" class="col-sm-6"><?php echo $captcha['image']?></p>
+
+            <input type="text" name="captcha" class="col-sm-6">
+            <p class="col-sm-12">¿No puedes leer la imagen? Haga <a href="javascript:void(0);" class="refreshCaptcha">click aquí</a> para actualizar.</p>
+        </div>
+      <?php endif; ?>
       <div class="form-group">
         <div class="col-xs-8">
           <div class="checkbox icheck">
