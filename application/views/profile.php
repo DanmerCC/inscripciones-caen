@@ -969,10 +969,26 @@
 <?php $this->load->view('adminlte/scriptsFooter');?>
 <script src="/assets/js/profile.js"></script>
 <script src="/assets/js/fileComponent.js"></script>
-<?php if($data = $this->session->flashdata('flashError')):?>
-    <script type="text/javascript">
-        $.post("/api/alumno", pruebaScript("<?=$data?>"));
-        // $(document).ready(configuracion, pruebaScript("<?=$data?>"));        
+<?php if($second = $this->session->flashdata('unfoldSecond')):?>
+    <script type="text/javascript">    
+        $.post("/api/alumno", function(<?=$second?>){
+            var acordeon1 = document.getElementById("<?=$second?>1");
+            acordeon1.classList.remove("in");
+
+            var acordeon2 = document.getElementById("<?=$second?>2");
+            acordeon2.classList.add("in");
+        });
+    </script>
+<?php endif; ?>
+<?php if($third = $this->session->flashdata('unfoldThird')):?>
+    <script type="text/javascript">    
+        $.post("/api/alumno", function(<?=$third?>){
+            var acordeon1 = document.getElementById("<?=$third?>1");
+            acordeon1.classList.remove("in");
+
+            var acordeon2 = document.getElementById("<?=$third?>9");
+            acordeon2.classList.add("in");
+        });
     </script>
 <?php endif; ?>
 </body>

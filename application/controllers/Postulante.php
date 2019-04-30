@@ -309,7 +309,7 @@ class Postulante extends CI_Controller {
 					$situacion_militar,
 					$si_militar
 				);
-		$this->session->set_flashdata('flashError', 'collapse');	
+		$this->session->set_flashdata('unfoldSecond', 'collapse');	
 		redirect(base_url().'postulante', 'refresh');
 
 	}
@@ -361,6 +361,7 @@ class Postulante extends CI_Controller {
 		$indicar2,
 		$situacion_laboral);
 
+		$this->session->set_flashdata('unfoldThird', 'collapse');
 		redirect(base_url().'postulante', 'refresh');
 
 

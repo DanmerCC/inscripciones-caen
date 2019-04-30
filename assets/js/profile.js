@@ -599,17 +599,6 @@ function reflejarDatos(idelemento){
 
 }
 
-function pruebaScript(data){
-    //btnPersonal
-    var acordeon1 = document.getElementById(data+"1");
-    acordeon1.classList.remove("in");
-    console.log(acordeon1);
-
-    var acordeon2 = document.getElementById(data+"2");
-    acordeon2.classList.add("in");
-    console.log(acordeon2);
-}
-
 /*MOSTRAR IMAGENES*/
 $('#foto').change(function(e) {
     addImage(e); 
@@ -708,4 +697,19 @@ function configInputsFile(target,url){
     });
 }
 
+// function unfoldSecond(data){
+//     var acordeon1 = document.getElementById(data+"1");
+//     acordeon1.classList.remove("in");
+
+//     var acordeon2 = document.getElementById(data+"2");
+//     acordeon2.classList.add("in");
+// }
+
+// function unfoldThird(data){
+//     var acordeon1 = document.getElementById(data+"1");
+//     acordeon1.classList.remove("in");
+
+//     var acordeon2 = document.getElementById(data+"9");
+//     acordeon2.classList.add("in");
+// }
 
