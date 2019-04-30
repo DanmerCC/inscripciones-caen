@@ -971,8 +971,8 @@
 <script src="/assets/js/fileComponent.js"></script>
 <?php if($data = $this->session->flashdata('flashError')):?>
     <script type="text/javascript">
-        pruebaScript("<?=$data?>");
-        $(document).ready(configuracion, );
+        $.post("/api/alumno", pruebaScript("<?=$data?>"));
+        // $(document).ready(configuracion, pruebaScript("<?=$data?>"));        
     </script>
 <?php endif; ?>
 </body>
