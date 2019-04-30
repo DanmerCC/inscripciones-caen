@@ -377,63 +377,51 @@
                             </h4>
                         </div>
                         <div id="collapse9" class="panel-collapse collapse">
+                            <div class="panel-body">
                                 <div class="panel-body">
-                                <p style="font-style: oblique; font-weight: 700;">
-                                Nota: <br> 
-                                - Los documentos a subir deben estar en un único archivo y en formato PDF. <br>
-                                - Las constancias de estudios a subir deben estar verificadas por la SUNEDU.
-                                </p>
-                                    <div class="col-sm-6">
-                                        <div id="containerBoxCV">
-                                            PDF
-                                            <!--box-->
-                                            
-                                            <!--box-->
-                                        </div>
+                                    <p style="font-style: oblique; font-weight: 700;">
+                                        Nota: <br> 
+                                        - Los documentos a subir deben estar en un único archivo y en formato PDF. <br>
+                                        - Las constancias de estudios a subir deben estar verificadas por la SUNEDU.
+                                    </p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div id="containerBoxCV">
+                                        PDF
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div id="containerBoxDJ">
-                                            <!--box-->
-
-                                            <!--box-->
-                                        </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div id="containerBoxDJ">
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div id="containerBoxCopys">
-                                            <!--box-->
-                                            
-                                            <!--box-->
-                                        </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div id="containerBoxCopys">
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div id="containerBoxBachiller">
-                                            <!--box-->
-                                            
-                                            <!--box-->
-                                        </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div id="containerBoxBachiller">
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div id="containerBoxMaestria">
-                                            <!--box-->
-                                            
-                                            <!--box-->
-                                        </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div id="containerBoxMaestria">
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div id="containerBoxDoctorado">
-                                            <!--box-->
-                                            
-                                            <!--box-->
-                                        </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div id="containerBoxDoctorado">
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div id="containerBoxSolicitud">
-                                            <!--box-->
-                                            
-                                            <!--box-->
+                                </div>
+                                <div class="col-sm-6">
+                                    <div id="containerBoxSolicitud">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <button class="btn btn-primary btn-lg right" data-toggle='collapse' data-parent='#accordion' href='#collapse10' id="btnDocument">Siguiente</button>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                         </div>
                     </div>
                     <!--Panel formatos-->
@@ -969,6 +957,7 @@
 <?php $this->load->view('adminlte/scriptsFooter');?>
 <script src="/assets/js/profile.js"></script>
 <script src="/assets/js/fileComponent.js"></script>
+
 <?php if($second = $this->session->flashdata('unfoldSecond')):?>
     <script type="text/javascript">    
         $.post("/api/alumno", function(<?=$second?>){

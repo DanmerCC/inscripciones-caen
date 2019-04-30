@@ -696,20 +696,3 @@ function configInputsFile(target,url){
         uploadFile(target,url)
     });
 }
-
-// function unfoldSecond(data){
-//     var acordeon1 = document.getElementById(data+"1");
-//     acordeon1.classList.remove("in");
-
-//     var acordeon2 = document.getElementById(data+"2");
-//     acordeon2.classList.add("in");
-// }
-
-// function unfoldThird(data){
-//     var acordeon1 = document.getElementById(data+"1");
-//     acordeon1.classList.remove("in");
-
-//     var acordeon2 = document.getElementById(data+"9");
-//     acordeon2.classList.add("in");
-// }
-

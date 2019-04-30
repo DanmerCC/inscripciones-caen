@@ -10,3 +10,15 @@ body{
 .probe {
     padding-bottom: 5px;
 }
+.btn-position {
+    /* margin-top: 18.5px; */
+    margin-top: 25px;
+    float: left;
+}
+
+@media (min-width: 992px){
+    .btn-position {
+        /* margin-top: 25px; */
+        margin-top: 18.5px;
+    }
+}
