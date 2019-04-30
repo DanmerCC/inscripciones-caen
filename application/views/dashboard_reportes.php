@@ -110,7 +110,7 @@
     <!-- ./col -->
 
     <!-- ./col -->
-    <div class="col-lg-12 col-xs-12">
+    <div class="col-lg-6 col-xs-6">
         <select name="model-chart" id="model-chart">
             <option value="alumno">Alumnos</option>
         </select>
@@ -188,7 +188,7 @@ $(document).ready(function(){
         getColumns($(this).children("option:selected").val(),makeOptionByResponse)
     });
     $("#datasets-chart").change(function (){
-        getGroupData($(this).val());
+        constructChart();
         //getGroupData($("#situacion_militar option:selected").val(),$("#model-chart option:selected").val());
     });
 	$("#model-chart").trigger("change");

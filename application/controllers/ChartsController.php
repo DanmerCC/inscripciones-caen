@@ -11,6 +11,13 @@ class ChartsController extends MY_Controller
         $this->load->helper('url');
 	}
 
+	private function get_array_model(){
+		$model=array();
+		$model["alumno"]="Alumno_model";
+		$model["Inscrito"]="Inscripcion_model";
+		return $model;
+	}
+
     public function get_data_source_names(){
         //$model=$this->input->post('model');
         $model=$this->uri->segment(2);
@@ -42,12 +49,21 @@ class ChartsController extends MY_Controller
 		}
 		$this->DataSource_model->setModel($model);
 	}
-
+/**
+ * @var name_model is a alias name string 
+ */
+	private function load_model_by_name_or_fail($name_model){
+		if(isset($this->get_array_model()[$name_model])){
+			$this->load->model($this->get_array_model()[$name_model]);
+			return $this->get_array_model()[$name_model];
+		}else{
+			show_error("Error al cargar el nombre de modelo",500);
+		}
+	}
 
 	public function alumno_columns(){
-		//$this->load_alumno_model();
-		$this->load->model('Alumno_model');
-		$result=$this->Alumno_model->getColumnsForAnalisis();
+		$model_real_name=$this->load_model_by_name_or_fail($this->input->post('model'));
+		$result=$this->$model_real_name->getColumnsForAnalisis();
 		$this->response($result,200);
 	}
 
@@ -55,15 +71,14 @@ class ChartsController extends MY_Controller
 		$this->load->model('Alumno_model');
 		$modelo=$this->input->post('model');
 		$column=$this->input->post('column');
-		//echo  var_dump($modelo);
-		//exit;
-		//if(empty($modelo) || empty($column) || !in_array($column,$this->Alumno_model->getColumnsForAnalisis())){
+		$model_real_name=$this->load_model_by_name_or_fail($this->input->post('model'));
+		
 		if(empty($modelo) || empty($column) || !in_array($column,$this->Alumno_model->getColumnsForAnalisis())){
 			show_404();
 			exit;
 		}
 
-		$group_data=$this->Alumno_model->getDataGroupColumn($column);
+		$group_data=$this->$model_real_name->getDataGroupColumn($column);
 		$resultado=array();
 		foreach($group_data as $key=>$data)
 		{
@@ -74,39 +89,44 @@ class ChartsController extends MY_Controller
 		$this->response($resultado,200);
 	}
 
-	public function get_count_data(){
-		$this->load->model('Alumno_model');
+	/**
+	 * @var 
+	 */
+	public function get_count_data_alumno(){
 		$modelo=$this->input->post('model');
 		$column=$this->input->post('column');
-		//echo  var_dump($this->Alumno_model->getDataGroupColumn($column));
-		//exit;
-		//if(empty($modelo) || empty($column) || !in_array($column,$this->Alumno_model->getColumnsForAnalisis())){
-		if(empty($modelo) || empty($column) || !in_array($column,$this->Alumno_model->getColumnsForAnalisis())){
+		$model_real_name=$this->load_model_by_name_or_fail($this->input->post('model'));
+		if(empty($modelo) || empty($column) || !in_array($column,$this->$model_real_name->getColumnsForAnalisis())){
 			show_404();
 			exit;
 		}
 		
-		$group_data_from_column=$this->Alumno_model->getDataGroupColumn($column);
-		$columns=$this->Alumno_model->getColumnsForAnalisis();
+		$group_data_from_column=$this->$model_real_name->getDataGroupColumn($column);
+		$columns=$this->$model_real_name->getColumnsForAnalisis();
 		
 		$data_sets=array();
 		foreach($group_data_from_column as $key=>$data)
 		{
 			array_push($data_sets,$data[$column]);
 		}
-
-		
 		$group_data=array();
-		$columns=$this->Alumno_model->getColumnsForAnalisis();
-		
+		$columns=$this->$model_real_name->getColumnsForAnalisis();
 		for ($i=0; $i < count($data_sets); $i++) { 
 			
-			array_push($group_data,$this->Alumno_model->getCountForAnalisis($column,$data_sets[$i])[0]);
+			array_push($group_data,$this->$model_real_name->getCountForAnalisis($column,$data_sets[$i])[0]);
 		}
 		$this->response($group_data,200);
 	}
         
     private function load_alumno_model(){
 		$this->load->model('Alumno_model');
+	}
+
+
+	public function inscrito_columns(){
+		//$this->load_alumno_model();
+		$this->load->model('Inscrito_model');
+		$result=$this->Alumno_model->getColumnsForAnalisis();
+		$this->response($result,200);
 	}
 }

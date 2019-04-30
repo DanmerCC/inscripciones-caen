@@ -232,5 +232,20 @@ class Inscripcion_model extends CI_Model
 		$this->db->where('ins.'.$this->id.'=',(int)$id);
         return resultToArray($this->db->get());
 	}
-	
+
+
+	public function getTittleForCharts(){
+		
+		return [
+			"programa"
+		];
+	}
+	public function getCountByColumn($column,$value){
+		$result=$this->db->select("COUNT(".$this->id.") as ".$column)
+			->from($this->table);
+	}
+
+	public function getGroupData(){
+
+	}
 }

@@ -428,7 +428,8 @@ class Alumno_model extends CI_Model
 			$this->departamento,
 			$this->seguro_medico,
 			$this->nombre_seguro,
-			$this->situacion_militar
+			$this->situacion_militar,
+			$this->grado_profesion
 		];
 	}
 
