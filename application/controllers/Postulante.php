@@ -397,6 +397,8 @@ class Postulante extends CI_Controller {
 		$doctorado_obtenido,
 		$universidad_doctor,
 		$fecha_doctor);
+
+		$this->session->set_flashdata('unfoldFourth', 'collapse');
 		redirect(base_url().'postulante', 'refresh');
 	}
 
@@ -437,6 +439,7 @@ class Postulante extends CI_Controller {
 		$telefono_familiar,
 		$parentesco,$desc_discapacidad);
 
+		$this->session->set_flashdata('unfoldFifth', 'collapse');
 		redirect(base_url().'postulante', 'refresh');
 	}
 
@@ -450,6 +453,7 @@ class Postulante extends CI_Controller {
 		$this->load->model('Alumno_model');
 		$this->Alumno_model->updateInformacionReferencias($id,$referencia_personal1,$referencia_personal2);
 
+		$this->session->set_flashdata('unfoldSixth', 'collapse');
 		redirect(base_url().'postulante', 'refresh');
 	}
 

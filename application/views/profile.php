@@ -484,11 +484,16 @@
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <button class="btn btn-primary btn-lg right" data-toggle='collapse' data-parent='#accordion' href='#collapse3' id="btnFormat">Siguiente</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!-- /.box-body -->
-                                </div>
-                                
-                                
+                                </div>                                
                             </div>
                         </div>
                     </div>
@@ -824,6 +829,7 @@
                                             <div class="row">
                                                 <div class="col-sm-5">
                                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Agregar Solicitud</button>
+                                                    <button type="button" class="btn btn-primary" data-toggle='collapse' data-parent='#accordion' href='#collapse11' id="btnFormat">Siguiente</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -976,6 +982,39 @@
             acordeon1.classList.remove("in");
 
             var acordeon2 = document.getElementById("<?=$third?>9");
+            acordeon2.classList.add("in");
+        });
+    </script>
+<?php endif; ?>
+<?php if($fourth = $this->session->flashdata('unfoldFourth')):?>
+    <script type="text/javascript">    
+        $.post("/api/alumno", function(<?=$fourth?>){
+            var acordeon1 = document.getElementById("<?=$fourth?>1");
+            acordeon1.classList.remove("in");
+
+            var acordeon2 = document.getElementById("<?=$fourth?>7");
+            acordeon2.classList.add("in");
+        });
+    </script>
+<?php endif; ?>
+<?php if($fifth = $this->session->flashdata('unfoldFifth')):?>
+    <script type="text/javascript">    
+        $.post("/api/alumno", function(<?=$fifth?>){
+            var acordeon1 = document.getElementById("<?=$fifth?>1");
+            acordeon1.classList.remove("in");
+
+            var acordeon2 = document.getElementById("<?=$fifth?>6");
+            acordeon2.classList.add("in");
+        });
+    </script>
+<?php endif; ?>
+<?php if($sixth = $this->session->flashdata('unfoldSixth')):?>
+    <script type="text/javascript">    
+        $.post("/api/solicitudes", function(<?=$sixth?>){
+            var acordeon1 = document.getElementById("<?=$sixth?>1");
+            acordeon1.classList.remove("in");
+
+            var acordeon2 = document.getElementById("<?=$sixth?>8");
             acordeon2.classList.add("in");
         });
     </script>
