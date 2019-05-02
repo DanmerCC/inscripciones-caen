@@ -120,6 +120,11 @@
         <button class="btn" onclick="constructChart();">Contruir</button>
         <canvas id="myChart" width="400" height="400"></canvas>
     </div>
+    <div class="col-lg-6  col-xs-6">
+        <button class="btn btn-info" onclick="getDataByChartInscrito();">Inscritos por programa</button>
+        <canvas id="chart2" width="400" height="400"></canvas>
+        
+    </div>
     <!-- ./col -->
 </div>
 <!-- /.row -->
@@ -192,6 +197,7 @@ $(document).ready(function(){
         //getGroupData($("#situacion_militar option:selected").val(),$("#model-chart option:selected").val());
     });
 	$("#model-chart").trigger("change");
+    
 });
 function constructChart(){
     getGroupData($("#datasets-chart option:selected").val(),$("#model-chart option:selected").val());
@@ -327,6 +333,69 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+
+
+var ctx2 = document.getElementById('chart2').getContext('2d');
+var inscritos_chart = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+            labels: [],
+            datasets: []
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+
+function initializeChartInscritos(){
+
+    var ctx = document.getElementById('chart-ins-container').getContext('2d');
+    inscritos_chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: [],
+            datasets: []
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    //getDataByChartInscrito();
+}
+
+function getDataByChartInscrito(){
+    $.ajax({
+        type: "get",
+        url: "/chart/inscrito",
+        data: "",
+        dataType: "json",
+        success: function (response) {
+            inscritos_chart.data.labels=[];
+            inscritos_chart.data.datasets=[];
+            var temp_datasets=response.datasets;
+            inscritos_chart.data.labels=response.labels;
+            temp_datasets.forEach(ds=>{
+                inscritos_chart.data.datasets.push({data:ds});
+            });
+            //inscritos_chart.data.datasets.push({data:temp_datasets});
+            inscritos_chart.update();
+        }
+    });
+}
 /*var myChart = new Chart(ctx, {
     type: 'bar',
     data: {

@@ -202,10 +202,11 @@ class Inscripcion_model extends CI_Model
 	}
 
 	private function basic_query($alias=NULL){
-		$this->db->from($this->table.(isset($alias)?' '.$alias:''));
+		$alias_or_void=(isset($alias)?$alias:'');
+		$this->db->from($this->table.' '.$alias_or_void);
 		$this->db->where(
 			array(
-				'ins.'.$this->deleted=>NULL
+				$alias_or_void.'.'.$this->deleted=>NULL
 			)
 		);
 	}
@@ -234,18 +235,69 @@ class Inscripcion_model extends CI_Model
 	}
 
 
-	public function getTittleForCharts(){
+	public function getColumnsForCharts(){
+		$result=[];
 		
+		return array_merge($result,$this->getExternalColumnsCharts());
+	}
+	public function getExternalColumnsCharts(){
 		return [
-			"programa"
+			"nombre_programa",
+			"tipo_programa"
 		];
 	}
+
+	public function getExternalColumnDetails($external_name){
+		$externals_details=[
+			"nombre_programa"=>[
+				"tabla"=>"curso",
+				"real_column_name"=>"nombre"
+				]
+		];
+		return $externals_details[$external_name];
+	}
+
 	public function getCountByColumn($column,$value){
 		$result=$this->db->select("COUNT(".$this->id.") as ".$column)
 			->from($this->table);
 	}
 
-	public function getGroupData(){
+	public function getGroupData($column_name){
+		if(in_array($column_name,$this->getExternalColumnsCharts())){
+			$this->db->select('c '.$this->getExternalColumnDetails($column_name)["real_column_name"]);
+		}else{
+			$this->db->select('ins.'.$column_name);
+		}
+		$this->db->from($this->table.' ins');
+		if(in_array($column_name,$this->getExternalColumnsCharts())){
 
+			$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
+			$this->db->join('usuario u','ins.created_user_id = u.id','left');
+			$this->db->join('curso c','c.id_curso = s.programa','left');
+			$this->db->join('tipo_curso tc','c.idTipo_curso = tc.idTipo_curso','left');
+			$this->db->join('alumno a','s.alumno = a.id_alumno','left');
+
+		}
+
+		$this->db->where(
+			array(
+				'ins.'.$this->deleted=>NULL
+			)
+		);
+		$this->db->where('ins.'.$this->id.'=',(int)$id);
 	}
+
+
+	public function queryGetProgramCount(){
+		$this->db->select('COUNT(ins.id_inscripcion) as conteo,c.id_curso,c.nombre as nombre_programa');
+		$this->basic_query('ins');
+		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
+		$this->db->join('usuario u','ins.created_user_id = u.id','left');
+		$this->db->join('curso c','c.id_curso = s.programa','left');
+		$this->db->join('tipo_curso tc','c.idTipo_curso = tc.idTipo_curso','left');
+		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
+		$this->db->group_by('c.id_curso');
+		return resultToArray($this->db->get());
+	}
+
 }

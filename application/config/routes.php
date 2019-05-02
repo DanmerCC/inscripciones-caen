@@ -228,9 +228,6 @@ $route['api/v1/inscrito/(:num)'] = 'apiRest/Inscritos_Controller/getById/$1';
 
 /***
  * Chart estadistics
- 
-$route['chart/([a-zA-Z]+)'] = 'ChartsController/get_data_source_names';
-$route['chart/([a-zA-Z]+)/data'] = 'ChartsController/get_data_source';
 */
 
 $route['chart/alumno'] = 'ChartsController/alumno_columns';
@@ -238,9 +235,8 @@ $route['chart/alumno/metadata'] = 'ChartsController/alumno_get_group_data';
 $route['chart/alumno/count'] = 'ChartsController/get_count_data_alumno';
 
 
-/***
- * Estadistics inscritos
+/**
+ * ugly code for static query
+ *
  */
-$route['chart/inscrito'] = 'ChartsController/inscrito_columns';
-$route['chart/inscrito/metadata'] = 'ChartsController/inscrito_get_group_data';
-$route['chart/inscrito/count'] = 'ChartsController/get_count_data_inscrito';
+$route['chart/inscrito'] = 'ChartsController/get_chart';

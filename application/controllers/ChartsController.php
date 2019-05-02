@@ -122,11 +122,18 @@ class ChartsController extends MY_Controller
 		$this->load->model('Alumno_model');
 	}
 
-
-	public function inscrito_columns(){
-		//$this->load_alumno_model();
-		$this->load->model('Inscrito_model');
-		$result=$this->Alumno_model->getColumnsForAnalisis();
-		$this->response($result,200);
+	public function get_chart(){
+		$this->load->model('Inscripcion_model');
+		$result=$this->Inscripcion_model->queryGetProgramCount();
+		//echo var_dump($result);
+		//exit;
+		$columns=array();
+		$data_set=array();
+		for ($i=0; $i < count($result); $i++) { 
+			array_push($columns,$result[$i]["nombre_programa"]);
+			array_push($data_set,$result[$i]["conteo"]);
+		}
+		$this->response(array("labels"=>$columns,"datasets"=>[$data_set]),200);
 	}
+
 }
