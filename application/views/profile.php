@@ -1010,7 +1010,7 @@
 <?php endif; ?>
 <?php if($sixth = $this->session->flashdata('unfoldSixth')):?>
     <script type="text/javascript">    
-        $.post("/api/solicitudes", function(<?=$sixth?>){
+        $.post("/api/solicitudes", "/api/programas", function(<?=$sixth?>){
             var acordeon1 = document.getElementById("<?=$sixth?>1");
             acordeon1.classList.remove("in");
 
