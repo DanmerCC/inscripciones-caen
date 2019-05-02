@@ -237,7 +237,7 @@ function getDataSet(column,model){
             response.forEach(obj=>{
                 dataset.push(obj.conteo);
             });
-            renderChart({data:dataset});
+            renderChart({data:dataset,backgroundColor:getNextColor()});
         }
     });
 }
@@ -389,7 +389,7 @@ function getDataByChartInscrito(){
             var temp_datasets=response.datasets;
             inscritos_chart.data.labels=response.labels;
             temp_datasets.forEach(ds=>{
-                inscritos_chart.data.datasets.push({data:ds});
+                inscritos_chart.data.datasets.push({data:ds,backgroundColor:getNextColor()});
             });
             //inscritos_chart.data.datasets.push({data:temp_datasets});
             inscritos_chart.update();
@@ -432,6 +432,17 @@ function getDataByChartInscrito(){
         }
     }
 });*/
+
+function getNextColor(){
+  return '#'+getNumberHexRamdom()+getNumberHexRamdom()+getNumberHexRamdom();
+}
+function getNumberHexRamdom(){
+  hexString = Math.floor((Math.random() * 255) + 1).toString(16);
+  if (hexString.length % 2) {
+	hexString = '0' + hexString.toUpperCase();
+  }
+  return hexString;
+}
 </script>
 </body>
 </html>
