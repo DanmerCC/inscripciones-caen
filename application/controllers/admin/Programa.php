@@ -28,6 +28,8 @@ class Programa extends CI_Controller
 		$start=$this->input->post('start');
 		$length=$this->input->post('length');
 		$columns=$this->input->post('columns');
+		$number_order=$this->input->post('order[0][column]');
+		$dir_order=$this->input->post('order[0][dir]');
 		$activeSearch=!(strlen($search["value"])==0);
 		$cantidad=$this->Programa_model->count();
 		$visibility='';
@@ -47,10 +49,14 @@ class Programa extends CI_Controller
 				break;
 		}
 		$this->Programa_model->onlyVisibleFilter($visibility);
+		if(isset($columns[7]["search"]["value"])){
+			$this->Programa_model->setTypeFilter($columns[7]["search"]["value"]);
+		}
+		
 		if(strlen($search["value"])>0){
-			$rspta = $this->Programa_model->page_with_filter($start,$length,$search["value"]);
+			$rspta = $this->Programa_model->page_with_filter($start,$length,$search["value"],$number_order,$dir_order);
 		}else{
-			$rspta = $this->Programa_model->page($start,$length);
+			$rspta = $this->Programa_model->page($start,$length,$number_order,$dir_order);
 		}
 	    //vamos a declarar un array
 		$data = Array();

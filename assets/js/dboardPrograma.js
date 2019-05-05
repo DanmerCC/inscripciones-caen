@@ -4,13 +4,48 @@ $(document).ready(function(){
 
     ajaxCPws();
 	cargarDtProgramas();
-	$("div.toolbar").html('<select id="slct-visibility">'+
-								'<option value selected>'+'Todos'+'</option>'+
-								'<option value="visible">'+'Visible'+'</option>'+
-								'<option value="no visible">'+'No VIsible'+'</option>'+
-							'</select>');
+	$("div.toolbar").html(
+							'<div class="row">'+
+								'<div class="col-md-2">'+
+									'<label for="slct-tipo">Visibilidad</label>'+
+								'</div>'+
+								'<div class="col-md-10">'+
+									'<select id="slct-visibility">'+
+										'<option value selected>'+'Todos'+'</option>'+
+										'<option value="visible">'+'Visible'+'</option>'+
+										'<option value="no visible">'+'No VIsible'+'</option>'+
+									'</select>'+
+								'</div>'+
+							'</div>'+
+							'<div class="row">'+
+								'<div class="col-md-2">'+
+									'<label for="slct-tipo">Tipo de programa</label>'+
+								'</div>'+
+								'<div class="col-md-10">'+
+									'<select id="slct-tipo">'+
+										'<option value selected>'+'Todos'+'</option>'+
+									'</select>'+
+								'</div>'+
+							'</div>'
+							).promise().done(function(){
+								$.ajax({
+									type: "get",
+									url: "/public/api/tipos",
+									data: "",
+									dataType: "json",
+									success: function (response) {
+										response.forEach(type=>{
+											$("#slct-tipo").append('<option value='+type.idTipo_curso+'>'+type.nombre+'</option>');
+										});
+										
+									}
+								});
+							});
 	$("#slct-visibility").change(function(){
 		tabla2.column(8).search($(this).val()).draw();
+	});
+	$("#slct-tipo").change(function(){
+		tabla2.column(7).search($(this).val()).draw();
 	});
     $.ajax({
         url: '/api/programas/tipos',
@@ -65,7 +100,7 @@ $(document).ready(function(){
 
      $('#formNuevoPro').on('click',function(){
 
-        if (typeof $("#formNewPrograma") !== 'undefined') {
+        if ($("#formNewPrograma").length == 0) {
             $.ajax({
                 url: '/admin/parts/nuevoprograma',
                 type: 'post',
@@ -129,7 +164,10 @@ $(document).ready(function(){
                 console.log("complete");
             });
             
-        }
+		}
+	if ($("#newForm_programa").length == 1) {
+		$("#newForm_programa").modal('show');
+	}
     });
 
 
