@@ -9,8 +9,8 @@ $(document).ready(function(){
 								'<div class="col-md-2">'+
 									'<label for="slct-tipo">Visibilidad</label>'+
 								'</div>'+
-								'<div class="col-md-10">'+
-									'<select id="slct-visibility">'+
+								'<div class="col-md-4">'+
+									'<select id="slct-visibility" class="form-control">'+
 										'<option value selected>'+'Todos'+'</option>'+
 										'<option value="visible">'+'Visible'+'</option>'+
 										'<option value="no visible">'+'No VIsible'+'</option>'+
@@ -21,8 +21,8 @@ $(document).ready(function(){
 								'<div class="col-md-2">'+
 									'<label for="slct-tipo">Tipo de programa</label>'+
 								'</div>'+
-								'<div class="col-md-10">'+
-									'<select id="slct-tipo">'+
+								'<div class="col-md-4">'+
+									'<select id="slct-tipo"  class="form-control">'+
 										'<option value selected>'+'Todos'+'</option>'+
 									'</select>'+
 								'</div>'+
@@ -136,13 +136,13 @@ $(document).ready(function(){
                                 }
                             })
                             .done(function() {
-                                console.log("success insertar");
+                                //console.log("success insertar");
                             })
                             .fail(function() {
-                                console.log("error insertar");
+                                //console.log("error insertar");
                             })
                             .always(function() {
-                                console.log("complete insertar");
+                                //console.log("complete insertar");
                             });
                             
                         });
@@ -155,13 +155,13 @@ $(document).ready(function(){
 
             })
             .done(function() {
-                console.log("success");
+                //console.log("success");
             })
             .fail(function() {
                 console.log("error");
             })
             .always(function() {
-                console.log("complete");
+                //console.log("complete");
             });
             
 		}
@@ -179,7 +179,17 @@ function cargarDtProgramas(){
     tabla2 = $('#dataTable2').dataTable({
         "Processing": true, //activamos el procesamiento del datatables
 		"serverSide": true, //paginacion y filtrado realizados por el servidor
-		"sEcho":"1", 
+		"sEcho":"1",
+		"createdRow": function ( row, data, index ) {
+			if(data[5]>=getDate()){
+				$(row).addClass('success');
+			}else{
+				$(row).addClass('warning');
+			}
+			/*if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {
+				$('td', row).eq(5).addClass('danger');
+			}*/
+		},
         dom: 'Bfrtip', //definimos los elementos del contro la tabla
         buttons: [
             'copyHtml5',
@@ -210,8 +220,6 @@ function activarPrograma(valor){
         if (result) {
             $.post('/administracion/programa/activar', {id_curso: valor}, function (e) {
                 bootbox.alert(e);
-                console.log(e);
-                console.log(result);
                 tabla2.ajax.reload(null,false);
             });
         }
@@ -224,8 +232,6 @@ function desactivarPrograma(valor){
         if (result) {
             $.post('/administracion/programa/desactivar', {id_curso: valor}, function (e) {
                 bootbox.alert(e);
-                console.log(e);
-                console.log(result);
                 tabla2.ajax.reload(null,false);
             });
         }
@@ -255,13 +261,13 @@ function mostrarFormPro(curso) {
     })
     .done(function() {
 
-        console.log("success");
+        //console.log("success");
     })
     .fail(function() {
-        console.log("error");
+        //console.log("error");
     })
     .always(function() {
-        console.log("complete");
+        //console.log("complete");
     });
     
 $('#form_programa').modal('show');
@@ -277,4 +283,14 @@ function limpiar() {
     $("#vacantes").val("");
     $("#fecha_inicio").val("");
     $("#fecha_final").val("");
+}
+
+function getDate(){
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, '0');
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = today.getFullYear();
+
+	today =  yyyy + '-' + mm + '-' + dd;
+	return today;
 }

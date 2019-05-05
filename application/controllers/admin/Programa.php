@@ -67,8 +67,8 @@ class Programa extends CI_Controller
 		
 	    foreach ($rspta as $value) {
 	            $data[] = array(
-	            "0" => ' <button class="btn btn-warning" onclick="mostrarFormPro(' .$value["id_curso"]. ')"><i class= "fa fa-pencil"></i></button>'.(($value["estado"]=='0')?' <button class="btn btn-alert"   title="" onclick="activarPrograma('.$value["id_curso"].')"><i class="fa fa-square-o" aria-hidden="true"></i></button>':
-	            ' <button class="btn btn-primary" onclick="desactivarPrograma('.$value["id_curso"].')"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>'),
+	            "0" => ' <button class="btn btn-warning" onclick="mostrarFormPro(' .$value["id_curso"]. ')"><i class= "fa fa-pencil"></i></button>'.(($value["estado"]=='0')?' <button class="btn btn-alert"   title="" onclick="activarPrograma('.$value["id_curso"].')"><i class="fa fa-eye-slash" aria-hidden="true"></i></button>':
+	            ' <button class="btn btn-primary" onclick="desactivarPrograma('.$value["id_curso"].')"><i class="fa fa-eye" aria-hidden="true"></i></button>'),
 	            "1" => $value["numeracion"]." ".$value["nombre"],
 	            "2" => $value["duracion"],
 	            "3" => $value["costo_total"],
