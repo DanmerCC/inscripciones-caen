@@ -187,6 +187,14 @@ function cargarDtProgramas(){
             'csvHtml5',
             'pdf'
         ],
+        "createdRow": function( row, data, dataIndex ) {
+            // Set the data-status attribute, and add a class
+            if(data[5]>=getDate()){
+                $(row).addClass('success');
+            }else{
+                $(row).addClass('warning');
+            }
+        },
         "ajax":
                 {
                     url: '/admin/dataTable/programa',
@@ -277,4 +285,15 @@ function limpiar() {
     $("#vacantes").val("");
     $("#fecha_inicio").val("");
     $("#fecha_final").val("");
+}
+
+
+function getDate(){
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+    return today;
 }
