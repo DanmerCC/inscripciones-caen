@@ -8,6 +8,8 @@
 <?php $this->load->view('adminlte/linksHead');?>
 <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css"> -->
 <link rel="stylesheet" href="/dist/css/jquery-externs/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
+
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 <!-- Site wrapper -->
@@ -106,30 +108,28 @@
         </div>
     </div>
     <!-- ./col -->
+
+    <!-- ./col -->
+    <div class="col-lg-6 col-xs-6">
+        <select name="model-chart" id="model-chart">
+            <option value="alumno">Alumnos</option>
+        </select>
+        <select name="datasets-chart" id="datasets-chart"></select>
+        <div id="checks">
+        </div>
+        <button class="btn" onclick="constructChart();">Contruir</button>
+        <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
+    <div class="col-lg-6  col-xs-6">
+        <button class="btn btn-info" onclick="getDataByChartInscrito();">Inscritos por programa</button>
+        <canvas id="chart2" width="400" height="400"></canvas>
+        
+    </div>
+    <!-- ./col -->
 </div>
 <!-- /.row -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!--<script src="/assets/charts.js"></script>-->
 
 
 
@@ -183,7 +183,266 @@
 <script src="/dist/js/jquery-externs/buttons.html5.min.js"></script>
 <script src="/dist/js/jquery-externs/buttons.print.min.js"></script>
 
-<!-- <script src="/assets/js/dboardAlumno.js"></script> -->
-<script src="/assets/js/dboardInformes.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+<script>
+
+$(document).ready(function(){
+    $("#model-chart").change(function(){
+        getColumns($(this).children("option:selected").val(),makeOptionByResponse)
+    });
+    $("#datasets-chart").change(function (){
+        constructChart();
+        //getGroupData($("#situacion_militar option:selected").val(),$("#model-chart option:selected").val());
+    });
+	$("#model-chart").trigger("change");
+    
+});
+function constructChart(){
+    getGroupData($("#datasets-chart option:selected").val(),$("#model-chart option:selected").val());
+}
+function getGroupData(column,model){
+    $.ajax({
+        type: "post",
+        url: "/chart/alumno/metadata",
+        data: {
+            "model":model,
+            "column":column
+        },
+        dataType: "json",
+        success: function (response) {
+            //console.log(response);
+            myChart.data.labels=response;
+            myChart.update();
+        }
+    });
+    getDataSet(column,model);
+}
+
+function getDataSet(column,model){
+    $.ajax({
+        type: "post",
+        url: "/chart/alumno/count",
+        data: {
+            "model":model,
+            "column":column
+        },
+        dataType: "json",
+        success: function (response) {
+            //console.log(response);
+            //renderChart(response);
+            
+            var dataset=[];
+            response.forEach(obj=>{
+                dataset.push(obj.conteo);
+            });
+            renderChart({data:dataset,backgroundColor:getNextColor()});
+        }
+    });
+}
+
+function renderChart(dataset){
+    myChart.data.datasets=[];
+    myChart.data.datasets.push(dataset);
+    myChart.update();
+}
+function getColumns(){
+	$.ajax({
+		type: "post",
+		url: "/chart/alumno",
+		data: {
+			"model":"alumno"
+		},
+		dataType: "json",
+		success: function (response) {
+            $("#datasets-chart").html("");
+            response.forEach(element =>{
+                $("#datasets-chart").append(makeOption(element,element));
+            });
+		}
+	});
+}
+
+function makeOption(text,value){
+    return "<option value='"+value+"'>"+text+"</option>"
+}
+
+function getDataset(array_column,callback){
+    $.ajax({
+        type: "post",
+        url: "/chart/alumnos/data",
+        data: $("#checks input[type=checkbox]:checked").map(
+            function(){
+                        return $(this).val();
+                    }
+            ),
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+        }
+    });
+}
+
+function makeOptionByResponse(response){
+    var i=0;
+    var content="";
+    response.forEach(element => {
+        content+=makeCheck(i+"check",element,element);
+        i++;
+    });
+
+    $("#checks").append("<div class='container'>"+content+"</div>");
+}
+
+function makeCheck(id,name,value){
+    return '<input type="checkbox" id="'+id+'" value="'+value+'"><label for="'+id+'">'+value+'</label>';
+}
+/*
+function getColumns(model,callback){
+    $.ajax({
+        type: "post",
+        url: "/chart/"+model,
+        data: "",
+        dataType: "json",
+        success: callback
+    });
+}
+*/
+function addOptions(select,opciones){
+    select.html("");
+    opciones.forEach(element => {
+        select.append("<option value="+element.value+">"+element.nombre+"</option>");
+    });
+}
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [],
+        datasets: []
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+
+var ctx2 = document.getElementById('chart2').getContext('2d');
+var inscritos_chart = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+            labels: [],
+            datasets: []
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+
+function initializeChartInscritos(){
+
+    var ctx = document.getElementById('chart-ins-container').getContext('2d');
+    inscritos_chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: [],
+            datasets: []
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    //getDataByChartInscrito();
+}
+
+function getDataByChartInscrito(){
+    $.ajax({
+        type: "get",
+        url: "/chart/inscrito",
+        data: "",
+        dataType: "json",
+        success: function (response) {
+            inscritos_chart.data.labels=[];
+            inscritos_chart.data.datasets=[];
+            var temp_datasets=response.datasets;
+            inscritos_chart.data.labels=response.labels;
+            temp_datasets.forEach(ds=>{
+                inscritos_chart.data.datasets.push({data:ds,backgroundColor:getNextColor()});
+            });
+            //inscritos_chart.data.datasets.push({data:temp_datasets});
+            inscritos_chart.update();
+        }
+    });
+}
+/*var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)', 
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});*/
+
+function getNextColor(){
+  return '#'+getNumberHexRamdom()+getNumberHexRamdom()+getNumberHexRamdom();
+}
+function getNumberHexRamdom(){
+  hexString = Math.floor((Math.random() * 255) + 1).toString(16);
+  if (hexString.length % 2) {
+	hexString = '0' + hexString.toUpperCase();
+  }
+  return hexString;
+}
+</script>
 </body>
 </html>
