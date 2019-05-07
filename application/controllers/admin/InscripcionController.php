@@ -120,7 +120,7 @@ class InscripcionController extends CI_Controller {
 				"4" => $value["documento"],
 				"5" => $value["email"],
 				//"4" => $value["nombre_user"],
-				"6" => (isset($value["celular"])?$value["celular"]:" ")." ".(isset($value["telefono_casa"])?$value["telefono_casa"]:" "),
+				"6" => (isset($value["celular"])?$value["celular"]:" ")." - ".(isset($value["telefono_casa"])?$value["telefono_casa"]:" "),
 				"7" => $value["created"]
 			);
 		}

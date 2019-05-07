@@ -55,7 +55,7 @@
                 <th>Programa</th>
                 <th>Documento</th>
                 <th>Correo</th>
-                <th>Telefono</th>
+                <th>Telefonos</th>
                 <th>Fecha de Registro</th>
               </thead>
               <tfoot>
@@ -65,7 +65,7 @@
                 <th>Programa</th>
                 <th>Documento</th>
                 <th>Correo</th>
-                <th>Telefono</th>
+                <th>Telefonos</th>
                 <th>Fecha de Registro</th>
               </tfoot>
             </table>
