@@ -105,6 +105,8 @@ class InscripcionController extends CI_Controller {
 		}
 		$cantidad=$this->Inscripcion_model->count();
 		$data = Array();
+		//echo var_dump($rspta);
+		//exit;
 		$i=0;
 		foreach ($rspta as $value) {
 			$i++;
@@ -115,9 +117,11 @@ class InscripcionController extends CI_Controller {
 				"1" => $value["nombres"],
 				"2" => $value["apellido_paterno"]." ".$value["apellido_materno"],
 				"3" => $value["numeracion"]." ".$value["tipo_curso"]." ".$value["nombre_curso"],
-				"4" => $value["nombre_user"],
-				"5" => $value["created"],
-				"6" => ""
+				"4" => $value["documento"],
+				"5" => $value["email"],
+				//"4" => $value["nombre_user"],
+				"6" => $value["celular"]??$value["telefono_casa"]??"--",
+				"7" => $value["created"]
 			);
 		}
 		$results = array(

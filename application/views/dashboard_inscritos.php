@@ -53,15 +53,19 @@
                 <th>Nombres</th>
                 <th>Apellidos</th>
                 <th>Programa</th>
-                <th>Usuario</th>
+                <th>Documento</th>
+                <th>Correo</th>
+                <th>Telefono</th>
                 <th>Fecha de Registro</th>
               </thead>
               <tfoot>
-								<th>Opciones</th>
+              <th>Opciones</th>
                 <th>Nombres</th>
                 <th>Apellidos</th>
                 <th>Programa</th>
-                <th>Usuario</th>
+                <th>Documento</th>
+                <th>Correo</th>
+                <th>Telefono</th>
                 <th>Fecha de Registro</th>
               </tfoot>
             </table>
@@ -115,11 +119,6 @@
                   <strong><i class="fa fa-pencil margin-r-5"></i> Documentos</strong>
                   <p>
                     <div id="mdl-icons-documents">
-                      <span class="label label-danger">UI Design</span>
-                      <span class="label label-success">Coding</span>
-                      <span class="label label-info">Javascript</span>
-                      <span class="label label-warning">PHP</span>
-                      <span class="label label-primary">Node.js</span>
                     </div>
                   </p>
                   <strong><i class="fa fa-pencil margin-r-5"></i> Documentos De solicitud</strong>
