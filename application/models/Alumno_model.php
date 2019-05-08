@@ -45,6 +45,11 @@ class Alumno_model extends CI_Model
 	private $seguro_medico='seguro_medico';
 	private $nombre_seguro='nombre_seguro';
 	private $situacion_militar='situacion_militar';
+	private $grado_militar='gradoMilitar';
+	private $plana_militar='planaMilitar';
+	private $nacionalidad='nacionalidad';
+	private $situacion_laboral='situacion_laboral';
+	
 
 	private $public_columns=[];
 
@@ -429,7 +434,12 @@ class Alumno_model extends CI_Model
 			$this->seguro_medico,
 			$this->nombre_seguro,
 			$this->situacion_militar,
-			$this->grado_profesion
+			$this->grado_profesion,
+			$this->lugar_trabajo,
+			$this->grado_militar,
+			$this->plana_militar,
+			$this->nacionalidad,
+			$this->situacion_laboral
 		];
 	}
 
