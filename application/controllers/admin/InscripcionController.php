@@ -112,9 +112,10 @@ class InscripcionController extends CI_Controller {
 		foreach ($rspta as $value) {
 			$i++;
 				$data[] = array(
-				"0" =>'<a href="'.base_url()."postulante/pdf/".$value["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a>'. 
+				"0" => 
 					"<button class='btn btn-danger' onclick='ins.cancel(".$value["id_inscripcion"].");'><i class='fa fa-trash-o' aria-hidden='true'></i> Anular</button>".
-					'<div class="btn btn-info" data-toggle="modal" data-target="#mdl_datos_inscritos" onclick="modalDataInscrito.loadData('.$value["idSolicitud"].');"><i class="fa fa-eye"></i></div>',
+					'<div class="btn btn-info" data-toggle="modal" data-target="#mdl_datos_inscritos" onclick="modalDataInscrito.loadData('.$value["idSolicitud"].');"><i class="fa fa-eye"></i></div>'.
+					'<a href="'.base_url()."postulante/pdf/".$value["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a>',
 				"1" => $value["nombres"],
 				"2" => $value["apellido_paterno"]." ".$value["apellido_materno"],
 				"3" => $value["numeracion"]." ".$value["tipo_curso"]." ".$value["nombre_curso"],
