@@ -108,10 +108,11 @@ class InscripcionController extends CI_Controller {
 		//echo var_dump($rspta);
 		//exit;
 		$i=0;
+
 		foreach ($rspta as $value) {
 			$i++;
 				$data[] = array(
-				"0" => 
+				"0" =>'<a href="'.base_url()."postulante/pdf/".$value["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a>'. 
 					"<button class='btn btn-danger' onclick='ins.cancel(".$value["id_inscripcion"].");'><i class='fa fa-trash-o' aria-hidden='true'></i> Anular</button>".
 					'<div class="btn btn-info" data-toggle="modal" data-target="#mdl_datos_inscritos" onclick="modalDataInscrito.loadData('.$value["idSolicitud"].');"><i class="fa fa-eye"></i></div>',
 				"1" => $value["nombres"],
