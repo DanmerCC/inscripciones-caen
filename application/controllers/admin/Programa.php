@@ -73,7 +73,7 @@ class Programa extends CI_Controller
 	            "2" => $value["duracion"],
 	            "3" => $value["costo_total"],
 	            "4" => $value["vacantes"],
-	            "5" => $value["fecha_inicio"],
+	            '5' => $value['fecha_inicio'].$this->getPostergacion($value["id_curso"]),
 	            "6" => $value["fecha_final"],
 	            "7" => $value["tipoNombre"],
 	            "8" => ($value["estado"]=='0')?'<span class="label bg-red">No visible</span>':'<span class="label bg-green">Visible</span>'
@@ -85,7 +85,18 @@ class Programa extends CI_Controller
 	        "iTotalDisplayRecords" => $this->Programa_model->countWithStateFilter(), //enviamos total de registros a visualizar
 	        "aaData" => $data);
 	    echo json_encode($results);
-    }
+	}
+	
+	private function getPostergacion(int $id){
+		return "<ul class=''>
+				<li class='dropdown'>
+					<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Postergaciones <b class='caret'></b></a>
+					<ul class='dropdown-menu'>
+						<li onclick='postergacion(".$id.");'>postergar curso</li>
+					</ul>
+				</li>
+				</ul>";
+	}
 
     public function index(){
     	if ($this->nativesession->get('tipo')=='admin') {
