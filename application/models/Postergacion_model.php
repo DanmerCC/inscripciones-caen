@@ -7,6 +7,7 @@ class Postergacion_model extends MY_Model{
     private $table='postergacion_curso';
 
     private $id="id_postergacon";
+    private $fecha_anterior = 'desde';
     private $nuevo_inicio="nuevo_inicio";
     private $author="author_id";
     private $comentario="comentario";
@@ -17,7 +18,8 @@ class Postergacion_model extends MY_Model{
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->helper('mihelper');
+        $this->load->helper('mihelper');
+        $this->load->model('Programa_model');
     }
 
     /**
@@ -25,10 +27,11 @@ class Postergacion_model extends MY_Model{
      * @var DateTime fecha fecha en formato
      * @var String comentario
      */
-    public function create($curso_id,$fecha,$autor,$comentario=""){
+    public function create($curso_id,$fecha_anterior,$fecha_nueva,$autor,$comentario=""){
         $data=array(
-			$this->id => NULL,
-			$this->nuevo_inicio => $nuevo_inicio,
+            $this->id => NULL,
+            $this->fecha_anterior=>$fecha_anterior,
+			$this->nuevo_inicio => $fecha_nueva,
 			$this->author => $autor,
             $this->comentario => $comentario,
             $this->curso_id=>$curso_id

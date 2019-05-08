@@ -73,7 +73,7 @@ class Programa extends CI_Controller
 	            "2" => $value["duracion"],
 	            "3" => $value["costo_total"],
 	            "4" => $value["vacantes"],
-	            '5' => $value['fecha_inicio'].$this->getPostergacion($value["id_curso"]),
+	            '5' => $value['fecha_inicio'].$this->HTML_Postergacion($value["id_curso"]),
 	            "6" => $value["fecha_final"],
 	            "7" => $value["tipoNombre"],
 	            "8" => ($value["estado"]=='0')?'<span class="label bg-red">No visible</span>':'<span class="label bg-green">Visible</span>'
@@ -87,7 +87,7 @@ class Programa extends CI_Controller
 	    echo json_encode($results);
 	}
 	
-	private function getPostergacion(int $id){
+	private function HTML_Postergacion(int $id){
 		return "<ul class=''>
 				<li class='dropdown'>
 					<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Postergaciones <b class='caret'></b></a>
@@ -202,6 +202,12 @@ class Programa extends CI_Controller
     	}else{
     		echo "Ocurrio un error";
     	}
-    }
+	}
+	
+	public function postergar(){
+		$programa_id=$this->input->post('programa_id');
+		$nueva_fecha=$this->input->post('nueva_fecha');
+		$this->Programa_model->postergar($programa_id,$nueva_fecha);
+	}
 
 }

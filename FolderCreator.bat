@@ -1,11 +1,11 @@
-IF EXIST publicFiles (
-	cd publicFiles
+IF EXIST publicfiles (
+	cd publicfiles
 	IF NOT EXIST foto (
 		mkdir foto
 	)
 ) ELSE (
-	mkdir publicFiles
-	cd publicFiles
+	mkdir publicfiles
+	cd publicfiles
 	IF NOT EXIST foto (
 		mkdir foto
 	)

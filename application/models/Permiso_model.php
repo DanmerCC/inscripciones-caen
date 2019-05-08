@@ -20,4 +20,9 @@ class Permiso_model extends CI_Model{
 
 		return resultToArray($this->db->get());
 	}
+	public function getByNativeSession(){
+		$this->load->model('Nativesession');
+		$idUser=$this->Nativesession->get('idUsuario');
+		return $this->lista($idUser);
+	}
 }

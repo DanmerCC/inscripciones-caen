@@ -5,11 +5,9 @@ class MY_Model extends CI_Model {
 	private $table='';
 	private $public_arguments;
 
-	function __construct($table_name)
+	function __construct()
 	{
 		parent::__construct();
-		$this->table=$table_name;
-		$this->id=$table_name.'_id';
 		$this->setPublicColumns();
 	}
 	
