@@ -274,7 +274,7 @@ class Programa_model extends CI_Model
 
 	private function verifyLogin(){
 		if($this->nativesession->get('idUsuario')==NULL){
-			show_error("Session no permitida",);
+			show_error("Session no permitida",500);
 		}else{
 			return true;
 		}
