@@ -256,12 +256,12 @@ class Programa_model extends CI_Model
 			$comentario
 		);
 		$data = array(
-			$this->id=>$id_curso,
+			$this->id=>$curso_id,
 			$this->fecha_inicio=>$fecha_nueva,
-			$this->fecha_final=>$programa[$this->fecha_inicial]
+			$this->fecha_final=>$programa[$this->fecha_inicio]
 		);
 
-		$this->db->where($this->id, $id_curso);
+		$this->db->where($this->id, $curso_id);
 		$this->db->update($this->table, $data);
 		return $this->db->affected_rows();
 	}

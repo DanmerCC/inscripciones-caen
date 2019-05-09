@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * 
  */
-class Programa extends CI_Controller
+class Programa extends MY_Controller
 {
 	
 	function __construct()
@@ -92,7 +92,11 @@ class Programa extends CI_Controller
 				<li class='dropdown'>
 					<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Postergaciones <b class='caret'></b></a>
 					<ul class='dropdown-menu'>
-						<li onclick='postergacion(".$id.");'>postergar curso</li>
+						<form id='form-'>
+							<label >Nueva fecha<label>
+							<input id='n_date".$id."' class='form-control' name='new_date' type='date' />
+						<form>
+						<li data-input='n_date$id' onclick='postergacion($id,this);'><div class='btn btn-primary'>postergar curso</div></li>
 					</ul>
 				</li>
 				</ul>";
@@ -208,6 +212,7 @@ class Programa extends CI_Controller
 		$programa_id=$this->input->post('programa_id');
 		$nueva_fecha=$this->input->post('nueva_fecha');
 		$this->Programa_model->postergar($programa_id,$nueva_fecha);
+		$this->response($this->Programa_model->postergar($programa_id,$nueva_fecha));
 	}
 
 }
