@@ -211,7 +211,6 @@ class Programa extends MY_Controller
 	public function postergar(){
 		$programa_id=$this->input->post('programa_id');
 		$nueva_fecha=$this->input->post('nueva_fecha');
-		$this->Programa_model->postergar($programa_id,$nueva_fecha);
 		$this->response($this->Programa_model->postergar($programa_id,$nueva_fecha));
 	}
 

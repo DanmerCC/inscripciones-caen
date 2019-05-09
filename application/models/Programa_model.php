@@ -248,7 +248,8 @@ class Programa_model extends CI_Model
 			throw new Exception('No se encontro programa');
 		}
 		$programa=$result->row_array();
-		$this->Postergacion_model->create(
+		$this->db->trans_start();
+		$resultado=$this->Postergacion_model->create(
 			$programa[$this->id],
 			$programa[$this->fecha_inicio],
 			$fecha_nueva,
@@ -256,14 +257,19 @@ class Programa_model extends CI_Model
 			$comentario
 		);
 		$data = array(
-			$this->id=>$curso_id,
-			$this->fecha_inicio=>$fecha_nueva,
-			$this->fecha_final=>$programa[$this->fecha_inicio]
+			$this->fecha_inicio=>$fecha_nueva
+			//$this->fecha_final=>$programa[$this->fecha_inicio]
 		);
 
 		$this->db->where($this->id, $curso_id);
 		$this->db->update($this->table, $data);
-		return $this->db->affected_rows();
+		$afected_rows_query=$this->db->affected_rows();
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE)
+		{
+			throw new Exception("Error en consulta al postergar");
+		}
+		return $afected_rows_query;
 	}
 
 	private function verifyLogin(){
