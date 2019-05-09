@@ -25,6 +25,8 @@ class Programa_model extends CI_Model
 	{
 		parent::__construct();
 		$this->load->helper('mihelper');
+		$this->load->library('Nativesession');
+		$this->load->model('Permiso_model');
 
 	}
 
@@ -54,6 +56,10 @@ class Programa_model extends CI_Model
 		$sql = "SELECT * FROM `curso` WHERE id_curso=?";
 		$result=$this->db->query($sql,$id);
 		return $result;
+	}
+
+	public function get_one($id){
+		return $this->getById($id)->row();
 	}
 	public function update($nombre,$id_curso,$duracion,$costo_total,$vacantes,$fecha_inicio,$fecha_final,$idTipo_curso,$numeracion){
 
@@ -231,4 +237,47 @@ class Programa_model extends CI_Model
 			$this->db->where($real_alias.$this->tipo,$this->type_filter);
 		}
 	}
+
+	public function postergar($curso_id,$fecha_nueva,$comentario=""){
+		$this->verifyLogin();
+		$idUser=$this->nativesession->get('idUsuario');
+		$this->load->model('Postergacion_model');
+		$this->db->select()->from($this->table)->where($this->id,$curso_id);
+		$result=$this->db->get();
+		if($result->num_rows()!==1){
+			throw new Exception('No se encontro programa');
+		}
+		$programa=$result->row_array();
+		$this->db->trans_start();
+		$resultado=$this->Postergacion_model->create(
+			$programa[$this->id],
+			$programa[$this->fecha_inicio],
+			$fecha_nueva,
+			$idUser,
+			$comentario
+		);
+		$data = array(
+			$this->fecha_inicio=>$fecha_nueva
+			//$this->fecha_final=>$programa[$this->fecha_inicio]
+		);
+
+		$this->db->where($this->id, $curso_id);
+		$this->db->update($this->table, $data);
+		$afected_rows_query=$this->db->affected_rows();
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE)
+		{
+			throw new Exception("Error en consulta al postergar");
+		}
+		return $afected_rows_query;
+	}
+
+	private function verifyLogin(){
+		if($this->nativesession->get('idUsuario')==NULL){
+			show_error("Session no permitida",);
+		}else{
+			return true;
+		}
+	}
+	
 }

@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * 
  */
-class Programa extends CI_Controller
+class Programa extends MY_Controller
 {
 	
 	function __construct()
@@ -73,7 +73,7 @@ class Programa extends CI_Controller
 	            "2" => $value["duracion"],
 	            "3" => $value["costo_total"],
 	            "4" => $value["vacantes"],
-	            "5" => $value["fecha_inicio"],
+	            '5' => $value['fecha_inicio'].$this->HTML_Postergacion($value["id_curso"]),
 	            "6" => $value["fecha_final"],
 	            "7" => $value["tipoNombre"],
 	            "8" => ($value["estado"]=='0')?'<span class="label bg-red">No visible</span>':'<span class="label bg-green">Visible</span>'
@@ -85,7 +85,22 @@ class Programa extends CI_Controller
 	        "iTotalDisplayRecords" => $this->Programa_model->countWithStateFilter(), //enviamos total de registros a visualizar
 	        "aaData" => $data);
 	    echo json_encode($results);
-    }
+	}
+	
+	private function HTML_Postergacion(int $id){
+		return "<ul class=''>
+				<li class='dropdown'>
+					<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Postergaciones <b class='caret'></b></a>
+					<ul class='dropdown-menu'>
+						<form id='form-'>
+							<label >Nueva fecha<label>
+							<input id='n_date".$id."' class='form-control' name='new_date' type='date' />
+						<form>
+						<li data-input='n_date$id' onclick='postergacion($id,this);'><div class='btn btn-primary'>postergar curso</div></li>
+					</ul>
+				</li>
+				</ul>";
+	}
 
     public function index(){
     	if ($this->nativesession->get('tipo')=='admin') {
@@ -191,6 +206,12 @@ class Programa extends CI_Controller
     	}else{
     		echo "Ocurrio un error";
     	}
-    }
+	}
+	
+	public function postergar(){
+		$programa_id=$this->input->post('programa_id');
+		$nueva_fecha=$this->input->post('nueva_fecha');
+		$this->response($this->Programa_model->postergar($programa_id,$nueva_fecha));
+	}
 
 }

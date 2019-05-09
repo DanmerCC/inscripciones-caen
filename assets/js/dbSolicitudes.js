@@ -36,7 +36,7 @@ $(document).ready(function(){
                 }else{
                     bootbox.alert("Ocurrio un error durante la carga");
                 }
-                cargarDataTable();
+                tabla.ajax.reload(null,false);
                 $('#mdl_form_comment').modal('hide');
             }
         })

@@ -130,6 +130,7 @@ $route['administracion/programa/activar'] = 'admin/Programa/activar';
 $route['administracion/programa/desactivar'] = 'admin/Programa/desactivar';
 $route['administracion/programa/actualizar'] = 'admin/Programa/actualizar';
 $route['administracion/programa/insertar'] = 'admin/Programa/insertar';
+$route['administracion/programa/postergar'] = 'admin/Programa/postergar';
 
 $route['admin/api/solicitud'] = 'admin/api/Solicitud';
 

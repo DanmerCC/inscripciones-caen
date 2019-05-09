@@ -294,3 +294,25 @@ function getDate(){
 	today =  yyyy + '-' + mm + '-' + dd;
 	return today;
 }
+
+function postergacion(id,obj){
+    $.ajax({
+        type: "post",
+        url: "/administracion/programa/postergar",
+        data: {
+            "programa_id":id,
+            "nueva_fecha":$("#"+$(obj).data('input')).val()
+        },
+        dataType: "json",
+        success: function (response) {
+            if(response){
+                bootbox.alert("Correctamente actualizado");
+            }
+            tabla2.ajax.reload(null,false);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+        }
+    });
+}
