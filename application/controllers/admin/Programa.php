@@ -87,7 +87,7 @@ class Programa extends MY_Controller
 	    echo json_encode($results);
 	}
 	
-	private function HTML_Postergacion(int $id){
+	private function HTML_Postergacion($id){
 		return "<ul class=''>
 				<li class='dropdown'>
 					<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Postergaciones <b class='caret'></b></a>
