@@ -17,6 +17,7 @@ class Programa_model extends CI_Model
 	private $numeracion='numeracion';
 
 	private $state_filter="";
+	private $type_filter="";
 
 	private $public_columns=[];
 
@@ -24,6 +25,8 @@ class Programa_model extends CI_Model
 	{
 		parent::__construct();
 		$this->load->helper('mihelper');
+		$this->load->library('Nativesession');
+		$this->load->model('Permiso_model');
 
 	}
 
@@ -53,6 +56,10 @@ class Programa_model extends CI_Model
 		$sql = "SELECT * FROM `curso` WHERE id_curso=?";
 		$result=$this->db->query($sql,$id);
 		return $result;
+	}
+
+	public function get_one($id){
+		return $this->getById($id)->row();
 	}
 	public function update($nombre,$id_curso,$duracion,$costo_total,$vacantes,$fecha_inicio,$fecha_final,$idTipo_curso,$numeracion){
 
@@ -131,24 +138,29 @@ class Programa_model extends CI_Model
 	}
 
 
-	public function page($start,$limit){
-		$this->db->select(implode(',',$this->getPublicColumns('p')).', tc.nombre as tipoNombre')
-				->join('tipo_curso tc','p.'.$this->tipo.'=tc.idTipo_curso')
-				->order_by($this->id, "desc")
-				->from($this->table.' p');
-			if($this->state_filter!=''){
-				$this->db->where($this->estado,$this->state_filter=="visible");
-			}
-			$this->db->limit($limit,$start);
+	public function page($start,$limit,$number_order,$order){
+		$columns_select=array();
+		$columns_select=$this->getPublicColumns('p');
+
+		array_push($columns_select,'tc.nombre as tipoNombre');
+		
+		$this->db->select(implode(',',$columns_select))
+				->join('tipo_curso tc','p.'.$this->tipo.'=tc.idTipo_curso');
+				
+		$this->query_orderBy($number_order,$order,$this->getOrdersColumnsByDatatables());
+				$this->db->from($this->table.' p');
+		$this->query_filters('p');
+		$this->db->limit($limit,$start);
 		return resultToArray($this->db->get());
 	}
 
-	public function page_with_filter($start,$limit,$filter_text){
-			$this->db->select(implode(',',$this->getPublicColumns('p')).', tc.nombre as tipoNombre')
+	public function page_with_filter($start,$limit,$filter_text,$number_order,$order){
+		$columns_select=array();
+		$columns_select=$this->getPublicColumns('p');
+		array_push($columns_select,'tc.nombre as tipoNombre');
+			$this->db->select(implode(',',$columns_select))
 					->from($this->table.' p');
-		if($this->state_filter!=''){
-			$this->db->where($this->estado,$this->state_filter=="visible");
-		}
+		$this->query_filters('p');
 			$this->db->join('tipo_curso tc','p.'.$this->tipo.'=tc.idTipo_curso','left')
 					->like('p.'.$this->name,$filter_text);
 		if(is_numeric($filter_text)){
@@ -160,9 +172,8 @@ class Programa_model extends CI_Model
 		if(is_numeric($filter_text)){
 			$this->db->or_like('p.'.$this->costo_total,$filter_text);
 		}
-			$this->db
-					->order_by($this->id, "desc")
-					->limit($limit,$start);
+			$this->query_orderBy($number_order,$order,$this->getOrdersColumnsByDatatables());
+			$this->db->limit($limit,$start);
 			return resultToArray($this->db->get());
 	}
 
@@ -180,9 +191,7 @@ class Programa_model extends CI_Model
 	public function countWithStateFilter(){
 			$this->db->select($this->id)
 					->from($this->table);
-		if($this->state_filter!=''){
-			$this->db->where($this->estado,$this->state_filter=="visible");
-		}
+		$this->query_filters();
 		return	$this->db->get()->num_rows();
 	}
 
@@ -195,4 +204,80 @@ class Programa_model extends CI_Model
 		$this->state_filter=$value;
 	}
 
+
+	private function query_orderBy($number,$order,$columnas=NULL){
+		
+		$this->db->order_by(isset($columnas)?$columnas[$number]:$this->id,$order);
+	}
+
+	public function getOrdersColumnsByDatatables(){
+		return $order_columns=[
+			'p.'.$this->id,
+			'p.'.$this->name,
+			'p.'.$this->duracion,
+			'p.'.$this->costo_total,
+			'p.'.$this->vacantes,
+			'p.'.$this->fecha_inicio,
+			'p.'.$this->fecha_final,
+			'tc.nombre',
+			$this->estado
+		];
+	}
+
+	public function setTypeFilter($type_filter){
+		$this->type_filter=$type_filter;
+	}
+
+	public function query_filters($alias_table=NULL){
+		$real_alias=isset($alias_table)?$alias_table.'.':'';
+		if($this->state_filter!=''){
+			$this->db->where($real_alias.$this->estado,$this->state_filter=="visible");
+		}
+		if($this->type_filter!=''){
+			$this->db->where($real_alias.$this->tipo,$this->type_filter);
+		}
+	}
+
+	public function postergar($curso_id,$fecha_nueva,$comentario=""){
+		$this->verifyLogin();
+		$idUser=$this->nativesession->get('idUsuario');
+		$this->load->model('Postergacion_model');
+		$this->db->select()->from($this->table)->where($this->id,$curso_id);
+		$result=$this->db->get();
+		if($result->num_rows()!==1){
+			throw new Exception('No se encontro programa');
+		}
+		$programa=$result->row_array();
+		$this->db->trans_start();
+		$resultado=$this->Postergacion_model->create(
+			$programa[$this->id],
+			$programa[$this->fecha_inicio],
+			$fecha_nueva,
+			$idUser,
+			$comentario
+		);
+		$data = array(
+			$this->fecha_inicio=>$fecha_nueva
+			//$this->fecha_final=>$programa[$this->fecha_inicio]
+		);
+
+		$this->db->where($this->id, $curso_id);
+		$this->db->update($this->table, $data);
+		$afected_rows_query=$this->db->affected_rows();
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE)
+		{
+			throw new Exception("Error en consulta al postergar");
+		}
+		return $afected_rows_query;
+	}
+
+	private function verifyLogin(){
+		if($this->nativesession->get('idUsuario')==NULL){
+			show_error("Session no permitida",500);
+		}else{
+			return true;
+		}
+	}
+	
 }

@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * 
  */
-class Programa extends CI_Controller
+class Programa extends MY_Controller
 {
 	
 	function __construct()
@@ -28,6 +28,8 @@ class Programa extends CI_Controller
 		$start=$this->input->post('start');
 		$length=$this->input->post('length');
 		$columns=$this->input->post('columns');
+		$number_order=$this->input->post('order[0][column]');
+		$dir_order=$this->input->post('order[0][dir]');
 		$activeSearch=!(strlen($search["value"])==0);
 		$cantidad=$this->Programa_model->count();
 		$visibility='';
@@ -47,10 +49,14 @@ class Programa extends CI_Controller
 				break;
 		}
 		$this->Programa_model->onlyVisibleFilter($visibility);
+		if(isset($columns[7]["search"]["value"])){
+			$this->Programa_model->setTypeFilter($columns[7]["search"]["value"]);
+		}
+		
 		if(strlen($search["value"])>0){
-			$rspta = $this->Programa_model->page_with_filter($start,$length,$search["value"]);
+			$rspta = $this->Programa_model->page_with_filter($start,$length,$search["value"],$number_order,$dir_order);
 		}else{
-			$rspta = $this->Programa_model->page($start,$length);
+			$rspta = $this->Programa_model->page($start,$length,$number_order,$dir_order);
 		}
 	    //vamos a declarar un array
 		$data = Array();
@@ -61,13 +67,13 @@ class Programa extends CI_Controller
 		
 	    foreach ($rspta as $value) {
 	            $data[] = array(
-	            "0" => ' <button class="btn btn-warning" onclick="mostrarFormPro(' .$value["id_curso"]. ')"><i class= "fa fa-pencil"></i></button>'.(($value["estado"]=='0')?' <button class="btn btn-alert"   title="" onclick="activarPrograma('.$value["id_curso"].')"><i class="fa fa-square-o" aria-hidden="true"></i></button>':
-	            ' <button class="btn btn-primary" onclick="desactivarPrograma('.$value["id_curso"].')"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>'),
+	            "0" => ' <button class="btn btn-warning" onclick="mostrarFormPro(' .$value["id_curso"]. ')"><i class= "fa fa-pencil"></i></button>'.(($value["estado"]=='0')?' <button class="btn btn-alert"   title="" onclick="activarPrograma('.$value["id_curso"].')"><i class="fa fa-eye-slash" aria-hidden="true"></i></button>':
+	            ' <button class="btn btn-primary" onclick="desactivarPrograma('.$value["id_curso"].')"><i class="fa fa-eye" aria-hidden="true"></i></button>'),
 	            "1" => $value["numeracion"]." ".$value["nombre"],
 	            "2" => $value["duracion"],
 	            "3" => $value["costo_total"],
 	            "4" => $value["vacantes"],
-	            "5" => $value["fecha_inicio"],
+	            '5' => $value['fecha_inicio'].$this->HTML_Postergacion($value["id_curso"]),
 	            "6" => $value["fecha_final"],
 	            "7" => $value["tipoNombre"],
 	            "8" => ($value["estado"]=='0')?'<span class="label bg-red">No visible</span>':'<span class="label bg-green">Visible</span>'
@@ -79,7 +85,22 @@ class Programa extends CI_Controller
 	        "iTotalDisplayRecords" => $this->Programa_model->countWithStateFilter(), //enviamos total de registros a visualizar
 	        "aaData" => $data);
 	    echo json_encode($results);
-    }
+	}
+	
+	private function HTML_Postergacion($id){
+		return "<ul class=''>
+				<li class='dropdown'>
+					<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Postergaciones <b class='caret'></b></a>
+					<ul class='dropdown-menu'>
+						<form id='form-'>
+							<label >Nueva fecha<label>
+							<input id='n_date".$id."' class='form-control' name='new_date' type='date' />
+						<form>
+						<li data-input='n_date$id' onclick='postergacion($id,this);'><div class='btn btn-primary'>postergar curso</div></li>
+					</ul>
+				</li>
+				</ul>";
+	}
 
     public function index(){
     	if ($this->nativesession->get('tipo')=='admin') {
@@ -185,6 +206,12 @@ class Programa extends CI_Controller
     	}else{
     		echo "Ocurrio un error";
     	}
-    }
+	}
+	
+	public function postergar(){
+		$programa_id=$this->input->post('programa_id');
+		$nueva_fecha=$this->input->post('nueva_fecha');
+		$this->response($this->Programa_model->postergar($programa_id,$nueva_fecha));
+	}
 
 }

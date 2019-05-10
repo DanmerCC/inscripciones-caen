@@ -130,6 +130,7 @@ $route['administracion/programa/activar'] = 'admin/Programa/activar';
 $route['administracion/programa/desactivar'] = 'admin/Programa/desactivar';
 $route['administracion/programa/actualizar'] = 'admin/Programa/actualizar';
 $route['administracion/programa/insertar'] = 'admin/Programa/insertar';
+$route['administracion/programa/postergar'] = 'admin/Programa/postergar';
 
 $route['admin/api/solicitud'] = 'admin/api/Solicitud';
 
@@ -224,3 +225,19 @@ $route['api/inscrito/persona'] = 'rest/apipersona_Controller/persona/id/';
 //**Rest codigo propio  v 0.1*/
 $route['api/v1/inscritos'] = 'apiRest/Inscritos_Controller/get';
 $route['api/v1/inscrito/(:num)'] = 'apiRest/Inscritos_Controller/getById/$1';
+
+
+/***
+ * Chart estadistics
+*/
+
+$route['chart/alumno'] = 'ChartsController/alumno_columns';
+$route['chart/alumno/metadata'] = 'ChartsController/alumno_get_group_data';
+$route['chart/alumno/count'] = 'ChartsController/get_count_data_alumno';
+
+
+/**
+ * ugly code for static query
+ *
+ */
+$route['chart/inscrito'] = 'ChartsController/get_chart';

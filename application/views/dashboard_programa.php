@@ -174,7 +174,11 @@
 <script src="/dist/js/jquery-externs/buttons.print.min.js"></script>
 
 <script src="/assets/js/dboardPrograma.js"></script>
-
+<style>
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; // remove the gap so it doesn't close
+ }</style>
 
 </body>
 </html>

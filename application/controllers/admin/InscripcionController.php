@@ -105,19 +105,25 @@ class InscripcionController extends CI_Controller {
 		}
 		$cantidad=$this->Inscripcion_model->count();
 		$data = Array();
+		//echo var_dump($rspta);
+		//exit;
 		$i=0;
+
 		foreach ($rspta as $value) {
 			$i++;
 				$data[] = array(
 				"0" => 
 					"<button class='btn btn-danger' onclick='ins.cancel(".$value["id_inscripcion"].");'><i class='fa fa-trash-o' aria-hidden='true'></i> Anular</button>".
-					'<div class="btn btn-info" data-toggle="modal" data-target="#mdl_datos_inscritos" onclick="modalDataInscrito.loadData('.$value["idSolicitud"].');"><i class="fa fa-eye"></i></div>',
+					'<div class="btn btn-info" data-toggle="modal" data-target="#mdl_datos_inscritos" onclick="modalDataInscrito.loadData('.$value["idSolicitud"].');"><i class="fa fa-eye"></i></div>'.
+					'<a href="'.base_url()."postulante/pdf/".$value["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a>',
 				"1" => $value["nombres"],
 				"2" => $value["apellido_paterno"]." ".$value["apellido_materno"],
 				"3" => $value["numeracion"]." ".$value["tipo_curso"]." ".$value["nombre_curso"],
-				"4" => $value["nombre_user"],
-				"5" => $value["created"],
-				"6" => ""
+				"4" => $value["documento"],
+				"5" => $value["email"],
+				//"4" => $value["nombre_user"],
+				"6" => (isset($value["celular"])?$value["celular"]:" ")." - ".(isset($value["telefono_casa"])?$value["telefono_casa"]:" "),
+				"7" => $value["created"]
 			);
 		}
 		$results = array(

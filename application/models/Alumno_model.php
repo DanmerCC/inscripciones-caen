@@ -26,6 +26,30 @@ class Alumno_model extends CI_Model
 	private $nombres='nombres';
 	private $documento='documento';
 	private $email='email';
+	private $grado_profesion='grado_profesion';
+	private $estado_civil='estado_civil';
+	private $fecha_nac='fecha_nac';
+	private $telefono_casa='telefono_casa';
+	private $distrito_nac='distrito_nac';
+	private $provincia='provincia';
+	private $departamento='departamento';
+	private $direccion='direccion';
+	private $distrito='distrito';
+	private $lugar_trabajo='lugar_trabajo';
+	private $area_direccion='area_direccion';
+	private $tiempo_servicio='tiempo_servicio';
+	private $cargo_actual='cargo_actual';
+	private $direccion_laboral='direccion_laboral';
+	private $distrito_laboral='distrito_laboral';
+	private $cambiar='cambiar';
+	private $seguro_medico='seguro_medico';
+	private $nombre_seguro='nombre_seguro';
+	private $situacion_militar='situacion_militar';
+	private $grado_militar='gradoMilitar';
+	private $plana_militar='planaMilitar';
+	private $nacionalidad='nacionalidad';
+	private $situacion_laboral='situacion_laboral';
+	
 
 	private $public_columns=[];
 
@@ -392,5 +416,46 @@ class Alumno_model extends CI_Model
 
 	public function list_public_columns(){
 		return implode(',',$this->public_columns);
+	}
+
+
+	/**
+	 * @return columns retorna un array con los campos para el filtrado de estadisticas
+	 * 
+	 */
+	public function getColumnsForAnalisis(){
+		return [
+			$this->estado_civil,
+			$this->distrito_laboral,
+			$this->distrito,
+			$this->distrito_nac,
+			$this->provincia,
+			$this->departamento,
+			$this->seguro_medico,
+			$this->nombre_seguro,
+			$this->situacion_militar,
+			$this->grado_profesion,
+			$this->lugar_trabajo,
+			$this->grado_militar,
+			$this->plana_militar,
+			$this->nacionalidad,
+			$this->situacion_laboral
+		];
+	}
+
+	/**
+	 * @var column name of column
+	 */
+	public function getCountForAnalisis($column,$where_data=NULL){
+		$this->db->select('COUNT('.$this->id.') as conteo,'.$column)->from($this->table);
+		if(isset($where_data)){
+			$this->db->where($column,$where_data);
+		}
+		
+		return resultToArray($this->db->get());
+	}
+	public function getDataGroupColumn($column_name){
+		$this->db->select($column_name)->from($this->table)->group_by($column_name);
+		return resultToArray($this->db->get());
 	}
 }
