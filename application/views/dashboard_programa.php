@@ -150,6 +150,7 @@
   </div>
 </div>
 
+<?php $this->load->view('modals/modal-danger.php');?>
 
 <!-- ./wrapper -->
 <?php $this->load->view('adminlte/scriptsFooter');?>

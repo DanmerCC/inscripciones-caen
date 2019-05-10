@@ -296,23 +296,49 @@ function getDate(){
 }
 
 function postergacion(id,obj){
-    $.ajax({
-        type: "post",
-        url: "/administracion/programa/postergar",
-        data: {
-            "programa_id":id,
-            "nueva_fecha":$("#"+$(obj).data('input')).val()
-        },
-        dataType: "json",
-        success: function (response) {
-            if(response){
-                bootbox.alert("Correctamente actualizado");
+    if(validarFormatoFecha($("#"+$(obj).data('input')).val())){
+        $.ajax({
+            type: "post",
+            url: "/administracion/programa/postergar",
+            data: {
+                "programa_id":id,
+                "nueva_fecha":$("#"+$(obj).data('input')).val()
+            },
+            dataType: "json",
+            success: function (response) {
+                if(response){
+                    bootbox.alert("Correctamente actualizado");
+                }
+                tabla2.ajax.reload(null,false);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
             }
-            tabla2.ajax.reload(null,false);
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);
-            alert(thrownError);
-        }
-    });
+        });
+    }else{
+        show_error_msg("Fecha erronea");
+    }
+    
+}
+
+
+function validarFormatoFecha(campo) {
+    var RegExPattern = /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+    if ((campo.match(RegExPattern)) && (campo!='')) {
+          return true;
+    } else {
+          return false;
+    }
+}
+
+function show_error_msg(msg,tiempo=null){
+    $("#mdl_danger_msg #msg-modal").html(msg);
+    $("#mdl_danger_msg").modal('show');
+    if(tiempo!=null){
+        setTimeout(function(){
+            $("#mdl_danger_msg").modal('hide');
+        },tiempo);
+    }
+
 }
