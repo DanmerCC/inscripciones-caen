@@ -20,6 +20,7 @@ class ApiPrograma extends CI_Controller
 
 
 			$this->load->model('Programa_model');
+
 			$programa=$this->Programa_model->allActives();
 
 				$result=[];
@@ -36,6 +37,22 @@ class ApiPrograma extends CI_Controller
 			echo "error";
 		}
 
+	}
+
+	public function all(){
+		$this->verify_login_or_fail();
+		$this->load->model('Programa_model');
+		$programa=$this->Programa_model->all();
+
+			$result=[];
+			$i=0;
+
+			foreach ($programa->result_array() as $row){
+				$result[$i]=$row;
+				$i++;
+			}
+
+		echo json_encode($result,JSON_UNESCAPED_UNICODE);
 	}
 
 
@@ -62,6 +79,14 @@ class ApiPrograma extends CI_Controller
 			echo "error";
 		}
 
+	}
+
+
+	public function verify_login_or_fail(){
+		if($this->nativesession->get("estado")!="logeado"){
+			show_404();
+			exit;
+		}
 	}
 
 

@@ -108,6 +108,7 @@ $route['file/info/([a-zA-Z]+)'] = 'admin/FilesController/info/$1';
 
 $route['api/alumno'] = 'ApiAlumno';
 $route['api/programas'] = 'ApiPrograma';
+$route['api/programas/all'] = 'ApiPrograma/all';
 $route['api/programas/tipos'] = 'ApiPrograma/tipos';
 $route['api/solicitudes'] = 'ApiAlumno/solicitudes';
 $route['api/pais'] = 'ApiPais/listar';
