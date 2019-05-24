@@ -459,7 +459,6 @@ $.ajax({
                 
                 //Insercion en Despegable SOLICITUDES
 				$("#contentSolicitudes").append(diseño);
-				var div_col_6="<div class='col-xs-3 col-md-4'>"+datos[i].numeracion+" "+datos[i].tipoCurso+" "+datos[i].nombreCurso+"</div>";
 				$("#contentSolicitudesDocument").append(div_row(row_diseño(i,datos[i])+div_modal_document(i,datos[i])));
 
                 solicitudComponets["SolicitudFileComponent"+(i+1)]=cc.fileComponent("#SolicitudFileComponent"+(i+1),{
@@ -761,7 +760,7 @@ return "<div class='modal fade' id='fmodalDocument"+(index+1)+"' tabindex='-1' r
 						"<button type='button' class='close' data-dismiss='modal' aria-label='Close'>"+
 							"<span aria-hidden='true'>&times;</span>"+
 						"</button>"+
-						"<h4 class='modal-title' id='myfModalLabel'><strong>Documentos para: </strong>"+
+						"<h4 class='modal-title' id='myfModalLabel'><strong>Otros Documentos </strong>"+
 							solicitud.numeracion+" "+solicitud.tipoCurso+" "+solicitud.nombreCurso+
 						"</h4>"+
 					"</div>"+
@@ -794,7 +793,7 @@ function row_diseño(index,solicitud){
 				"<div class='box-header with-border'> Documentos para "+solicitud.numeracion+" "+solicitud.tipoCurso+" "+solicitud.nombreCurso+"</div>"+
 					"<div class='box-body'>"+
 						"<button type='button' class='btn btn-block btn-primary btn-xs' data-toggle='modal' data-target='#fmodalDocument"+(index+1)+"'>"+
-							"Otros documentos para "+
+							"Otros documentos "+
 						"</button>"+
 					"</div>"+
 				"</div>"+
