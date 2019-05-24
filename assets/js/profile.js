@@ -768,7 +768,7 @@ return "<div class='modal fade' id='fmodalDocument"+(index+1)+"' tabindex='-1' r
 						"<div class='row'>"+
 							"<div class='col-xs-12 col-md-6' id='fSolicitudFileComponent"+(index+1)+"'></div>"+
 							"<div class='col-xs-12 col-md-6' id='fSolicitudFormalFileComponent"+(index+1)+"'></div>"+
-							"<div class='col-xs-12 col-md-6' id='fproInvest"+(index+1)+"'></div>"+
+							(solicitud.tipoCurso=="Doctorado"?"<div class='col-xs-12 col-md-6' id='fproInvest"+(index+1)+"'></div>":"")+
 							//alinknotification(solicitud)+
 						"</div>"+    
 					"</div>"+
