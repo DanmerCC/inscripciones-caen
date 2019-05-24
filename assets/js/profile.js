@@ -760,7 +760,7 @@ return "<div class='modal fade' id='fmodalDocument"+(index+1)+"' tabindex='-1' r
 						"<button type='button' class='close' data-dismiss='modal' aria-label='Close'>"+
 							"<span aria-hidden='true'>&times;</span>"+
 						"</button>"+
-						"<h4 class='modal-title' id='myfModalLabel'><strong>Otros Documentos </strong>"+
+						"<h4 class='modal-title' id='myfModalLabel'><strong> Otros Documentos </strong>"+
 							solicitud.numeracion+" "+solicitud.tipoCurso+" "+solicitud.nombreCurso+
 						"</h4>"+
 					"</div>"+
@@ -793,7 +793,7 @@ function row_diseño(index,solicitud){
 				"<div class='box-header with-border'> Documentos para "+solicitud.numeracion+" "+solicitud.tipoCurso+" "+solicitud.nombreCurso+"</div>"+
 					"<div class='box-body'>"+
 						"<button type='button' class='btn btn-block btn-primary btn-xs' data-toggle='modal' data-target='#fmodalDocument"+(index+1)+"'>"+
-							"Otros documentos "+
+							"ver documentos a subir "+
 						"</button>"+
 					"</div>"+
 				"</div>"+
