@@ -53,6 +53,8 @@ class Alumno_model extends CI_Model
 
 	private $public_columns=[];
 
+
+
 	function __construct()
 	{
 		parent::__construct();
@@ -63,8 +65,32 @@ class Alumno_model extends CI_Model
 			$this->apellido_materno,
 			$this->documento,
 			$this->email,
-			$this->desc_discapacidad
+			$this->email,
+			$this->grado_profesion,
+			$this->estado_civil,
+			$this->fecha_nac,
+			$this->telefono_casa,
+			$this->desc_discapacidad,
+			$this->distrito_nac,
+			$this->provincia,
+			$this->departamento,
+			$this->direccion,
+			$this->distrito,
+			$this->lugar_trabajo,
+			$this->area_direccion,
+			$this->tiempo_servicio,
+			$this->cargo_actual,
+			$this->direccion_laboral,
+			$this->distrito_laboral,
+			$this->seguro_medico,
+			$this->nombre_seguro,
+			$this->situacion_militar,
+			$this->grado_militar,
+			$this->plana_militar,
+			$this->nacionalidad,
+			$this->situacion_laboral
 		];
+
 	}
 
 	public function registrar($apellido_paterno,$apellido_materno,$nombres,$documento,$email,$celphone,$idTipoDocumento=1){
@@ -458,4 +484,48 @@ class Alumno_model extends CI_Model
 		$this->db->select($column_name)->from($this->table)->group_by($column_name);
 		return resultToArray($this->db->get());
 	}
+
+	/**
+	 * @method  get_page_api devuelve un array con las personas 
+	 * @var int $start es el inicio de la paginacion
+	 * @var int $limit es la cantidad de registros retornados
+	 */
+	public function get_page_api($start,$limit = 10){
+		$this->query_selectApiColumnsFromTable();
+		$this->db->limit($limit,$start);
+		return resultToArray($this->db->get());
+	}
+
+	public function get_all_api(){
+		$this->query_selectApiColumnsFromTable();
+		$this->db->from($this->table);
+		return resultToArray($this->db->get());
+	}
+
+	public function get_one_api($id){
+		$this->query_selectApiColumnsFromTable();
+		$this->db->where($this->id,$id);
+		return resultToArray($this->db->get());
+	}
+
+	public function  query_selectApiColumnsFromTable(){
+		$this->db->select(
+			implode(',',$this->getApicColumns())
+		);
+		$this->db->from($this->table);
+	}
+
+	public function getApicColumns($alias=NULL){
+		if($alias===NULL){
+			return $this->public_columns;
+		}else{
+			$arraynew=[];
+			for ($i=0; $i < count($this->public_columns); $i++) { 
+				$arraynew[$i]=$alias.'.'.$this->public_columns[$i];
+			}
+			return $arraynew;
+		}
+	}
+
+
 }

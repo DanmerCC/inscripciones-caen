@@ -108,6 +108,7 @@ $route['file/info/([a-zA-Z]+)'] = 'admin/FilesController/info/$1';
 
 $route['api/alumno'] = 'ApiAlumno';
 $route['api/programas'] = 'ApiPrograma';
+$route['api/programas/all'] = 'ApiPrograma/all';
 $route['api/programas/tipos'] = 'ApiPrograma/tipos';
 $route['api/solicitudes'] = 'ApiAlumno/solicitudes';
 $route['api/pais'] = 'ApiPais/listar';
@@ -225,7 +226,8 @@ $route['api/inscrito/persona'] = 'rest/apipersona_Controller/persona/id/';
 //**Rest codigo propio  v 0.1*/
 $route['api/v1/inscritos'] = 'apiRest/Inscritos_Controller/get';
 $route['api/v1/inscrito/(:num)'] = 'apiRest/Inscritos_Controller/getById/$1';
-
+$route['api/v1/personas'] = 'apiRest/Persona_Controller/get';
+$route['api/v1/persona/(:num)'] = 'apiRest/Persona_Controller/getById/$1';
 
 /***
  * Chart estadistics

@@ -112,7 +112,8 @@
                                             </div>
                                             <div class="col-sm-2">
                                                 <label>Nacionalidad<span style="color: red">(*)</span></label>
-                                                <select class="form-control" name="nacionalidad" id="paises" form='formInfPersonal'>
+                                                <select class="form-control" name="nacionalidad" id="paises" form='formInfPersonal' required>
+                                                    <option value selected>Elije un Pais de origen</option>
                                                     <?php for($i=0;$i<count($paises);$i++){ ?>
                                                         <option <?php echo $paises[$i]["nombre"]==$nacionalidad?"selected ":""; ?>value=<?php echo "'".$paises[$i]["nombre"]."'"; ?> > <?php echo $paises[$i]["nombre"]; ?> </option>
                                                     <?php } ?>
@@ -432,8 +433,15 @@
                                             
                                             <!--box-->
                                         </div>
+									</div>
+									<div class="col-sm-12">
+                                        <div id="contentSolicitudesDocument">
+                                            <!--box-->
+                                            
+                                            <!--box-->
+                                        </div>
                                     </div>
-                                </div>
+								</div>
                         </div>
                     </div>
                     <!--Panel formatos-->
