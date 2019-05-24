@@ -458,7 +458,9 @@ $.ajax({
                 modal;
                 
                 //Insercion en Despegable SOLICITUDES
-                $("#contentSolicitudes").append(diseño);
+				$("#contentSolicitudes").append(diseño);
+				var div_col_6="<div class='col-xs-3 col-md-4'>"+datos[i].numeracion+" "+datos[i].tipoCurso+" "+datos[i].nombreCurso+"</div>";
+				$("#contentSolicitudesDocument").append(div_row(row_diseño(i,datos[i])+div_modal_document(i,datos[i])));
 
                 solicitudComponets["SolicitudFileComponent"+(i+1)]=cc.fileComponent("#SolicitudFileComponent"+(i+1),{
 					"state":false,
@@ -473,11 +475,42 @@ $.ajax({
                     "pathInfo":"/file/info",
                     "pathDelete":"/file/delete",
                     "id":datos[i].idSolicitud
+				});
+				
+				solicitudComponets["fSolicitudFileComponent"+(i+1)]=cc.fileComponent("#fSolicitudFileComponent"+(i+1),{
+					"state":false,
+					"target":"fSolicitudFileComponent"+(i+1),
+					"urlUpload":"/solicitud/upload/"+datos[i].idSolicitud,
+					"urlVerify":"/solicitud/stateFile/"+datos[i].idSolicitud,
+
+					"tittle":"Hoja de datos",
+					"identifier":"hdatos",
+					"sizeTemplate":"min",
+                    "urlview":"/solicitud/view/pdf",                      
+                    "pathInfo":"/file/info",
+                    "pathDelete":"/file/delete",
+                    "id":datos[i].idSolicitud
                 });
+
 
 				solicitudFormalComponets["SolicitudFormalFileComponent"+(i+1)]=cc.fileComponent("#SolicitudFormalFileComponent"+(i+1),{
 					"state":false,
 					"target":"SolicitudFormalFileComponent"+(i+1),
+					"urlUpload":"/soladmision/upload/"+datos[i].idSolicitud,
+					"urlVerify":"/soladmision/stateFile/"+datos[i].idSolicitud,
+
+					"tittle":"Solicitud admisión",
+					"identifier":"solad",
+					"sizeTemplate":"min",
+                    "urlview":"/solicitud/view/pdf",                      
+                    "pathInfo":"/file/info",
+                    "pathDelete":"/file/delete",
+                    "id":datos[i].idSolicitud
+				});
+				
+				solicitudFormalComponets["fSolicitudFormalFileComponent"+(i+1)]=cc.fileComponent("#fSolicitudFormalFileComponent"+(i+1),{
+					"state":false,
+					"target":"fSolicitudFormalFileComponent"+(i+1),
 					"urlUpload":"/soladmision/upload/"+datos[i].idSolicitud,
 					"urlVerify":"/soladmision/stateFile/"+datos[i].idSolicitud,
 
@@ -493,6 +526,21 @@ $.ajax({
                 proInvest["proInvest"+(i+1)]=cc.fileComponent("#proInvest"+(i+1),{
 					"state":false,
 					"target":"proInvest"+(i+1),
+					"urlUpload":"/proinves/upload/"+datos[i].idSolicitud,
+					"urlVerify":"/proinves/stateFile/"+datos[i].idSolicitud,
+
+					"tittle":"Proyecto de Investigacion",
+					"identifier":"pinvs",
+					"sizeTemplate":"min",
+                    "urlview":"/solicitud/view/pdf",                      
+                    "pathInfo":"/file/info",
+                    "pathDelete":"/file/delete",
+                    "id":datos[i].idSolicitud
+				});
+				
+				proInvest["fproInvest"+(i+1)]=cc.fileComponent("#fproInvest"+(i+1),{
+					"state":false,
+					"target":"fproInvest"+(i+1),
 					"urlUpload":"/proinves/upload/"+datos[i].idSolicitud,
 					"urlVerify":"/proinves/stateFile/"+datos[i].idSolicitud,
 
@@ -701,4 +749,56 @@ function configInputsFile(target,url){
     });
 }
 
+function div_row(content){
+	return "<div class='row'>"+content+"<div class='row'>";
+}
 
+function div_modal_document(index,solicitud){
+return "<div class='modal fade' id='fmodalDocument"+(index+1)+"' tabindex='-1' role='dialog' aria-labelledby='modalDocumentLabel"+(index+1)+"'>"+
+			"<div class='modal-dialog' role='document'>"+
+				"<div class='modal-content'>"+
+					"<div class='modal-header'>"+
+						"<button type='button' class='close' data-dismiss='modal' aria-label='Close'>"+
+							"<span aria-hidden='true'>&times;</span>"+
+						"</button>"+
+						"<h4 class='modal-title' id='myfModalLabel'><strong>Documentos para: </strong>"+
+							solicitud.numeracion+" "+solicitud.tipoCurso+" "+solicitud.nombreCurso+
+						"</h4>"+
+					"</div>"+
+					"<div class='modal-body'>"+
+						"<div class='row'>"+
+							"<div class='col-xs-12 col-md-6' id='fSolicitudFileComponent"+(index+1)+"'></div>"+
+							"<div class='col-xs-12 col-md-6' id='fSolicitudFormalFileComponent"+(index+1)+"'></div>"+
+							"<div class='col-xs-12 col-md-6' id='fproInvest"+(index+1)+"'></div>"+
+							//alinknotification(solicitud)+
+						"</div>"+    
+					"</div>"+
+					"<div class='modal-footer'>"+
+						"<button type='button' class='btn btn-primary' data-dismiss='modal'>Cerrar</button>"+
+					"</div>"+
+				"</div>"+
+			"</div>"+
+		"</div>";
+}
+
+function alinknotification(solicitud){
+	return ((!solicitud.completeFile)?"<div class='col-xs-12 col-md-6'><a href='#'><button class='btn btn-sm bg-light-blue disabled color-palette' data-dismiss='modal' data-toggle='collapse' data-parent='#accordion' href='#collapse9' data-target=''>"+solicitud.msgUploadFile+"</button></a></div>":"");
+}
+
+function row_diseño(index,solicitud){
+
+	return "<div class=''>"+
+		"<div class='row'>"+
+			"<div class='col-xs-12 col-md-12'>"+
+				"<div class='box box-success box-solid'>"+
+				"<div class='box-header with-border'> Documentos para "+solicitud.numeracion+" "+solicitud.tipoCurso+" "+solicitud.nombreCurso+"</div>"+
+					"<div class='box-body'>"+
+						"<button type='button' class='btn btn-block btn-primary btn-xs' data-toggle='modal' data-target='#fmodalDocument"+(index+1)+"'>"+
+							"Otros documentos para "+
+						"</button>"+
+					"</div>"+
+				"</div>"+
+			"</div>"+
+		"</div>"+
+	"</div><br>";
+}

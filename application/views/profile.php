@@ -433,8 +433,15 @@
                                             
                                             <!--box-->
                                         </div>
+									</div>
+									<div class="col-sm-12">
+                                        <div id="contentSolicitudesDocument">
+                                            <!--box-->
+                                            
+                                            <!--box-->
+                                        </div>
                                     </div>
-                                </div>
+								</div>
                         </div>
                     </div>
                     <!--Panel formatos-->
