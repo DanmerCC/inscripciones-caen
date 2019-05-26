@@ -175,7 +175,7 @@ $route['admin/parts/nuevoprograma'] = 'admin/Programa/newPrograma';
 $route['admin/inscr/create'] = 'admin/InscripcionController/create';
 $route['admin/inscr/cancel'] = 'admin/InscripcionController/delete';
 
-$route['test'] = 'admin/Solicitud/test';
+$route['test/(:num)'] = 'admin/Solicitud/test/$1';
 
 
 $route['mdf/api/programa'] = 'apiMindef/Programa';

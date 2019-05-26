@@ -278,7 +278,14 @@ class Solicitud extends CI_Controller
 	}
 
 
-	public function test(){
+	public function test($id){
+		$this->verify_login_or_fail();
+		$this->load->model('Documentrender_model');
+		$nuva_solicitud=new SolicitudDocument($id);
+		$this->Documentrender_model->setType($nuva_solicitud);
+		$this->Documentrender_model->loadDocument();
+		
+		/*
 		$this->load->library('mergerpdf');
 		$this->mergerpdf->addFile(CC_BASE_PATH."/PDF1.pdf");
 		$this->mergerpdf->addFile(CC_BASE_PATH."/PDF2.pdf");
@@ -288,6 +295,7 @@ class Solicitud extends CI_Controller
 		$resultado= $this->mergerpdf->getMergedFiles();
 		$que_paso=file_put_contents(CC_BASE_PATH."/completado.pdf",$resultado);
 		echo $que_paso;
+		*/
 	}
 
 	public function generarLegajo($idSolicitud){
@@ -318,6 +326,13 @@ class Solicitud extends CI_Controller
             $output["content"]="";
 			$output["status"]="500";
 			return $output;
+		}
+	}
+
+	public function verify_login_or_fail(){
+		if($this->nativesession->get("estado")!="logeado"){
+			show_error("No tiene acceso a ese documento",501);
+			exit;
 		}
 	}
 

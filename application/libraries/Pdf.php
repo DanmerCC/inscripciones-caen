@@ -7,7 +7,15 @@ class Pdf extends TCPDF
     function __construct()
     {
         parent::__construct();
-    }
+	}
+	
+	function AutoPrint($dialog=false)
+	{
+		//Open the print dialog or start printing immediately on the standard printer
+		$param=($dialog ? 'true' : 'false');
+		$script="print($param);";
+		$this->IncludeJS($script);
+	}
 }
 
 /* End of file Pdf.php */

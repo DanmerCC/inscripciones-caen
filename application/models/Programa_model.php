@@ -61,6 +61,14 @@ class Programa_model extends CI_Model
 	public function get_one($id){
 		return $this->getById($id)->row();
 	}
+
+	public function get_one_with_type($id){
+		$this->db->select('c.*, t.nombre as tipo_curso')->from($this->table.' c');
+		$this->db->join('tipo_curso t', 'c.idTipo_curso = t.idTipo_curso');
+		$this->db->where('c.'.$this->id,$id);
+		$result=$this->db->get();
+		return $result->row();
+	}
 	public function update($nombre,$id_curso,$duracion,$costo_total,$vacantes,$fecha_inicio,$fecha_final,$idTipo_curso,$numeracion){
 
 		$data = array(
