@@ -243,3 +243,9 @@ $route['chart/alumno/count'] = 'ChartsController/get_count_data_alumno';
  *
  */
 $route['chart/inscrito'] = 'ChartsController/get_chart';
+
+
+/***
+ * documentos autogenerados v2
+ */
+$route['generator/solad/(:num)'] = 'Solicitud/generate_document/$1';

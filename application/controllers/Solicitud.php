@@ -305,4 +305,31 @@ class Solicitud extends CI_Controller
 			return json_encode($result,JSON_UNESCAPED_UNICODE);
         }
 	}
+
+	/**
+	 * genera un documento a partir de los datos de la persona
+	 */
+	public function generate_document($id){
+		$this->verify_login_or_fail();
+			$idUser=$this->nativesession->get('idUsuario');
+		$this->load->model('Documentrender_model');
+		$nuva_solicitud=new SolicitudDocument($id);
+
+		/**Verifica si es dueño de la solicitud */
+		$solicitud=$this->Solicitud_model->getAllColumnsById($id);
+		$idAlumno=$this->nativesession->get('idAlumno');
+		if(!($idAlumno===$solicitud["alumno"])){
+			show_error("Permiso denegado",401);
+			exit;
+		}
+		$this->Documentrender_model->setType($nuva_solicitud);
+		$this->Documentrender_model->loadDocument();
+	}
+
+	public function verify_login_or_fail(){
+		if($this->nativesession->get("estado")!="logeado"){
+			show_404();
+			exit;
+		}
+	}
 } 

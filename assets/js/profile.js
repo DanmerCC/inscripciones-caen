@@ -765,12 +765,53 @@ return "<div class='modal fade' id='fmodalDocument"+(index+1)+"' tabindex='-1' r
 						"</h4>"+
 					"</div>"+
 					"<div class='modal-body'>"+
-						"<div class='row'>"+
-							"<div class='col-xs-12 col-md-6' id='fSolicitudFileComponent"+(index+1)+"'></div>"+
-							"<div class='col-xs-12 col-md-6' id='fSolicitudFormalFileComponent"+(index+1)+"'></div>"+
-							(solicitud.tipoCurso=="Doctorado"?"<div class='col-xs-12 col-md-6' id='fproInvest"+(index+1)+"'></div>":"")+
-							//alinknotification(solicitud)+
-						"</div>"+    
+                        "<div class='row'>"+
+                            "<div class='col-xs-12 col-md-6'>"+
+                                "<div class='bg-gray panel'>"+
+                                    "<div class='container'>"+
+                                        "<div class='row'>"+
+                                            "<div class='col-xs-12 col-md-6' >"+
+                                                "<a class='btn btn-default btn-sm' target='_blank' href='/postulante/pdf/"+solicitud.idSolicitud+"'>imprimir para firmar</a>"+
+                                            "</div>"+
+                                        "</div>"+
+                                        "<div class='row'>"+
+                                            "<div class='col-xs-12 col-md-12' id='fSolicitudFileComponent"+(index+1)+"'></div>"+
+                                        "</div>"+
+                                    "</div>"+
+                                "</div>"+
+                            "</div>"+
+
+                            /**fsolicitud */
+                            "<div class='col-xs-12 col-md-6'>"+
+                                "<div class='bg-gray panel'>"+
+                                    "<div class='container'>"+
+                                        "<div class='row'>"+
+                                            "<div class='col-xs-12 col-md-6' >"+
+                                                "<a class='btn btn-default btn-sm' target='_blank' href='/generator/solad/"+solicitud.idSolicitud+"'>imprimir para firmar</a>"+
+                                            "</div>"+
+                                        "</div>"+
+                                        "<div class='row'>"+
+                                            "<div class='col-xs-12 col-md-6' id='fSolicitudFormalFileComponent"+(index+1)+"'></div>"+
+                                        "</div>"+
+                                    "</div>"+
+                                "</div>"+
+                            "</div>"+
+
+                            /**Doctirado condicional */
+                            "<div class='col-xs-12 col-md-6'>"+
+                                "<div class='bg-gray panel'>"+
+                                    "<div class='container'>"+
+                                        "<div class='row'>"+
+                                            
+                                        "</div>"+
+                                        "<div class='row'>"+
+                                            (solicitud.tipoCurso=="Doctorado"?"<div class='col-xs-12 col-md-6' id='fproInvest"+(index+1)+"'></div>":"")+
+                                        "</div>"+
+                                    "</div>"+
+                                "</div>"+    
+                            "</div>"+
+                            //alinknotification(solicitud)+
+                        "</div>"+   
 					"</div>"+
 					"<div class='modal-footer'>"+
 						"<button type='button' class='btn btn-primary' data-dismiss='modal'>Cerrar</button>"+
@@ -790,7 +831,7 @@ function row_diseño(index,solicitud){
 		"<div class='row'>"+
 			"<div class='col-xs-12 col-md-12'>"+
 				"<div class='box box-success box-solid'>"+
-				"<div class='box-header with-border'> Documentos para "+solicitud.numeracion+" "+solicitud.tipoCurso+" "+solicitud.nombreCurso+"</div>"+
+                "<div class='box-header with-border'> Documentos para "+solicitud.numeracion+" "+solicitud.tipoCurso+" "+solicitud.nombreCurso+"</div>"+
 					"<div class='box-body'>"+
 						"<button type='button' class='btn btn-block btn-primary btn-xs' data-toggle='modal' data-target='#fmodalDocument"+(index+1)+"'>"+
 							"ver documentos a subir "+
@@ -798,6 +839,6 @@ function row_diseño(index,solicitud){
 					"</div>"+
 				"</div>"+
 			"</div>"+
-		"</div>"+
+        "</div>"+
 	"</div><br>";
 }

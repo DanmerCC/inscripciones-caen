@@ -89,7 +89,7 @@
 			<tr style="height: 5%;">
 
 				<td style="width:5%"></td>
-				<td style="width:90%;height: 10px" colspan="2">
+				<td style="width:90%;height: 10px;text-align:justify;" colspan="2">
 					<p>
 					Yo, <font face="times "><i ><u><?=$nombres_completo;?></u></i></font>, identificado con DNI Nº <font face="times "><i><u><?=$documento;?></u></i></font> de profesión <font face="times "><i><u><?=$profesion;?></u></i></font>, con domicilio legal en <font face="times "><i><u><?=$domicilio?></u></i></font>
 				en el distrito de <font face="times "><i><u><?=$domicilio_distrito?></u></i></font>, teléfono <font face="times "><i><u><?=$telefono?></u></i></font> y correo electrónico <font face="times "><i><u><?=$email?></u></i></font>, me presento ante ud. y expongo lo siguiente:
@@ -107,7 +107,7 @@
 			<tr style="height: 5%;" >
 
 				<td style="width:5%"></td>
-				<td style="width:90%;height: 10px" colspan="2">
+				<td style="width:90%;height: 10px;text-align:justify;" colspan="2">
 					<p>
 						Que deseando participar en el programa de <font face="times "><i><u><?=$programa?></u></i></font>, a dictarse a partir del <font face="times "><i><u><?=$fechatexto_start_program?></u></i></font>, solicito a Ud. señor Director General del CAEN - EPG, tenga a bien disponer mi inscripción como postulante en el proceso de admisión correspondiente a dicho programa.
 					</p>
@@ -124,7 +124,7 @@
 			<tr style="height: 5%;">
 
 				<td style="width:5%"></td>
-				<td style="width:90%;height: 10px" colspan="2">
+				<td style="width:90%;height: 10px;text-align:justify;" colspan="2">
 				<p>
 					Al respecto, dejo constancia que el suscrito ha tomado conocimiento de los requisitos necesarios para postular al citado programa, de acuerdo a las disposiciones vigentes del Centro de Altos Estudios Nacionales y de la Ley Universitaria.
 				</p>
