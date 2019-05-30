@@ -17,7 +17,7 @@ class Documentrender_model extends CI_Model
 
 	public function loadDocument(){
 		$data=$this->documentable->getData();
-		$template=$this->documentable::TEMPLATE;
+		$template=$this->documentable->template;
 		$pdf = new Pdf('P', 'mm', 'A4', false, 'UTF-8', false);
 		$pdf->SetDisplayMode('real', 'default');
 		$pdf->setCellHeightRatio(1.3);
@@ -51,7 +51,7 @@ interface Documentable{
 
 abstract class BaseDocument {
 	public $ci;
-	public const PATH ='/';
+	public $path ='/';
 	protected $id;
 
 	public function __construct(int $id)
@@ -65,8 +65,8 @@ abstract class BaseDocument {
 class SolicitudDocument extends BaseDocument implements Documentable {
 
 
-	const PATH ='/';
-	const TEMPLATE='pdf/solicitud_admision';
+	public $path ='/';
+	public $template='pdf/solicitud_admision';
 
 	public function setTemplate(){
 
