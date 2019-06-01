@@ -54,7 +54,7 @@ abstract class BaseDocument {
 	public $path ='/';
 	protected $id;
 
-	public function __construct(int $id)
+	public function __construct($id)
 	{
 		$this->ci=&get_instance();
 		$this->id=$id;

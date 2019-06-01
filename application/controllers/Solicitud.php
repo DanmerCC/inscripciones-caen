@@ -44,7 +44,9 @@ class Solicitud extends CI_Controller
 		$pdf->SetDisplayMode('real', 'default');
 		$pdf->setPrintHeader(false);
 		$pdf->setPrintFooter(false);
+		$pdf->AutoPrint(true);
 		$pdf->AddPage();
+		
 		$html = $this->load->view('pdf/ficha',$data,true);
 		$pdf->writeHTML($html, true, false, true, false, '');
 		$pdf->Output('My-File-Name.pdf', 'I');
