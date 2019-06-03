@@ -63,15 +63,26 @@ class Solicitud extends CI_Controller
         $pdf->Output('My-File-Name.pdf', 'I');
 	}
 
-        public function dataTable(){
-        $rspta = $this->mihelper->resultToArray($this->Solicitud_model->getAllOrderByIdSolicitud());
-        //vamos a declarar un array
+    public function dataTable(){
+        $search=$this->input->post("search[]");
+		$start=$this->input->post('start');
+		$length=$this->input->post('length');
+        $activeSearch=((strlen($search["value"])!=0))||empty($search);
+        $cantidad=$this->Solicitud_model->count_sent_less();
+        
+        if($activeSearch){
+            $rspta = resultToArray($this->Solicitud_model->get_data_for_datatable($start,$length,$search["value"]));
+        }else{
+            $rspta = resultToArray($this->Solicitud_model->get_data_for_datatable($start,$length));
+        }
         $data = Array();
         //echo var_dump($rspta);
+        $ii=$start;
         header("Content-type: application/json");
         for ($i=0;$i<count($rspta);$i++) {
+            $ii++;
                 $data[$i] = array(
-                "0" => ($i+1),
+                "0" => $activeSearch?"-":(($cantidad-$ii)+1),
                 "1" => '<a href="'.base_url()."postulante/pdf/".$rspta[$i]["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a>'.
                             ' <div class="btn btn-info" data-toggle="modal" data-target="#mdl_datos_alumno" onclick="modalDataAlumno.loadData('.$rspta[$i]["idSolicitud"].');"><i class="fa fa-eye"></i></div>'.
                             (
@@ -84,7 +95,7 @@ class Solicitud extends CI_Controller
                             ');">'.
                             '<i class="fa fa-user-plus" aria-hidden="true"></i></button>'
                             ,
-                "2" => $rspta[$i]["nombres"],
+                "2" => $rspta[$i]["nombres"].$rspta[$i]["idSolicitud"],
                 "3" => $rspta[$i]["apellido_paterno"],
                 "4" => $rspta[$i]["apellido_materno"],
                 "5" => $rspta[$i]["tipo_financiamiento"],
@@ -98,9 +109,9 @@ class Solicitud extends CI_Controller
             );
          }        
         $results = array(
-            "sEcho" => 1, //Informacion para datatables
-            "iTotalRecords" => count($data), //enviamos el total de registros al datatables
-            "iTotalDisplayRecords" => count($data), //enviamos total de registros a visualizar
+            "sEcho" =>$this->input->post('sEcho'), //Informacion para datatables
+            "iTotalRecords" => $cantidad, //enviamos el total de registros al datatables
+            "iTotalDisplayRecords" => ($activeSearch)?$this->Solicitud_model->count_with_filter($search["value"]):$cantidad, //enviamos total de registros a visualizar
             "aaData" => $data);
         echo json_encode($results);
         }

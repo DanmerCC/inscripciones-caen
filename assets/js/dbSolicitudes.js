@@ -59,8 +59,9 @@ $(document).ready(function(){
 function cargarDataTable(){
 	    tabla = $('#dataTable1').dataTable({
         "aProcessing": true, //activamos el procesamiento del datatables
-        "aServerSide": true, //paginacion y filtrado realizados por el servidor 
+        "serverSide": true, //paginacion y filtrado realizados por el servidor 
         dom: 'Bfrtip', //definimos los elementos del contro la tabla
+        "sEcho":"1",
         buttons: [
             'copyHtml5',
             'excelHtml5',
@@ -191,7 +192,7 @@ function loadDataToSelect(){
         data: "",
         dataType: "json",
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             $("#selectProgram").html(listProgramasActivos(response));
         }
     });

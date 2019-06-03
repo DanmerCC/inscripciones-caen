@@ -68,6 +68,72 @@ class Solicitud_model extends CI_Model
 		return $result;
 	}
 
+	/***Metodos para datatable paginado y filtrado de datos */
+	public function get_data_for_datatable($start,$length,$text=NULL){
+		$this->fn_query_datatable_base();
+		$this->db->limit($length,$start);
+		if($text!==NULL||isset($text)){
+			$this->db->like('a.nombres',$text);
+			$this->db->or_like('a.apellido_paterno',$text);
+			$this->db->or_like('a.apellido_materno',$text);
+			$this->db->or_like('c.numeracion',$text);
+			$this->db->or_like('s.comentario',$text);
+			$this->db->or_like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
+		}
+
+		return $this->db->get();
+	}
+
+	public function count_with_filter($text){
+		$this->db->select($this->id);
+		$this->fn_query_datatable_base();
+		$this->db->like('a.nombres',$text);
+		$this->db->or_like('a.apellido_paterno',$text);
+		$this->db->or_like('a.apellido_materno',$text);
+		$this->db->or_like('c.numeracion',$text);
+		$this->db->or_like('s.comentario',$text);
+		$this->db->or_like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
+		return $this->db->get()->num_rows();
+	}
+
+	private function fn_query_datatable_base(){
+		$this->fn_db_select();
+		$this->db->from($this->tbl_solicitud.' s')
+		->join('alumno a','s.alumno=a.id_alumno','left')
+		->join('curso c' , 's.programa=c.id_curso','left')
+		->join('tipo_curso tc' ,'c.idTipo_curso=tc.idTipo_Curso','left')
+		->where(array(
+			's.'.$this->sent.' IS NULL'=>NULL,
+		))
+		->order_by('s.'.$this->id,'desc')
+		;
+	}
+
+	private function fn_db_select(){
+		$this->db->select('tc.nombre as nombretipoCurso,'.
+		's.idSolicitud as idSolicitud,'.
+		's.estado estado,s.programa,'.
+		's.alumno as alumno,'.
+		's.tipo_financiamiento,'.
+		's.fecha_registro,'.
+		'a.documento,'.
+		'a.nombres,'.
+		'a.apellido_paterno,'.
+		'a.apellido_materno,'.
+		'c.nombre curso_nombre,'.
+		'c.numeracion curso_numeracion ,'.
+		's.marcaPago ,'.
+		' s.comentario');
+	}
+
+	public function count_sent_less(){
+		$this->db->select($this->id)->from($this->tbl_solicitud)->where(array(
+			$this->sent.' IS NULL'=>NULL,
+		));
+		return $this->db->get()->num_rows();
+		
+	}
+
 	public function marcar(){
 		$id=$this->input->post('id');
 		$sql = "UPDATE solicitud SET estado='1' WHERE idSolicitud=?";
