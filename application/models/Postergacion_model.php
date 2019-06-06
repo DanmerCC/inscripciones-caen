@@ -8,7 +8,8 @@ class Postergacion_model extends MY_Model{
 
     private $id="id_postergacon";
     private $fecha_anterior = 'desde';
-    private $nuevo_inicio="nuevo_inicio";
+	private $nuevo_inicio="nuevo_inicio";
+	private $nuevo_termino='nuevo_termino';
     private $author="author_id";
     private $comentario="comentario";
     private $curso_id="curso_id";
@@ -27,14 +28,15 @@ class Postergacion_model extends MY_Model{
      * @var DateTime fecha fecha en formato
      * @var String comentario
      */
-    public function create($curso_id,$fecha_anterior,$fecha_nueva,$autor,$comentario=""){
+    public function create($curso_id,$fecha_anterior,$fecha_nueva,$autor,$nuevo_termino,$comentario=""){
         $data=array(
             $this->id => NULL,
             $this->fecha_anterior=>$fecha_anterior,
 			$this->nuevo_inicio => $fecha_nueva,
 			$this->author => $autor,
             $this->comentario => $comentario,
-            $this->curso_id=>$curso_id
+			$this->curso_id=>$curso_id,
+			$this->nuevo_termino=>$nuevo_termino
 		);
 		$this->db->insert($this->table,$data);
 		$ultimoId = $this->db->insert_id();

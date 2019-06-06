@@ -246,7 +246,7 @@ class Programa_model extends CI_Model
 		}
 	}
 
-	public function postergar($curso_id,$fecha_nueva,$comentario=""){
+	public function postergar($curso_id,$fecha_nueva,$nuevo_termino,$comentario=""){
 		$this->verifyLogin();
 		$idUser=$this->nativesession->get('idUsuario');
 		$this->load->model('Postergacion_model');
@@ -262,6 +262,7 @@ class Programa_model extends CI_Model
 			$programa[$this->fecha_inicio],
 			$fecha_nueva,
 			$idUser,
+			$nuevo_termino,
 			$comentario
 		);
 		$data = array(

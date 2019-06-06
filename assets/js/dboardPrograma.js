@@ -296,13 +296,14 @@ function getDate(){
 }
 
 function postergacion(id,obj){
-    if(validarFormatoFecha($("#"+$(obj).data('input')).val())){
+    if(validarFormatoFecha($("#"+$(obj).data('inputinit')).val())&&validarFormatoFecha($("#"+$(obj).data('inputend')).val())){
         $.ajax({
             type: "post",
             url: "/administracion/programa/postergar",
             data: {
                 "programa_id":id,
-                "nueva_fecha":$("#"+$(obj).data('input')).val()
+				"nueva_fecha":$("#"+$(obj).data('inputinit')).val(),
+				"nueva_fecha_final":$("#"+$(obj).data('inputend')).val()
             },
             dataType: "json",
             success: function (response) {
@@ -317,7 +318,15 @@ function postergacion(id,obj){
             }
         });
     }else{
-        show_error_msg("Fecha erronea");
+		if($("#"+$(obj).data('inputinit')).val()==""){
+			show_error_msg("fecha de inicio incompleta");
+		}
+		else if($("#"+$(obj).data('inputend')).val()==""){
+			show_error_msg("fecha de termino incompleta");
+		}else{
+			show_error_msg("Error al validar una fecha ");
+		}
+        
     }
     
 }

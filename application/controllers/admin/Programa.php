@@ -93,10 +93,16 @@ class Programa extends MY_Controller
 					<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Postergaciones <b class='caret'></b></a>
 					<ul class='dropdown-menu'>
 						<form id='form-'>
-							<label >Nueva fecha<label>
-							<input id='n_date".$id."' class='form-control' name='new_date' type='date' />
+							<div class='form-group'>
+							<label for='n_start".$id."' >Nueva fecha<label>
+							<input id='n_start".$id."' class='form-control' name='new_date' type='date' />
+							</div>
+							<div class='form-group'>
+							<label for='n_end".$id."' >Nueva fecha final<label>
+							<input id='n_end".$id."' class='form-control' name='new_date' type='date' />
+							</div>
 						<form>
-						<li data-input='n_date$id' onclick='postergacion($id,this);'><div class='btn btn-primary'>postergar curso</div></li>
+						<li data-inputinit='n_start$id' data-inputend='n_end$id' onclick='postergacion($id,this);'><div class='btn btn-primary'>postergar curso</div></li>
 					</ul>
 				</li>
 				</ul>";
@@ -210,8 +216,10 @@ class Programa extends MY_Controller
 	
 	public function postergar(){
 		$programa_id=$this->input->post('programa_id');
-		$nueva_fecha=$this->input->post('nueva_fecha');
-		$this->response($this->Programa_model->postergar($programa_id,$nueva_fecha));
+		$nueva_fecha_inicio=$this->input->post('nueva_fecha');
+		$nueva_fecha_final=$this->input->post('nueva_fecha_final');
+		
+		$this->response($this->Programa_model->postergar($programa_id,$nueva_fecha_inicio,$nueva_fecha_final));
 	}
 
 }
