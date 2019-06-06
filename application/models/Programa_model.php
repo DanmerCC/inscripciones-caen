@@ -266,8 +266,8 @@ class Programa_model extends CI_Model
 			$comentario
 		);
 		$data = array(
-			$this->fecha_inicio=>$fecha_nueva
-			//$this->fecha_final=>$programa[$this->fecha_inicio]
+			$this->fecha_inicio=>$fecha_nueva,
+			$this->fecha_final=>$nuevo_termino
 		);
 
 		$this->db->where($this->id, $curso_id);
