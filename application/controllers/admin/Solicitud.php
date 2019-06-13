@@ -95,7 +95,7 @@ class Solicitud extends CI_Controller
                             ');">'.
                             '<i class="fa fa-user-plus" aria-hidden="true"></i></button>'
                             ,
-                "2" => $rspta[$i]["nombres"].$rspta[$i]["idSolicitud"],
+                "2" => $rspta[$i]["nombres"],
                 "3" => $rspta[$i]["apellido_paterno"],
                 "4" => $rspta[$i]["apellido_materno"],
                 "5" => $rspta[$i]["tipo_financiamiento"],
