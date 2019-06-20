@@ -83,8 +83,13 @@
         <!-- /.col -->
       </div>
       <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Registrarse</button>
-        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-flat">Registrarse</button>
+      </div>
+      <div class="form-group">
+        <a class="btn btn-secundary btn-sm btn-block btn-flat" href="<?=base_url();?>">Ya tengo una cuenta</a>
+      </div>
+      
+      
     </form>
 
     <!-- <div class="social-auth-links text-center">
