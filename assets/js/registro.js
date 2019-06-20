@@ -38,8 +38,6 @@ function loadTipesOfPorgramas(){
 		success: function (response) {
 			for (var ii = 0; ii < response.length; ii++) {
 				if(defaultType==response[ii].idTipo_curso){
-					console.log (defaultType);
-					console.log(response[ii].idTipo_curso);
 					$("#slctTipoPrograma").append(option(response[ii].idTipo_curso,response[ii].nombre,true));
 				}else{
 					$("#slctTipoPrograma").append(option(response[ii].idTipo_curso,response[ii].nombre));
@@ -69,10 +67,8 @@ function onChangeType(){
 				if(defaultId==""){
 					$("#slctPrograma").html("<option value='' selected>Selecione un programa</option>");
 				}
-				console.log("buscando :"+defaultId);
 				for (var ii = 0; ii < response.length; ii++) {
 					if(response[ii].id_curso==defaultId){
-						console.log("coincidencia");
 						$("#slctPrograma").append(option(response[ii].id_curso,response[ii].numeracion+" "+response[ii].nombre,true));
 					}else{
 						$("#slctPrograma").append(option(response[ii].id_curso,response[ii].numeracion+" "+response[ii].nombre));
