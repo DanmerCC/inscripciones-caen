@@ -28,6 +28,8 @@ $(document).ready(function(){
 });
 
 function loadTipesOfPorgramas(){
+	var defaultType=$("#default-type").data('iddefaulttype');
+	 $("#slctTipoPrograma").append("<option value='' disabled selected>Elija Un Tipo de programa</option>");
 	$.ajax({
 		type: "get",
 		url: "/public/api/tipos",
@@ -35,15 +37,23 @@ function loadTipesOfPorgramas(){
 		dataType: "json",
 		success: function (response) {
 			for (var ii = 0; ii < response.length; ii++) {
-				$("#slctTipoPrograma").append(option(response[ii].idTipo_curso,response[ii].nombre));
+				if(defaultType==response[ii].idTipo_curso){
+					console.log (defaultType);
+					console.log(response[ii].idTipo_curso);
+					$("#slctTipoPrograma").append(option(response[ii].idTipo_curso,response[ii].nombre,true));
+				}else{
+					$("#slctTipoPrograma").append(option(response[ii].idTipo_curso,response[ii].nombre));
+				}
+				$("#slctTipoPrograma").trigger('change');
 			}
 			
 		}
 	});
 }
 
-function  option(id,value){
-	return "<option value='"+id+"'>"+value+"</option>";
+function  option(id,value,selected=false){
+	var properties_select=selected?"selected='selected'":"";
+	return "<option value='"+id+"' "+properties_select+">"+value+"</option>";
 }
 
 function onChangeType(){
@@ -55,12 +65,24 @@ function onChangeType(){
 			data: "",
 			dataType: "json",
 			success: function (response) {
-				$("#slctPrograma").html("<option value='' selected>Selecione un programa</option>");
+				var defaultId=$("#default-course").data("iddefault");
+				if(defaultId==""){
+					$("#slctPrograma").html("<option value='' selected>Selecione un programa</option>");
+				}
+				console.log("buscando :"+defaultId);
 				for (var ii = 0; ii < response.length; ii++) {
-					$("#slctPrograma").append(option(response[ii].id_curso,response[ii].numeracion+" "+response[ii].nombre));
+					if(response[ii].id_curso==defaultId){
+						console.log("coincidencia");
+						$("#slctPrograma").append(option(response[ii].id_curso,response[ii].numeracion+" "+response[ii].nombre,true));
+					}else{
+						$("#slctPrograma").append(option(response[ii].id_curso,response[ii].numeracion+" "+response[ii].nombre));
+					}
+					
 				}
 			}
 		});
 	}
 	
 }
+
+

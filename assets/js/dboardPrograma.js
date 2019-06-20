@@ -351,3 +351,19 @@ function show_error_msg(msg,tiempo=null){
     }
 
 }
+
+
+function copy_clipboard(object){
+	var copyText = $(object).data('url');
+	console.log(copyText);
+
+    var el = document.createElement('textarea');
+    el.value = copyText;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+
+	/* Alert the copied text */
+	alert("Copied the text: " + copyText.value);
+}

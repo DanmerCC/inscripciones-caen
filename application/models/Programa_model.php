@@ -288,5 +288,20 @@ class Programa_model extends CI_Model
 			return true;
 		}
 	}
+
+	public function findById($id){
+		$this->db->select()->from($this->table)->where($this->id,$id);
+		$result=$this->db->get();
+		if($result->num_rows()!==1){
+			return false;
+		}else{
+			return $result->result_array()[0];
+		}
+	}
+
+	public function types(){
+		$this->db->select()->from('tipo_curso');
+		return $this->db->get()->result_array();
+	}
 	
 }

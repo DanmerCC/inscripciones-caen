@@ -68,7 +68,8 @@ class Programa extends MY_Controller
 	    foreach ($rspta as $value) {
 	            $data[] = array(
 	            "0" => ' <button class="btn btn-warning" onclick="mostrarFormPro(' .$value["id_curso"]. ')"><i class= "fa fa-pencil"></i></button>'.(($value["estado"]=='0')?' <button class="btn btn-alert"   title="" onclick="activarPrograma('.$value["id_curso"].')"><i class="fa fa-eye-slash" aria-hidden="true"></i></button>':
-	            ' <button class="btn btn-primary" onclick="desactivarPrograma('.$value["id_curso"].')"><i class="fa fa-eye" aria-hidden="true"></i></button>'),
+				' <button class="btn btn-primary" onclick="desactivarPrograma('.$value["id_curso"].')"><i class="fa fa-eye" aria-hidden="true"></i></button>').
+				(($value["estado"]=='1')?$this->html_link($value["id_curso"]):""),
 	            "1" => $value["numeracion"]." ".$value["nombre"],
 	            "2" => $value["duracion"],
 	            "3" => $value["costo_total"],
@@ -222,4 +223,17 @@ class Programa extends MY_Controller
 		$this->response($this->Programa_model->postergar($programa_id,$nueva_fecha_inicio,$nueva_fecha_final));
 	}
 
+	public function html_link($id_programa){
+		$link_base=base_url()."registro?dp=".$id_programa;
+		return "<ul class=''>
+		<li class='dropdown'>
+			<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Link registro directo <b class='caret'></b></a>
+
+			<ul class='dropdown-menu' onclick='copy_clipboard(this)' data-url='$link_base'>
+			
+				$link_base
+			</ul>
+		</li>
+		</ul>";
+	}
 }

@@ -15,7 +15,6 @@
   <div class="register-logo">
     <img src="assets/img/logo-caen.png" alt="">
   </div>
-
   <div class="sin-bordes register-box-body ">
     <p class="login-box-msg">Registrate aqui</p>
 
@@ -53,14 +52,16 @@
         <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
+        <div data-iddefaultType="<?=(isset($defaultIdProgramType)?$defaultIdProgramType:'')?>" id="default-type"></div>
+        <div data-iddefault="<?=(isset($defaultIdProgram)?$defaultIdProgram:'')?>" id="default-course"></div>
         <select class="form-control" name="tipo_programa_id" id="slctTipoPrograma" required>
-          <option value="" disabled selected>Elija Un Tipo de programa</option>
+          
         </select>
         <span class="glyphicon glyphicon-education form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
         <select class="form-control" name="programa_id" id="slctPrograma" required>
-          <option value="" disabled selected>No has seleccionado el tipo</option>
+          <option value="" >No seleccionaste el tipo</option>
         </select>
         <span class="glyphicon glyphicon-education form-control-feedback"></span>
       </div>

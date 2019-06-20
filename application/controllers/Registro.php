@@ -12,9 +12,27 @@ class Registro extends CI_Controller
 
     public function index()
     {
+        $this->load->model('Programa_model');
+        $tipos=$this->Programa_model->types();
+        if(isset($_GET["dp"])){
+            $programa_defecto=$this->Programa_model->findById($_GET["dp"]);
+            
+            $id_programa_defecto=$programa_defecto["id_curso"];
+            $typo_defecto=$programa_defecto["idTipo_curso"];
+
+            if($programa_defecto["estado"]==="0"){
+                $id_programa_defecto=null;
+                $typo_defecto=null;
+            }
+        }else{
+            $id_programa_defecto=null;
+            $typo_defecto=null;
+        }
         $data['cabecera'] = $this->load->view('adminlte/linksHead', '', true);
         $data['footer']   = $this->load->view('adminlte/scriptsFooter', '', true);
-
+        $data['defaultIdProgram']=$id_programa_defecto;
+        $data['defaultIdProgramType']=$typo_defecto;
+        $data['tipos']=$tipos;
         $this->load->view('register', $data);
     }
 
