@@ -375,6 +375,7 @@
                             <h4 class="panel-title">
                                 <span class="glyphicon glyphicon-plus-sign"></span>
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse9">DOCUMENTOS ADJUNTOS</a>
+                                <i class="fa fa-fw fa-file-pdf-o"></i>
                             </h4>
                         </div>
                         <div id="collapse9" class="panel-collapse collapse">
