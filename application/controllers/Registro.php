@@ -8,6 +8,7 @@ class Registro extends CI_Controller
     {
         parent::__construct();
         $this->load->helper('url');
+        $this->load->library('Nativesession');
     }
 
     public function index()
@@ -77,11 +78,21 @@ class Registro extends CI_Controller
             
 
             if($this->User_model->registrar($id_usuario_dni, $email, $password, $alumno)){
-                $this->Alumno_model->nuevaSolicitud($programa_id, $alumno, $tipoFinan);
-                $data["heading"]="Se registro correctamente";
-                $data["message"]="Su cuenta  $id_usuario_dni a sido registrada correctamente";
-                $data["seconds"]="5";
-                $data["url"]="/postulante";
+                if($this->Alumno_model->nuevaSolicitud($programa_id, $alumno, $tipoFinan)){
+                    $nuevo_alumno=$this->Alumno_model->find($alumno);
+                    $this->nativesession->regenerateId();
+					$this->nativesession->set('idAlumno',$nuevo_alumno["id_alumno"]);
+					$this->nativesession->set('idUsuario',$nuevo_alumno["usuario_id"]);
+					$this->nativesession->set('dni',$nuevo_alumno["documento"]);
+					$this->nativesession->set('estado','logeado');
+					$this->nativesession->set('tipo',$nuevo_alumno["tipo"]);
+                    
+                    $data["heading"]="Se registro correctamente";
+                    $data["message"]="Su cuenta  $id_usuario_dni a sido registrada correctamente";
+                    $data["seconds"]="5";
+                    $data["url"]="/postulante";    
+                }
+                
                 $this->load->view('errors/custom/flash_msg',$data);
             }else{
                 $data["heading"]="Ah ocurrido un error ";

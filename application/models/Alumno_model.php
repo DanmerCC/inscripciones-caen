@@ -329,7 +329,7 @@ class Alumno_model extends CI_Model
 			'tipo_financiamiento' => "$tipo_financiamiento"
 		);
 		$this->db->insert('solicitud',$data);
-
+		return $this->db->affected_rows()==1;
 	}
 
 	public function solicitudes($id){
@@ -527,5 +527,19 @@ class Alumno_model extends CI_Model
 		}
 	}
 
+	//return array object to alumno
+	public function find($id){
+		$this->db->select('a.*,u.acceso as usuario_id,u.tipo')
+		->from($this->table.' a')
+		->join('tipodocumento t','a.idTipoDocumento = t.idTipoDocumento')
+		->join('usuario u','a.id_alumno = u.alumno','left')
+		->where($this->id,$id);
+		$result=$this->db->get();
+		if($result->num_rows()==1){
+			return $result->result_array()[0];
+		}else{
+			return null;
+		}
+	}
 
 }
