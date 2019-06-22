@@ -45,7 +45,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">DATOS PERSONALES</a>
                             </h4>
                         </div>
-                        <div id="collapse1" class="panel-collapse collapse in">
+                        <div id="collapse1" class="panel-collapse collapse">
                             <div class="panel-body">
 
                                 <div class="panel-body">
@@ -232,7 +232,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">DATOS LABORALES</a>
                             </h4>
                         </div>
-                        <div id="collapse2" class="panel-collapse collapse">
+                        <div id="collapse2" class="panel-collapse collapse in">
                             <form action="postulante/guardar/laboral" method="POST" id="formInfLaboral">
                                 <div class="panel-body">
                                     <div class="form-group">

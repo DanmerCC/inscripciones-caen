@@ -144,7 +144,7 @@ var configuracion = function(){
 		
 	});
 
-	/*Efecto de desactivar */
+	/*Efecto de desactivar 
 	relacionarColapseLi('#aInfPersonal','#collapse1');
 	relacionarColapseLi('#aInfAcademica','#collapse2');
 	relacionarColapseLi('#aInfLaboral','#collapse3');
@@ -154,7 +154,7 @@ var configuracion = function(){
     relacionarColapseLi('#aDocs','#collapse9');
     relacionarColapseLi('#formatesPanel','#collapse10');
     relacionarColapseLi('#aInfOtros','#collapse11');
-    
+    */
 	reflejarDatos("#t_enfermedad_asma");
 	reflejarDatos("#t_enfermedad_arterial");
 	reflejarDatos("#t_enfermedad_diabetes");

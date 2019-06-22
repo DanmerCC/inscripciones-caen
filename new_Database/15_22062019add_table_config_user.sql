@@ -1,0 +1,8 @@
+CREATE TABLE `config_perfil_user` (
+  `id_config_perfil_user` int(11) NOT NULL,
+  `acordion_default_name` varchar(25) NOT NULL,
+  `usuario_id` int(10) NOT NULL
+)
+
+ALTER TABLE `config_perfil_user` ADD INDEX(`usuario_id`);
+ALTER TABLE `config_perfil_user` CHANGE `usuario_id` `usuario_id` INT(10) UNSIGNED NOT NULL;

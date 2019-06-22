@@ -7,10 +7,16 @@ class Postulante extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->library('Nativesession');
+		$this->load->library('ConfigClass');
+		$this->load->model('ConfigPerfil_model');
 	}
 
 	public function index()
 	{
+		var_dump($this->ConfigPerfil_model->getObejct());
+		exit;
+		$config=new Config_Acordion();
+		
 		if($this->nativesession->get("estado")=="logeado"){
 
 			$this->load->model('Alumno_model');
@@ -55,58 +61,8 @@ class Postulante extends CI_Controller {
 				$data["nacionalidad"]=$result[0]["nacionalidad"];
 				$data["paises"]=$this->Pais_model->all();
 				$opciones["rutaimagen"]=$identity["rutaimagen"];
-				$opciones["menu"]=[
-					[
-					"text"=>"Mi informacion",
-					"submenu"=>[
-							[
-								"text"=>"Informacion Personal",
-								"atributos"=>"id='aInfPersonal' data-toggle='collapse' data-parent='#accordion' href='#collapse1' class='default-click'",
-								"default"=>"default"
-							],
-							[
-								"text"=>"Laboral",
-								"atributos"=>"id='aInfAcademica' data-toggle='collapse' data-parent='#accordion' href='#collapse2'"
-							],
-							[
-								"text"=>"Documentos",
-								"atributos"=>"id='aDocs' data-toggle='collapse' data-parent='#accordion' href='#collapse9'"
-							],
-							[
-								"text"=>"Formatos",
-								"atributos"=>"id='formatesPanel' data-toggle='collapse' data-parent='#accordion' href='#collapse10'"
-							],
-							[
-								"text"=>"Academica",
-								"atributos"=>"id='aInfLaboral' data-toggle='collapse' data-parent='#accordion' href='#collapse3'"
-							],
-							[
-								"text"=>"Salud",
-								"atributos"=>"id='aInfSalud' data-toggle='collapse' data-parent='#accordion' href='#collapse7'"
-							],
-							[
-								"text"=>"Referencias",
-								"atributos"=>"id='aInfReferencias' data-toggle='collapse' data-parent='#accordion' href='#collapse6'"
-							],
-							[
-								"text"=>"Otros",
-								"atributos"=>"id='aInfOtros' data-toggle='collapse' data-parent='#accordion' href='#collapse11'"
-							]
-						],
-					"active"=>true
-					],
-					[
-					"text"=>"Mis solicitudes",
-					"submenu"=>[
-							[
-								"text"=>"Todas",
-								"atributos"=>"id='aSolicitudes' data-toggle='collapse' data-parent='#accordion' href='#collapse8'"
-							]
-						],
-					"active"=>true
-					],
-				];
-				$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
+				$opciones["menu"]=[];
+				$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar2',$opciones,TRUE);
 				$this->load->view('profile',$data);
 
 			}else{
