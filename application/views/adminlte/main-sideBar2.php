@@ -32,55 +32,55 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                                
-                    <li class="">
+                    <li class="<?=($config_acordion[Config_Acordion::$first_acordion])?"active":""?>">
                       <a id="aInfPersonal" data-toggle="collapse" data-parent="#accordion" href="#collapse1" class="default-click">
                         <i class="fa fa-circle-o"></i> Informacion Personal                      </a>
                     </li>
                   
                                   
-                    <li class="">
+                    <li class="<?=($config_acordion[Config_Acordion::$second_acordion])?"active":""?>">
                       <a id="aInfAcademica" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
                         <i class="fa fa-circle-o"></i> Laboral                      </a>
                     </li>
                   
                                   
-                    <li class="">
-                      <a id="aDocs" data-toggle="collapse" data-parent="#accordion" href="#collapse9">
-                        <i class="fa fa-circle-o"></i> Documentos                      </a>
-                    </li>
-                  
-                                  
-                    <li class="">
-                      <a id="formatesPanel" data-toggle="collapse" data-parent="#accordion" href="#collapse10">
-                        <i class="fa fa-circle-o"></i> Formatos                      </a>
-                    </li>
-                  
-                                  
-                    <li class="">
+                    <li class="<?=($config_acordion[Config_Acordion::$third_acordion])?"active":""?>">
                       <a id="aInfLaboral" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
                         <i class="fa fa-circle-o"></i> Academica                      </a>
                     </li>
                   
                                   
-                    <li class="">
+                    <li class="<?=($config_acordion[Config_Acordion::$quarter_acordion])?"active":""?>">
                       <a id="aInfSalud" data-toggle="collapse" data-parent="#accordion" href="#collapse7">
                         <i class="fa fa-circle-o"></i> Salud                      </a>
                     </li>
                   
                                   
-                    <li class="">
+                    <li class="<?=($config_acordion[Config_Acordion::$fifth_acordion])?"active":""?>">
                       <a id="aInfReferencias" data-toggle="collapse" data-parent="#accordion" href="#collapse6">
                         <i class="fa fa-circle-o"></i> Referencias                      </a>
                     </li>
                   
                                   
-                    <li class="">
+                    <li class="<?=($config_acordion[Config_Acordion::$sixth_acordion])?"active":""?>">
                       <a id="aInfOtros" data-toggle="collapse" data-parent="#accordion" href="#collapse11">
                         <i class="fa fa-circle-o"></i> Otros                      </a>
                     </li>
                   
-                            </ul>
+                  
+                                  
+                    <li class="<?=($config_acordion[Config_Acordion::$seventh_acordion])?"active":""?>">
+                      <a id="aDocs" data-toggle="collapse" data-parent="#accordion" href="#collapse9">
+                        <i class="fa fa-circle-o"></i> Documentos                      </a>
+                    </li>
+                  
+                                  
+                    <li class="<?=($config_acordion[Config_Acordion::$eighth_acordion])?"active":""?>">
+                      <a id="formatesPanel" data-toggle="collapse" data-parent="#accordion" href="#collapse10">
+                        <i class="fa fa-circle-o"></i> Formatos                      </a>
+										</li>
+										
+                </ul>
             </li>
             <li class="treeview active menu-open">
               <a href="#">
@@ -91,7 +91,7 @@
               </a>
               <ul class="treeview-menu">
                                 
-                    <li class="">
+                    <li class="<?=($config_acordion[Config_Acordion::$nineth_acordion])?"active":""?>">
                       <a id="aSolicitudes" data-toggle="collapse" data-parent="#accordion" href="#collapse8">
                         <i class="fa fa-circle-o"></i> Todas                      </a>
                     </li>

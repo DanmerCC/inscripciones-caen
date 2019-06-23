@@ -13,9 +13,7 @@ class Postulante extends CI_Controller {
 
 	public function index()
 	{
-		var_dump($this->ConfigPerfil_model->getObejct());
-		exit;
-		$config=new Config_Acordion();
+		$config_acordion=$this->ConfigPerfil_model->getConfigAcordion();
 		
 		if($this->nativesession->get("estado")=="logeado"){
 
@@ -60,8 +58,13 @@ class Postulante extends CI_Controller {
 				$data["lista"]=$result[$i];
 				$data["nacionalidad"]=$result[0]["nacionalidad"];
 				$data["paises"]=$this->Pais_model->all();
+				$data["config_acordion"]=$config_acordion;
+
 				$opciones["rutaimagen"]=$identity["rutaimagen"];
 				$opciones["menu"]=[];
+				$opciones["config_acordion"]=$config_acordion;
+
+
 				$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar2',$opciones,TRUE);
 				$this->load->view('profile',$data);
 
@@ -264,8 +267,9 @@ class Postulante extends CI_Controller {
 					$situacion_militar,
 					$si_militar
 				);
+		$this->ConfigPerfil_model->setAcordion(Config_Acordion::$second_acordion);
 		redirect(base_url().'postulante', 'refresh');
-
+		
 	}
 
 	public function cargaLaboral(){
@@ -314,7 +318,7 @@ class Postulante extends CI_Controller {
 		$curso_maestria,
 		$indicar2,
 		$situacion_laboral);
-
+		$this->ConfigPerfil_model->setAcordion(Config_Acordion::$third_acordion);
 		redirect(base_url().'postulante', 'refresh');
 
 
@@ -350,6 +354,7 @@ class Postulante extends CI_Controller {
 		$doctorado_obtenido,
 		$universidad_doctor,
 		$fecha_doctor);
+		$this->ConfigPerfil_model->setAcordion(Config_Acordion::$quarter_acordion);
 		redirect(base_url().'postulante', 'refresh');
 	}
 
@@ -389,7 +394,7 @@ class Postulante extends CI_Controller {
 		$emergencia_familiar,
 		$telefono_familiar,
 		$parentesco,$desc_discapacidad);
-
+		$this->ConfigPerfil_model->setAcordion(Config_Acordion::$fifth_acordion);
 		redirect(base_url().'postulante', 'refresh');
 	}
 
@@ -402,7 +407,7 @@ class Postulante extends CI_Controller {
 
 		$this->load->model('Alumno_model');
 		$this->Alumno_model->updateInformacionReferencias($id,$referencia_personal1,$referencia_personal2);
-
+		$this->ConfigPerfil_model->setAcordion(Config_Acordion::$sixth_acordion);
 		redirect(base_url().'postulante', 'refresh');
 	}
 
@@ -411,6 +416,7 @@ class Postulante extends CI_Controller {
 		$def_patria=($this->input->post('def_patria')=='1');
 		$def_democracia=($this->input->post('def_democracia')=='1');
 		$this->Alumno_model->updateOtros($def_patria,$def_democracia);
+		$this->ConfigPerfil_model->setAcordion(Config_Acordion::$seventh_acordion);
 		redirect(base_url().'postulante', 'refresh');
 	}
 
@@ -435,7 +441,7 @@ class Postulante extends CI_Controller {
 			$tipo_financiamiento=$this->input->post('tipoFinan');
 			$this->load->model('Alumno_model');
 			$this->Alumno_model->nuevaSolicitud($programa,$alumno,$tipo_financiamiento);
-
+			$this->ConfigPerfil_model->setAcordion(Config_Acordion::$nineth_acordion);
 			redirect(base_url().'postulante', 'refresh');
 		}
 

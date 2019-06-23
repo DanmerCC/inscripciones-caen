@@ -38,6 +38,7 @@
     <section class="content">
               <div class="container">   
                   <div class="panel-group" id="accordion">
+					<!--DATOS PERSONALES-->
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
@@ -45,7 +46,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">DATOS PERSONALES</a>
                             </h4>
                         </div>
-                        <div id="collapse1" class="panel-collapse collapse">
+                        <div id="collapse1" class="panel-collapse collapse <?=($config_acordion[Config_Acordion::$first_acordion])?"in":"";?>">
                             <div class="panel-body">
 
                                 <div class="panel-body">
@@ -216,7 +217,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <button type="sumbit" class="btn btn-primary btn-lg right" id="btnPersonal">Guardar</button>
+                                                <button type="sumbit" class="btn btn-primary btn-lg right" id="btnPersonal">Guardar y seguir<i class="fa fa-fw fa-arrow-down"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -224,7 +225,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+					</div>
+					<!--DATOS PERSONALES-->
+
+					<!--DATOS LABORALES-->
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
@@ -232,7 +236,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">DATOS LABORALES</a>
                             </h4>
                         </div>
-                        <div id="collapse2" class="panel-collapse collapse in">
+                        <div id="collapse2" class="panel-collapse collapse <?=($config_acordion[Config_Acordion::$second_acordion])?"in":"";?>">
                             <form action="postulante/guardar/laboral" method="POST" id="formInfLaboral">
                                 <div class="panel-body">
                                     <div class="form-group">
@@ -360,7 +364,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <button type="sumbit" class="btn btn-primary btn-lg right" id="btnLaboral">Guardar</button>
+                                                <button type="sumbit" class="btn btn-primary btn-lg right" id="btnLaboral">Guardar y seguir<i class="fa fa-fw fa-arrow-down"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -368,154 +372,9 @@
                             </form>
                         </div>
                     </div>
-                    <!--agregado -->
-                    
-					<div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <span class="glyphicon glyphicon-plus-sign"></span>
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse9">DOCUMENTOS ADJUNTOS</a>
-                                <i class="fa fa-fw fa-file-pdf-o"></i>
-                            </h4>
-                        </div>
-                        <div id="collapse9" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                <p style="font-style: oblique; font-weight: 700;">
-                                Nota: <br> 
-                                - Los documentos a subir deben estar en un único archivo y en formato PDF. <br>
-                                - Las constancias de estudios a subir deben estar verificadas por la SUNEDU.
-                                </p>
-                                    <div class="col-sm-6">
-                                        <div id="containerBoxCV">
-                                            PDF
-                                            <!--box-->
-                                            
-                                            <!--box-->
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div id="containerBoxDJ">
-                                            <!--box-->
+                    <!--DATOS LABORALES-->
 
-                                            <!--box-->
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div id="containerBoxCopys">
-                                            <!--box-->
-                                            
-                                            <!--box-->
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div id="containerBoxBachiller">
-                                            <!--box-->
-                                            
-                                            <!--box-->
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div id="containerBoxMaestria">
-                                            <!--box-->
-                                            
-                                            <!--box-->
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div id="containerBoxDoctorado">
-                                            <!--box-->
-                                            
-                                            <!--box-->
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div id="containerBoxSolicitud">
-                                            <!--box-->
-                                            
-                                            <!--box-->
-                                        </div>
-									</div>
-									<div class="col-sm-12">
-                                        <div id="contentSolicitudesDocument">
-                                            <!--box-->
-                                            
-                                            <!--box-->
-                                        </div>
-                                    </div>
-								</div>
-                        </div>
-                    </div>
-                    <!--Panel formatos-->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <span class="glyphicon glyphicon-plus-sign"></span>
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse10">FORMATOS</a>
-                            </h4>
-                        </div>
-                        <div id="collapse10" class="panel-collapse collapse">
-                            <div class="">
-                                <div class="panel-body">
-                                    <div class="box">
-                                        <div class="box-header with-border">
-                                            <h3 class="box-title">Puede descargar los siguientes formatos</h3>
-                                        </div>
-                                        <!-- /.box-header -->
-                                        <div class="box-body">
-                                            <table class="table table-bordered">
-                                                <tbody>
-                                                    <tr>
-                                                        <th style="width: 10px">#</th>
-                                                        <th>Nombre</th>
-                                                        <th>Descarga</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>1.</td>
-                                                        <td>Hoja de datos</td>
-                                                        <td>
-                                                            <div class="col-md-12">
-                                                                <div class="form-group">
-                                                                <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Solicitud-de-Inscripci%C3%B3n.xls" download>Hoja de datos</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2.</td>
-                                                        <td>Solicitud de Admision</td>
-                                                        <td>
-                                                            <div class="col-md-12">
-                                                                <div class="form-group">
-                                                                    <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Solicitud-de-Admisi%C3%B3n.docx" download>Descargar Solicitud de Admisión (Formato CAEN)</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3.</td>
-                                                        <td>Declaración Jurada de no tener antecedentes Penales, Judiciales ni policiales</td>
-                                                        <td>
-                                                            <div class="col-md-12">
-                                                                <div class="form-group">
-                                                                    <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Declaraci%C3%B3n-Jurada-Simple.docx" download>Descargar Declaración Jurada de no tener antecedentes Penales, Judiciales ni policiales (Formato CAEN).</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <!-- /.box-body -->
-                                </div>
-                                
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <!--End Panel formatos-->
-
-					<!--agregado -->
+					<!--DATOS ACADEMICOS-->
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
@@ -523,7 +382,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">DATOS ACADÉMICOS</a>
                             </h4>
                         </div>
-                        <div id="collapse3" class="panel-collapse collapse">
+                        <div id="collapse3" class="panel-collapse collapse <?=($config_acordion[Config_Acordion::$third_acordion])?"in":"";?>">
                             <form action="postulante/guardar/academico" method="post">
                                 <div class="panel-body">
                                     <div class="form-group">
@@ -597,14 +456,17 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <button type="sumbit" class="btn btn-primary btn-lg right" id="btnAcademico">Guardar</button>
+                                                <button type="sumbit" class="btn btn-primary btn-lg right" id="btnAcademico">Guardar y seguir<i class="fa fa-fw fa-arrow-down"></i></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                    </div>
+					</div>
+					<!--DATOS ACADEMICOS-->
+
+					<!--DATOS SALUD-->
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
@@ -612,7 +474,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">DATOS DE SALUD</a>
                             </h4>
                         </div>
-                        <div id="collapse7" class="panel-collapse collapse">
+                        <div id="collapse7" class="panel-collapse collapse <?=($config_acordion[Config_Acordion::$quarter_acordion])?"in":"";?>">
                             <form action="postulante/guardar/salud" method="post">
                                 <div class="panel-body">
                                     <div class="form-group">
@@ -763,14 +625,17 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <button type="submit" class="btn btn-primary btn-lg right" id="btnSalud">Guardar</button>
+                                                <button type="submit" class="btn btn-primary btn-lg right" id="btnSalud">Guardar y seguir<i class="fa fa-fw fa-arrow-down"></i></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                    </div>
+					</div>
+					<!--DATOS SALUD-->
+
+					<!--REFERENCIAS-->
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
@@ -778,7 +643,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">REFERENCIAS</a>
                             </h4>
                         </div>
-                        <div id="collapse6" class="panel-collapse collapse">
+                        <div id="collapse6" class="panel-collapse collapse <?=($config_acordion[Config_Acordion::$fifth_acordion])?"in":"";?>">
                             <form action="postulante/guardar/referencia" method="post" name="formulario" id="formularioRef" class="form-horizontal">
                                 <div class="panel-body"> 
                                     <div class="container form-group">
@@ -803,7 +668,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <button type="sumbit" class="btn btn-primary btn-lg right" id="btnRef">Guardar</button>
+                                                <button type="sumbit" class="btn btn-primary btn-lg right" id="btnRef">Guardar y seguir<i class="fa fa-fw fa-arrow-down"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -811,16 +676,209 @@
                             </form>         
                         </div>
                     </div>
+					<!--REFERENCIAS-->
 
-                    <!-- PARTE DEL DISEÑO A MODIFICAR -->
+
+                    <!--otros datos-->
                     <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse11">OTROS DATOS</a>
+                            </h4>
+                        </div>
+                        <div id="collapse11" class="panel-collapse collapse <?=($config_acordion[Config_Acordion::$sixth_acordion])?"in":"";?>">
+                            <form action="postulante/guardar/otros" method="post" name="formOtros" id="formOtros" class="form-horizontal">
+                                <div class=" panel-body">
+                                        <div class="container form-group">
+                                            <div class="row">
+                                                <div class="col-sm-10">
+                                                    <label>Marque de corresponder<span style="color: red"></span></label>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                        <input type="checkbox" name="def_patria" id="def_patria" value="1">
+                                                            Soy Defensor de la patria
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                        <input type="checkbox" name="def_democracia" id="def_democracia" value="1">
+                                                            Soy Defensor de la democracia
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <button type="sumbit" class="btn btn-primary btn-lg right" id="btnOtros">Guardar y seguir<i class="fa fa-fw fa-arrow-down"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                           
+                                </div>
+                            </form>         
+                        </div>
+                    </div>
+					<!--otros datos-->
+					
+					
+					<!--DOCUMENTOS ADJUNTOS-->
+					<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse9">DOCUMENTOS ADJUNTOS</a>
+                                <i class="fa fa-fw fa-file-pdf-o"></i>
+                            </h4>
+                        </div>
+                        <div id="collapse9" class="panel-collapse collapse <?=($config_acordion[Config_Acordion::$seventh_acordion])?"in":"";?>">
+                                <div class="panel-body">
+                                <p style="font-style: oblique; font-weight: 700;">
+                                Nota: <br> 
+                                - Los documentos a subir deben estar en un único archivo y en formato PDF. <br>
+                                - Las constancias de estudios a subir deben estar verificadas por la SUNEDU.
+                                </p>
+                                    <div class="col-sm-6">
+                                        <div id="containerBoxCV">
+                                            PDF
+                                            <!--box-->
+                                            
+                                            <!--box-->
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div id="containerBoxDJ">
+                                            <!--box-->
+
+                                            <!--box-->
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div id="containerBoxCopys">
+                                            <!--box-->
+                                            
+                                            <!--box-->
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div id="containerBoxBachiller">
+                                            <!--box-->
+                                            
+                                            <!--box-->
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div id="containerBoxMaestria">
+                                            <!--box-->
+                                            
+                                            <!--box-->
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div id="containerBoxDoctorado">
+                                            <!--box-->
+                                            
+                                            <!--box-->
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div id="containerBoxSolicitud">
+                                            <!--box-->
+                                            
+                                            <!--box-->
+                                        </div>
+									</div>
+									<div class="col-sm-12">
+                                        <div id="contentSolicitudesDocument">
+                                            <!--box-->
+                                            
+                                            <!--box-->
+                                        </div>
+                                    </div>
+								</div>
+                        </div>
+					</div>
+					<!--DOCUMENTOS ADJUNTOS-->
+
+                    <!--Panel formatos-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse10">FORMATOS</a>
+                            </h4>
+                        </div>
+                        <div id="collapse10" class="panel-collapse collapse <?=($config_acordion[Config_Acordion::$eighth_acordion])?"in":"";?>">
+                            <div class="">
+                                <div class="panel-body">
+                                    <div class="box">
+                                        <div class="box-header with-border">
+                                            <h3 class="box-title">Puede descargar los siguientes formatos</h3>
+                                        </div>
+                                        <!-- /.box-header -->
+                                        <div class="box-body">
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr>
+                                                        <th style="width: 10px">#</th>
+                                                        <th>Nombre</th>
+                                                        <th>Descarga</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1.</td>
+                                                        <td>Hoja de datos</td>
+                                                        <td>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Solicitud-de-Inscripci%C3%B3n.xls" download>Hoja de datos</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2.</td>
+                                                        <td>Solicitud de Admision</td>
+                                                        <td>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Solicitud-de-Admisi%C3%B3n.docx" download>Descargar Solicitud de Admisión (Formato CAEN)</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3.</td>
+                                                        <td>Declaración Jurada de no tener antecedentes Penales, Judiciales ni policiales</td>
+                                                        <td>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Declaraci%C3%B3n-Jurada-Simple.docx" download>Descargar Declaración Jurada de no tener antecedentes Penales, Judiciales ni policiales (Formato CAEN).</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+					<!--End Panel formatos-->
+					
+					<!-- SOLICITUDES-->
+					<div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <span class="glyphicon glyphicon-plus-sign"></span>
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse8">SOLICITUDES</a>
                             </h4>
                         </div>
-                        <div id="collapse8" class="panel-collapse collapse">
+                        <div id="collapse8" class="panel-collapse collapse <?=($config_acordion[Config_Acordion::$nineth_acordion])?"in":"";?>">
                             <form action="" method="post" name="formulario" id="formulario" class="form-horizontal">
                                 <div class=" panel-body">
                                         <div class="form-create">
@@ -857,49 +915,8 @@
                             </form>         
                         </div>
                     </div>
-                    <!-- FIN PARTE DEL DISEÑO A MODIFICAR -->
+                    <!-- SOLICITUDES-->
 
-                    <!--otros datos-->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <span class="glyphicon glyphicon-plus-sign"></span>
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse11">OTROS DATOS</a>
-                            </h4>
-                        </div>
-                        <div id="collapse11" class="panel-collapse collapse">
-                            <form action="postulante/guardar/otros" method="post" name="formOtros" id="formOtros" class="form-horizontal">
-                                <div class=" panel-body">
-                                        <div class="container form-group">
-                                            <div class="row">
-                                                <div class="col-sm-10">
-                                                    <label>Marque de corresponder<span style="color: red"></span></label>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                        <input type="checkbox" name="def_patria" id="def_patria" value="1">
-                                                            Soy Defensor de la patria
-                                                        </label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                        <input type="checkbox" name="def_democracia" id="def_democracia" value="1">
-                                                            Soy Defensor de la democracia
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <button type="sumbit" class="btn btn-primary btn-lg right" id="btnOtros">Guardar</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                           
-                                </div>
-                            </form>         
-                        </div>
-                    </div>
-                    <!--otros datos-->
                   </div><!-- end acordion -->
               </div>
 
