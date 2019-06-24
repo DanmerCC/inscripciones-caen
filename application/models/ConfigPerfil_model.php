@@ -68,11 +68,11 @@ class ConfigPerfil_model extends CI_Model {
 		$result=$this->db->get();
         if($result->num_rows()==0){
             $data=array(
-				'acordion_default_name'=>Config_Acordion::first_acordion,
+				'acordion_default_name'=>Config_Acordion::$first_acordion,
 				'usuario_id'=>$id_usuario
             );
 			$this->db->insert($this->table,$data);
-			$name_acordion_config=Config_Acordion::first_acordion;
+			$name_acordion_config=Config_Acordion::$first_acordion;
 		}else{
 			$name_acordion_config=$result->result_array()[0]['acordion_default_name'];
 		}
