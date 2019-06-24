@@ -13,10 +13,9 @@ class Postulante extends CI_Controller {
 
 	public function index()
 	{
-		$config_acordion=$this->ConfigPerfil_model->getConfigAcordion();
-		
 		if($this->nativesession->get("estado")=="logeado"){
-
+			$config_acordion=$this->ConfigPerfil_model->getConfigAcordion();
+			
 			$this->load->model('Alumno_model');
 			$alumno=$this->Alumno_model->all($this->nativesession->get("idAlumno"));
 
