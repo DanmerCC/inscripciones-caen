@@ -54,6 +54,17 @@ class User_model extends CI_Model
 		return ($this->db->affected_rows()==1);
 	}
 
+	public function byAlumno($id_alumno){
+		$this->db->select('id,acceso,alumno,tipo,tipousuario')
+		->from('usuario')
+		->where('alumno',$id_alumno);
+		$result=$this->db->get();
+		if($result->num_rows()!=1){
+			return null;
+		}
+		return $result->result_array()[0];
+	}
+
 
 }
 

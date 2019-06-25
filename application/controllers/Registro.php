@@ -79,9 +79,10 @@ class Registro extends CI_Controller
 
             if($this->User_model->registrar($id_usuario_dni, $email, $password, $alumno)){
                 $nuevo_alumno=$this->Alumno_model->find($alumno);
+                $nuevo_usuario=$this->User_model->byAlumno($nuevo_alumno["id_alumno"]);
                 $this->nativesession->regenerateId();
                 $this->nativesession->set('idAlumno',$nuevo_alumno["id_alumno"]);
-                $this->nativesession->set('idUsuario',$nuevo_alumno["usuario_id"]);
+                $this->nativesession->set('idUsuario',$nuevo_usuario["id"]);
                 $this->nativesession->set('dni',$nuevo_alumno["documento"]);
                 $this->nativesession->set('estado','logeado');
                 $this->nativesession->set('tipo',$nuevo_alumno["tipo"]);
