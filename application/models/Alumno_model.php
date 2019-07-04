@@ -451,6 +451,7 @@ class Alumno_model extends CI_Model
 	 */
 	public function getColumnsForAnalisis(){
 		return [
+			$this->id,
 			$this->estado_civil,
 			$this->distrito_laboral,
 			$this->distrito,
@@ -498,7 +499,6 @@ class Alumno_model extends CI_Model
 
 	public function get_all_api(){
 		$this->query_selectApiColumnsFromTable();
-		$this->db->from($this->table);
 		return resultToArray($this->db->get());
 	}
 

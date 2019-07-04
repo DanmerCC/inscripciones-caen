@@ -169,7 +169,7 @@ class Inscripcion_model extends CI_Model
 	public function get_page_api($start,$limit = 10){
 		$this->db->select(
 			implode(',',$this->getApicColumns('ins')).
-			',c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
+			',c.id_curso,c.nombre as nombre_curso,c.numeracion,a.id_alumno,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
 		);
 		$this->db->from($this->table.' ins');
 		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
