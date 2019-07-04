@@ -18,10 +18,7 @@ class Usuario extends CI_Controller {
 
 		$validado=0;
 		if(isset($password)&&isset($passwordNuevo)&&isset($passwordComparacion)&&isset($id_usuario)&&($passwordNuevo==$passwordComparacion)){
-		//if(isset($password)&&isset($passwordNuevo)&&isset($passwordComparacion)&&isset($temp)&&($passwordNuevo==$passwordComparacion)){
-			//$resultado=$this->User_model->buscarUsuario($temp);
-				//password_verify($password,$result->result()[0]->password)
-			echo  var_dump($this->User_model->validarContraseña($password,$id_usuario));
+		
 			if ($this->User_model->validarContraseña($password,$id_usuario)) {
 				$validado=1;
 			}

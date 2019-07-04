@@ -39,14 +39,14 @@ class Registro extends CI_Controller
 
     public function guardar()
     {
-    		$id_usuario_dni = $this->input->post('id');//el id por defecto sera el dni pero puede ser cambiado  cualquier otro
+    		$id_usuario_dni = trim($this->input->post('id'));//el id por defecto sera el dni pero puede ser cambiado  cualquier otro
 
-	        $nombre           = $this->input->post('nombre');
-	        $apellido_paterno = $this->input->post('apellido_paterno');
-	        $apellido_materno = $this->input->post('apellido_materno');
+	        $nombre           = trim($this->input->post('nombre'));
+	        $apellido_paterno = trim($this->input->post('apellido_paterno'));
+	        $apellido_materno = trim($this->input->post('apellido_materno'));
 	        $password         = $this->input->post('password');
-            $email            = $this->input->post('email');
-			$celphone         = $this->input->post('celphone');
+            $email            = trim($this->input->post('email'));
+			$celphone         = trim($this->input->post('celphone'));
             $programa_id      =$this->input->post('programa_id');
             $tipoFinan          =$this->input->post('tipoFinan');
 
