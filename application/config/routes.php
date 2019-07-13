@@ -249,3 +249,5 @@ $route['chart/inscrito'] = 'ChartsController/get_chart';
  * documentos autogenerados v2
  */
 $route['generator/solad/(:num)'] = 'Solicitud/generate_document/$1';
+
+$route['admin/upload/file'] = 'admin/FilesController/uploads_page';

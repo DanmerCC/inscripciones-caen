@@ -351,6 +351,15 @@ public function eliminar($FileType,$id){
 	}
 	echo json_encode($resultModel);
 }
+function uploads_page(){
+	$this->load->view('uploads_document');
+}
+
+function recive_file(){
+
+	
+	$this->load->view('uploads_document');
+}
 
 
 }
