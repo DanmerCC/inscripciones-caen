@@ -250,4 +250,5 @@ $route['chart/inscrito'] = 'ChartsController/get_chart';
  */
 $route['generator/solad/(:num)'] = 'Solicitud/generate_document/$1';
 
-$route['admin/upload/file'] = 'admin/FilesController/uploads_page';
+$route['admin/upload/page/([a-zA-Z]+)/(:num)'] = 'admin/FilesController/uploads_page';
+$route['admin/uploading'] = 'admin/FilesController/recive_file';

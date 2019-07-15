@@ -285,8 +285,9 @@ function cargarData(id){
 
 				//documents for solicitud
 				var filesOfSol =alumno.solicitudFiles;
-				var htmlfilesOfSol="";
+                var htmlfilesOfSol="";
 				for (var ii = 0; ii < filesOfSol.length; ii++) {
+                    
 					htmlfilesOfSol += makeTemplateIconsDocuments(filesOfSol[ii].name,filesOfSol[ii].stateUpload,filesOfSol[ii].identifier,filesOfSol[ii].fileName);
 					
 				}

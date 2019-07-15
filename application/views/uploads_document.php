@@ -7,16 +7,13 @@
     <title>Subir documentos</title>
 </head>
 <body>
+    <? if($exist): ?>
     <div id="uploads"></div>
     <div class="dropzone" id="dropzone1">
         Arrastrar Documento
     </div>
-    <div class="dropzone" id="dropzone2">
-        Arrastrar Documento
-    </div>
-    <div class="dropzone" id="dropzone3">
-        Arrastrar Documento
-    </div>
+    <? endif; ?>
+    <div id="returnlink"></div>
 </body>
 <style>
 body {
@@ -47,7 +44,6 @@ body {
         x.ondrop=function(e){
             e.preventDefault();
             this.className='dropzone';
-            console.log(e.dataTransfer.files);
             upload(e.dataTransfer.files);
         };
 
@@ -61,22 +57,23 @@ body {
             return false; 
         }
 
-        x.addEventListener('click',()=>{console.log(x.id)});
     });
     var upload=function(files){
         var formData=new FormData(),
         xhr=new XMLHttpRequest(),x;
-        for (let x = 0; x < files.length; x++) {
-            formData.append('file[]',files[x]);
+        if(files.length!=1){
+            alert("Solo se permite un archivo a la vez");
+            formData.append('file',files[0]);
+            return;
         }
+        formData.append('hola','asdas');
         xhr.onload=function(){
             var data =this.responseText;
-            //console.log(data);
         }
         xhr.onerror=function(){
             console.log("Ocurrio un error");
         }
-        xhr.open('post','/listo');
+        xhr.open('post','/admin/uploading');
         xhr.send(formData);
 
     }

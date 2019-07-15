@@ -281,9 +281,6 @@ class FilesController extends CI_Controller {
 				die();
 				break;
 		}
-
-
-		
 		echo json_encode($resultModel);
 	}
 
@@ -352,13 +349,66 @@ public function eliminar($FileType,$id){
 	echo json_encode($resultModel);
 }
 function uploads_page(){
-	$this->load->view('uploads_document');
+	$this->load->model('File_model');
+	$tipo=$this->uri->segment(4);
+	$id=$this->uri->segment(5);
+	
+	$existFile="";
+	$obj;
+	switch ($tipo) {
+		case CurriculumFile::$min_name:
+			$obj=new CurriculumFile();
+			break;
+
+		case DeclaracionJuradaFile::$min_name:
+			$obj=new DeclaracionJuradaFile();
+			break;
+
+		case DniFile::$min_name:
+			$obj=new DniFile();
+			break;
+
+		case BachillerFile::$min_name:
+			$obj=new BachillerFile();
+			break;
+
+		case MaestriaFile::$min_name:
+			$obj=new MaestriaFile();
+			break;
+		case DoctoradoFile::$min_name:
+			$obj=new DoctoradoFile();
+			break;
+		case SolicitudFile::$min_name:
+			$obj=new SolicitudFile();
+			break;
+		
+		case ProyectoInvestigacionFile::$min_name:
+			$obj=new ProyectoInvestigacionFile();
+			break;
+
+		case HojaDatosFile::$min_name:
+			$obj=new HojaDatosFile();
+			break;
+		
+		default:
+			show_404();
+			exit;
+			break;
+		
+	}
+
+	$obj->id=$id;
+	$existFile=file_exists($obj->path().'.pdf');
+
+	$this->load->view('uploads_document',array('exist'=>$existFile));
 }
 
 function recive_file(){
 
-	
-	$this->load->view('uploads_document');
+	var_dump($_POST);
+	var_dump($_FILES);
+	exit;
+
 }
 
 
