@@ -11,6 +11,7 @@
     <input type="hidden" id="file_name" name="file_name" value="<?=$id ?>">
     <input type="hidden" id="file_type" name="file_type" value="<?=$min_name ?>">
     <div id="uploads"></div>
+    <div id="mensaje"></div>
     <div class="dropzone" id="dropzone1">
         Arrastrar Documento
     </div>
@@ -79,8 +80,28 @@ body {
         xhr.onerror=function(){
             console.log("Ocurrio un error");
         }
+
+        xhr.onreadystatechange = function () {
+            var mesaje=document.getElementById('mensaje');
+
+            console.log(xhr);
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                var json_respuesta=JSON.parse(xhr.response);
+                if(json_respuesta.status){
+                    var zona_drop1=document.getElementById('dropzone1');
+                    var returnlink=document.getElementById('returnlink');
+                    zona_drop1.hidden="hidden";
+                    mesaje.innerHTML="Se ha subido el "+json_respuesta.data.upload_data+"con exito";
+                    returnlink.innerHTML="<a href='#' onclick='window. close();'>Regresar</a>"
+                }
+            }
+        
+        }
+
         xhr.open('post','/admin/uploading');
+        
         xhr.send(formData);
+        
 
     }
 }());

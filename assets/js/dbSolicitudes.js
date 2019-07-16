@@ -263,7 +263,6 @@ function cargarData(id){
         data: "",
         dataType: "json",
         success: function (response) {
-            console.log(response);
             if(response.status=="NO FOUND"){
                 alert("Ocurrio un error. El alumno no pudo ser encontrado");
             }else{
@@ -283,7 +282,7 @@ function cargarData(id){
 				for (var i = 0; i < documentos.length; i++) {
                     var upload_link="/admin/upload/page/"+documentos[i].identifier+'/'+alumno.documento;
                     console.log(alumno.documento);
-					htmlDocuments=htmlDocuments+makeTemplateIconsDocuments(documentos[i].name,documentos[i].stateUpload,documentos[i].identifier,documentos[i].fileName,upload_link);
+					htmlDocuments=htmlDocuments+makeTemplateIconsDocuments(documentos[i].name,documentos[i].stateUpload,documentos[i].identifier,documentos[i].fileName,upload_link,id);
 					
 				}
 				//documents for solicitud
@@ -291,7 +290,7 @@ function cargarData(id){
                 var htmlfilesOfSol="";
 				for (var ii = 0; ii < filesOfSol.length; ii++) {
                     var upload_link="/admin/upload/page/"+filesOfSol[ii].identifier+'/'+id;
-					htmlfilesOfSol += makeTemplateIconsDocuments(filesOfSol[ii].name,filesOfSol[ii].stateUpload,filesOfSol[ii].identifier,filesOfSol[ii].fileName,upload_link);
+					htmlfilesOfSol += makeTemplateIconsDocuments(filesOfSol[ii].name,filesOfSol[ii].stateUpload,filesOfSol[ii].identifier,filesOfSol[ii].fileName,upload_link,id);
 					
 				}
 				$(idquerytarget+' #mdl-icons-filesOfSol').html(htmlfilesOfSol);
@@ -302,18 +301,44 @@ function cargarData(id){
     });
 }
 
-function makeTemplateIconsDocuments(nombre,estado,identifier,nameFile,urlUpload){
+function makeTemplateIconsDocuments(nombre,estado,identifier,nameFile,urlUpload,id){
+
+    var onclick= "";
+    onclick=(estado)?"":" onclick='reiniciarModalAlumno("+id+",this);' link="+urlUpload+" ";
+
     template=''+
-    ((estado)?"<a href='/admin/view/pdf/"+identifier+"/"+nameFile+"' target='_blank'>":"<a href='"+urlUpload+"' target='_blank'>")+
-    '<span class="'+((estado)?"label label-primary":"label label-danger")+'">'+
+    ((estado)?"<a href='/admin/view/pdf/"+identifier+"/"+nameFile+"' target='_blank'>":"<div class='container' ></div>")+
+    '<span class="'+((estado)?"label label-primary":"label label-danger")+'" '+onclick+' >'+
     nombre+
     '</span>'+
     ((estado)?'</a>':"");
     return template;
 }
 
-function makeUploadLink(){
+function cerrarModalAlumno(callback){
+   
+    if(callback !== 'undefined'){
+        $("#mdl_datos_alumno").modal('hide').promise().then(callback);
+    }else{
+        $("#mdl_datos_alumno").modal('hide');
+    }
+}
+function modalReOpen(){
+    alert("Cheveereee");
+}
 
+function reiniciarModalAlumno(id,obj_dom){
+    cerrarModalAlumno(function(){
+        var win = window.open(obj_dom.getAttribute("link"), '_blank');
+        var status = confirm("Desea volver a ver los datos?");
+        //win.focus();
+        if(status){
+            modalDataAlumno.loadData(id); 
+            $("#mdl_datos_alumno").modal('show');
+        }
+            
+        
+    });
 }
 
 

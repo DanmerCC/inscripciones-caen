@@ -428,7 +428,7 @@ function recive_file(){
 	if($this->upload->do_upload('file'))
 	{
 		$resultado["status"]=1;
-		$resultado["data"] = array('upload_data' => $this->upload->data());
+		$resultado["data"] = array('upload_data' => $this->makeObjectByType($type)->name());
 	}else
 	{
 		$resultado["error"] = array('error' => $this->upload->display_errors());

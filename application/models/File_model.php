@@ -36,6 +36,10 @@ class BaseFile implements iFile{
 	public function completePath(){
 		return $this->path().'/'.$this->id();
 	}
+
+	public function name(){
+		return static::$nombre;
+	}
 }
 
 class CurriculumFile extends BaseFile{
@@ -44,6 +48,7 @@ class CurriculumFile extends BaseFile{
 	 */
 	static $object_path='/cvs';
 	static $min_name='cv';
+	static $nombre='Curriculum';
 
 }
 
@@ -53,6 +58,7 @@ class DeclaracionJuradaFile extends BaseFile{
 	 */
 	static $object_path='/djs';
 	static $min_name='dj';
+	static $nombre='Declaracion Jurada';
 
 }
 
@@ -62,6 +68,7 @@ class DniFile extends BaseFile{
 	 */
 	static $object_path='/dni';
 	static $min_name='dni';
+	static $nombre='DNI';
 
 }
 
@@ -71,6 +78,7 @@ class BachillerFile extends BaseFile{
 	 */
 	static $object_path='/bachiller';
 	static $min_name='bach';
+	static $nombre='Constacia de Bachiller';
 
 }
 
@@ -80,6 +88,7 @@ class MaestriaFile extends BaseFile{
 	 */
 	static $object_path='/maestria';
 	static $min_name='maes';
+	static $nombre='Constancia de Maestria';
 
 }
 
@@ -90,6 +99,7 @@ class DoctoradoFile extends BaseFile{
 	 */
 	static $object_path='/doctorado';
 	static $min_name='doct';
+	static $nombre='Constancia de Doctorado';
 
 }
 
@@ -100,6 +110,7 @@ class SolicitudFile extends BaseFile{
 	 */
 	static $object_path='/sol-ad';
 	static $min_name='solad';
+	static $nombre='Solicitud de Admision';
 }
 
 class ProyectoInvestigacionFile extends BaseFile{
@@ -108,6 +119,7 @@ class ProyectoInvestigacionFile extends BaseFile{
 	 */
 	static $object_path='/proinves';
 	static $min_name='pinvs';
+	static $nombre='Proyecto de Investigacion';
 }
 
 class HojaDatosFile extends BaseFile{
@@ -116,6 +128,7 @@ class HojaDatosFile extends BaseFile{
 	 */
 	static $object_path='/hojadatos';
 	static $min_name='hdatos';
+	static $nombre='Hoja de datos';
 }
 
 
