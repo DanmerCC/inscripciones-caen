@@ -349,6 +349,7 @@ public function eliminar($FileType,$id){
 	echo json_encode($resultModel);
 }
 function uploads_page(){
+	$this->verify_login_or_fail();
 	$this->load->model('File_model');
 	$tipo=$this->uri->segment(4);
 	$id=$this->uri->segment(5);
@@ -418,6 +419,8 @@ function uploads_page(){
 }
 
 function recive_file(){
+	$this->verify_login_or_fail();
+	
 	$this->load->model('File_model');
 	$id=$this->input->post('id');
 	$type=$this->input->post('type');
@@ -493,5 +496,12 @@ private function makeObjectByType($type_string){
 	return $obj;
 }
 
+
+public function verify_login_or_fail(){
+	if($this->nativesession->get("estado")!="logeado"){
+		show_error("No tiene acceso debes iniciar session",501);
+		exit;
+	}
+}
 
 }
