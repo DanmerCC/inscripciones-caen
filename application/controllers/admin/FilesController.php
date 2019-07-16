@@ -447,7 +447,7 @@ function recive_file(){
 }
 
 
-private function makeObjectByType($type_string):BaseFile{
+private function makeObjectByType($type_string){
 	$obj;
 	switch ($type_string) {
 		case CurriculumFile::$min_name:
