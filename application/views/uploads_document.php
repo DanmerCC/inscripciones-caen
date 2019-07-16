@@ -7,7 +7,7 @@
     <title>Subir documentos</title>
 </head>
 <body>
-    <? if($exist): ?>
+    <? if(!$exist): ?>
     <input type="hidden" id="file_name" name="file_name" value="<?=$id ?>">
     <input type="hidden" id="file_type" name="file_type" value="<?=$min_name ?>">
     <div id="uploads"></div>
