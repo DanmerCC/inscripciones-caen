@@ -354,40 +354,50 @@ function uploads_page(){
 	$id=$this->uri->segment(5);
 	
 	$existFile="";
+	$minNameOfClass="";
 	$obj;
 	switch ($tipo) {
 		case CurriculumFile::$min_name:
 			$obj=new CurriculumFile();
+			$minNameOfClass=CurriculumFile::$min_name;
 			break;
 
 		case DeclaracionJuradaFile::$min_name:
 			$obj=new DeclaracionJuradaFile();
+			$minNameOfClass=DeclaracionJuradaFile::$min_name;
 			break;
 
 		case DniFile::$min_name:
 			$obj=new DniFile();
+			$minNameOfClass=DniFile::$min_name;
 			break;
 
 		case BachillerFile::$min_name:
 			$obj=new BachillerFile();
+			$minNameOfClass=BachillerFile::$min_name;
 			break;
 
 		case MaestriaFile::$min_name:
 			$obj=new MaestriaFile();
+			$minNameOfClass=MaestriaFile::$min_name;
 			break;
 		case DoctoradoFile::$min_name:
 			$obj=new DoctoradoFile();
+			$minNameOfClass=DoctoradoFile::$min_name;
 			break;
 		case SolicitudFile::$min_name:
 			$obj=new SolicitudFile();
+			$minNameOfClass=SolicitudFile::$min_name;
 			break;
 		
 		case ProyectoInvestigacionFile::$min_name:
 			$obj=new ProyectoInvestigacionFile();
+			$minNameOfClass=ProyectoInvestigacionFile::$min_name;
 			break;
 
 		case HojaDatosFile::$min_name:
 			$obj=new HojaDatosFile();
+			$minNameOfClass=HojaDatosFile::$min_name;
 			break;
 		
 		default:
@@ -401,7 +411,7 @@ function uploads_page(){
 	$data=array(
 		'exist'=>file_exists($obj->completePath().'.pdf'),
 		'id'=>$id,
-		'min_name'=>get_class($obj)::$min_name,
+		'min_name'=>get_class($obj)::$minNameOfClass,
 	);
 
 	$this->load->view('uploads_document',$data);
