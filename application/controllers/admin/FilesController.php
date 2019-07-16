@@ -398,17 +398,89 @@ function uploads_page(){
 	}
 
 	$obj->id=$id;
-	$existFile=file_exists($obj->path().'.pdf');
+	$data=array(
+		'exist'=>file_exists($obj->completePath().'.pdf'),
+		'id'=>$id,
+		'min_name'=>get_class($obj)::$min_name,
+	);
 
-	$this->load->view('uploads_document',array('exist'=>$existFile));
+	$this->load->view('uploads_document',$data);
 }
 
 function recive_file(){
+	$this->load->model('File_model');
+	$id=$this->input->post('id');
+	$type=$this->input->post('type');
+	
+	$obj=$this->makeObjectByType($type);
+	$obj->id=$id;
 
-	var_dump($_POST);
-	var_dump($_FILES);
-	exit;
+	$config = array(
+		'upload_path' => $obj->path(),
+		'allowed_types' => "pdf",
+		'overwrite' => TRUE,
+		'max_size' => "20048000",
+		'file_name' => $id
+	);
+	$this->load->library('upload', $config);
+	$resultado["status"]=0;
+	$this->upload->initialize($config);
+	if($this->upload->do_upload('file'))
+	{
+		$resultado["status"]=1;
+		$resultado["data"] = array('upload_data' => $this->upload->data());
+	}else
+	{
+		$resultado["error"] = array('error' => $this->upload->display_errors());
+	}
+	echo json_encode($resultado);
+}
 
+
+private function makeObjectByType($type_string):BaseFile{
+	$obj;
+	switch ($type_string) {
+		case CurriculumFile::$min_name:
+			$obj=new CurriculumFile();
+			break;
+
+		case DeclaracionJuradaFile::$min_name:
+			$obj=new DeclaracionJuradaFile();
+			break;
+
+		case DniFile::$min_name:
+			$obj=new DniFile();
+			break;
+
+		case BachillerFile::$min_name:
+			$obj=new BachillerFile();
+			break;
+
+		case MaestriaFile::$min_name:
+			$obj=new MaestriaFile();
+			break;
+		case DoctoradoFile::$min_name:
+			$obj=new DoctoradoFile();
+			break;
+		case SolicitudFile::$min_name:
+			$obj=new SolicitudFile();
+			break;
+		
+		case ProyectoInvestigacionFile::$min_name:
+			$obj=new ProyectoInvestigacionFile();
+			break;
+
+		case HojaDatosFile::$min_name:
+			$obj=new HojaDatosFile();
+			break;
+		
+		default:
+			show_404();
+			exit;
+			break;
+		
+	}
+	return $obj;
 }
 
 

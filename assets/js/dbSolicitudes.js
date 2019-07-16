@@ -263,6 +263,7 @@ function cargarData(id){
         data: "",
         dataType: "json",
         success: function (response) {
+            console.log(response);
             if(response.status=="NO FOUND"){
                 alert("Ocurrio un error. El alumno no pudo ser encontrado");
             }else{
@@ -277,18 +278,20 @@ function cargarData(id){
                 //fotoData
 				$(idquerytarget+' #mdl-foto').prop("src",alumno.fotoData);
 				var documentos=alumno.documentosObject;
-				var htmlDocuments="";
+                var htmlDocuments="";
+                var upload_link="#";
 				for (var i = 0; i < documentos.length; i++) {
-					htmlDocuments=htmlDocuments+makeTemplateIconsDocuments(documentos[i].name,documentos[i].stateUpload,documentos[i].identifier,documentos[i].fileName);
+                    var upload_link="/admin/upload/page/"+documentos[i].identifier+'/'+alumno.documento;
+                    console.log(alumno.documento);
+					htmlDocuments=htmlDocuments+makeTemplateIconsDocuments(documentos[i].name,documentos[i].stateUpload,documentos[i].identifier,documentos[i].fileName,upload_link);
 					
 				}
-
 				//documents for solicitud
 				var filesOfSol =alumno.solicitudFiles;
                 var htmlfilesOfSol="";
 				for (var ii = 0; ii < filesOfSol.length; ii++) {
-                    
-					htmlfilesOfSol += makeTemplateIconsDocuments(filesOfSol[ii].name,filesOfSol[ii].stateUpload,filesOfSol[ii].identifier,filesOfSol[ii].fileName);
+                    var upload_link="/admin/upload/page/"+filesOfSol[ii].identifier+'/'+id;
+					htmlfilesOfSol += makeTemplateIconsDocuments(filesOfSol[ii].name,filesOfSol[ii].stateUpload,filesOfSol[ii].identifier,filesOfSol[ii].fileName,upload_link);
 					
 				}
 				$(idquerytarget+' #mdl-icons-filesOfSol').html(htmlfilesOfSol);
@@ -299,14 +302,18 @@ function cargarData(id){
     });
 }
 
-function makeTemplateIconsDocuments(nombre,estado,identifier,nameFile){
+function makeTemplateIconsDocuments(nombre,estado,identifier,nameFile,urlUpload){
     template=''+
-    ((estado)?"<a href='/admin/view/pdf/"+identifier+"/"+nameFile+"' target='_blank'>":"")+
+    ((estado)?"<a href='/admin/view/pdf/"+identifier+"/"+nameFile+"' target='_blank'>":"<a href='"+urlUpload+"' target='_blank'>")+
     '<span class="'+((estado)?"label label-primary":"label label-danger")+'">'+
     nombre+
     '</span>'+
     ((estado)?'</a>':"");
     return template;
+}
+
+function makeUploadLink(){
+
 }
 
 

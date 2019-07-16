@@ -21,11 +21,20 @@ class File_model extends CI_Model
 
 interface iFile{
 	public function path();
+	public function completePath();
+	public function id();
 }
 
 class BaseFile implements iFile{
 	public function path(){
-		return CC_BASE_PATH.'/files'.static::$object_path.'/'.$this->id;
+		return CC_BASE_PATH.'/files'.static::$object_path;
+	}
+	public function id(){
+		return $this->id;
+	}
+
+	public function completePath(){
+		return $this->path().'/'.$this->id();
 	}
 }
 
@@ -69,8 +78,8 @@ class MaestriaFile extends BaseFile{
 	/**
 	 * @var path String ruta especifica parala solicitud
 	 */
-	static $object_path='/sol-ad';
-	static $min_name='solad';
+	static $object_path='/maestria';
+	static $min_name='maes';
 
 }
 
@@ -79,8 +88,8 @@ class DoctoradoFile extends BaseFile{
 	/**
 	 * @var path String ruta especifica parala solicitud
 	 */
-	static $object_path='/maestria';
-	static $min_name='maes';
+	static $object_path='/doctorado';
+	static $min_name='doct';
 
 }
 

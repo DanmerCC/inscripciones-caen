@@ -8,6 +8,8 @@
 </head>
 <body>
     <? if($exist): ?>
+    <input type="hidden" id="file_name" name="file_name" value="<?=$id ?>">
+    <input type="hidden" id="file_type" name="file_type" value="<?=$min_name ?>">
     <div id="uploads"></div>
     <div class="dropzone" id="dropzone1">
         Arrastrar Documento
@@ -63,10 +65,14 @@ body {
         xhr=new XMLHttpRequest(),x;
         if(files.length!=1){
             alert("Solo se permite un archivo a la vez");
-            formData.append('file',files[0]);
+            
             return;
         }
-        formData.append('hola','asdas');
+        formData.append('file',files[0]);
+        var id_value=document.getElementById("file_name").value;
+        var file_type=document.getElementById("file_type").value;
+        formData.append('id',id_value);
+        formData.append('type',file_type);
         xhr.onload=function(){
             var data =this.responseText;
         }
