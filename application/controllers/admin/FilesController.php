@@ -411,7 +411,7 @@ function uploads_page(){
 	$data=array(
 		'exist'=>file_exists($obj->completePath().'.pdf'),
 		'id'=>$id,
-		'min_name'=>get_class($obj)::$minNameOfClass,
+		'min_name'=>$minNameOfClass,
 	);
 
 	$this->load->view('uploads_document',$data);
