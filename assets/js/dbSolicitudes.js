@@ -323,9 +323,6 @@ function cerrarModalAlumno(callback){
         $("#mdl_datos_alumno").modal('hide');
     }
 }
-function modalReOpen(){
-    alert("Cheveereee");
-}
 
 function reiniciarModalAlumno(id,obj_dom){
     cerrarModalAlumno(function(){
