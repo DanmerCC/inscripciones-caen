@@ -201,7 +201,6 @@ $route['prueba']='CorreoController/fileTest';
 
 
 $route['prueba']='CorreoController/fileTest';
-//
 $route['postulante/checkingfile'] = 'admin/Alumno/set_good_file';
 
 
@@ -228,6 +227,9 @@ $route['api/v1/inscritos'] = 'apiRest/Inscritos_Controller/get';
 $route['api/v1/inscrito/(:num)'] = 'apiRest/Inscritos_Controller/getById/$1';
 $route['api/v1/personas'] = 'apiRest/Persona_Controller/get';
 $route['api/v1/persona/(:num)'] = 'apiRest/Persona_Controller/getById/$1';
+$route['api/v1/programas'] = 'apiRest/Programa_Controller/get';
+$route['api/v1/programa/(:num)'] = 'apiRest/Programa_Controller/getById/$1';
+$route['api/v1/tipoProgramas'] = 'apiRest/Programa_Controller/listTipos';
 
 /***
  * Chart estadistics

@@ -24,9 +24,23 @@ class Programa_model extends CI_Model
 	function __construct()
 	{
 		parent::__construct();
+
+		$this->public_columns=[
+			$this->id,
+			$this->name,
+			$this->duracion,
+			$this->costo_total,
+			$this->vacantes,
+			$this->fecha_inicio,
+			$this->fecha_final,
+			$this->numeracion,
+			$this->tipo
+		];
+
 		$this->load->helper('mihelper');
 		$this->load->library('Nativesession');
 		$this->load->model('Permiso_model');
+
 
 	}
 
@@ -302,6 +316,53 @@ class Programa_model extends CI_Model
 	public function types(){
 		$this->db->select()->from('tipo_curso');
 		return $this->db->get()->result_array();
+	}
+
+	/**
+	* get a page only no deleted marked for api
+	*/
+	public function get_one_api($id){
+		$this->db->select(
+			implode(',',$this->getApicColumns('pro'))
+		);
+		$this->db->from($this->table.' pro');
+		$this->db->where(
+			array(
+				'pro.'.$this->estado=>1
+			)
+		);
+		$this->db->where('pro.'.$this->id.'=',(int)$id);
+        return resultToArray($this->db->get());
+	}
+
+	private function getApicColumns($alias=NULL){
+		if($alias===NULL){
+			return $this->public_columns;
+		}else{
+			$arraynew=[];
+			for ($i=0; $i < count($this->public_columns); $i++) { 
+				$arraynew[$i]=$alias.'.'.$this->public_columns[$i];
+			}
+			return $arraynew;
+		}
+	}
+
+	/**
+	* get a page only no deleted marked for api
+	*/
+	public function get_page_api($start,$limit = 10){
+		$this->db->select(
+			implode(',',$this->getApicColumns('pro'))
+		);
+		$this->db->from($this->table.' pro');
+		$this->db->where(
+			array(
+				'pro.'.$this->estado=>1
+			)
+		);
+		$this->db->limit($limit,$start);
+		
+        return resultToArray($this->db->get());
 	}
 	
 }
