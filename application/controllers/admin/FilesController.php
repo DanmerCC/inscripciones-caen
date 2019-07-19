@@ -440,7 +440,18 @@ function recive_file(){
 	$this->upload->initialize($config);
 	if($this->upload->do_upload('file'))
 	{
-		$resultado["status"]=1;
+		/**
+		 * Correccion de extension de PDF a dpf
+		 */
+		$file_data=$this->upload->data();
+		$estado=true;
+		if($file_data['file_ext']=="PDF"){
+			$name_correct=$id.'.pdf';
+			$new_path=$file_data['file_path'].$name_correct;
+			$estado=rename($file_data['full_path'],  $new_path);
+		}
+		
+		$resultado["status"]=($estado?1:0);
 		$resultado["data"] = array('upload_data' => $this->makeObjectByType($type)->name());
 	}else
 	{

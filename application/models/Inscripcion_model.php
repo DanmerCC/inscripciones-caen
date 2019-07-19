@@ -13,6 +13,8 @@ class Inscripcion_model extends CI_Model
 	private $deleted='deleted';
 	private $modified='modified';
 
+	private $where_filters=[];
+
 
 	private $public_columns=[];
 
@@ -25,6 +27,29 @@ class Inscripcion_model extends CI_Model
 			$this->solicitud_id,
 			$this->created_user_id
 		];
+		$this->where_filters=array(
+			$this->deleted=>NULL
+		);
+	}
+
+	/**
+	 * return array with conditions
+	 * @var prefix String example 'p'.'nombre' from producto as p;
+	 */
+	public function filters($prefix="",$override=FALSE){
+		$filtros=[];
+		if($prefix==""){
+			$filters_with_prefix=[];
+			$original_filters=$this->where_filters;
+			foreach ($original_filters as $key => $filter) {
+				$filters_with_prefix[$prefix.'.'.$key]=$filter;
+			}
+			$filtros=$filters_with_prefix;
+		}else{
+			$filtros=$this->where_filters;
+		}
+
+		return $filtros;
 	}
 
 	public function create($idSolicitud,$created_user_id){
@@ -185,6 +210,50 @@ class Inscripcion_model extends CI_Model
 		$this->db->limit($limit,$start);
 		
         return resultToArray($this->db->get());
+	}
+
+	public function get_page_api_by_program($start,$limit = 10,$id){
+
+		//Set new particular filter to inscripcion
+		$this->where_filters['id_curso']=$id;
+
+		$this->db->select(
+			implode(',',$this->getApicColumns('ins')).
+			',c.id_curso,c.nombre as nombre_curso,c.numeracion,a.id_alumno,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
+		);
+		$this->db->from($this->table.' ins');
+		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
+		$this->db->join('usuario u','ins.created_user_id = u.id','left');
+		$this->db->join('curso c','c.id_curso = s.programa','left');
+		$this->db->join('tipo_curso tc','c.idTipo_curso = tc.idTipo_curso','left');
+		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
+		$this->db->where(
+			$this->filters('ins')
+		);
+		$this->db->limit($limit,$start);
+		
+        return resultToArray($this->db->get());
+	}
+
+	public function get_all_api_by_program($id){
+
+		//add filter by program
+		$this->where_filters['id_curso']=$id;
+
+		$this->db->select(
+			implode(',',$this->getApicColumns('ins')).
+			',c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
+		);
+		$this->basic_query('ins');
+		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
+		$this->db->join('usuario u','ins.created_user_id = u.id','left');
+		$this->db->join('curso c','c.id_curso = s.programa','left');
+		$this->db->join('tipo_curso tc','c.idTipo_curso = tc.idTipo_curso','left');
+		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
+		$this->db->where(
+			$this->filters('ins')
+		);
+		return resultToArray($this->db->get());
 	}
 
 	public function get_all_api(){

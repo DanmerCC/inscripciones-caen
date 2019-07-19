@@ -318,6 +318,24 @@ class Programa_model extends CI_Model
 		return $this->db->get()->result_array();
 	}
 
+	
+	public function getTipoById($id){
+
+		$result=$this->db
+		->select()
+		->from('tipo_curso')
+		->where('idTipo_curso',$id)
+		->get();
+
+		if($result->num_rows()==1){
+			return $result->result_array()[0];
+		}
+
+		return [];
+		
+	}
+
+
 	/**
 	* get a page only no deleted marked for api
 	*/

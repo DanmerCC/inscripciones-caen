@@ -46,4 +46,23 @@ class Inscritos_Controller extends MY_Controller {
         }
         
     }
+
+    public function byPrograma($id_programa){
+        if(!$this->verify_token()){
+            $this->response("No permitido",401);
+        }
+
+        if(isset($_GET["size"])){
+            $page=isset($_GET["page"])?$_GET["page"]:10;
+            $size=$_GET["size"];
+            $inscritos=$this->Inscripcion_model->get_page_api_by_program(($size*$page),$size,$id_programa);
+        }else{
+            $inscritos=$this->Inscripcion_model->get_all_api_by_program();
+        }
+        $query=$this->db->last_query();
+        /*var_dump($query);
+        exit;*/
+        $this->response($inscritos,200);
+
+    }
 }

@@ -56,4 +56,12 @@ class Programa_Controller extends MY_Controller {
         $tipos=$this->Programa_model->types();
         $this->response($tipos,200);
     }
+
+    public function tipo($id){
+        if(!$this->verify_token()){
+            $this->response("No permitido",401);
+        }
+        $tipo=$this->Programa_model->getTipoById($id);
+        $this->response($tipo,200);
+    }
 }
