@@ -57,7 +57,7 @@ class Inscritos_Controller extends MY_Controller {
             $size=$_GET["size"];
             $inscritos=$this->Inscripcion_model->get_page_api_by_program(($size*$page),$size,$id_programa);
         }else{
-            $inscritos=$this->Inscripcion_model->get_all_api_by_program();
+            $inscritos=$this->Inscripcion_model->get_all_api_by_program($id_programa);
         }
         $query=$this->db->last_query();
         /*var_dump($query);

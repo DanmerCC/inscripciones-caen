@@ -341,9 +341,14 @@ class Programa_model extends CI_Model
 	*/
 	public function get_one_api($id){
 		$this->db->select(
-			implode(',',$this->getApicColumns('pro'))
+			implode(',',$this->getApicColumns('pro')).
+			',COUNT(sol.idSolicitud) as count'
 		);
 		$this->db->from($this->table.' pro');
+
+		//**count query */
+		$this->db->join('solicitud sol','sol.programa=pro.id_curso');
+		$this->db->group_by('pro.id_curso');
 		$this->db->where(
 			array(
 				'pro.'.$this->estado=>1
@@ -370,15 +375,36 @@ class Programa_model extends CI_Model
 	*/
 	public function get_page_api($start,$limit = 10){
 		$this->db->select(
-			implode(',',$this->getApicColumns('pro'))
+			implode(',',$this->getApicColumns('pro')).
+			', COUNT(sol.programa) as count' 
 		);
 		$this->db->from($this->table.' pro');
+		$this->db->join('solicitud sol','pro.id_curso=sol.programa');
+		$this->db->group_by('sol.programa');
 		$this->db->where(
 			array(
 				'pro.'.$this->estado=>1
 			)
 		);
 		$this->db->limit($limit,$start);
+		
+        return resultToArray($this->db->get());
+	}
+
+	public function get_all_api(){
+
+		$this->db->select(
+			implode(',',$this->getApicColumns('pro')).
+			', COUNT(sol.programa) as count' 
+		);
+		$this->db->from($this->table.' pro');
+		$this->db->join('solicitud sol','pro.id_curso=sol.programa');
+		$this->db->group_by('sol.programa');
+		$this->db->where(
+			array(
+				'pro.'.$this->estado=>1
+			)
+		);
 		
         return resultToArray($this->db->get());
 	}
