@@ -15,6 +15,7 @@ class Solicitud extends CI_Controller
 		$this->load->library('Pdf');
 		//$this->load->library('Pdf2');
 		$this->load->model('Solicitud_model');
+		$this->load->model('Notificacion_model');
 	}
 	
 	public function index(){
@@ -193,6 +194,12 @@ class Solicitud extends CI_Controller
 		}
 		$solicitud=$this->Solicitud_model->byIdAndAlumno($id,$idAlumno);
 		if(count($solicitud)!=0){
+			$data_notification=array(
+				'tipo_usuario_id'=>2,
+				'action_id'=>1,
+				'mensaje'=>'se subio una hoja de datos'
+			);
+			$this->Notificacion_model->create($data_notification);
 			echo $this->uploadFile('cv',$id,"hojadatos");//send result to view
 		}else{
 			show_404();

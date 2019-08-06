@@ -8,9 +8,13 @@ class MY_Model extends CI_Model {
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->library('Nativesession');
 		$this->setPublicColumns();
 	}
 	
+	/***
+	 * for use override this method
+	 */
 	private function setPublicColumns(){
 		$this->public_arguments=[];
 	}
@@ -64,4 +68,17 @@ class MY_Model extends CI_Model {
 		
 	}
 	 */
+
+
+	 /***
+	  * @return array con todos los registros y columnas de un modelo  
+	  */
+	function all(){
+		$result=$this->db->select()->from($this->table)->get();
+		return $result->result_array();
+	}
+
+	function isLoged(){
+		return empty($this->nativesession->get('idUsuario'));
+	}
 }
