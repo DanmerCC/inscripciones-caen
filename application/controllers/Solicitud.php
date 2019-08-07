@@ -194,10 +194,12 @@ class Solicitud extends CI_Controller
 		}
 		$solicitud=$this->Solicitud_model->byIdAndAlumno($id,$idAlumno);
 		if(count($solicitud)!=0){
+			$mensaje='se subio una hoja de datos';
+			$this->Solicitud_model->set_notification_mensaje($id,$mensaje);
 			$data_notification=array(
 				'tipo_usuario_id'=>2,
 				'action_id'=>1,
-				'mensaje'=>'se subio una hoja de datos'
+				'mensaje'=>$mensaje
 			);
 			$this->Notificacion_model->create($data_notification);
 			echo $this->uploadFile('cv',$id,"hojadatos");//send result to view

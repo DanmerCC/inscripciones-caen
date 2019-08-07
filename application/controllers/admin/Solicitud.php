@@ -18,6 +18,7 @@ class Solicitud extends CI_Controller
         $this->load->library('Pdf');
 		$this->load->model('Permiso_model');
 		$this->load->helper('mihelper');
+		$this->load->model('Notificacion_model');
 	}
     public function index(){
         if ($this->nativesession->get('tipo')=='admin') {
@@ -28,7 +29,8 @@ class Solicitud extends CI_Controller
             $data['cabecera']=$this->load->view('adminlte/linksHead','',TRUE);
             $data['footer']=$this->load->view('adminlte/scriptsFooter','',TRUE);
             $data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
-            $data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
+			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
+			$data['notificaciones']=$this->Notificacion_model->fromSolcitud(16);
             $this->load->view('dashboard_solicitud',$data);
         }else
         {
@@ -80,11 +82,14 @@ class Solicitud extends CI_Controller
         $ii=$start;
         header("Content-type: application/json");
         for ($i=0;$i<count($rspta);$i++) {
-            $ii++;
+			$ii++;
+			$hasNotification=$rspta[$i]["notification_mensaje"]!=="";
                 $data[$i] = array(
                 "0" => $activeSearch?"-":(($cantidad-$ii)+1),
                 "1" => '<a href="'.base_url()."postulante/pdf/".$rspta[$i]["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a>'.
-                            ' <div class="btn btn-info" data-toggle="modal" data-target="#mdl_datos_alumno" onclick="modalDataAlumno.loadData('.$rspta[$i]["idSolicitud"].');"><i class="fa fa-eye"></i></div>'.
+				' <div class="btn btn-info '.($hasNotification?'beating-button':'').'" data-toggle="modal" data-target="#mdl_datos_alumno" onclick="modalDataAlumno.loadData('.$rspta[$i]["idSolicitud"].');"><i class="fa fa-eye"></i>'.
+								
+							'</div>'.
                             (
                                 ($rspta[$i]["estado"]=='0')?
                                     ' <button class="btn btn-alert"   title="click para marcar como verificado" onclick="marcar('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-square-o" aria-hidden="true"></i></button>':
@@ -93,7 +98,7 @@ class Solicitud extends CI_Controller
                             ' <button class="btn btn-warning" onclick="request_bootbox('.
                                 $rspta[$i]["idSolicitud"].
                             ');">'.
-                            '<i class="fa fa-user-plus" aria-hidden="true"></i></button>'
+							'<i class="fa fa-user-plus" aria-hidden="true"></i></button>'
                             ,
                 "2" => $rspta[$i]["nombres"],
                 "3" => $rspta[$i]["apellido_paterno"],
@@ -191,6 +196,7 @@ class Solicitud extends CI_Controller
 		
 		$solicitud=$this->Solicitud_model->getAllColumnsById($id);
 		$alumno=$this->Alumno_model->findById($solicitud['alumno'])[0];
+		$this->Solicitud_model->reset_notification_status($id);
 		$data=[];
 		$data=$alumno;
 		$data["solicitudes"]=$this->Solicitud_model->countByAlumno($solicitud["alumno"]);
@@ -345,6 +351,10 @@ class Solicitud extends CI_Controller
 			show_error("No tiene acceso a ese documento",501);
 			exit;
 		}
+	}
+
+	public function have_notification_simbol($content=''){
+		return "<div class='viewPoint'>".($content)."</div>";
 	}
 
 }

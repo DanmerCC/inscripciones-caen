@@ -8,6 +8,7 @@
 <?php $this->load->view('adminlte/linksHead');?>
 <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css"> -->
 <link rel="stylesheet" href="/dist/css/jquery-externs/jquery.dataTables.min.css">
+<link rel="stylesheet" href="/assets/css/effects.css">
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 <!-- Site wrapper -->
@@ -30,7 +31,7 @@
 
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
       </ol>
     </section>
 

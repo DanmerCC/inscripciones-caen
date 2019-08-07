@@ -10,7 +10,7 @@ class Solicitud_model extends CI_Model
 	private $alumno_id='alumno';
 	private $check_hdatos='check_hdatos';
 	private $state='estado';
-
+	private $notification_mensaje='notification_mensaje';
 	/**
 	 * var @sent cuando la solicitud ya esta enviada
 	 */
@@ -123,7 +123,8 @@ class Solicitud_model extends CI_Model
 		'c.nombre curso_nombre,'.
 		'c.numeracion curso_numeracion ,'.
 		's.marcaPago ,'.
-		' s.comentario');
+		's.comentario ,'.
+		's.notification_mensaje');
 	}
 
 	public function count_sent_less(){
@@ -381,5 +382,38 @@ class Solicitud_model extends CI_Model
 		$this->db->where($this->id, $id);
 		$this->db->update($this->tbl_solicitud, $data);
 		return $this->db->affected_rows();
+	}
+
+	public function get_notification_status($id){
+		return $this->notification_mensaje($id)!='';
+	}
+
+	public function get_notification_mensaje($id){
+		$this->db
+			->select($this->notification_mensaje)
+			->from($this->tbl_solicitud)
+			->where($this->notification_mensaje,$id);
+		$result=$this->db->get();
+		if($result->num_rows()===1){
+			return $result->result_array()[0][$this->notification_mensaje];
+		}
+		return NULL;
+	}
+
+	public function reset_notification_status($id){
+		$data=array(
+			$this->notification_mensaje=>''
+		);
+		$this->db->update($this->tbl_solicitud,$data);
+		return $this->db->affected_rows()==1;
+	}
+
+	public function set_notification_mensaje($id,$mensaje){
+		$data=array(
+			$this->notification_mensaje=>$mensaje
+		);
+		$this->db->where($this->id,$id);
+		$this->db->update($this->tbl_solicitud,$data);
+		return $this->db->affected_rows()==1;
 	}
 }

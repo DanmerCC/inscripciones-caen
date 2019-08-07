@@ -32,3 +32,7 @@ CREATE TABLE `caenedup_caen2`.`notification_configs` (
 	PRIMARY KEY (`id`),
 	INDEX (`usuario_id`)
 ) ENGINE = InnoDB;
+
+ALTER TABLE `solicitud`
+ ADD `notification_mensaje` 
+ VARCHAR(50) NULL DEFAULT '' AFTER `check_hdatos`;

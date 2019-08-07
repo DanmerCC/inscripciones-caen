@@ -54,16 +54,36 @@ class Notificacion_model extends MY_Model
 		 * 	)
 		 * )
 		 */
-		$idUsuario=$this->nativesession->get('idUsuario');
-		$actual_config=$this->getConfig();
+		
+			$idUsuario=$this->nativesession->get('idUsuario');
+			$actual_config=$this->getConfig();
+/*
+			$this->db->query("SELECT notifications.* FROM notifications
+			INNER JOIN usuario on usuario.tipousuario=usuario.tipousuario 
+			WHERE (usuario.id=11) 
+			and ( notifications.time > '$actual_config') 
+			and ( notifications.id NOT IN (
+				SELECT read_notifications.notification_id  FROM read_notifications WHERE read_notifications.usuario_id=$idUsuario)
+				)");
+		*/
 
-		$this->db->query("SELECT notifications.* FROM notifications
-		 INNER JOIN usuario on usuario.tipousuario=usuario.tipousuario 
-		 WHERE (usuario.id=11) 
-		 and ( notifications.time > '$actual_config') 
-		 and ( notifications.id NOT IN (
-			SELECT read_notifications.notification_id  FROM read_notifications WHERE read_notifications.usuario_id=$idUsuario)
-			)");
+		/**
+		 * 
+		 * SELECT notifications.* FROM notifications 
+         * LEFT JOIN usuario on usuario.tipousuario=notifications.tipo_usuario_id
+         * LEFT JOIN read_notifications on read_notifications.notification_id=notifications.id
+         * WHERE (usuario.id=11) and ( notifications.time > '2019-08-06 11:42:34')
+         * and read_notifications.notification_id IS NULL
+		 */
+
+		$this->db->select('notifications.*')
+		->from('notifications')
+		->join('usuario', 'usuario.tipousuario = notifications.tipo_usuario_id', 'left')
+		->join('read_notifications', 'read_notifications.notification_id = notifications.id', 'left')
+		->where('usuario.id',$idUsuario)
+		->where('notifications.time >',$actual_config)
+		->where('read_notifications.notification_id IS NULL',NULL);
+
 		$result= $this->db->get();
 		return $result->result_array();
 	}
@@ -75,9 +95,9 @@ class Notificacion_model extends MY_Model
 			->select('init_watch')
 			->from('notification_configs')
 			->where('usuario_id',$idUsuario)
-			->limit(1);
+			->limit(1)->get();
 		if($result->num_rows()===1){
-			return $result[0]['init_watch'];
+			return $result->result_array()[0]['init_watch'];
 		}else{
 			$currentTime=date('Y-m-d H:i:s');
 			$data=array(
@@ -88,4 +108,25 @@ class Notificacion_model extends MY_Model
 			return $currentTime;
 		}
 	}
+
+
+	function fromSolcitud($idSolcitud){
+
+		$idUsuario=$this->nativesession->get('idUsuario');
+		$actual_config=$this->getConfig();
+
+		$this->db->select('notifications.*')
+		->from('notifications')
+		->join('notifications_solicituds', 'notifications.id = notifications_solicituds.notifications_id', 'rigth')
+		->join('usuario', 'usuario.tipousuario = notifications.tipo_usuario_id', 'left')
+		->join('read_notifications', 'read_notifications.notification_id = notifications.id', 'left')
+		->where('usuario.id',$idUsuario)
+		->where('notifications.time >',$actual_config)
+		->where('read_notifications.notification_id IS NULL',NULL)
+		->where('notifications_solicituds.solicitud_id',$idSolcitud);
+
+		$result= $this->db->get();
+		return $result->result_array();
+	}
+
 }
