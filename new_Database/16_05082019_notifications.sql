@@ -1,4 +1,4 @@
-CREATE TABLE `caenedup_caen2`.`notifications` (
+CREATE TABLE `notifications` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`tipo_usuario_id` INT NOT NULL,
 	`action_id` INT NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE `caenedup_caen2`.`notifications` (
 ALTER TABLE `notifications` ADD INDEX(`tipo_usuario_id`);
 ALTER TABLE `notifications` ADD INDEX(`action_id`);
 
-CREATE TABLE `caenedup_caen2`.`read_notifications` (
+CREATE TABLE `read_notifications` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
 	`usuario_id` INT(10) UNSIGNED NOT NULL ,
 	`notification_id` INT NOT NULL ,
@@ -18,7 +18,7 @@ CREATE TABLE `caenedup_caen2`.`read_notifications` (
 	INDEX (`notification_id`)
 ) ENGINE = InnoDB;
 
-CREATE TABLE `caenedup_caen2`.`action` (
+CREATE TABLE `action` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
 	`nombre` VARCHAR(50) NOT NULL ,
 	PRIMARY KEY (`id`)
@@ -35,7 +35,7 @@ INSERT INTO `action` (`id`, `nombre`) VALUES (7, 'solicitud cargado');
 INSERT INTO `action` (`id`, `nombre`) VALUES (8, 'proyecto de investigacion cargado');
 INSERT INTO `action` (`id`, `nombre`) VALUES (9, 'hoja de datos cargado');
 
-CREATE TABLE `caenedup_caen2`.`notification_configs` (
+CREATE TABLE `notification_configs` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`usuario_id` INT(10) UNSIGNED NOT NULL,
 	`init_watch` DATETIME NOT NULL,
