@@ -30,7 +30,7 @@ class Solicitud extends CI_Controller
             $data['footer']=$this->load->view('adminlte/scriptsFooter','',TRUE);
             $data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
 			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
-			$data['notificaciones']=$this->Notificacion_model->fromSolcitud(16);
+			$data['notificaciones']=$this->Notificacion_model->fromSolicitud(16);
             $this->load->view('dashboard_solicitud',$data);
         }else
         {

@@ -110,20 +110,20 @@ class Notificacion_model extends MY_Model
 	}
 
 
-	function fromSolcitud($idSolcitud){
+	function fromSolicitud($idSolcitud){
 
 		$idUsuario=$this->nativesession->get('idUsuario');
 		$actual_config=$this->getConfig();
 
 		$this->db->select('notifications.*')
-		->from('notifications')
-		->join('notifications_solicituds', 'notifications.id = notifications_solicituds.notifications_id', 'rigth')
-		->join('usuario', 'usuario.tipousuario = notifications.tipo_usuario_id', 'left')
-		->join('read_notifications', 'read_notifications.notification_id = notifications.id', 'left')
-		->where('usuario.id',$idUsuario)
-		->where('notifications.time >',$actual_config)
-		->where('read_notifications.notification_id IS NULL',NULL)
-		->where('notifications_solicituds.solicitud_id',$idSolcitud);
+			->from('notifications')
+			->join('notifications_solicituds', 'notifications.id = notifications_solicituds.notifications_id', 'rigth')
+			->join('usuario', 'usuario.tipousuario = notifications.tipo_usuario_id', 'left')
+			->join('read_notifications', 'read_notifications.notification_id = notifications.id', 'left')
+			->where('usuario.id',$idUsuario)
+			->where('notifications.time >',$actual_config)
+			->where('read_notifications.notification_id IS NULL',NULL)
+			->where('notifications_solicituds.solicitud_id',$idSolcitud);
 
 		$result= $this->db->get();
 		return $result->result_array();
