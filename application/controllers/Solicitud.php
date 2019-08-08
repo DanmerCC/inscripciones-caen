@@ -196,12 +196,6 @@ class Solicitud extends CI_Controller
 		if(count($solicitud)!=0){
 			$mensaje='se subio una hoja de datos';
 			$this->Solicitud_model->set_notification_mensaje($id,$mensaje);
-			$data_notification=array(
-				'tipo_usuario_id'=>2,
-				'action_id'=>1,
-				'mensaje'=>$mensaje
-			);
-			$this->Notificacion_model->create($data_notification);
 			echo $this->uploadFile('cv',$id,"hojadatos");//send result to view
 		}else{
 			show_404();
@@ -217,6 +211,8 @@ class Solicitud extends CI_Controller
 		}
 		$solicitud=$this->Solicitud_model->byIdAndAlumno($id,$idAlumno);
 		if(count($solicitud)!=0){
+			$mensaje='se subio un proyecto de investigacion';
+			$this->Solicitud_model->set_notification_mensaje($id,$mensaje);
 			echo $this->uploadFile('cv',$id,"proinves");//send result to view
 		}else{
 			show_404();
@@ -254,6 +250,8 @@ class Solicitud extends CI_Controller
 		}
 		$solicitud=$this->Solicitud_model->byIdAndAlumno($id,$idAlumno);
 		if(count($solicitud)!=0){
+			$mensaje='se subio una solicitud de admision';
+			$this->Solicitud_model->set_notification_mensaje($id,$mensaje);
 			echo $this->uploadFile('cv',$id,"sol-ad");//send result to view
 		}else{
 			show_404();
