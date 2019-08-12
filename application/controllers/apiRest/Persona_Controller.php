@@ -19,7 +19,7 @@ class Persona_Controller extends MY_Controller {
         }
 
         if(isset($_GET["size"])){
-            $page=isset($_GET["page"])?$_GET["page"]:10;
+            $page=isset($_GET["page"])?$_GET["page"]:0;
             $size=$_GET["size"];
             $inscritos=$this->Alumno_model->get_page_api(($size*$page),$size);
         }else{
