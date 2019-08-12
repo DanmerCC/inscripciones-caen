@@ -383,8 +383,7 @@ class Programa_model extends CI_Model
 		$this->db->group_by('sol.programa');
 		$this->db->where(
 			array(
-				'pro.'.$this->estado=>1,
-				'sol.sent_to_inscripcion IS NOT NULL'=>NULL
+				'pro.'.$this->estado=>1
 			)
 		);
 		$this->db->limit($limit,$start);
