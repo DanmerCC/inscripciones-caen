@@ -112,7 +112,7 @@ class Solicitud extends CI_Controller
                 "10" => $rspta[$i]["fecha_registro"],
                 "11" => ($rspta[$i]["estado"]=='0')?'<span class="label bg-red">Sin atender</span>':'<span class="label bg-green">Atendido</span>'
             );
-         }        
+         }    
         $results = array(
             "sEcho" =>$this->input->post('sEcho'), //Informacion para datatables
             "iTotalRecords" => $cantidad, //enviamos el total de registros al datatables
@@ -120,7 +120,6 @@ class Solicitud extends CI_Controller
             "aaData" => $data);
         echo json_encode($results);
         }
-
         public function dataTableAtendidas(){
         $rspta = $this->mihelper->resultToArray($this->Solicitud_model->atendidas());
         //vamos a declarar un array

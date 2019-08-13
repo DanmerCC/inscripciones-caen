@@ -68,16 +68,13 @@ class CorreoController extends CI_Controller
 	}
 	
 	public function fileTest(){
-
-		echo  var_dump($_FILES);
-	    //file_get_contents
-	    /*
-	    mkdir('files/prueba1234567');
-	    
-	    $stringfile=base64_encode(file_get_contents('files/dni/47327529.pdf',true));
-	    $data=$stringfile;
-	    
-	    $this->load->view("prueba",array("data"=>$stringfile));*/
+		$this->load->model('Solicitud_model');
+		$rspta = ($this->Solicitud_model->get_data_for_datatable(0,20,""));
+	    echo '<pre>';
+		print_r ($rspta->result_array());
+		print_r ($this->db->last_query());
+		echo '</pre>';
+		exit;
 	}
 	
 

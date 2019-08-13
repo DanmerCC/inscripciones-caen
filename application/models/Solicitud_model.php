@@ -73,12 +73,15 @@ class Solicitud_model extends CI_Model
 		$this->fn_query_datatable_base();
 		$this->db->limit($length,$start);
 		if($text!==NULL||isset($text)){
-			$this->db->like('a.nombres',$text);
-			$this->db->or_like('a.apellido_paterno',$text);
-			$this->db->or_like('a.apellido_materno',$text);
-			$this->db->or_like('c.numeracion',$text);
-			$this->db->or_like('s.comentario',$text);
-			$this->db->or_like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
+			$this->db->group_start();
+				$this->db->like('a.nombres',$text);
+				$this->db->or_like('a.apellido_paterno',$text);
+				$this->db->or_like('a.apellido_materno',$text);
+				$this->db->or_like('a.documento',$text);
+				$this->db->or_like('c.numeracion',$text);
+				$this->db->or_like('s.comentario',$text);
+				$this->db->or_like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
+			$this->db->group_end();
 		}
 
 		return $this->db->get();
@@ -87,12 +90,15 @@ class Solicitud_model extends CI_Model
 	public function count_with_filter($text){
 		$this->db->select($this->id);
 		$this->fn_query_datatable_base();
-		$this->db->like('a.nombres',$text);
-		$this->db->or_like('a.apellido_paterno',$text);
-		$this->db->or_like('a.apellido_materno',$text);
-		$this->db->or_like('c.numeracion',$text);
-		$this->db->or_like('s.comentario',$text);
-		$this->db->or_like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
+			$this->db->group_start();
+				$this->db->like('a.nombres',$text);
+				$this->db->or_like('a.apellido_paterno',$text);
+				$this->db->or_like('a.apellido_materno',$text);
+				$this->db->or_like('a.documento',$text);
+				$this->db->or_like('c.numeracion',$text);
+				$this->db->or_like('s.comentario',$text);
+				$this->db->or_like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
+			$this->db->group_end();
 		return $this->db->get()->num_rows();
 	}
 
@@ -102,9 +108,11 @@ class Solicitud_model extends CI_Model
 		->join('alumno a','s.alumno=a.id_alumno','left')
 		->join('curso c' , 's.programa=c.id_curso','left')
 		->join('tipo_curso tc' ,'c.idTipo_curso=tc.idTipo_Curso','left')
-		->where(array(
-			's.'.$this->sent.' IS NULL'=>NULL,
-		))
+		->group_start()
+			->where(array(
+				's.'.$this->sent.' IS NULL '=>NULL,
+			))
+		->group_end()
 		->order_by('s.'.$this->id,'desc')
 		;
 	}
