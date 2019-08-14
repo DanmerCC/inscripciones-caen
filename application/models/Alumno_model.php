@@ -52,7 +52,7 @@ class Alumno_model extends CI_Model
 	
 
 	private $public_columns=[];
-
+	private $startIdPersona=NULL;
 
 
 	function __construct()
@@ -60,6 +60,7 @@ class Alumno_model extends CI_Model
 		parent::__construct();
 		$this->load->helper('mihelper');
 		$this->public_columns=[
+			$this->id,
 			$this->nombres,
 			$this->apellido_paterno,
 			$this->apellido_materno,
@@ -499,6 +500,9 @@ class Alumno_model extends CI_Model
 
 	public function get_all_api(){
 		$this->query_selectApiColumnsFromTable();
+		if($this->startIdPersona!==NULL){
+			$this->db->where($this->id.' >',$this->startIdPersona);
+		}
 		return resultToArray($this->db->get());
 	}
 
@@ -540,6 +544,14 @@ class Alumno_model extends CI_Model
 		}else{
 			return null;
 		}
+	}
+
+	/**
+	 * Id de 
+	 * @param id Integer
+	 */
+	public function setStartId($id){
+		$this->startIdPersona=$id;
 	}
 
 }

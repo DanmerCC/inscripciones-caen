@@ -23,6 +23,11 @@ class Persona_Controller extends MY_Controller {
             $size=$_GET["size"];
             $inscritos=$this->Alumno_model->get_page_api(($size*$page),$size);
         }else{
+			
+			$start_person=isset($_GET["sp_id"])?$_GET["sp_id"]:0;
+			if($start_person!=0){
+				$this->Alumno_model->setStartId($start_person);
+			}
             $inscritos=$this->Alumno_model->get_all_api();
         }
         
