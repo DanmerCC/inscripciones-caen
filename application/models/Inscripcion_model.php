@@ -216,7 +216,6 @@ class Inscripcion_model extends CI_Model
 
 		//Set new particular filter to inscripcion
 		$this->where_filters['id_curso']=$id;
-
 		$this->db->select(
 			implode(',',$this->getApicColumns('ins')).
 			',c.id_curso,c.nombre as nombre_curso,c.numeracion,a.id_alumno,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
@@ -229,9 +228,10 @@ class Inscripcion_model extends CI_Model
 		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
 		$this->db->where(
 			$this->filters('ins')
-		);
+		);			
+		$this->db->where('s.sent_to_inscripcion IS NOT NULL',NULL);
+		$this->db->where('ins.deleted IS NULL',NULL);
 		$this->db->limit($limit,$start);
-		
         return resultToArray($this->db->get());
 	}
 
