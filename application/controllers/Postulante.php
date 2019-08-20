@@ -222,6 +222,7 @@ class Postulante extends CI_Controller {
 		$tipoDocumento=$this->input->post('tipoDocumento');
 		$nombres=$this->input->post('nombres');
 		$estado_civil=$this->input->post('estado_civil');
+		$genero=$this->input->post('genero');
 		$fecha_nac=$this->input->post('fecha_nac');
 		$telefono_casa=$this->input->post('telefono_casa');
 		$celular=$this->input->post('celular');
@@ -249,6 +250,7 @@ class Postulante extends CI_Controller {
 					$nombres,
 					$tipoDocumento,
 					$estado_civil,
+					$genero,
 					$fecha_nac,
 					$telefono_casa,
 					$celular,

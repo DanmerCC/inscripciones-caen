@@ -28,6 +28,7 @@ class Alumno_model extends CI_Model
 	private $email='email';
 	private $grado_profesion='grado_profesion';
 	private $estado_civil='estado_civil';
+	private $genero='genero';
 	private $fecha_nac='fecha_nac';
 	private $telefono_casa='telefono_casa';
 	private $distrito_nac='distrito_nac';
@@ -69,6 +70,7 @@ class Alumno_model extends CI_Model
 			$this->email,
 			$this->grado_profesion,
 			$this->estado_civil,
+			$this->genero,
 			$this->fecha_nac,
 			$this->telefono_casa,
 			$this->desc_discapacidad,
@@ -149,6 +151,7 @@ class Alumno_model extends CI_Model
 		$nombres,
 		$tipoDocumento,
 		$estado_civil,
+		$genero,
 		$fecha_nac,
 		$telefono_casa,
 		$celular,
@@ -174,6 +177,7 @@ class Alumno_model extends CI_Model
 			'nombres'=>$nombres,
 			'idTipoDocumento'=>$tipoDocumento,
 			'estado_civil'=>$estado_civil,
+			'genero'=>$genero,
 			'fecha_nac'=>$fecha_nac,
 			'telefono_casa'=>$telefono_casa,
 			'celular'=>$celular,

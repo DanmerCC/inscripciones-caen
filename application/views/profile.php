@@ -120,8 +120,15 @@
                                                     <?php } ?>
                                                 </select>
                                             </div>
-
-                                            <div class="col-sm-4">
+											<div class="col-sm-2">
+												<label>Genero</label>
+												<select name="genero" id="genero" class="form-control">
+													<option value="">Elejir::</option>
+													<option value="F">Femenino</option>
+													<option value="M">Masculino</option>
+												</select>
+                                            </div>
+                                            <div class="col-sm-2">
                                                 <label>Fecha de Nacimiento<span style="color: red">(*)</span></label>
                                                 <input type="date" class="form-control" id="fecha_nac" name ="fecha_nac" required>
                                             </div>

@@ -205,7 +205,8 @@ var configuracion = function(){
                 $("#tipoDocumento").val(datos[i].idTipoDocumento);
         		$("#dni").val(datos[i].documento);
 
-        		$("#estado_civil").val(datos[i].estado_civil);
+				$("#estado_civil").val(datos[i].estado_civil);
+                $("#genero").val(datos[i].genero);
         		$("#fecha_nac").val(datos[i].fecha_nac);
         		$("#telefono_casa").val(datos[i].telefono_casa);
         		$("#celular").val(datos[i].celular);
