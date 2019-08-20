@@ -376,14 +376,17 @@ class Programa_model extends CI_Model
 	public function get_page_api($start,$limit = 10){
 		$this->db->select(
 			implode(',',$this->getApicColumns('pro')).
-			', COUNT(sol.programa) as count' 
+			', COUNT(sol.programa) as count,'.
+			'CONCAT(pro.numeracion," ",tc.nombre," ",pro.nombre) as fullname' 
 		);
 		$this->db->from($this->table.' pro');
 		$this->db->join('solicitud sol','pro.id_curso=sol.programa');
+		$this->db->join('tipo_curso tc','pro.idTipo_curso=tc.idTipo_curso');
 		$this->db->group_by('sol.programa');
 		$this->db->where(
 			array(
-				'pro.'.$this->estado=>1
+				'pro.'.$this->estado=>1,
+				'sol.sent_to_inscripcion IS NOT NULL'=>NULL
 			)
 		);
 		$this->db->limit($limit,$start);
