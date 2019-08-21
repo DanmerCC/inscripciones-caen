@@ -2,10 +2,12 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Persona_Controller extends MY_Controller {
+	private $base_url;
 
 	public function __construct(){
         parent::__construct();
-        $this->load->model('Alumno_model');
+		$this->load->model('Alumno_model');
+		$this->base_url=base_url()."api/v1/";
     }
     
     /**
@@ -29,11 +31,74 @@ class Persona_Controller extends MY_Controller {
 				$this->Alumno_model->setStartId($start_person);
 			}
             $inscritos=$this->Alumno_model->get_all_api();
-        }
-        
+		}
+		
+        for ($i=0; $i < count($inscritos); $i++) {
+			$inscritos[$i]["files_personal"]=$this->array_get_data_files($inscritos[$i]);
+		}
         $this->response($inscritos,200);
     }
 
+	/***
+	 * @param array de alumno
+	 */
+	private function array_get_data_files($alumno){
+		$data;
+		if($alumno!=NULL){
+			$data["documentosObject"]=[
+				[
+					"name"=>"curriculum",
+					"identifier"=>"cv",
+					"statechecked"=>(boolean)$alumno["check_cv_pdf"],
+					"stateUpload"=>file_exists(CC_BASE_PATH."/files/cvs/".$alumno["documento"].".pdf"),
+					"fileName"=>$alumno["documento"],
+					"urldownload"=>$this->base_url."files/cv/".$alumno["id_alumno"]
+				],
+				[
+					"name"=>"declaracion jurada",
+					"identifier"=>"dj",
+					"statechecked"=>(boolean)$alumno["check_dj_pdf"],
+					"stateUpload"=>file_exists(CC_BASE_PATH."/files/djs/".$alumno["documento"].".pdf"),
+					"fileName"=>$alumno["documento"],
+					"urldownload"=>$this->base_url."files/dj/".$alumno["id_alumno"]
+				],
+				[
+					"name"=>"dni",
+					"identifier"=>"dni",
+					"statechecked"=>(boolean)$alumno["check_dni_pdf"],
+					"stateUpload"=>file_exists(CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf"),
+					"fileName"=>$alumno["documento"],
+					"urldownload"=>$this->base_url."files/dni/".$alumno["id_alumno"]
+				],
+				[
+					"name"=>"bachiller",
+					"identifier"=>"bach",
+					"statechecked"=>(boolean)$alumno["check_bach_pdf"],
+					"stateUpload"=>file_exists(CC_BASE_PATH."/files/bachiller/".$alumno["documento"].".pdf"),
+					"fileName"=>$alumno["documento"],
+					"urldownload"=>$this->base_url."files/bach/".$alumno["id_alumno"]
+				],
+				[
+					"name"=>"maestria",
+					"identifier"=>"maes",
+					"statechecked"=>(boolean)$alumno["check_maes_pdf"],
+					"stateUpload"=>file_exists(CC_BASE_PATH."/files/maestria/".$alumno["documento"].".pdf"),
+					"fileName"=>$alumno["documento"],
+					"urldownload"=>$this->base_url."files/maes/".$alumno["id_alumno"]
+				],
+				[
+					"name"=>"Doctorado",
+					"identifier"=>"doct",
+					"statechecked"=>(boolean)$alumno["check_doct_pdf"],
+					"stateUpload"=>file_exists(CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf"),
+					"fileName"=>$alumno["documento"],
+					"urldownload"=>$this->base_url."files/doct/".$alumno["id_alumno"]
+				]
+	
+			];
+		}
+		return $data["documentosObject"];
+	}
     /**
      * 
      */

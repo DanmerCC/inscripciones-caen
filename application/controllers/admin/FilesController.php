@@ -9,8 +9,9 @@ class FilesController extends CI_Controller {
 		$this->load->library('Nativesession');
 		$this->load->library('Mihelper');
 		$this->load->model('Solicitud_model');
-    }
-    
+		$this->load->model('Alumno_model');
+	}
+	
     public function get_file_view_as_data(){
 		$segmentOfTypeFile=$this->uri->segment(4);
 		//$segmentOfNumberDni=$this->uri->segment(5);
@@ -18,7 +19,6 @@ class FilesController extends CI_Controller {
 		$data="";
 		$pathFile="";
 
-		$this->load->model('Alumno_model');
 		$result;
 		$idNameAndRegist=NULL;
 

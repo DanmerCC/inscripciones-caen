@@ -89,7 +89,13 @@ class Alumno_model extends CI_Model
 			$this->grado_militar,
 			$this->plana_militar,
 			$this->nacionalidad,
-			$this->situacion_laboral
+			$this->situacion_laboral,
+			$this->check_bach,
+			$this->check_cv,
+			$this->check_dj,
+			$this->check_dni,
+			$this->check_doct,
+			$this->check_maes,
 		];
 
 	}
