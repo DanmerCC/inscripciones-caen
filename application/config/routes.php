@@ -170,6 +170,8 @@ $route['administracion/vista/reportes'] = 'admin/ReportesController';
 $route['administracion/vista/inscripciones'] ='admin/InscripcionController/index';
 
 $route['admin/parts/nuevoprograma'] = 'admin/Programa/newPrograma';
+$route['admin/notifications'] = 'admin/NotificationController/index';
+$route['admin/read'] = 'admin/NotificationController/read';
 
 //**Models with inscription */
 $route['admin/inscr/create'] = 'admin/InscripcionController/create';

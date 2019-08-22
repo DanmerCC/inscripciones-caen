@@ -20,16 +20,16 @@
         <ul class="nav navbar-nav">
           
           <!-- Notifications: style can be found in dropdown.less -->
-          <!-- <li class="dropdown notifications-menu">
+          <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
+              <span class="label label-warning" id="not-tot">11</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
+              <li class="header" id="not-tot-text">You have 10 notifications</li>
               <li>
                 
-                <ul class="menu">
+                <ul class="menu" id="not-menu">
                   <li>
                     <a href="#">
                       <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
@@ -45,7 +45,7 @@
               </li>
               <li class="footer"><a href="#">Ver todos</a></li>
             </ul>
-          </li> -->
+          </li>
           
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
@@ -83,3 +83,47 @@
       </div>
     </nav>
   </header>
+<script>
+
+function getPromiseNotifications(){
+	return new Promise(function(resolve, reject) {
+		var xhr = new XMLHttpRequest();
+		xhr.open('get', '/admin/notifications', true);
+		xhr.responseType = 'json';
+		xhr.onload = function() {
+			var status = xhr.status;
+			if (status == 200) {
+				resolve(xhr.response);
+			} else {
+				reject(status);
+			}
+		};
+		xhr.send();
+	});
+}
+
+getPromiseNotifications().then(function(response){
+	var total_notification=response.length;
+	var div_not_tot=document.getElementById('not-tot');
+	var div_not_tot_text=document.getElementById('not-tot-text');
+	var ul_container=document.getElementById('not-menu');
+
+	div_not_tot.innerHTML=total_notification;
+	div_not_tot_text.innerHTML=`Usted tiene ${total_notification} notificaciones`;
+	var list_notification="";
+	for (let index = 0; index < response.length; index++) {
+		list_notification = list_notification+construct_notification_li(response[index].mensaje);
+	}
+	ul_container.innerHTML=list_notification;
+}).catch();
+
+
+function construct_notification_li(mensaje){
+	return `<li>
+						<a href="#">
+							<i class="fa fa-warning text-yellow"></i> ${mensaje}
+						</a>
+					</li>`;
+}
+
+</script>
