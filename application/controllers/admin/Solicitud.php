@@ -21,6 +21,13 @@ class Solicitud extends CI_Controller
 		$this->load->model('Notificacion_model');
 	}
     public function index(){
+		
+		echo '<pre>';
+		print_r($this->Notificacion_model->all());
+		//$this->Notificacion_model->readNotificatiom(2);
+		echo $this->db->last_query();
+		echo '</pre>';
+		exit;
         if ($this->nativesession->get('tipo')=='admin') {
             $identidad["rutaimagen"]="/dist/img/avatar5.png";
             $identidad["nombres"]=$this->nativesession->get('acceso');

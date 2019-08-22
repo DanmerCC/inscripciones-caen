@@ -31,12 +31,12 @@ class Notificacion_model extends MY_Model
 		return $this->Action_model->all();
 	}
 
-	function readNotificatiom($idNotification,$idUsuario){
+	function readNotificatiom($idNotification){
 		$data=array(
-			'usuario_id'=>$idUsuario,
+			'usuario_id'=>(int)$this->nativesession->get('idUsuario'),
 			'notification_id'=>$idNotification
 		);
-		$this->db->insert($this->table,$data);
+		$this->db->insert('read_notifications',$data);
 		return $this->db->affected_rows()===1;
 	}
 

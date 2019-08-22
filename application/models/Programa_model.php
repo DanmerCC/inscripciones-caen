@@ -313,6 +313,19 @@ class Programa_model extends CI_Model
 		}
 	}
 
+	public function findWithFullname($id){
+		$this->db->select('c.*,CONCAT(c.numeracion," ",t.nombre," ",c.nombre) as fullname')
+		->from($this->table.' c')
+		->join('tipo_curso t', 'c.idTipo_curso = t.idTipo_curso')
+		->where($this->id,$id);
+		$result=$this->db->get();
+		if($result->num_rows()!==1){
+			return false;
+		}else{
+			return $result->result_array()[0];
+		}
+	}
+
 	public function types(){
 		$this->db->select()->from('tipo_curso');
 		return $this->db->get()->result_array();
