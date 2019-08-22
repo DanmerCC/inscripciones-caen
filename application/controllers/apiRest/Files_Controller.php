@@ -89,7 +89,7 @@ class Files_Controller extends MY_Controller {
 
 		if((!($pathFile==""))&&(file_exists($pathFile))){
 			$data=base64_encode(file_get_contents($pathFile,true));
-			$this->load->view("pdf/onlyviewpdf",array('data'=>$data));///Load view pdf for admin marks
+			echo ($data);
 		}else{
 			show_error("Error al buscar un archivo",404);
 		}
