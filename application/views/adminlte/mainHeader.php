@@ -20,16 +20,17 @@
         <ul class="nav navbar-nav">
           
           <!-- Notifications: style can be found in dropdown.less -->
-          <li class="dropdown notifications-menu">
+          <li class="dropdown notifications-menu" id="notification-component">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
               <span class="label label-warning" id="not-tot">11</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header" id="not-tot-text">You have 10 notifications</li>
+              <li class="header" id="not-tot-text"></li>
               <li>
                 
                 <ul class="menu" id="not-menu">
+
                   <li>
                     <a href="#">
                       <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
@@ -112,6 +113,7 @@ getPromiseNotifications().then(function(response){
 	div_not_tot_text.innerHTML=`Usted tiene ${total_notification} notificaciones`;
 	var list_notification="";
 	for (let index = 0; index < response.length; index++) {
+
 		list_notification = list_notification+construct_notification_li(response[index].mensaje);
 	}
 	ul_container.innerHTML=list_notification;
@@ -119,11 +121,34 @@ getPromiseNotifications().then(function(response){
 
 
 function construct_notification_li(mensaje){
+	/*
+	var mensaje_final="";
+	var mensaje_array=mensaje.split(' ');
+	if(mensaje_array.length>3){
+		for (let ii = 0; ii <= mensaje_array.length; ii+3) {
+			if(mensaje_array[ii]!=null){
+				mensaje_array.splice(ii,0,'</br>');
+			}
+		}
+	}
+
+	for (let iii = 0; iii < mensaje_array.length; iii++) {
+		var mensaje_final=mensaje_final+' '+mensaje_array[iii];
+	}
+
 	return `<li>
 						<a href="#">
-							<i class="fa fa-warning text-yellow"></i> ${mensaje}
+							<i class="fa fa-warning text-yellow"></i> ${mensaje_final}
 						</a>
 					</li>`;
+					*/
+
+	return `<li>
+		<a href="#">
+			<i class="fa fa-warning text-yellow" style="word-wrap: break-word;"></i> ${mensaje}
+		</a>
+	</li>`;
 }
+
 
 </script>
