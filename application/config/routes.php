@@ -232,6 +232,7 @@ $route['api/v1/programas'] = 'apiRest/Programa_Controller/get';
 $route['api/v1/programa/(:num)'] = 'apiRest/Programa_Controller/getById/$1';
 $route['api/v1/tipoProgramas'] = 'apiRest/Programa_Controller/listTipos';
 $route['api/v1/tipoPrograma/(:num)'] = 'apiRest/Programa_Controller/tipo/$1';
+$route['api/v1/files/([a-zA-Z]+)/(:num)'] = 'apiRest/Files_Controller/getFile';
 
 /***
  * Chart estadistics
