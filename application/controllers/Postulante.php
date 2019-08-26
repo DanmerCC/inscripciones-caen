@@ -447,7 +447,7 @@ class Postulante extends CI_Controller {
 			if($resultado==1){
 				$this->Notificacion_model->create(array(
 					'action_id'=>10,//create solicitud
-					'mensaje'=>'El alumno '.$alumno_result["nombres"]." ".$alumno_result["apellido_paterno"]." ".$alumno_result["apellido_materno"]." a solicitado su incripcion a ".$programa["fullname"],
+					'mensaje'=>'El alumno '.$alumno_result["nombres"]." </br> ".$alumno_result["apellido_paterno"]." ".$alumno_result["apellido_materno"]." a solicitado su incripcion a </br> ".$programa["fullname"],
 					'tipo_usuario_id'=>2//admin
 				));
 			}

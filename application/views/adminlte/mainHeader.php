@@ -23,14 +23,14 @@
           <li class="dropdown notifications-menu" id="notification-component">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning" id="not-tot">11</span>
+              <span class="label label-warning" id="not-tot">0</span>
             </a>
             <ul class="dropdown-menu">
               <li class="header" id="not-tot-text"></li>
               <li>
                 
                 <ul class="menu" id="not-menu">
-
+								<!--
                   <li>
                     <a href="#">
                       <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
@@ -41,10 +41,13 @@
                     <a href="#">
                       <i class="fa fa-users text-red"></i> 5 new members joined
                     </a>
-                  </li>
+									</li>
+								-->	
                 </ul>
-              </li>
-              <li class="footer"><a href="#">Ver todos</a></li>
+							</li>
+							<!--
+							<li class="footer"><a href="#">Ver todos</a></li>
+							-->
             </ul>
           </li>
           
@@ -104,44 +107,27 @@ function getPromiseNotifications(){
 }
 
 getPromiseNotifications().then(function(response){
-	var total_notification=response.length;
-	var div_not_tot=document.getElementById('not-tot');
-	var div_not_tot_text=document.getElementById('not-tot-text');
-	var ul_container=document.getElementById('not-menu');
+	if(response!=null){
+		var total_notification=response.length;
+		var div_not_tot=document.getElementById('not-tot');
+		var div_not_tot_text=document.getElementById('not-tot-text');
+		var ul_container=document.getElementById('not-menu');
 
-	div_not_tot.innerHTML=total_notification;
-	div_not_tot_text.innerHTML=`Usted tiene ${total_notification} notificaciones`;
-	var list_notification="";
-	for (let index = 0; index < response.length; index++) {
+		div_not_tot.innerHTML=total_notification;
+		div_not_tot_text.innerHTML=`Usted tiene ${total_notification} notificaciones`;
+		var list_notification="";
+		for (let index = 0; index < response.length; index++) {
 
-		list_notification = list_notification+construct_notification_li(response[index].mensaje);
+			list_notification = list_notification+construct_notification_li(response[index].mensaje);
+		}
+		ul_container.innerHTML=list_notification;
+
 	}
-	ul_container.innerHTML=list_notification;
+
 }).catch();
 
 
-function construct_notification_li(mensaje){
-	/*
-	var mensaje_final="";
-	var mensaje_array=mensaje.split(' ');
-	if(mensaje_array.length>3){
-		for (let ii = 0; ii <= mensaje_array.length; ii+3) {
-			if(mensaje_array[ii]!=null){
-				mensaje_array.splice(ii,0,'</br>');
-			}
-		}
-	}
-
-	for (let iii = 0; iii < mensaje_array.length; iii++) {
-		var mensaje_final=mensaje_final+' '+mensaje_array[iii];
-	}
-
-	return `<li>
-						<a href="#">
-							<i class="fa fa-warning text-yellow"></i> ${mensaje_final}
-						</a>
-					</li>`;
-					*/
+function construct_notification_li(mensaje){	
 
 	return `<li>
 		<a href="#">
