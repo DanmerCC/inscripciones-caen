@@ -48,6 +48,21 @@ class Programa_model extends CI_Model
 		return $this->db->query('SELECT c.id_curso,c.nombre,c.duracion,c.costo_total,c.vacantes,c.fecha_inicio,c.fecha_final,c.idTipo_curso,c.estado,c.numeracion,t.nombre as tipoNombre FROM curso c left join tipo_curso t on c.idTipo_curso = t.idTipo_curso');
 	}
 
+	public function allBySolicitud(){
+		$result = $this->db->select('c.id_curso,c.nombre,c.duracion,c.costo_total,c.vacantes,c.fecha_inicio,c.fecha_final,c.idTipo_curso,c.estado,c.numeracion,t.nombre as tipoNombre')
+				->from('curso c')
+				->join('tipo_curso t','c.idTipo_curso = t.idTipo_curso','LEFT')
+				->join('solicitud s','s.programa=c.id_curso')
+				->join('alumno a','s.alumno=a.id_alumno','left')
+				->group_start()
+					->where(array(
+						's.sent_to_inscripcion IS NULL '=>NULL,
+					))
+				->group_end()
+				->group_by('c.id_curso');
+		return $result->get();
+	}
+
   public function allActives(){
 		return $this->db->query('SELECT c.id_curso,c.nombre,c.duracion,c.costo_total,c.vacantes,c.fecha_inicio,c.fecha_final,c.idTipo_curso,c.estado,c.numeracion,t.nombre as tipoNombre FROM curso c left join tipo_curso t on c.idTipo_curso = t.idTipo_curso where c.estado=1');
 	}

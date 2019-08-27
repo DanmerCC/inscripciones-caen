@@ -42,7 +42,7 @@ class ApiPrograma extends CI_Controller
 	public function all(){
 		$this->verify_login_or_fail();
 		$this->load->model('Programa_model');
-		$programa=$this->Programa_model->all();
+		$programa=$this->Programa_model->allBySolicitud();
 
 			$result=[];
 			$i=0;
