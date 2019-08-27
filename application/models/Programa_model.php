@@ -51,9 +51,9 @@ class Programa_model extends CI_Model
 	public function allBySolicitud(){
 		$result = $this->db->select('c.id_curso,c.nombre,c.duracion,c.costo_total,c.vacantes,c.fecha_inicio,c.fecha_final,c.idTipo_curso,c.estado,c.numeracion,t.nombre as tipoNombre')
 				->from('curso c')
-				->join('tipo_curso t','c.idTipo_curso = t.idTipo_curso','LEFT')
+				->join('tipo_curso t','c.idTipo_curso = t.idTipo_curso')
 				->join('solicitud s','s.programa=c.id_curso')
-				->join('alumno a','s.alumno=a.id_alumno','left')
+				->join('alumno a','s.alumno=a.id_alumno')
 				->group_start()
 					->where(array(
 						's.sent_to_inscripcion IS NULL '=>NULL,
