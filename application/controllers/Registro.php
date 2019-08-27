@@ -8,12 +8,13 @@ class Registro extends CI_Controller
     {
         parent::__construct();
         $this->load->helper('url');
-        $this->load->library('Nativesession');
+		$this->load->library('Nativesession');
+		$this->load->model('Programa_model');
+		$this->load->model('Notificacion_model');
     }
 
     public function index()
     {
-        $this->load->model('Programa_model');
         $tipos=$this->Programa_model->types();
         if(isset($_GET["dp"])){
             $programa_defecto=$this->Programa_model->findById($_GET["dp"]);
@@ -88,8 +89,18 @@ class Registro extends CI_Controller
                 $this->nativesession->set('tipo',$nuevo_alumno["tipo"]);
                 
                 if($this->Alumno_model->nuevaSolicitud($programa_id, $alumno, $tipoFinan)){
-                   
-                    
+                   $programa_result=$this->Programa_model->findWithFullname($programa_id);
+                    $this->Notificacion_model->create(array(
+						'action_id'=>10,//create solicitud
+						'mensaje'=>'El alumno '.
+						$nuevo_alumno["nombres"].
+						" </br> ".$nuevo_alumno["apellido_paterno"].
+						" ".$nuevo_alumno["apellido_materno"]."</br>".
+						" se registro y a solicitado </br> ".
+						" su incripcion a </br> ".
+						$programa_result["fullname"],
+						'tipo_usuario_id'=>2//admin
+					));
                     $data["heading"]="Se registro correctamente";
                     $data["message"]="Su cuenta  $id_usuario_dni a sido registrada correctamente";
                     $data["seconds"]="5";

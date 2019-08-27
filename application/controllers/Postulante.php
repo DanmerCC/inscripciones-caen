@@ -9,6 +9,8 @@ class Postulante extends CI_Controller {
 		$this->load->library('Nativesession');
 		$this->load->library('ConfigClass');
 		$this->load->model('ConfigPerfil_model');
+		$this->load->model('Notificacion_model');
+		$this->load->model('Programa_model');
 	}
 
 	public function index()
@@ -441,7 +443,16 @@ class Postulante extends CI_Controller {
 		}else{
 			$tipo_financiamiento=$this->input->post('tipoFinan');
 			$this->load->model('Alumno_model');
-			$this->Alumno_model->nuevaSolicitud($programa,$alumno,$tipo_financiamiento);
+			$resultado=$this->Alumno_model->nuevaSolicitud($programa,$alumno,$tipo_financiamiento);
+			$alumno_result=$this->Alumno_model->find($alumno);
+			$programa=$this->Programa_model->findWithFullname($programa);
+			if($resultado==1){
+				$this->Notificacion_model->create(array(
+					'action_id'=>10,//create solicitud
+					'mensaje'=>'El alumno '.$alumno_result["nombres"]." </br> ".$alumno_result["apellido_paterno"]." ".$alumno_result["apellido_materno"]." a solicitado su incripcion a </br> ".$programa["fullname"],
+					'tipo_usuario_id'=>2//admin
+				));
+			}
 			$this->ConfigPerfil_model->setAcordion(Config_Acordion::$nineth_acordion);
 			redirect(base_url().'postulante', 'refresh');
 		}

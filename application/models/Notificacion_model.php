@@ -31,12 +31,12 @@ class Notificacion_model extends MY_Model
 		return $this->Action_model->all();
 	}
 
-	function readNotificatiom($idNotification,$idUsuario){
+	function readNotificatiom($idNotification){
 		$data=array(
-			'usuario_id'=>$idUsuario,
+			'usuario_id'=>(int)$this->nativesession->get('idUsuario'),
 			'notification_id'=>$idNotification
 		);
-		$this->db->insert($this->table,$data);
+		$this->db->insert('read_notifications',$data);
 		return $this->db->affected_rows()===1;
 	}
 
@@ -44,37 +44,9 @@ class Notificacion_model extends MY_Model
 	 * overriding the method
 	 */
 	function all(){
-		/**
-		 * SELECT * FROM notifications 
-		 * INNER JOIN usuario on usuario.tipousuario=usuario.tipousuario
-		 * WHERE (usuario.id=11) and ( notifications.time > '2019-08-06 12:42:34')
-		 * and (notifications.id NOT IN 
-		 * 	(
-		 * 		SELECT read_notifications.notification_id  FROM read_notifications WHERE read_notifications.usua
-		 * 	)
-		 * )
-		 */
-		
-			$idUsuario=$this->nativesession->get('idUsuario');
-			$actual_config=$this->getConfig();
-/*
-			$this->db->query("SELECT notifications.* FROM notifications
-			INNER JOIN usuario on usuario.tipousuario=usuario.tipousuario 
-			WHERE (usuario.id=11) 
-			and ( notifications.time > '$actual_config') 
-			and ( notifications.id NOT IN (
-				SELECT read_notifications.notification_id  FROM read_notifications WHERE read_notifications.usuario_id=$idUsuario)
-				)");
-		*/
-
-		/**
-		 * 
-		 * SELECT notifications.* FROM notifications 
-         * LEFT JOIN usuario on usuario.tipousuario=notifications.tipo_usuario_id
-         * LEFT JOIN read_notifications on read_notifications.notification_id=notifications.id
-         * WHERE (usuario.id=11) and ( notifications.time > '2019-08-06 11:42:34')
-         * and read_notifications.notification_id IS NULL
-		 */
+	
+		$idUsuario=$this->nativesession->get('idUsuario');
+		$actual_config=$this->getConfig();
 
 		$this->db->select('notifications.*')
 		->from('notifications')
@@ -82,10 +54,12 @@ class Notificacion_model extends MY_Model
 		->join('read_notifications', 'read_notifications.notification_id = notifications.id', 'left')
 		->where('usuario.id',$idUsuario)
 		->where('notifications.time >',$actual_config)
-		->where('read_notifications.notification_id IS NULL',NULL);
-
+		->where('read_notifications.notification_id IS NULL',NULL)
+		->order_by('notifications.time','asc')
+		->limit(20);
 		$result= $this->db->get();
-		return $result->result_array();
+		$result=$result->result_array();
+		return $result;
 	}
 
 
