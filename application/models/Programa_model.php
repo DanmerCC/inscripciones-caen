@@ -47,7 +47,6 @@ class Programa_model extends CI_Model
 	public function all(){
 		return $this->db->query('SELECT c.id_curso,c.nombre,c.duracion,c.costo_total,c.vacantes,c.fecha_inicio,c.fecha_final,c.idTipo_curso,c.estado,c.numeracion,t.nombre as tipoNombre FROM curso c left join tipo_curso t on c.idTipo_curso = t.idTipo_curso');
 	}
-
 	public function allBySolicitud(){
 		$result = $this->db->select('c.id_curso,c.nombre,c.duracion,c.costo_total,c.vacantes,c.fecha_inicio,c.fecha_final,c.idTipo_curso,c.estado,c.numeracion,t.nombre as tipoNombre')
 				->from('curso c')
@@ -58,6 +57,24 @@ class Programa_model extends CI_Model
 					->where(array(
 						's.sent_to_inscripcion IS NULL '=>NULL,
 					))
+				->group_end()
+				->group_by('c.id_curso');
+		return $result->get();
+	}
+	public function allByIncripcionSolicitud(){
+		$result = $this->db->select('c.id_curso,c.nombre,c.duracion,c.costo_total,c.vacantes,c.fecha_inicio,c.fecha_final,c.idTipo_curso,c.estado,c.numeracion,t.nombre as tipoNombre')
+				->from('curso c')
+				->join('tipo_curso t','c.idTipo_curso = t.idTipo_curso')
+				->join('solicitud s','s.programa=c.id_curso')
+				->join('inscripcion ins','ins.solicitud_id = s.idSolicitud')
+				->join('usuario u','ins.created_user_id = u.id')
+				->join('alumno a','s.alumno=a.id_alumno')
+				->group_start()
+					->where(
+						array(
+							'ins.deleted'=>NULL
+						)
+					)
 				->group_end()
 				->group_by('c.id_curso');
 		return $result->get();
