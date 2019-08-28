@@ -42,7 +42,36 @@ class ApiPrograma extends CI_Controller
 	public function all(){
 		$this->verify_login_or_fail();
 		$this->load->model('Programa_model');
+		$programa=$this->Programa_model->all();
+			$result=[];
+			$i=0;
+
+			foreach ($programa->result_array() as $row){
+				$result[$i]=$row;
+				$i++;
+			}
+
+		echo json_encode($result,JSON_UNESCAPED_UNICODE);
+	}
+
+	public function allByIncripciones(){
+		$this->verify_login_or_fail();
+		$this->load->model('Programa_model');
 		$programa=$this->Programa_model->allByIncripcionSolicitud();
+			$result=[];
+			$i=0;
+
+			foreach ($programa->result_array() as $row){
+				$result[$i]=$row;
+				$i++;
+			}
+
+		echo json_encode($result,JSON_UNESCAPED_UNICODE);
+	}
+	public function allBySolicitud(){
+		$this->verify_login_or_fail();
+		$this->load->model('Programa_model');
+		$programa=$this->Programa_model->allBySolicitud();
 			$result=[];
 			$i=0;
 

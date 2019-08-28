@@ -53,7 +53,7 @@ function listProgramasActivos(array){
 function loadDataToSelect(){
     $.ajax({
         type: "get",
-        url: "/api/programas/all",
+        url: "/api/programas/allInscripciones",
         data: "",
         dataType: "json",
         success: function (response) {
