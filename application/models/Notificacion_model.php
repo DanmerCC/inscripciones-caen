@@ -26,6 +26,14 @@ class Notificacion_model extends MY_Model
 		return $this->db->affected_rows()===1;
 	}
 
+	function createAndReturnId($array){
+		$this->db->insert($this->table,$array);
+		if ($this->db->affected_rows()===1) {
+			return $this->db->insert_id();
+		}
+		return 0;
+	}
+
 	function types(){
 		$this->load->model('Action_model');
 		return $this->Action_model->all();
@@ -38,6 +46,14 @@ class Notificacion_model extends MY_Model
 		);
 		$this->db->insert('read_notifications',$data);
 		return $this->db->affected_rows()===1;
+	}
+
+	/**
+	 * Crear tabla notifications_solicituds
+	 * @param array los campos como solicitud_id y notificacion id
+	 */
+	function createNotificationSolicitud($array){
+		$this->db->insert("notifications_solicituds",$array);
 	}
 
 	/**

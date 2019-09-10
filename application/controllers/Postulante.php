@@ -11,6 +11,7 @@ class Postulante extends CI_Controller {
 		$this->load->model('ConfigPerfil_model');
 		$this->load->model('Notificacion_model');
 		$this->load->model('Programa_model');
+		$this->load->model('Alumno_model');
 	}
 
 	public function index()
@@ -470,6 +471,7 @@ class Postulante extends CI_Controller {
         //nombre de imagen
 		$config['file_name'] = $this->nativesession->get("dni");
 		
+		//solicitudes
 		$this->load->library('upload',$config);
 		header('Content-Type: application/json');
 		if(!$this->upload->do_upload('cv')){
@@ -486,6 +488,8 @@ class Postulante extends CI_Controller {
 			];
 			echo json_encode($result,JSON_UNESCAPED_UNICODE);
         }else{
+
+			$this->cargarNotificacionDocumentos();
             //Datos del fichero subido
             $datos["img"]=$this->upload->data();
  
@@ -493,7 +497,6 @@ class Postulante extends CI_Controller {
             $datos["img"]["file_name"];
 
 			//echo var_dump($datos);
-
             //Cargamos la vista y le pasamos los datos
             //para asegurarse que la imagen nueva se cargue en la vista se agregara un header
             //header("Cache-Control: no-cache, must-revalidate");
@@ -540,7 +543,7 @@ class Postulante extends CI_Controller {
             $datos["img"]["file_name"];
 
 			//echo var_dump($datos);
-
+			$this->cargarNotificacionDocumentos();
             //Cargamos la vista y le pasamos los datos
             //para asegurarse que la imagen nueva se cargue en la vista se agregara un header
             //header("Cache-Control: no-cache, must-revalidate");
@@ -595,7 +598,7 @@ class Postulante extends CI_Controller {
             $datos["img"]["file_name"];
 			
 			//echo var_dump($datos);
-
+			$this->cargarNotificacionDocumentos();
             //Cargamos la vista y le pasamos los datos
             //para asegurarse que la imagen nueva se cargue en la vista se agregara un header
             //header("Cache-Control: no-cache, must-revalidate");
@@ -649,6 +652,7 @@ class Postulante extends CI_Controller {
             //Podemos acceder a todas las propiedades del fichero subido 
             $datos["img"]["file_name"];
 			
+			$this->cargarNotificacionDocumentos();
 			//echo var_dump($datos);
 
             //Cargamos la vista y le pasamos los datos
@@ -705,7 +709,7 @@ class Postulante extends CI_Controller {
             $datos["img"]["file_name"];
 			
 			//echo var_dump($datos);
-
+			$this->cargarNotificacionDocumentos();
             //Cargamos la vista y le pasamos los datos
             //para asegurarse que la imagen nueva se cargue en la vista se agregara un header
             //header("Cache-Control: no-cache, must-revalidate");
@@ -760,7 +764,7 @@ class Postulante extends CI_Controller {
             $datos["img"]["file_name"];
 			
 			//echo var_dump($datos);
-
+			$this->cargarNotificacionDocumentos();
             //Cargamos la vista y le pasamos los datos
             //para asegurarse que la imagen nueva se cargue en la vista se agregara un header
             //header("Cache-Control: no-cache, must-revalidate");
@@ -886,7 +890,21 @@ class Postulante extends CI_Controller {
 		}
 		echo json_encode($result,JSON_UNESCAPED_UNICODE);
 	}
-	
+
+	public function cargarNotificacionDocumentos(){
+		$alumno = $this->Alumno_model->findByDocumento($this->nativesession->get("dni"))->row();
+		$solicitudes = $this->Alumno_model->solicitudes($alumno->id_alumno)->result();
+		$notificacion_id = $this->Notificacion_model->createAndReturnId(array(
+			'action_id'=>10,//create solicitud
+			'mensaje'=>'Los archivos personales del alumno '.$alumno->apellido_paterno." </br> ".$alumno->apellido_materno." ".$alumno->nombres." <br> an sido actualizados. ",
+			'tipo_usuario_id'=>2//admin
+		));
+		if($notificacion_id){
+			foreach ($solicitudes as $key => $solicitud) {
+				$this->Notificacion_model->createNotificationSolicitud(array('solicitud_id'=>$solicitud->idSolicitud,'notifications_id'=>$notificacion_id));
+			}
+		}
+	}
 
 
 }

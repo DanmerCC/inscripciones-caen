@@ -127,6 +127,10 @@ class Alumno_model extends CI_Model
 		return resultToArray($this->db->select()->from('alumno')->where('id_alumno',$idAlumno)->get());
 	}
 
+	public function findByDocumento($numero){
+		return $this->db->select('id_alumno,apellido_paterno,apellido_materno,nombres,documento,cargo_actual')->from('alumno')->where('documento',$numero)->get();
+	}
+
 	public function findAllInnerSolicitudCountById($idAlumno){
 		$this->db->select('COUNT(s.idSolicitud) as solicitudes,a.*');
 		$this->db->from($this->table." a");
