@@ -10,6 +10,7 @@ class FilesController extends CI_Controller {
 		$this->load->library('Mihelper');
 		$this->load->model('Solicitud_model');
 		$this->load->model('Alumno_model');
+		$this->load->model('Notificacion_model');
 	}
 	
     public function get_file_view_as_data(){
@@ -21,6 +22,7 @@ class FilesController extends CI_Controller {
 
 		$result;
 		$idNameAndRegist=NULL;
+		$result=resultToArray($this->Alumno_model->all($id))[0];
 
 		switch ($segmentOfTypeFile) {
 			case 'cv':
@@ -28,36 +30,42 @@ class FilesController extends CI_Controller {
 				$pathFile=CC_BASE_PATH."/files/cvs/".$result["documento"].".pdf";
 				
 				$idNameAndRegist=$result["id_alumno"];
+				$this->read_notification($result['id_alumno'],1);
 				break;
 			case 'dj':
 				$result=resultToArray($this->Alumno_model->all($id))[0];
 				$pathFile=CC_BASE_PATH."/files/djs/".$result["documento"].".pdf";
 				
 				$idNameAndRegist=$result["id_alumno"];
+				$this->read_notification($result['id_alumno'],2);
 				break;
 			case 'dni':
 				$result=resultToArray($this->Alumno_model->all($id))[0];
 				$pathFile=CC_BASE_PATH."/files/dni/".$result["documento"].".pdf";
 				
 				$idNameAndRegist=$result["id_alumno"];
+				$this->read_notification($result['id_alumno'],3);
 				break;
 			case 'bach':
 				$result=resultToArray($this->Alumno_model->all($id))[0];
 				$pathFile=CC_BASE_PATH."/files/bachiller/".$result["documento"].".pdf";
 				
 				$idNameAndRegist=$result["id_alumno"];
+				$this->read_notification($result['id_alumno'],4);
 				break;
 			case 'maes':
 				$result=resultToArray($this->Alumno_model->all($id))[0];
 				$pathFile=CC_BASE_PATH."/files/maestria/".$result["documento"].".pdf";
 				
 				$idNameAndRegist=$result["id_alumno"];
+				$this->read_notification($result['id_alumno'],5);
 				break;
 			case 'doct':
 				$result=resultToArray($this->Alumno_model->all($id))[0];
 				$pathFile=CC_BASE_PATH."/files/doctorado/".$result["documento"].".pdf";
 				
 				$idNameAndRegist=$result["id_alumno"];
+				$this->read_notification($result['id_alumno'],6);
 				break;
 			case 'sins':
 				$result=resultToArray($this->Alumno_model->all($id))[0];
@@ -110,6 +118,16 @@ class FilesController extends CI_Controller {
 			}
 		}else{
 			show_404();
+		}
+	}
+
+	public function read_notification($id_alumno,$tipo_read){
+		$solicitudes = $this->Solicitud_model->getByAlumno($id_alumno);
+		foreach ($solicitudes as $key => $solicitud) {
+			$notificaciones = $this->Notificacion_model->fromSolicitudAlumno($solicitud['idSolicitud'],$tipo_read);
+			foreach ($notificaciones as $key => $notification) {
+				$this->Notificacion_model->readNotificatiom($notification['id']);
+			}
 		}
 	}
 	

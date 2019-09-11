@@ -71,7 +71,7 @@ class Notificacion_model extends MY_Model
 		->where('usuario.id',$idUsuario)
 		->where('notifications.time >',$actual_config)
 		->where('read_notifications.notification_id IS NULL',NULL)
-		->order_by('notifications.time','asc')
+		->order_by('notifications.time','desc')
 		->limit(20);
 		$result= $this->db->get();
 		$result=$result->result_array();
@@ -119,4 +119,66 @@ class Notificacion_model extends MY_Model
 		return $result->result_array();
 	}
 
+	function fromSolicitudAlumno($idSolcitud,$action_id){
+
+		//$idUsuario=$this->nativesession->get('idUsuario');
+		//$actual_config=$this->getConfig();
+		$this->db->select('notifications.*')
+			->from('notifications')
+			->join('notifications_solicituds', 'notifications.id = notifications_solicituds.notifications_id')
+			//->join('usuario', 'usuario.tipousuario = notifications.tipo_usuario_id', 'left')
+			->join('read_notifications', 'read_notifications.notification_id = notifications.id', 'left')
+			->join('action','action.id=notifications.action_id','left')
+			//->where('usuario.id',$idUsuario)
+			->where('notifications.action_id',$action_id)
+			//->where('notifications.time >',$actual_config)
+			->where('read_notifications.notification_id IS NULL',NULL)
+			->where('notifications_solicituds.solicitud_id',$idSolcitud);
+
+		$result= $this->db->get();
+		return $result->result_array();
+	}
+
+	public function getActionById($id){
+		$action = $this->db->where('id',$id)->get('action')->row();
+		if($action!=null){
+			return $action;
+		}
+		return null;
+	} 
+
+	public function readByTipo($solicitud_id,$action_id){
+		$notifications=$this->fromSolicitudAlumno($solicitud_id,$action_id);
+
+	}
+
+	public function reads(){
+		$id_user=$this->nativesession->get('idUsuario');
+		$this->select()->from($this->table)->where('usuario_id',$id_user)->get()->result_array();
+	}
+	public function reads_id(){
+		$id_user=$this->nativesession->get('idUsuario');
+		$this->db->select('id')
+		->from($this->table)
+		->where('usuario_id',$id_user)
+		->get()
+		->result_array();
+	}
+
+	public function notifications_id_by_solicituds($arrays_id){
+		$id_user=$this->nativesession->get('idUsuario');
+		$actual_config=$this->getConfig();
+		return $this->db->select('notifications.*')
+		->from('notifications')
+		->join('usuario', 'usuario.tipousuario = notifications.tipo_usuario_id', 'left')
+		->join('read_notifications', 'read_notifications.notification_id = notifications.id', 'left')
+		->join('notifications_solicituds', 'notifications_solicituds.notifications_id = notifications.id')
+		/*->where('usuario.id',$id_user)*/
+		->where('notifications.time >',$actual_config)
+		//->where('read_notifications.notification_id IS NULL',NULL)
+		->where_in('notifications_solicituds.solicitud_id',$arrays_id)
+		//->group_by('notifications_solicituds.solicitud_id')
+		->order_by('notifications.time','desc')
+		->get()->result_array();
+	}
 }

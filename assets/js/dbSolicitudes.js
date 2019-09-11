@@ -282,7 +282,7 @@ function cargarData(id){
 				for (var i = 0; i < documentos.length; i++) {
                     var upload_link="/admin/upload/page/"+documentos[i].identifier+'/'+alumno.documento;
                     console.log(alumno.documento);
-					htmlDocuments=htmlDocuments+makeTemplateIconsDocuments(documentos[i].name,documentos[i].stateUpload,documentos[i].identifier,documentos[i].fileName,upload_link,id);
+					htmlDocuments=htmlDocuments+makeTemplateIconsDocuments(documentos[i].name,documentos[i].stateUpload,documentos[i].identifier,documentos[i].fileName,upload_link,id,documentos[i].notification);
 					
 				}
 				//documents for solicitud
@@ -301,14 +301,15 @@ function cargarData(id){
     });
 }
 
-function makeTemplateIconsDocuments(nombre,estado,identifier,nameFile,urlUpload,id){
+function makeTemplateIconsDocuments(nombre,estado,identifier,nameFile,urlUpload,id,notification=''){
 
     var onclick= "";
     onclick=(estado)?"":" onclick='reiniciarModalAlumno("+id+",this);' link="+urlUpload+" ";
-
+	var notif = "";
+	notif=(notification)?"beating-button-sm":"";
     template=''+
     ((estado)?"<a href='/admin/view/pdf/"+identifier+"/"+nameFile+"' target='_blank'>":"<div class='container' ></div>")+
-    '<span class="'+((estado)?"label label-primary":"label label-danger")+'" '+onclick+' >'+
+    '<span class="'+((estado)?"btn btn-xs btn-primary ":"btn btn-xs btn-danger")+'  '+notif+'" '+onclick+' >'+
     nombre+
     '</span>'+
     ((estado)?'</a>':"");

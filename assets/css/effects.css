@@ -1,23 +1,44 @@
 .beating-button {
 	font-size: 20px;
 	animation: beat 1.2s ease-in-out infinite forwards;
-  }
-  .beating-button:hover {
+}
+.beating-button:hover {
 	animation-play-state: paused;
-  }
-  
-  @keyframes beat {
+}
+
+@keyframes beat {
 	0%, 100% {
-	  transform: scale(1);
+		transform: scale(1);
 	}
 	15%, 45% {
-	  transform: scale(1.2);
+		transform: scale(1.2);
 	}
 	35% {
-	  transform: scale(1.1);
+		transform: scale(1.1);
 	}
 	65% {
-	  transform: scale(1);
+		transform: scale(1);
 	}
-  }
-  
+}
+.beating-button-sm {
+	font-size: 12px;
+	animation: beat 1.2s ease-in-out infinite forwards;
+}
+.beating-button-sm:hover {
+	animation-play-state: paused;
+}
+
+@keyframes beat {
+	0%, 100% {
+		transform: scale(1);
+	}
+	15%, 45% {
+		transform: scale(1.2);
+	}
+	35% {
+		transform: scale(1.1);
+	}
+	65% {
+		transform: scale(1);
+	}
+}

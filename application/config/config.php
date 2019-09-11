@@ -24,8 +24,8 @@ date_default_timezone_set('America/Lima');
 |
 */
 //$config['base_url'] = 'http://inscripciones.caen.edu.pe';
-
 $config['base_url'] = 'http://inscripciones.prueba.com';
+//$config['base_url'] = 'http://192.168.0.110/inscripciones-caen';
 
 /*
 |

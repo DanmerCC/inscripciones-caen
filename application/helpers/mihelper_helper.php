@@ -30,3 +30,17 @@ if(!function_exists('arrayObjectoToArray')){
 	}
 }
 
+
+//si no existe la función invierte_date_time la creamos
+if(!function_exists('c_extract')){
+	//formateamos la fecha y la hora, función de cesarcancino.com
+	function c_extract($array_pluckeable,$column){
+		$response= [];
+		$i=0;
+		for($i=0;$i<count($array_pluckeable);$i++){
+		    $response[$i]=($array_pluckeable[$i][$column]);
+		}
+
+		return $response;
+	}
+}

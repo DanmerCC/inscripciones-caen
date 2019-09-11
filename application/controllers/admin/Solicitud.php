@@ -77,20 +77,28 @@ class Solicitud extends CI_Controller
             $rspta = resultToArray($this->Solicitud_model->get_data_for_datatable($start,$length,$search["value"]));
         }else{
             $rspta = resultToArray($this->Solicitud_model->get_data_for_datatable($start,$length));
-        }
+		}
         $data = Array();
-        //echo var_dump($rspta);
+		//echo var_dump($rspta);
+		$solicitud_ids=c_extract($rspta,'idSolicitud');
+		
+		$notifications_by_solicituds=$this->Notificacion_model->notifications_id_by_solicituds($solicitud_ids);
+		echo '<pre>';
+		print_r($notifications_by_solicituds);
+		echo '</pre>';
+		exit;
         $ii=$start;
         header("Content-type: application/json");
         for ($i=0;$i<count($rspta);$i++) {
 			$ii++;
 			$hasNotification=$rspta[$i]["notification_mensaje"]!=="";
+			$hasPersonales=$rspta[$i]["cuan_noti"]>0;
                 $data[$i] = array(
                 "0" => $activeSearch?"-":(($cantidad-$ii)+1),
                 "1" => '<a href="'.base_url()."postulante/pdf/".$rspta[$i]["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a>'.
-				' <div class="btn btn-info '.($hasNotification?'beating-button':'').'" data-toggle="modal" data-target="#mdl_datos_alumno" onclick="modalDataAlumno.loadData('.$rspta[$i]["idSolicitud"].');"><i class="fa fa-eye"></i>'.
+				' <div style="position:relative" class="btn btn-info '.($hasNotification || $hasPersonales?'beating-button':'').'" data-toggle="modal" data-target="#mdl_datos_alumno" onclick="modalDataAlumno.loadData('.$rspta[$i]["idSolicitud"].');"><i class="fa fa-eye"></i>'.
 								
-							'</div>'.
+							'  '.($hasPersonales?'<span style="position:absolute;top:-5px;right:-10px;" class="label label-danger">'.$rspta[$i]["cuan_noti"].'</span>':'').'</div>'.
                             (
                                 ($rspta[$i]["estado"]=='0')?
                                     ' <button class="btn btn-alert"   title="click para marcar como verificado" onclick="marcar('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-square-o" aria-hidden="true"></i></button>':
@@ -197,6 +205,13 @@ class Solicitud extends CI_Controller
 		$solicitud=$this->Solicitud_model->getAllColumnsById($id);
 		$alumno=$this->Alumno_model->findById($solicitud['alumno'])[0];
 		$this->Solicitud_model->reset_notification_status($id);
+		$notificaciones = $this->Notificacion_model->fromSolicitud($id);
+		$documentStatus = [1=>false,2=>false,3=>false,4=>false,5=>false,6=>false];
+		foreach ($notificaciones as $key => $notificacion) {
+			if(isset($documentStatus[$notificacion['action_id']])){
+				$documentStatus[$notificacion['action_id']] = true;
+			}
+		}
 		$data=[];
 		$data=$alumno;
 		$data["solicitudes"]=$this->Solicitud_model->countByAlumno($solicitud["alumno"]);
@@ -206,42 +221,48 @@ class Solicitud extends CI_Controller
 				"identifier"=>"cv",
 				"statechecked"=>(boolean)$alumno["check_cv_pdf"],
 				"stateUpload"=>file_exists(CC_BASE_PATH."/files/cvs/".$alumno["documento"].".pdf"),
-				"fileName"=>$solicitud['alumno']
+				"fileName"=>$solicitud['alumno'],
+				"notification"=>$documentStatus[1]
 			],
 			[
 				"name"=>"declaracion jurada",
 				"identifier"=>"dj",
 				"statechecked"=>(boolean)$alumno["check_dj_pdf"],
 				"stateUpload"=>file_exists(CC_BASE_PATH."/files/djs/".$alumno["documento"].".pdf"),
-				"fileName"=>$solicitud['alumno']
+				"fileName"=>$solicitud['alumno'],
+				"notification"=>$documentStatus[2]
 			],
 			[
 				"name"=>"dni",
 				"identifier"=>"dni",
 				"statechecked"=>(boolean)$alumno["check_dni_pdf"],
 				"stateUpload"=>file_exists(CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf"),
-				"fileName"=>$solicitud['alumno']
+				"fileName"=>$solicitud['alumno'],
+				"notification"=>$documentStatus[3]
 			],
 			[
 				"name"=>"bachiller",
 				"identifier"=>"bach",
 				"statechecked"=>(boolean)$alumno["check_bach_pdf"],
 				"stateUpload"=>file_exists(CC_BASE_PATH."/files/bachiller/".$alumno["documento"].".pdf"),
-				"fileName"=>$solicitud['alumno']
+				"fileName"=>$solicitud['alumno'],
+				"notification"=>$documentStatus[4]
 			],
 			[
 				"name"=>"maestria",
 				"identifier"=>"maes",
 				"statechecked"=>(boolean)$alumno["check_maes_pdf"],
 				"stateUpload"=>file_exists(CC_BASE_PATH."/files/maestria/".$alumno["documento"].".pdf"),
-				"fileName"=>$solicitud['alumno']
+				"fileName"=>$solicitud['alumno'],
+				"notification"=>$documentStatus[5]
 			],
 			[
 				"name"=>"Doctorado",
 				"identifier"=>"doct",
 				"statechecked"=>(boolean)$alumno["check_doct_pdf"],
 				"stateUpload"=>file_exists(CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf"),
-				"fileName"=>$solicitud['alumno']
+				"fileName"=>$solicitud['alumno'],
+				"notification"=>$documentStatus[6]
 			]
 
 		];
