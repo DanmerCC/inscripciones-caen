@@ -67,7 +67,7 @@ class Alumno_model extends CI_Model
 			$this->apellido_materno,
 			$this->documento,
 			$this->email,
-			$this->email,
+			$this->celphone,
 			$this->grado_profesion,
 			$this->estado_civil,
 			$this->genero,
