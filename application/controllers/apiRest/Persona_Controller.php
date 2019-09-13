@@ -35,6 +35,7 @@ class Persona_Controller extends MY_Controller {
 		
         for ($i=0; $i < count($inscritos); $i++) {
 			$inscritos[$i]["files_personal"]=$this->array_get_data_files($inscritos[$i]);
+			$inscritos[$i]["photo_personal"]=$this->get_photo_object($inscritos[$i]);
 		}
         $this->response($inscritos,200);
     }
@@ -99,6 +100,42 @@ class Persona_Controller extends MY_Controller {
 		}
 		return $data["documentosObject"];
 	}
+
+	/**
+	 * photo_object
+	 *
+	 * @return void
+	 */
+	private function get_photo_object($alumno){
+		$state=false;
+		$imagen;
+			if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".jpg")){
+				$state=true;
+				$imagen="data:image/jpg;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".jpg"));
+
+			}else if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".png")){
+				
+				$state=true;
+				$imagen="data:image/png;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".png"));
+
+			}else if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".gif")){
+				
+				$state=true;
+				$imagen="data:image/gif;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".gif"));
+				
+			}else{
+
+				$imagen="#";
+			}
+		return 
+		[
+			"name"=>"Foto",
+			"identifier"=>"foto",
+			"stateUpload"=>$state,
+			"fileName"=>$alumno["documento"],
+			"urldownload"=>$this->base_url."files/foto/".$alumno["id_alumno"]
+		];
+	}
     /**
      * 
      */
@@ -110,12 +147,15 @@ class Persona_Controller extends MY_Controller {
         if(COUNT($this->Alumno_model->get_one_api($id))==1){
             $inscrito=$this->Alumno_model->get_one_api($id)[0];
         }
-        
+		$inscrito["files_personal"]=$this->array_get_data_files($inscrito);
+		$inscrito["photo_personal"]=$this->get_photo_object($inscrito);
         if(isset($inscrito)){
             $this->response($inscrito,200);
         }else{
             $this->response(array("response"=>"No encontrado"),404);
         }
-        
+		
+		
+		
     }
 }

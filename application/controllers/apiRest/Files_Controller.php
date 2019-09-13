@@ -22,6 +22,9 @@ class Files_Controller extends MY_Controller {
 		$result;
 		$idNameAndRegist=NULL;
 
+		$isPhoto=false;
+		$state=false;
+
 		switch ($segmentOfTypeFile) {
 			case 'cv':
 				$result=resultToArray($this->Alumno_model->all($id))[0];
@@ -80,18 +83,60 @@ class Files_Controller extends MY_Controller {
 				$result=$this->Solicitud_model->getAllColumnsById($id);
 				$idNameAndRegist=$result["idSolicitud"];
 				break;
+			case 'foto':
+				$result=resultToArray($this->Alumno_model->all($id))[0];
+				$imagen;
+				
+				if(file_exists(CC_BASE_PATH."/files/foto/".$result["documento"].".jpg")){
+					$state=true;
+					$isPhoto=true;
+					$path=(CC_BASE_PATH."/files/foto/".$result["documento"].".jpg");
+					$imagen="data:image/jpg;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$result["documento"].".jpg"));
+
+				}else if(file_exists(CC_BASE_PATH."/files/foto/".$result["documento"].".png")){
+					
+					$state=true;
+					$isPhoto=true;
+					$path=(CC_BASE_PATH."/files/foto/".$result["documento"].".png");
+					$imagen="data:image/png;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$result["documento"].".png"));
+
+				}else if(file_exists(CC_BASE_PATH."/files/foto/".$result["documento"].".gif")){
+					
+					$path=(CC_BASE_PATH."/files/foto/".$result["documento"].".gif");
+					$state=true;
+					$isPhoto=true;
+					$imagen="data:image/gif;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$result["documento"].".gif"));
+					
+				}else{
+
+					$imagen="#";
+				}
+				$pathFile=CC_BASE_PATH."/files/cvs/".$result["documento"].".pdf";
+				
+				$idNameAndRegist=$result["id_alumno"];
+				break;
 			default:
 				$pathFile="";
 				show_404();
 				die();
 				break;
+				
 		}
-
-		if((!($pathFile==""))&&(file_exists($pathFile))){
-			$data=base64_encode(file_get_contents($pathFile,true));
-			echo ($data);
+		
+		if(!$isPhoto){
+			if((!($pathFile==""))&&(file_exists($pathFile))){
+				$data=base64_encode(file_get_contents($pathFile,true));
+				echo ($data);
+			}else{
+				show_error("Error al buscar un archivo",404);
+			}
 		}else{
-			show_error("Error al buscar un archivo",404);
+			if((!($pathFile==""))&&(file_exists($pathFile))){
+				$data=$imagen;
+				echo ($data);
+			}else{
+				show_error("Error al buscar un archivo",404);
+			}
 		}
 	}
 }
