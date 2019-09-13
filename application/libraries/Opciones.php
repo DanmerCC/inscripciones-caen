@@ -62,7 +62,7 @@ class Opciones
                      "active"=>false
                     ];
     $this->opciones['solicitudes']=[
-                    "text"=>"Solicitudes",
+                    "text"=>"Pre-inscripcion",
                     "href"=>"/administracion/vista/solicitudes",
                     "submenu"=>[
                             [
