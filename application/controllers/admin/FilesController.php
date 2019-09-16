@@ -121,6 +121,108 @@ class FilesController extends CI_Controller {
 		}
 	}
 
+	public function download_pdf(){
+		$segmentOfTypeFile=$this->uri->segment(4);
+		//$segmentOfNumberDni=$this->uri->segment(5);
+		$id=$this->uri->segment(5);
+		$data="";
+		$pathFile="";
+
+		$result;
+		$idNameAndRegist=NULL;
+		$result=resultToArray($this->Alumno_model->all($id))[0];
+
+		switch ($segmentOfTypeFile) {
+			case 'cv':
+				$result=resultToArray($this->Alumno_model->all($id))[0];
+				$pathFile=CC_BASE_PATH."/files/cvs/".$result["documento"].".pdf";
+				
+				$idNameAndRegist=$result["id_alumno"];
+				break;
+			case 'dj':
+				$result=resultToArray($this->Alumno_model->all($id))[0];
+				$pathFile=CC_BASE_PATH."/files/djs/".$result["documento"].".pdf";
+				
+				$idNameAndRegist=$result["id_alumno"];
+				break;
+			case 'dni':
+				$result=resultToArray($this->Alumno_model->all($id))[0];
+				$pathFile=CC_BASE_PATH."/files/dni/".$result["documento"].".pdf";
+				
+				$idNameAndRegist=$result["id_alumno"];
+				break;
+			case 'bach':
+				$result=resultToArray($this->Alumno_model->all($id))[0];
+				$pathFile=CC_BASE_PATH."/files/bachiller/".$result["documento"].".pdf";
+				
+				$idNameAndRegist=$result["id_alumno"];
+				break;
+			case 'maes':
+				$result=resultToArray($this->Alumno_model->all($id))[0];
+				$pathFile=CC_BASE_PATH."/files/maestria/".$result["documento"].".pdf";
+				
+				$idNameAndRegist=$result["id_alumno"];
+				break;
+			case 'doct':
+				$result=resultToArray($this->Alumno_model->all($id))[0];
+				$pathFile=CC_BASE_PATH."/files/doctorado/".$result["documento"].".pdf";
+				
+				$idNameAndRegist=$result["id_alumno"];
+				break;
+			case 'sins':
+				$result=resultToArray($this->Alumno_model->all($id))[0];
+				$pathFile=CC_BASE_PATH."/files/sInscripcion/".$result["documento"].".pdf";
+				
+				$idNameAndRegist=$result["id_alumno"];
+				break;
+			case 'hdatos':
+				$pathFile=CC_BASE_PATH."/files/hojadatos/".$id.".pdf";
+				$result=$this->Solicitud_model->getAllColumnsById($id);
+				$idNameAndRegist=$result["idSolicitud"];
+				break;
+			case 'solad':
+				$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
+				$result=$this->Solicitud_model->getAllColumnsById($id);
+				$idNameAndRegist=$result["idSolicitud"];
+				break;
+			case 'pinvs':
+				$pathFile=CC_BASE_PATH."/files/proinves/".$id.".pdf";
+				$result=$this->Solicitud_model->getAllColumnsById($id);
+				$idNameAndRegist=$result["idSolicitud"];
+				break;
+			default:
+				$pathFile="";
+				show_404();
+				die();
+				break;
+		}
+
+		if($this->nativesession->get('tipo')=='admin'){
+			
+			if((($pathFile!=""))&&(file_exists($pathFile))){
+				header('Content-type: application/pdf');
+				header('Content-Disposition: attachment; filename="'.$pathFile.'"');
+				readfile($pathFile);
+			}else{
+				show_404();
+			}
+		}elseif($this->nativesession->get('tipo')=='alumno'){
+			$this->load->model('User_model');
+			$usuario=$this->User_model->buscarUsuario($this->nativesession->get('idUsuario'))[0];
+			$alumno=resultToArray($this->Alumno_model->all($usuario["alumno"]))[0];
+			if($alumno["documento"]==$this->nativesession->get('dni')){
+				if((!($pathFile==""))&&(file_exists($pathFile))){
+					$data=base64_encode(file_get_contents($pathFile,true));
+					$this->load->view("pdf/onlyviewpdf",array('data'=>$data));///Load view pdf for admin marks
+				}else{
+					show_404();
+				}
+			}
+		}else{
+			show_404();
+		}
+	}
+
 	public function read_notification($id_alumno,$tipo_read){
 		$solicitudes = $this->Solicitud_model->getByAlumno($id_alumno);
 		foreach ($solicitudes as $key => $solicitud) {
@@ -305,6 +407,78 @@ class FilesController extends CI_Controller {
 public function eliminar($FileType,$id){
 	$this->load->model('Alumno_model'); 
 	$alumno=$this->Alumno_model->findById($this->nativesession->get('idAlumno'))[0];
+	$pathFile;
+	$resultModel;
+	$resultModel["state"]=NULL;
+	$resultModel["message"]=NULL;
+	$nameFile="undefined";
+	switch ($FileType) {
+		case 'cv':
+			$pathFile=CC_BASE_PATH."/files/cvs/".$alumno["documento"].".pdf";
+			$nameFile=$alumno["documento"];
+			$this->read_notification($alumno['id_alumno'],1);
+			break;
+		case 'dj':
+			$pathFile=CC_BASE_PATH."/files/djs/".$alumno["documento"].".pdf";
+			$nameFile=$alumno["documento"];
+			$this->read_notification($alumno['id_alumno'],2);
+			break;
+		case 'dni':
+			$pathFile=CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf";
+			$nameFile=$alumno["documento"];
+			$this->read_notification($alumno['id_alumno'],3);
+			break;
+		case 'bach':
+			$pathFile=CC_BASE_PATH."/files/bachiller/".$alumno["documento"].".pdf";
+			$nameFile=$alumno["documento"];
+			$this->read_notification($alumno['id_alumno'],4);
+			break;
+		case 'maes':
+			$pathFile=CC_BASE_PATH."/files/maestria/".$alumno["documento"].".pdf";
+			$nameFile=$alumno["documento"];
+			$this->read_notification($alumno['id_alumno'],5);
+			break;
+		case 'doct':
+			$pathFile=CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf";
+			$nameFile=$alumno["documento"];
+			$this->read_notification($alumno['id_alumno'],6);
+			break;
+		case 'sins':
+			$pathFile=CC_BASE_PATH."/files/sInscripcion/".$alumno["documento"].".pdf";
+			$nameFile=$alumno["documento"];
+			$this->read_notification($alumno['id_alumno'],7);
+			break;
+		case 'hdatos':
+			$pathFile=CC_BASE_PATH."/files/hojadatos/".$id.".pdf";
+			$nameFile=$id;
+			break;
+		case 'solad':
+			$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
+			$nameFile=$id;
+			break;
+		case 'pinvs':
+			$pathFile=CC_BASE_PATH."/files/proinves/".$id.".pdf";
+			$nameFile=$id;
+			break;
+		default:
+			$pathFile=NULL;
+			show_404();
+			die();
+			break;
+	}
+	if(rename($pathFile,CC_BASE_PATH."/trash/$nameFile"."_".$FileType."_".date('j-m-y').".pdf")){
+		$resultModel["state"]=true;
+		$resultModel["message"]="Borrado correctamente";
+	}else{
+		$resultModel["state"]=false;
+		$resultModel["message"]="Error al borrar";
+	}
+	echo json_encode($resultModel);
+}
+public function eliminarPorAdmin($FileType,$id){
+	
+	$this->load->model('Alumno_model'); 
+	$alumno=$this->Alumno_model->findById($id)[0];
 	$pathFile;
 	$resultModel;
 	$resultModel["state"]=NULL;

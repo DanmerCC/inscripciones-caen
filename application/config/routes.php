@@ -104,6 +104,7 @@ $route['proinves/upload/(:num)'] = 'Solicitud/upload_pro_inves/$1';
 $route['proinves/stateFile/(:num)'] = 'Solicitud/stateFile_spro_inves/$1';
 
 $route['file/delete/([a-zA-Z]+)/(:num)'] = 'admin/FilesController/eliminar/$1/$2';
+$route['file/deleteadmin/([a-zA-Z]+)/(:num)'] = 'admin/FilesController/eliminarPorAdmin/$1/$2';
 $route['file/info/([a-zA-Z]+)'] = 'admin/FilesController/info/$1';
 
 $route['api/alumno'] = 'ApiAlumno';
@@ -200,6 +201,7 @@ $route['certifica']='CertificadoController/verificar';
 //$route['admin/view/pdf']='admin/Alumno/viewPdfDocument';
 //$route['admin/view/pdf/:any']='admin/Alumno/viewPdfDocument';
 $route['admin/view/pdf/([a-zA-Z]+)/(:num)']='admin/FilesController/get_file_view_as_data';
+$route['admin/download/pdf/([a-zA-Z]+)/(:num)']='admin/FilesController/download_pdf';
 $route['solicitud/view/pdf/([a-zA-Z]+)/(:num)']='admin/FilesController/get_fileSolicitud_view_as_data';
 $route['prueba']='CorreoController/fileTest';
 
