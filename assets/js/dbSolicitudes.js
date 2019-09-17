@@ -295,6 +295,9 @@ function cargarData(id){
 				}
 				$(idquerytarget+' #mdl-icons-filesOfSol').html(htmlfilesOfSol);
 				$(idquerytarget+' #mdl-icons-documents').html(htmlDocuments);
+				$("#mdl-icons-documents a").click(function(){
+					tabla.ajax.reload(null,false);
+				});
             }
             
         }
