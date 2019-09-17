@@ -24,5 +24,4 @@ publicFiles/foto/*.*
 publicfiles/foto/*.*
 error_log
 
-application/config/config.php
 application/config/database.php
