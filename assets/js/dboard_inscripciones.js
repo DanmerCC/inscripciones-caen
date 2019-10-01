@@ -28,6 +28,14 @@ function cargarDataTable(){
 
 $(document).ready(function(){
 
+	$("#slct_anulados").change(()=>{
+		//console.log($("#slct_anulados").attr("checked"));
+		var input_select=document.getElementById('slct_anulados');
+		console.log(input_select.checked)
+		tabla.column(8).search(input_select.checked).draw();
+		//tabla.ajax.reload(null,false);
+	})
+
 	loadDataToSelect();
 
     $("#selectProgram").change(function(){

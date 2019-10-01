@@ -39,7 +39,11 @@
       <div class=""><!-- container -->
           <div class="panel-body table-responsive" id="listadoregistros">
             <div class='row'>
-              <div class='col-sm-6'></div>
+							<div class="col-md-4"></div>
+              <div class='col-sm-2'>
+								<label for="slct_anulados">Incluir Anulados</label>
+								<input type="checkbox" name="slct_anulados" value="true" id="slct_anulados">
+							</div>
               <div class='col-sm-6'>
                 <select class="form-control" name="prueba1" id="selectProgram">
                   <!-- container -->
@@ -56,7 +60,8 @@
                 <th>Documento</th>
                 <th>Correo</th>
                 <th>Telefonos</th>
-                <th>Fecha de Registro</th>
+								<th>Fecha de Registro</th>
+								<th>Estado</th>
               </thead>
               <tfoot>
               <th>Opciones</th>
@@ -66,7 +71,7 @@
                 <th>Documento</th>
                 <th>Correo</th>
                 <th>Telefonos</th>
-                <th>Fecha de Registro</th>
+                <th>Estado</th>
               </tfoot>
             </table>
           </div>

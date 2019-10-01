@@ -98,24 +98,35 @@ class InscripcionController extends CI_Controller {
 		$search=$this->input->post("search[]");
 		$start=$this->input->post('start');
 		$length=$this->input->post('length');
+		$columns=$this->input->post('columns');
+		$deletes=(boolean)($columns[8]["search"]["value"]==='true');
+
 		if(strlen($search["value"])>0){
-			$rspta = $this->Inscripcion_model->get_page_and_filter($start,$length,$search["value"]);
+			
+			$cantidad = $this->Inscripcion_model->get_count_and_filter($search["value"],$deletes);
+			$rspta = $this->Inscripcion_model->get_page_and_filter($start,$length,$search["value"],$deletes);
+			
 		}else{
-			$rspta = $this->Inscripcion_model->get_page($start,$length);
+			
+			$cantidad = $this->Inscripcion_model->get_count($deletes);
+			$rspta = $this->Inscripcion_model->get_page($start,$length,$deletes);
 		}
-		$cantidad=$this->Inscripcion_model->count();
 		$data = Array();
-		//echo var_dump($rspta);
-		//exit;
 		$i=0;
 
+		//$rspta["lasq"]=$this->db->last_query();
+		/*echo '<pre>';
+		print_r($this->db->last_query());
+		echo '</pre>';
+		exit;*/
 		foreach ($rspta as $value) {
 			$i++;
+			$is_anulated=!isset($value["f_anulado"]);
 				$data[] = array(
 				"0" => 
-					"<button class='btn btn-danger' onclick='ins.cancel(".$value["id_inscripcion"].");'><i class='fa fa-trash-o' aria-hidden='true'></i> Anular</button>".
-					'<div class="btn btn-info" data-toggle="modal" data-target="#mdl_datos_inscritos" onclick="modalDataInscrito.loadData('.$value["idSolicitud"].');"><i class="fa fa-eye"></i></div>'.
-					'<a href="'.base_url()."postulante/pdf/".$value["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a>',
+				($is_anulated?"<button class='btn btn-danger' onclick='ins.cancel(".$value["id_inscripcion"].");'><i class='fa fa-trash-o' aria-hidden='true'></i> Anular</button>":"").
+					($is_anulated?'<div class="btn btn-info" data-toggle="modal" data-target="#mdl_datos_inscritos" onclick="modalDataInscrito.loadData('.$value["idSolicitud"].');"><i class="fa fa-eye"></i></div>':'').
+					($is_anulated?('<a href="'.base_url()."postulante/pdf/".$value["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a>'):''),
 				"1" => $value["nombres"],
 				"2" => $value["apellido_paterno"]." ".$value["apellido_materno"],
 				"3" => $value["numeracion"]." ".$value["tipo_curso"]." ".$value["nombre_curso"],
@@ -123,14 +134,17 @@ class InscripcionController extends CI_Controller {
 				"5" => $value["email"],
 				//"4" => $value["nombre_user"],
 				"6" => (isset($value["celular"])?$value["celular"]:" ")." - ".(isset($value["telefono_casa"])?$value["telefono_casa"]:" "),
-				"7" => $value["created"]
+				"7" => $value["created"],
+				"8" => $is_anulated?"":"Anulado"
 			);
 		}
 		$results = array(
 			"sEcho" => $this->input->post('sEcho'), //Informacion para datatables
 			"iTotalRecords" => $cantidad, //enviamos el total de registros al datatables
 			"iTotalDisplayRecords" => $cantidad, //enviamos total de registros a visualizar
-			"aaData" => $data);
+			"aaData" => $data,
+			"query"=>$deletes
+		);
 		echo json_encode($results);
 	}
 
