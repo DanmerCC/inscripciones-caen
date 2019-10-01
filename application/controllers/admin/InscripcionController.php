@@ -113,12 +113,6 @@ class InscripcionController extends CI_Controller {
 		}
 		$data = Array();
 		$i=0;
-
-		//$rspta["lasq"]=$this->db->last_query();
-		/*echo '<pre>';
-		print_r($this->db->last_query());
-		echo '</pre>';
-		exit;*/
 		foreach ($rspta as $value) {
 			$i++;
 			$is_anulated=!isset($value["f_anulado"]);
@@ -132,10 +126,9 @@ class InscripcionController extends CI_Controller {
 				"3" => $value["numeracion"]." ".$value["tipo_curso"]." ".$value["nombre_curso"],
 				"4" => $value["documento"],
 				"5" => $value["email"],
-				//"4" => $value["nombre_user"],
 				"6" => (isset($value["celular"])?$value["celular"]:" ")." - ".(isset($value["telefono_casa"])?$value["telefono_casa"]:" "),
 				"7" => $value["created"],
-				"8" => $is_anulated?"":"Anulado"
+				"8" => $is_anulated?"<span class='label label-success'>Cargado</span>":"<span class='label label-danger'>Anulado</span>"
 			);
 		}
 		$results = array(
