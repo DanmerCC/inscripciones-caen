@@ -22,7 +22,27 @@ function cargarDataTable(){
 			},
 	"bDestroy": true,
 	"iDisplayLength": 15, // paginacion
-	"order": [[0, "desc"]] //ordenar(columna, orden)
+	"order": [[0, "desc"]],
+	language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Inscripciones",
+        "infoEmpty": "Mostrando 0 to 0 of 0 Inscripciones",
+        "infoFiltered": "(Filtrado de _MAX_ total Inscripciones)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Inscripciones",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        }
+    }, //ordenar(columna, orden)
 }).DataTable();
 }
 

@@ -131,7 +131,7 @@ class Inscripcion_model extends CI_Model
 	}
 
 	public function get_count($deletes=true){
-		$this->db->select('COUNT(s.idSolicitud) as count');
+		$this->db->select('COUNT(ins.id_inscripcion) as count');
 		$this->db->from($this->table.' ins');
 		$this->dtq_join_solicitud_usuario_curso_tipo_curso_alumno();
 		if(!$deletes){
@@ -155,10 +155,12 @@ class Inscripcion_model extends CI_Model
 	public function get_page_and_filter($start,$limit,$text,$deletes=true){
 		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.documento,a.email,a.celular,a.telefono_casa,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created,ins.id_inscripcion');
 		$this->db->from($this->table.' ins');
-		$this->db->like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
-		$this->db->or_like('a.nombres',$text);
-		$this->db->or_like('a.apellido_paterno',$text);
-		$this->db->or_like('a.apellido_materno',$text);
+		$this->db->group_start();
+			$this->db->like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
+			$this->db->or_like('a.nombres',$text);
+			$this->db->or_like('a.apellido_paterno',$text);
+			$this->db->or_like('a.apellido_materno',$text);
+		$this->db->group_end();
 		$this->dtq_join_solicitud_usuario_curso_tipo_curso_alumno();
 		if(!$deletes){
 			$this->db->where(
@@ -172,12 +174,14 @@ class Inscripcion_model extends CI_Model
 	}
 
 	public function get_count_and_filter($text,$deletes=true){
-		$this->db->select('COUNT(s.idSolicitud) as count');
+		$this->db->select('COUNT(ins.id_inscripcion) as count');
 		$this->db->from($this->table.' ins');
-		$this->db->like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
-		$this->db->or_like('a.nombres',$text);
-		$this->db->or_like('a.apellido_paterno',$text);
-		$this->db->or_like('a.apellido_materno',$text);
+		$this->db->group_start();
+			$this->db->like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
+			$this->db->or_like('a.nombres',$text);
+			$this->db->or_like('a.apellido_paterno',$text);
+			$this->db->or_like('a.apellido_materno',$text);
+		$this->db->group_end();
 		$this->dtq_join_solicitud_usuario_curso_tipo_curso_alumno();
 		if(!$deletes){
 			$this->db->where(

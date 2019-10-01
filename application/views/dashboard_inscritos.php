@@ -7,6 +7,7 @@
   <title>Postulante CAEN</title>
 <?php $this->load->view('adminlte/linksHead');?>
 <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css"> -->
+<link rel="stylesheet" href="/assets/css/global.css">
 <link rel="stylesheet" href="/dist/css/jquery-externs/jquery.dataTables.min.css">
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
@@ -41,8 +42,8 @@
             <div class='row'>
 							<div class="col-md-4"></div>
               <div class='col-sm-2'>
-								<label for="slct_anulados">Incluir Anulados</label>
-								<input type="checkbox" name="slct_anulados" value="true" id="slct_anulados">
+								<input class="conic" type="checkbox" name="slct_anulados" value="true" id="slct_anulados">
+								<label class="label-checkbox" for="slct_anulados">Incluir Anulados</label>
 							</div>
               <div class='col-sm-6'>
                 <select class="form-control" name="prueba1" id="selectProgram">

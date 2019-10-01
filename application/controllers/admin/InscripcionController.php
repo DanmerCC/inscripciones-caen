@@ -143,7 +143,7 @@ class InscripcionController extends CI_Controller {
 			"iTotalRecords" => $cantidad, //enviamos el total de registros al datatables
 			"iTotalDisplayRecords" => $cantidad, //enviamos total de registros a visualizar
 			"aaData" => $data,
-			"query"=>$deletes
+			"query"=>$this->db->last_query()
 		);
 		echo json_encode($results);
 	}
