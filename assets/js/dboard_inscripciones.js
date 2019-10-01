@@ -26,8 +26,8 @@ function cargarDataTable(){
 	language: {
         "decimal": "",
         "emptyTable": "No hay información",
-        "info": "Mostrando _START_ a _END_ de _TOTAL_ Inscripciones",
-        "infoEmpty": "Mostrando 0 to 0 of 0 Inscripciones",
+        "info": "Mostrando de _START_ a _END_ de _TOTAL_ Inscripciones",
+        "infoEmpty": "Mostrando de 0 to 0 of 0 Inscripciones",
         "infoFiltered": "(Filtrado de _MAX_ total Inscripciones)",
         "infoPostFix": "",
         "thousands": ",",
