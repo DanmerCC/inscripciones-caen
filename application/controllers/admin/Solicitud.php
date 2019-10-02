@@ -81,7 +81,8 @@ class Solicitud extends CI_Controller
         $data = Array();
 		//echo var_dump($rspta);
 		$solicitud_ids=c_extract($rspta,'idSolicitud');
-		$notifications_by_solicituds=$this->Notificacion_model->notifications_id_by_solicitudsv1($solicitud_ids);
+		
+		$notifications_by_solicituds=$this->Notificacion_model->notifications_id_by_solicituds($solicitud_ids);
 
 		for ($i=0; $i < count($rspta); $i++) {
 			$rspta[$i]['cuan_noti']=0;
