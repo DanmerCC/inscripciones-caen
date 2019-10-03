@@ -113,7 +113,7 @@ class Inscripcion_model extends CI_Model
 	* get a page only no deleted marked
 	*/
 	public function get_page($start,$limit = 10,$deletes=true){
-		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.documento,a.email,a.celular,a.telefono_casa,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created ,ins.id_inscripcion');
+		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,ef.nombre as estado_finanzas,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.documento,a.email,a.celular,a.telefono_casa,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created ,ins.id_inscripcion');
 		$this->db->from($this->table.' ins');
 		$this->dtq_join_solicitud_usuario_curso_tipo_curso_alumno();
 		
@@ -153,7 +153,7 @@ class Inscripcion_model extends CI_Model
 	 * SELECT ins.*,a.nombres,a.apellido_paterno,a.apellido_materno FROM  inscripcion ins left JOIN solicitud s ON ins.solicitud_id = s.idSolicitud left JOIN curso c on c.id_curso = s.programa left JOIN alumno a on s.alumno = a.id_alumno LIMIT ?,?
 	 */
 	public function get_page_and_filter($start,$limit,$text,$deletes=true){
-		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.documento,a.email,a.celular,a.telefono_casa,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created,ins.id_inscripcion');
+		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,ef.nombre as estado_finanzas,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.documento,a.email,a.celular,a.telefono_casa,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created,ins.id_inscripcion');
 		$this->db->from($this->table.' ins');
 		$this->db->group_start();
 			$this->db->like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
@@ -411,12 +411,20 @@ class Inscripcion_model extends CI_Model
 		return resultToArray($this->db->get());
 	}
 
+	/**
+	 * Funcion de part querys comunes en datatables
+	 * joins y ordenamiento 
+	 *
+	 * @return void
+	 */
 	public function dtq_join_solicitud_usuario_curso_tipo_curso_alumno(){
 		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
 		$this->db->join('usuario u','ins.created_user_id = u.id','left');
 		$this->db->join('curso c','c.id_curso = s.programa','left');
 		$this->db->join('tipo_curso tc','c.idTipo_curso = tc.idTipo_curso','left');
 		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
+		$this->db->join('estado_finanzas ef','ins.estado_finanzas_id = ef.id');
+		$this->db->order_by('ins.created','desc');
 	}
 
 }

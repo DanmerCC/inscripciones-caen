@@ -62,6 +62,7 @@
                 <th>Correo</th>
                 <th>Telefonos</th>
 								<th>Fecha de Registro</th>
+								<th>Finanzas</th>
 								<th>Estado</th>
               </thead>
               <tfoot>
@@ -72,6 +73,7 @@
                 <th>Documento</th>
                 <th>Correo</th>
                 <th>Telefonos</th>
+                <th>Finanzas</th>
                 <th>Estado</th>
               </tfoot>
             </table>

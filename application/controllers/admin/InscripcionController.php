@@ -100,7 +100,11 @@ class InscripcionController extends CI_Controller {
 		$length=$this->input->post('length');
 		$columns=$this->input->post('columns');
 		$deletes=(boolean)($columns[8]["search"]["value"]==='true');
-
+		echo '<pre>';
+		print_r ($this->Permiso_model->getByNativeSession());
+		echo '</pre>';
+		exit;
+		$can_edi_finanzas=$this->Permiso_model->getByNativeSession();
 		if(strlen($search["value"])>0){
 			
 			$cantidad = $this->Inscripcion_model->get_count_and_filter($search["value"],$deletes);
@@ -128,7 +132,8 @@ class InscripcionController extends CI_Controller {
 				"5" => $value["email"],
 				"6" => (isset($value["celular"])?$value["celular"]:" ")." - ".(isset($value["telefono_casa"])?$value["telefono_casa"]:" "),
 				"7" => $value["created"],
-				"8" => $is_anulated?"<span class='label label-success'>Cargado</span>":"<span class='label label-danger'>Anulado</span>"
+				"8" => "<span class='btn btn-block btn-default'>".$value["estado_finanzas"]."</span>",
+				"9" => $is_anulated?"<span class='label label-success'>Cargado</span>":"<span class='label label-danger'>Anulado</span>"
 			);
 		}
 		$results = array(
