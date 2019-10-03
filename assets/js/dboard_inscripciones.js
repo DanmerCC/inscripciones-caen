@@ -48,6 +48,12 @@ function cargarDataTable(){
 
 $(document).ready(function(){
 
+	$('#select2-estado-finanzas').change((evt)=>{
+		var select=$('#select2-estado-finanzas');
+		//console.log(select.val());
+		tabla.column(9).search(select.val()).draw();
+	})
+
 	$("#slct_anulados").change(()=>{
 		//console.log($("#slct_anulados").attr("checked"));
 		var input_select=document.getElementById('slct_anulados');
@@ -92,9 +98,48 @@ function loadDataToSelect(){
 }
 
 ins={
-	"cancel":cancelarById
+	"cancel":cancelarById,
+	"change_estado":callBackchangeEstado
 };
 
+function callBackchangeEstado(id,estado_id,nombre){
+	bootbox.confirm({
+		message: "Esta seguro de querer cambiar de estado a <strong>"+nombre+"</strong>?",
+		buttons: {
+			confirm: {
+				label: 'Si',
+				className: 'btn-success'
+			},
+			cancel: {
+				label: 'Cancelar',
+				className: 'btn-danger'
+			}
+		},
+		callback: function (result) {
+			if(result){
+				$.ajax({
+					type: "post",
+					url: "/admin/inscripcion/changestatefinan",
+					data: {
+						"id":id,
+						"estado_id":estado_id
+					},
+					dataType: "json",
+					success: function (response) {
+						console.log(response);
+						if(response.content=="OK"){
+							alert("Cambio correcto correctamente");
+							tabla.ajax.reload(null,false);
+						}
+					},
+					error: function (e) {
+						console.log(e.responseText);
+					}
+				});
+			}
+		}
+	});
+}
 function cancelarById(id){
 
 	bootbox.confirm({

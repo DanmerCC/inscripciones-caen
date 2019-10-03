@@ -5,6 +5,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class InscripcionController extends CI_Controller {
 
+	private $estado_finazas;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -14,8 +16,14 @@ class InscripcionController extends CI_Controller {
 		$this->load->model('Permiso_model');
 		$this->load->model('Solicitud_model');
 		$this->load->library('opciones');
+		$this->load->model('EstadoFinanzas_model');
+		$this->estado_finanzas=$this->EstadoFinanzas_model->all();
+		
 	}
 
+	/**
+	 * @var 
+	 */
 	public function index()
 	{
 		if ($this->nativesession->get('tipo')=='admin') {
@@ -28,6 +36,7 @@ class InscripcionController extends CI_Controller {
 			$data['footer']=$this->load->view('adminlte/scriptsFooter','',TRUE);
 			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
 			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
+			$data['estados_finanzas']=$this->estado_finanzas;
 			$this->load->view('dashboard_inscritos',$data);
 		}else
 		{
@@ -95,16 +104,18 @@ class InscripcionController extends CI_Controller {
 	}
 
 	public function datatable_dashboard(){
+
 		$search=$this->input->post("search[]");
 		$start=$this->input->post('start');
 		$length=$this->input->post('length');
 		$columns=$this->input->post('columns');
 		$deletes=(boolean)($columns[8]["search"]["value"]==='true');
-		echo '<pre>';
-		print_r ($this->Permiso_model->getByNativeSession());
-		echo '</pre>';
-		exit;
-		$can_edi_finanzas=$this->Permiso_model->getByNativeSession();
+		$estados=explode(',',$columns[9]["search"]["value"]);
+		
+		$this->load->model('Auth_Permisions');
+		
+		$can_edit_finanzas=$this->Auth_Permisions->can('show_inscripcion_estado_finanzas');
+		$this->Inscripcion_model->global_stado_finanzas=$estados;
 		if(strlen($search["value"])>0){
 			
 			$cantidad = $this->Inscripcion_model->get_count_and_filter($search["value"],$deletes);
@@ -132,7 +143,7 @@ class InscripcionController extends CI_Controller {
 				"5" => $value["email"],
 				"6" => (isset($value["celular"])?$value["celular"]:" ")." - ".(isset($value["telefono_casa"])?$value["telefono_casa"]:" "),
 				"7" => $value["created"],
-				"8" => "<span class='btn btn-block btn-default'>".$value["estado_finanzas"]."</span>",
+				"8" => $can_edit_finanzas?$this->HTML_drop_down($value["id_inscripcion"],$value["estado_finanzas"]):$this->HTML_btn_default($value["estado_finanzas"]),
 				"9" => $is_anulated?"<span class='label label-success'>Cargado</span>":"<span class='label label-danger'>Anulado</span>"
 			);
 		}
@@ -247,5 +258,44 @@ class InscripcionController extends CI_Controller {
 					
 			],JSON_UNESCAPED_UNICODE);
 	}
-	
+
+
+	public function changeEstadoFinanzas(){
+		$id_inscripcion=$this->input->post('id');
+		$id_estado=$this->input->post('estado_id');
+		if(empty($id_inscripcion)||(empty($id_estado))){
+			return show_error('Solicitud erronea faltan datos');
+		}
+		$result=$this->Inscripcion_model->setEstadoFinanzas($id_inscripcion,$id_estado);
+		if($result){
+			$result=array(
+				"content"=>"OK",
+			);
+			echo json_encode($result);
+		}else{
+			echo "No actualizado";
+		}
+	}
+
+	private function HTML_drop_down($id,$text){
+		$list="";
+		
+		for ($i=0; $i < count($this->estado_finanzas); $i++) {
+			$nombre=$this->estado_finanzas[$i]['nombre'];
+			$id_estado=$this->estado_finanzas[$i]['id'];
+			$list=$list."<li onclick='ins.change_estado($id,$id_estado,".'"'.$nombre.'"'.")'><a href='#'>$nombre</a></li>";
+		}
+		return "<div class='input-group-btn'>
+                  <button type='button' class='btn btn btn-default dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>$text
+                    <span class='fa fa-caret-down'></span></button>
+                  <ul class='dropdown-menu'>
+                    $list
+                  </ul>
+                </div>";
+	}
+
+	private function HTML_btn_default($text){
+		return "<button type='button' class='btn btn-default'>$text</button>";
+	}
+
 }

@@ -9,6 +9,7 @@
 <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css"> -->
 <link rel="stylesheet" href="/assets/css/global.css">
 <link rel="stylesheet" href="/dist/css/jquery-externs/jquery.dataTables.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 <!-- Site wrapper -->
@@ -40,7 +41,22 @@
       <div class=""><!-- container -->
           <div class="panel-body table-responsive" id="listadoregistros">
             <div class='row'>
-							<div class="col-md-4"></div>
+							<div class='col-sm-4'>
+								<div class="container">
+									<div class="row">
+										<div class="col-md-12">
+											<label class="label-checkbox" for="select2-estado-finanzas">Incluir Anulados</label>
+											<select data-placeholder="Seleccione estado" name="filtro_estado_finanzas[]" multiple class="chosen-select" id="select2-estado-finanzas">
+											<option value="1" selected><?=$estados_finanzas[0]["nombre"];?></option>
+												<?php for ($i=1; $i < count($estados_finanzas); $i++){ ?>
+													<option value="<?=$estados_finanzas[$i]["id"];?>"><?=$estados_finanzas[$i]["nombre"];?></option>
+												<?php } ?>
+											</select>
+										</div>
+									</div>
+								</div>
+								
+								</div>
               <div class='col-sm-2'>
 								<input class="conic" type="checkbox" name="slct_anulados" value="true" id="slct_anulados">
 								<label class="label-checkbox" for="slct_anulados">Incluir Anulados</label>
@@ -192,8 +208,12 @@
 <script src="/dist/js/jquery-externs/pdfmake.min.js"></script>
 <script src="/dist/js/jquery-externs/buttons.html5.min.js"></script>
 <script src="/dist/js/jquery-externs/buttons.print.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 <script src="/assets/js/dboard_inscripciones.js"></script>
+<script>
+	$('#select2-estado-finanzas').select2();
+	
 
+</script>
 </body>
 </html>

@@ -176,6 +176,9 @@ $route['admin/parts/nuevoprograma'] = 'admin/Programa/newPrograma';
 $route['admin/notifications'] = 'admin/NotificationController/index';
 $route['admin/read'] = 'admin/NotificationController/read';
 
+
+$route['admin/inscripcion/changestatefinan']='admin/InscripcionController/changeEstadoFinanzas';
+
 //**Models with inscription */
 $route['admin/inscr/create'] = 'admin/InscripcionController/create';
 $route['admin/inscr/cancel'] = 'admin/InscripcionController/delete';

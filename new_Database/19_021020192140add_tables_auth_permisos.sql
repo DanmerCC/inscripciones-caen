@@ -28,3 +28,4 @@ ALTER TABLE `auth_roles_permisos`
 ALTER TABLE `auth_roles_users`
   ADD CONSTRAINT `fk_auth_roles_users_auth_roles_id` FOREIGN KEY (`auth_roles_id`) REFERENCES `auth_rol` (`id`),
   ADD CONSTRAINT `fk_auth_roles_users_users_id` FOREIGN KEY (`users_id`) REFERENCES `usuario` (`id`);
+

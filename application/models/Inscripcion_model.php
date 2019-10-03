@@ -8,6 +8,7 @@ class Inscripcion_model extends CI_Model
 	private $id='id_inscripcion';
 	private $solicitud_id='solicitud_id';
 	private $created_user_id='created_user_id';
+	private $estado_finanzas_id='estado_finanzas_id';
 	private $created='created';
 	//** Determina si el registro existe */
 	private $deleted='deleted';
@@ -17,6 +18,10 @@ class Inscripcion_model extends CI_Model
 
 
 	private $public_columns=[];
+
+	public $global_stado_finanzas=1;
+
+	public $array_estado_finanzas=[];
 
 	public function __construct()
 	{
@@ -30,6 +35,7 @@ class Inscripcion_model extends CI_Model
 		$this->where_filters=array(
 			$this->deleted=>NULL
 		);
+		$this->array_estado_finanzas=$this->load->model('EstadoFinanzas_model');
 	}
 
 	/**
@@ -124,6 +130,11 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
+		$this->db->where(
+			array(
+				'ins.'.$this->estado_finanzas_id=>$this->global_stado_finanzas
+			)
+		);
 		
 		$this->db->limit($limit,$start);
 		
@@ -141,6 +152,11 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
+		$this->db->where(
+			array(
+				'ins.'.$this->estado_finanzas_id=>$this->global_stado_finanzas
+			)
+		);
 		$result=$this->db->get()->result_array();
 		if(count($result)==1){
 			return $result[0]['count'];
@@ -169,6 +185,11 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
+		$this->db->where(
+			array(
+				'ins.'.$this->estado_finanzas_id=>$this->global_stado_finanzas
+			)
+		);
 		$this->db->limit($limit,$start);
         return resultToArray($this->db->get());
 	}
@@ -190,6 +211,11 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
+		$this->db->where(
+			array(
+				'ins.'.$this->estado_finanzas_id=>$this->global_stado_finanzas
+			)
+		);
 		$result=$this->db->get()->result_array();
 		if(count($result)==1){
 			return $result[0]['count'];
@@ -427,4 +453,33 @@ class Inscripcion_model extends CI_Model
 		$this->db->order_by('ins.created','desc');
 	}
 
+/**
+ * @var integer id
+ * @var integer estado_id
+ */
+	public function setEstadoFinanzas($id,$estado_id){
+		$data=array(
+			$this->estado_finanzas_id=>$estado_id
+		);
+		$this->db->where($this->id, $id);
+		$this->db->update($this->table,$data);
+		return ($this->db->affected_rows()==1);
+	}
+
+	function dt_query_datatable(){
+		$ids=c_extract($this->array_estado_finanzas,'id');
+		$this->db->group_start();
+		/** por terminar !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+		for ($i=0; $i < $this->estado_finanzas_id; $i++) {
+			if(in_array($this->estado_finanzas_id[$i],$ids)){
+
+			}else{
+				throw new Exception("Error no se detecto un estado no validado");
+			}
+			$this->db->or_where($this->estado_finanzas_id,$this->array_estado_finanzas);
+		}
+		/** por terminar !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+			
+		$this->db->group_end();
+	}
 }
