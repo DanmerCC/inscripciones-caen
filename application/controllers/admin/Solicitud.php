@@ -133,7 +133,7 @@ class Solicitud extends CI_Controller
             "iTotalDisplayRecords" => ($activeSearch)?$this->Solicitud_model->count_with_filter($search["value"]):$cantidad, //enviamos total de registros a visualizar
             "aaData" => $data);
         echo json_encode($results);
-        }
+	}
         public function dataTableAtendidas(){
         $rspta = $this->mihelper->resultToArray($this->Solicitud_model->atendidas());
         //vamos a declarar un array
