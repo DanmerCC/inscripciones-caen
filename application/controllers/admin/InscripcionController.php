@@ -115,7 +115,7 @@ class InscripcionController extends CI_Controller {
 		
 		$this->load->model('Auth_Permisions');
 		
-		$can_edit_finanzas=$this->Auth_Permisions->can('show_inscripcion_estado_finanzas');
+		$can_edit_finanzas=$this->Auth_Permisions->can('change_inscripcion_estado_finanzas');
 		$this->Inscripcion_model->global_stado_finanzas=$estados;
 
 		if(strlen($search["value"])>0){
