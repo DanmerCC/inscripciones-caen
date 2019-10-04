@@ -171,6 +171,7 @@ $route['administracion/vista/solicitudes'] = 'admin/Solicitud';
 $route['administracion/vista/informes'] = 'admin/InformeController';
 $route['administracion/vista/reportes'] = 'admin/ReportesController';
 $route['administracion/vista/inscripciones'] ='admin/InscripcionController/index';
+$route['administracion/vista/dowloadFilter'] ='admin/InscripcionController/dowloadFilter';
 
 $route['admin/parts/nuevoprograma'] = 'admin/Programa/newPrograma';
 $route['admin/notifications'] = 'admin/NotificationController/index';

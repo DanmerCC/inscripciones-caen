@@ -43,44 +43,47 @@
 					<div class='row'>
 					<!---->
 					<div class="col-md-3">
-          <div class="box box-success box-solid collapsed-box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Filtros Finanzas</h3>
+						<div class="box box-success box-solid collapsed-box">
+							<div class="box-header with-border">
+								<h3 class="box-title">Filtros Finanzas</h3>
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
-              <!-- /.box-tools -->
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body" style="">
-							<div class="row">
-								<div class="col-md-12">
-									<label class="label-checkbox" for="select2-estado-finanzas">Estados Finanzas</label>
-									<select data-placeholder="Seleccione estado" name="filtro_estado_finanzas[]" multiple class="chosen-select" id="select2-estado-finanzas">
-									
-										<?php for ($i=0; $i < count($estados_finanzas); $i++){ ?>
-											<option value="<?=$estados_finanzas[$i]["id"];?>" selected><?=$estados_finanzas[$i]["nombre"];?></option>
-										<?php } ?>
-									</select>
+								<div class="box-tools pull-right">
+									<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+									</button>
 								</div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-				</div>
-			</div>
-					<!---->
-              <div class='col-sm-2'>
-								<input class="conic" type="checkbox" name="slct_anulados" value="true" id="slct_anulados">
-								<label class="label-checkbox" for="slct_anulados">Incluir Anulados</label>
+								<!-- /.box-tools -->
 							</div>
-              <div class='col-sm-6'>
-                <select class="form-control" name="prueba1" id="selectProgram">
-                  <!-- container -->
-                </select>
-              </div>
+							<!-- /.box-header -->
+							<div class="box-body" style="">
+								<div class="row">
+									<div class="col-md-12">
+										<label class="label-checkbox" for="select2-estado-finanzas">Estados Finanzas</label>
+										<select data-placeholder="Seleccione estado" name="filtro_estado_finanzas[]" multiple class="chosen-select" id="select2-estado-finanzas">
+										
+											<?php for ($i=0; $i < count($estados_finanzas); $i++){ ?>
+												<option value="<?=$estados_finanzas[$i]["id"];?>" selected><?=$estados_finanzas[$i]["nombre"];?></option>
+											<?php } ?>
+										</select>
+									</div>
+								</div>
+								<!-- /.box-body -->
+							</div>
+							<!-- /.box -->
+						</div>
+					</div>
+					<!---->
+					<div class='col-sm-2'>
+						<input class="conic" type="checkbox" name="slct_anulados" value="true" id="slct_anulados">
+						<label class="label-checkbox" for="slct_anulados">Incluir Anulados</label>
+					</div>
+					<div class='col-sm-2'>
+						<a href="/administracion/vista/dowloadFilter" id="btnExport" class="btn btn-primary" target="_blank">Exportar completo</a>
+					</div>
+					<div class='col-sm-4'>
+						<select class="form-control" name="prueba1" id="selectProgram">
+							<!-- container -->
+						</select>
+					</div>
               
             </div>
             <table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">

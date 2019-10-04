@@ -23,6 +23,9 @@ function cargarDataTable(){
 					console.log(e.responseText);
 				}
 			},
+	"initComplete":function( settings, json){
+		createRouteExport();
+	},
 	"bDestroy": true,
 	"iDisplayLength": 15, // paginacion
 	"order": [[0, "desc"]],
@@ -55,6 +58,7 @@ $(document).ready(function(){
 		var select=$('#select2-estado-finanzas');
 		//console.log(select.val());
 		tabla.column(9).search(select.val()).draw();
+		createRouteExport();
 	})
 
 	$("#slct_anulados").change(()=>{
@@ -62,6 +66,7 @@ $(document).ready(function(){
 		var input_select=document.getElementById('slct_anulados');
 		console.log(input_select.checked)
 		tabla.column(8).search(input_select.checked).draw();
+		createRouteExport();
 		//tabla.ajax.reload(null,false);
 	})
 
@@ -69,6 +74,7 @@ $(document).ready(function(){
 
     $("#selectProgram").change(function(){
         tabla.search($(this).val()).draw();
+		createRouteExport();
     });
 
     //contruirTitulos(dataTables.solicitudes.thead);
@@ -278,4 +284,10 @@ function cargarData(id){
     });
 }
 
+function createRouteExport(){
+	let search = tabla.ajax.params().search.value;
+	let anulado = tabla.ajax.params().columns[8].search.value;
+	let estados = tabla.ajax.params().columns[9].search.value;
+	document.getElementById('btnExport').attributes.href.nodeValue = "/administracion/vista/dowloadFilter?search="+search+"&anulado="+anulado+"&estados="+estados;
+}
 
