@@ -19,7 +19,7 @@ class Inscripcion_model extends CI_Model
 
 	private $public_columns=[];
 
-	public $global_stado_finanzas=1;
+	public $global_stado_finanzas=[];
 
 	public $array_estado_finanzas=[];
 
@@ -35,7 +35,8 @@ class Inscripcion_model extends CI_Model
 		$this->where_filters=array(
 			$this->deleted=>NULL
 		);
-		$this->array_estado_finanzas=$this->load->model('EstadoFinanzas_model');
+		$this->load->model('EstadoFinanzas_model');
+		$this->array_estado_finanzas=$this->EstadoFinanzas_model->all();
 	}
 
 	/**
@@ -130,11 +131,7 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
-		$this->db->where(
-			array(
-				'ins.'.$this->estado_finanzas_id=>$this->global_stado_finanzas
-			)
-		);
+		$this->dt_query_datatable_filter_array();
 		
 		$this->db->limit($limit,$start);
 		
@@ -152,11 +149,7 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
-		$this->db->where(
-			array(
-				'ins.'.$this->estado_finanzas_id=>$this->global_stado_finanzas
-			)
-		);
+		$this->dt_query_datatable_filter_array();
 		$result=$this->db->get()->result_array();
 		if(count($result)==1){
 			return $result[0]['count'];
@@ -185,11 +178,7 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
-		$this->db->where(
-			array(
-				'ins.'.$this->estado_finanzas_id=>$this->global_stado_finanzas
-			)
-		);
+		$this->dt_query_datatable_filter_array();
 		$this->db->limit($limit,$start);
         return resultToArray($this->db->get());
 	}
@@ -211,11 +200,8 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
-		$this->db->where(
-			array(
-				'ins.'.$this->estado_finanzas_id=>$this->global_stado_finanzas
-			)
-		);
+		$this->dt_query_datatable_filter_array();
+
 		$result=$this->db->get()->result_array();
 		if(count($result)==1){
 			return $result[0]['count'];
@@ -466,20 +452,23 @@ class Inscripcion_model extends CI_Model
 		return ($this->db->affected_rows()==1);
 	}
 
-	function dt_query_datatable(){
-		$ids=c_extract($this->array_estado_finanzas,'id');
-		$this->db->group_start();
-		/** por terminar !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-		for ($i=0; $i < $this->estado_finanzas_id; $i++) {
-			if(in_array($this->estado_finanzas_id[$i],$ids)){
+	function dt_query_datatable_filter_array(){
 
-			}else{
-				throw new Exception("Error no se detecto un estado no validado");
+		$ids=c_extract($this->array_estado_finanzas,'id');
+		if(count($this->global_stado_finanzas)>0){
+			$this->db->group_start();
+			for ($i=0; $i < count($this->global_stado_finanzas); $i++) {
+				
+				if(in_array($this->global_stado_finanzas[$i],$ids)){
+					$this->db->or_where($this->estado_finanzas_id,$this->global_stado_finanzas[$i]);
+				}else{
+					throw new Exception("Error no se detecto un estado validado");
+				}
 			}
-			$this->db->or_where($this->estado_finanzas_id,$this->array_estado_finanzas);
-		}
-		/** por terminar !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+			$this->db->group_end();
+		}else{
 			
-		$this->db->group_end();
+		}
+		
 	}
 }

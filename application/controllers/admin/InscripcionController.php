@@ -110,12 +110,14 @@ class InscripcionController extends CI_Controller {
 		$length=$this->input->post('length');
 		$columns=$this->input->post('columns');
 		$deletes=(boolean)($columns[8]["search"]["value"]==='true');
-		$estados=explode(',',$columns[9]["search"]["value"]);
+		$column_nine=$columns[9]["search"]["value"];
+		$estados=($column_nine=="")?[]:explode(',',$column_nine);
 		
 		$this->load->model('Auth_Permisions');
 		
 		$can_edit_finanzas=$this->Auth_Permisions->can('show_inscripcion_estado_finanzas');
 		$this->Inscripcion_model->global_stado_finanzas=$estados;
+
 		if(strlen($search["value"])>0){
 			
 			$cantidad = $this->Inscripcion_model->get_count_and_filter($search["value"],$deletes);

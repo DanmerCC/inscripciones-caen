@@ -16,6 +16,9 @@ function cargarDataTable(){
 				url: '/admin/dataTable/inscripciones',
 				type: "post",
 				dataType: "json",
+				data:{
+					"asdasd":1
+				},
 				error: function (e) {
 					console.log(e.responseText);
 				}
