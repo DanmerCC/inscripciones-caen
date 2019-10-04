@@ -53,15 +53,12 @@ $(document).ready(function(){
 
 	$('#select2-estado-finanzas').change((evt)=>{
 		var select=$('#select2-estado-finanzas');
-		//console.log(select.val());
 		tabla.column(9).search(select.val()).draw(false);
 	})
 
 	$("#slct_anulados").change(()=>{
-		//console.log($("#slct_anulados").attr("checked"));
 		var input_select=document.getElementById('slct_anulados');
 		tabla.column(8).search(input_select.checked).draw(false);
-		//tabla.ajax.reload(null,false);
 	})
 
 	loadDataToSelect();
