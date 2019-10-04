@@ -1,5 +1,5 @@
 
-CREATE TABLE `caenedup_caen2`.`estado_finanzas` ( `id` INT NOT NULL AUTO_INCREMENT ,
+CREATE TABLE `estado_finanzas` ( `id` INT NOT NULL AUTO_INCREMENT ,
        `nombre` VARCHAR(150) NOT NULL ,
        PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
