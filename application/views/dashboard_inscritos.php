@@ -9,7 +9,7 @@
 <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css"> -->
 <link rel="stylesheet" href="/assets/css/global.css">
 <link rel="stylesheet" href="/dist/css/jquery-externs/jquery.dataTables.min.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+<link href="/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 <!-- Site wrapper -->
@@ -223,7 +223,7 @@
 <script src="/dist/js/jquery-externs/pdfmake.min.js"></script>
 <script src="/dist/js/jquery-externs/buttons.html5.min.js"></script>
 <script src="/dist/js/jquery-externs/buttons.print.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+<script src="/bower_components/select2/dist/js/select2.min.js"></script>
 <script src="/assets/js/dboard_inscripciones.js"></script>
 <script>
 	$('#select2-estado-finanzas').select2();
