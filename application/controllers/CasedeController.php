@@ -13,7 +13,7 @@ class CasedeController extends CI_Controller
 		$this->load->helper('url');
 		$this->load->library('opciones');
 		$this->load->model('Regcasede_model');
-		$this->diad=((date('Y-m-d')=='2018-11-15') or(date('Y-m-d')=='2018-11-16'));
+		$this->diad=((date('Y-m-d')=='2019-11-14') or(date('Y-m-d')=='2019-14-15'));
 	}
 
     public function marcarAsistenciaQ(){
@@ -69,8 +69,8 @@ class CasedeController extends CI_Controller
 	            "8" => $value["grado_academico"],
 	            "9" => $value["motivo"],
 	            "10" => $value["fecha_inscripcion"],
-	            "11" => (!(!($value["marca_asistencia"])&&$this->diad&&$dia=='15')?($value["marca_asistencia"]?$value["marca_asistencia"]:"<button class='btn btn-warning' disabled>No disponible</button>"):"<button class='btn btn-primary' onclick='marcaruno(".$value["id_participante"].")'>Asistencia Jueves</button>"),
-	            "12" => (!(!($value["marca_asistencia_seg"])&&$this->diad&&$dia=='16')?($value["marca_asistencia_seg"]?$value["marca_asistencia_seg"]:"<button class='btn btn-warning' disabled>No disponible</button>"):"<button class='btn btn-primary' onclick='marcardos(".$value["id_participante"].")' >Asistencia Viernes</button>")
+	            "11" => (!(!($value["marca_asistencia"])&&$this->diad&&$dia=='14')?($value["marca_asistencia"]?$value["marca_asistencia"]:"<button class='btn btn-warning' disabled>No disponible</button>"):"<button class='btn btn-primary' onclick='marcaruno(".$value["id_participante"].")'>Asistencia Jueves</button>"),
+	            "12" => (!(!($value["marca_asistencia_seg"])&&$this->diad&&$dia=='15')?($value["marca_asistencia_seg"]?$value["marca_asistencia_seg"]:"<button class='btn btn-warning' disabled>No disponible</button>"):"<button class='btn btn-primary' onclick='marcardos(".$value["id_participante"].")' >Asistencia Viernes</button>")
 	            //"13"=>$value["idmd5Badge"]
 	        );
 	     }        
@@ -78,7 +78,8 @@ class CasedeController extends CI_Controller
 	        "sEcho" => 1, //Informacion para datatables
 	        "iTotalRecords" => count($data), //enviamos el total de registros al datatables
 	        "iTotalDisplayRecords" => count($data), //enviamos total de registros a visualizar
-	        "aaData" => $data);
+			"aaData" => $data
+		);
 	    echo json_encode($results);
 	}
 

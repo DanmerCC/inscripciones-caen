@@ -195,7 +195,8 @@ $route['int/solicitud/(:num)'] = 'intranetCaen/Solicitud/pdf/$1';
 ///CASEDE
 $route['casede/datatable/listar'] = 'CasedeController/listarComoDatatable';
 $route['administracion/vista/casede'] = 'CasedeController';
-
+$route['casede/marcaAsistenciaq'] = 'CasedeController/marcarAsistenciaQ';
+$route['casede/marcaAsistenciad'] = 'CasedeController/marcarAsistenciaD';
 $route['certifica']='CertificadoController/verificar';
 
 
