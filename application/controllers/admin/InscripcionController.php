@@ -300,4 +300,131 @@ class InscripcionController extends CI_Controller {
 		return "<button type='button' class='btn btn-default'>$text</button>";
 	}
 
+	private function estado_archivos_by_solicitud($solicitud_id){
+		$solicitud=$this->Solicitud_model->getAllColumnsById($solicitud_id);
+		$data=[];
+
+		$data["solicitudFiles"]=[
+			[
+				"name"=>"Solicitud de Admision",
+				"identifier"=>"solad",
+				"statechecked"=>(boolean)$solicitud["check_sol_ad"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/sol-ad/".$solicitud["idSolicitud"].".pdf"),
+				"fileName"=>$solicitud["idSolicitud"]
+            ],
+            [
+				"name"=>"Proyecto de Investigacion",
+				"identifier"=>"pinvs",
+				"statechecked"=>(boolean)$solicitud["check_proyect_invest"],
+                "stateUpload"=>file_exists(CC_BASE_PATH."/files/pinvs/".$solicitud["idSolicitud"].".pdf"),
+                "fileName"=>$solicitud["idSolicitud"]
+            ],
+            [
+                "name"=>"Hoja de datos",
+				"identifier"=>"hdatos",
+				"statechecked"=>(boolean)$solicitud["check_hdatos"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/hojadatos/".$solicitud["idSolicitud"].".pdf"),
+				"fileName"=>$solicitud["idSolicitud"]
+			]
+
+		];
+		return $data;
+	}
+
+	private function estado_archivos_by_alumno($alumno_id){
+		$this->load->model('Alumno_model');
+		$alumno=$this->Alumno_model->findById($alumno_id)[0];
+		$data=[];
+		$data=$alumno;
+		$data["documentosObject"]=[
+			[
+				"name"=>"curriculum",
+				"identifier"=>"cv",
+				"statechecked"=>(boolean)$alumno["check_cv_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/cvs/".$alumno["documento"].".pdf"),
+				"fileName"=>$alumno['documento']
+			],
+			[
+				"name"=>"declaracion jurada",
+				"identifier"=>"dj",
+				"statechecked"=>(boolean)$alumno["check_dj_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/djs/".$alumno["documento"].".pdf"),
+				"fileName"=>$alumno['documento']
+			],
+			[
+				"name"=>"dni",
+				"identifier"=>"dni",
+				"statechecked"=>(boolean)$alumno["check_dni_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf"),
+				"fileName"=>$alumno['documento']
+			],
+			[
+				"name"=>"bachiller",
+				"identifier"=>"bach",
+				"statechecked"=>(boolean)$alumno["check_bach_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/bachiller/".$alumno["documento"].".pdf"),
+				"fileName"=>$alumno['documento']
+			],
+			[
+				"name"=>"maestria",
+				"identifier"=>"maes",
+				"statechecked"=>(boolean)$alumno["check_maes_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/maestria/".$alumno["documento"].".pdf"),
+				"fileName"=>$alumno['documento']
+			],
+			[
+				"name"=>"Doctorado",
+				"identifier"=>"doct",
+				"statechecked"=>(boolean)$alumno["check_doct_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf"),
+				"fileName"=>$alumno['documento']
+			]
+
+		];
+
+
+		$imagen;
+			if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".jpg")){
+				$imagen="data:image/jpg;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".jpg"));
+
+			}else if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".png")){
+				$imagen="data:image/png;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".png"));
+
+			}else if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".gif")){
+				$imagen="data:image/gif;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".gif"));
+				
+			}else{
+				$imagen="/dist/img/avatar5.png";
+			}
+		$data["fotoData"]=$imagen;
+		
+		return $data;
+	}
+
+
+	public function get_estado_archivos($id){
+		$solicitud=$this->estado_archivos_by_solicitud($id);
+		$estado_archivos_solicitud=$this->estado_archivos_by_solicitud($solicitud['idSolicitud']);
+		header("Content-type:application/json");
+		echo json_encode([
+			"content"=>[],
+			"status"=>"OK",
+			"result"=>($estado_archivos_solicitud)
+				
+		],JSON_UNESCAPED_UNICODE);
+	}
+
+	public function get_estado_archivos_solicitud_include_person_files($id){
+		$solicitud=$this->Solicitud_model->getOrFail($id);
+		$estado_archivos_solicitud=$this->estado_archivos_by_solicitud($solicitud['idSolicitud']);
+		$estado_archivos_persona=$this->estado_archivos_by_alumno($solicitud['alumno']);
+		header("Content-type:application/json");
+		echo json_encode([
+			"content"=>[],
+			"status"=>"OK",
+			"result"=>($estado_archivos_solicitud)
+				
+		],JSON_UNESCAPED_UNICODE);
+	}
+
 }

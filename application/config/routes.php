@@ -270,3 +270,5 @@ $route['admin/uploading'] = 'admin/FilesController/recive_file';
 
 
 $route['use/inscripcion'] = 'InfoForUseController/index';
+
+$route['solicitud/files_state/(:num)'] = 'admin/InscripcionController/get_estado_archivos_solicitud_include_person_files/$1';

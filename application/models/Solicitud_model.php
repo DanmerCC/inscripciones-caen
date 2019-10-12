@@ -424,4 +424,18 @@ class Solicitud_model extends CI_Model
 		$this->db->update($this->tbl_solicitud,$data);
 		return $this->db->affected_rows()==1;
 	}
+
+
+	public function getOrFail($id){
+		$this->db->select()
+		->from($this->tbl_solicitud)
+		->where($this->id,$id);
+		$result=$this->db->get();
+		if($result->num_rows()==1){
+			$row_result=$result->result_array()[0];
+		}else{
+			return new Exception("Solicitud no existe");
+		}
+		return $row_result;
+	}
 }
