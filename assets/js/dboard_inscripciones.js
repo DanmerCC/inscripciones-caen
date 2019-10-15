@@ -102,7 +102,48 @@ ins={
 };
 
 function callBackchangeEstado(id,estado_id,nombre){
-	bootbox.confirm({
+	if(estado_id==3){
+			bootbox.prompt({
+			title:"Observacion",
+			message: "Esta seguro de querer cambiar de estado a <strong>"+nombre+"</strong>?",
+			buttons: {
+				confirm: {
+					label: 'Si',
+					className: 'btn-success'
+				},
+				cancel: {
+					label: 'Cancelar',
+					className: 'btn-danger'
+				}
+			},
+			callback: function (result) {
+				if(result){
+					$.ajax({
+						type: "post",
+						url: "/admin/inscripcion/changestatefinan",
+						data: {
+							"id":id,
+							"estado_id":estado_id
+						},
+						dataType: "json",
+						success: function (response) {
+							console.log(response);
+							if(response.content=="OK"){
+								alert("Cambio correcto correctamente");
+								tabla.ajax.reload(null,false);
+							}
+						},
+						error: function (e) {
+							console.log(e.responseText);
+						}
+					});
+				}
+			}
+		});
+	}
+
+	if(estado_id!=3){
+		bootbox.confirm({
 		message: "Esta seguro de querer cambiar de estado a <strong>"+nombre+"</strong>?",
 		buttons: {
 			confirm: {
@@ -138,6 +179,8 @@ function callBackchangeEstado(id,estado_id,nombre){
 			}
 		}
 	});
+}
+	
 }
 function cancelarById(id){
 
