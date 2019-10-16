@@ -117,13 +117,15 @@ function callBackchangeEstado(id,estado_id,nombre){
 				}
 			},
 			callback: function (result) {
-				if(result){
+				
+				if(result!=null){
 					$.ajax({
 						type: "post",
 						url: "/admin/inscripcion/changestatefinan",
 						data: {
 							"id":id,
-							"estado_id":estado_id
+							"estado_id":estado_id,
+							"comentario":result
 						},
 						dataType: "json",
 						success: function (response) {
@@ -315,6 +317,18 @@ function cargarData(id){
 			console.log(e.responseText);
 		}
     });
+}
+
+
+function load_details_state_finanzas(id){
+	$.ajax({
+		type: "get",
+		url: "/admin/finobservacion/inscripcion/"+id,
+		dataType: "json",
+		success: function (response) {
+			console.log(response);
+		}
+	});
 }
 
 

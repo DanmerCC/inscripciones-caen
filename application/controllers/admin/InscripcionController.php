@@ -6,6 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class InscripcionController extends CI_Controller {
 
 	private $estado_finazas;
+	private $usuario_actual;
 
 	public function __construct()
 	{
@@ -18,6 +19,8 @@ class InscripcionController extends CI_Controller {
 		$this->load->library('opciones');
 		$this->load->model('EstadoFinanzas_model');
 		$this->estado_finanzas=$this->EstadoFinanzas_model->all();
+		$this->load->model('FinObservaciones_model');
+		$this->usuario_actual=$this->nativesession->get('idUsuario');
 		
 	}
 
@@ -265,10 +268,15 @@ class InscripcionController extends CI_Controller {
 	public function changeEstadoFinanzas(){
 		$id_inscripcion=$this->input->post('id');
 		$id_estado=$this->input->post('estado_id');
+		$comentario=$this->input->post('comentario');
+		
 		if(empty($id_inscripcion)||(empty($id_estado))){
 			return show_error('Solicitud erronea faltan datos');
 		}
 		$result=$this->Inscripcion_model->setEstadoFinanzas($id_inscripcion,$id_estado);
+		if($id_estado==$this->EstadoFinanzas_model->OBSERVADO){
+			$result2=$this->FinObservaciones_model->create($id_inscripcion,$this->usuario_actual,$comentario);
+		}
 		if($result){
 			$result=array(
 				"content"=>"OK",
@@ -281,6 +289,8 @@ class InscripcionController extends CI_Controller {
 
 	private function HTML_drop_down($id,$text){
 		$list="";
+
+		$details_icon="<a class='btn btn-social-icon btn-instagram' onclick='load_details_state_finanzas(".$id.")'><i class='fa fa-commenting'></i></a>";
 		
 		for ($i=0; $i < count($this->estado_finanzas); $i++) {
 			$nombre=$this->estado_finanzas[$i]['nombre'];
@@ -292,8 +302,9 @@ class InscripcionController extends CI_Controller {
                     <span class='fa fa-caret-down'></span></button>
                   <ul class='dropdown-menu'>
                     $list
-                  </ul>
-                </div>";
+				  </ul>".
+				 ($details_icon). 
+                "</div>";
 	}
 
 	private function HTML_btn_default($text){
