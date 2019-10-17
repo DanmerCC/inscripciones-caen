@@ -149,7 +149,18 @@ class InscripcionController extends CI_Controller {
 				"5" => $value["email"],
 				"6" => (isset($value["celular"])?$value["celular"]:" ")." - ".(isset($value["telefono_casa"])?$value["telefono_casa"]:" "),
 				"7" => $value["created"],
-				"8" => $can_edit_finanzas?$this->HTML_drop_down($value["id_inscripcion"],$value["estado_finanzas"],$value["estado_finanzas_id"]):$this->HTML_btn_default($value["estado_finanzas"]),
+				"8" => "<div class='input-group-btn'>".
+							($can_edit_finanzas?
+											
+												$this->HTML_drop_down(
+													$value["id_inscripcion"],
+													$value["estado_finanzas"],
+													$value["estado_finanzas_id"]
+												):
+												$this->HTML_btn_default($value["estado_finanzas"])
+							).
+							$this->HTML_details_icon($value["id_inscripcion"],$value["estado_finanzas_id"]).
+						"</div>",
 				"9" => $is_anulated?"<span class='label label-success'>Cargado</span>":"<span class='label label-danger'>Anulado</span>"
 			);
 		}
@@ -288,7 +299,7 @@ class InscripcionController extends CI_Controller {
 		}
 	}
 
-	private function HTML_drop_down($id,$text,$estado_finanzas_id=null){
+	private function HTML_drop_down($id,$text,$estado_finanzas_id=null,$other_html_elelemt=''){
 		$list="";
 		$is_obserbated=false;
 		if($estado_finanzas_id!=null){
@@ -302,18 +313,28 @@ class InscripcionController extends CI_Controller {
 			$id_estado=$this->estado_finanzas[$i]['id'];
 			$list=$list."<li onclick='ins.change_estado($id,$id_estado,".'"'.$nombre.'"'.")'><a href='#'>$nombre</a></li>";
 		}
-		return "<div class='input-group-btn'>
+		return "
                   <button type='button' class='btn btn btn-default dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>$text
                     <span class='fa fa-caret-down'></span></button>
                   <ul class='dropdown-menu'>
                     $list
 				  </ul>".
-				 ($details_icon). 
-                "</div>";
+				 ($other_html_elelemt). 
+                "";
+	}
+
+	private function HTML_details_icon($id_inscripcion,$estado_finanzas_id=null){
+		$is_obserbated=false;
+		if($estado_finanzas_id!=null){
+			$is_obserbated=($this->EstadoFinanzas_model->OBSERVADO!=$estado_finanzas_id);
+		}
+		$disabled_html=$is_obserbated?' disabled '."onclick='' ":" onclick='load_details_state_finanzas(".$id_inscripcion.")' ";
+		$details_icon="<a class='btn btn-social-icon btn-instagram' $disabled_html ><i class='fa fa-fw fa-info-circle'></i></a>";
+		return $details_icon;
 	}
 
 	private function HTML_btn_default($text){
-		return "<button type='button' class='btn btn-default'>$text</button>";
+		return "<button type='button' style='cursor: default;' class='btn btn-default'>$text</button>";
 	}
 
 	private function estado_archivos_by_solicitud($solicitud_id){
