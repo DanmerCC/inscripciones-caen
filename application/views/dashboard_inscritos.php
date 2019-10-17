@@ -198,7 +198,11 @@
   <div class="control-sidebar-bg"></div>
 
   <div id="contentModals"></div>
-  <!-- /.modal -->
+	<!-- /.modal -->
+	
+	<?php
+		$this->load->view('modals/detalles_finanzas');
+	?>
 <!-- 
   </div>
 </div> -->

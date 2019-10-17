@@ -40,6 +40,7 @@ class InscripcionController extends CI_Controller {
 			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
 			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
 			$data['estados_finanzas']=$this->estado_finanzas;
+			$data["modal_details_finance"]=$this->load->view('modals/detalles_finanzas','',TRUE);
 			$this->load->view('dashboard_inscritos',$data);
 		}else
 		{
@@ -148,7 +149,7 @@ class InscripcionController extends CI_Controller {
 				"5" => $value["email"],
 				"6" => (isset($value["celular"])?$value["celular"]:" ")." - ".(isset($value["telefono_casa"])?$value["telefono_casa"]:" "),
 				"7" => $value["created"],
-				"8" => $can_edit_finanzas?$this->HTML_drop_down($value["id_inscripcion"],$value["estado_finanzas"]):$this->HTML_btn_default($value["estado_finanzas"]),
+				"8" => $can_edit_finanzas?$this->HTML_drop_down($value["id_inscripcion"],$value["estado_finanzas"],$value["estado_finanzas_id"]):$this->HTML_btn_default($value["estado_finanzas"]),
 				"9" => $is_anulated?"<span class='label label-success'>Cargado</span>":"<span class='label label-danger'>Anulado</span>"
 			);
 		}
@@ -287,10 +288,14 @@ class InscripcionController extends CI_Controller {
 		}
 	}
 
-	private function HTML_drop_down($id,$text){
+	private function HTML_drop_down($id,$text,$estado_finanzas_id=null){
 		$list="";
-
-		$details_icon="<a class='btn btn-social-icon btn-instagram' onclick='load_details_state_finanzas(".$id.")'><i class='fa fa-commenting'></i></a>";
+		$is_obserbated=false;
+		if($estado_finanzas_id!=null){
+			$is_obserbated=($this->EstadoFinanzas_model->OBSERVADO!=$estado_finanzas_id);
+		}
+		$disabled_html=$is_obserbated?' disabled '."onclick='' ":" onclick='load_details_state_finanzas(".$id.")' ";
+		$details_icon="<a class='btn btn-social-icon btn-instagram' $disabled_html ><i class='fa fa-fw fa-info-circle'></i></a>";
 		
 		for ($i=0; $i < count($this->estado_finanzas); $i++) {
 			$nombre=$this->estado_finanzas[$i]['nombre'];

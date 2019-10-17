@@ -321,14 +321,7 @@ function cargarData(id){
 
 
 function load_details_state_finanzas(id){
-	$.ajax({
-		type: "get",
-		url: "/admin/finobservacion/inscripcion/"+id,
-		dataType: "json",
-		success: function (response) {
-			console.log(response);
-		}
-	});
+	MDL_DETALLE_FINANZAS.open(id)
 }
 
 

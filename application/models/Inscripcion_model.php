@@ -120,7 +120,7 @@ class Inscripcion_model extends CI_Model
 	* get a page only no deleted marked
 	*/
 	public function get_page($start,$limit = 10,$deletes=true){
-		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,ef.nombre as estado_finanzas,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.documento,a.email,a.celular,a.telefono_casa,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created ,ins.id_inscripcion');
+		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,ins.'.$this->estado_finanzas_id.',ef.nombre as estado_finanzas,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.documento,a.email,a.celular,a.telefono_casa,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created ,ins.id_inscripcion');
 		$this->db->from($this->table.' ins');
 		$this->dtq_join_solicitud_usuario_curso_tipo_curso_alumno();
 		
