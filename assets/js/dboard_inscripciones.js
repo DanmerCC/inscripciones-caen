@@ -144,7 +144,7 @@ function callBackchangeEstado(id,estado_id,nombre){
 		});
 	}
 
-	if(estado_id!=3){
+	if(estado_id!=3 && estado_id!=VARS.inscripcion_finanzas.estados.AUTORIZADO){
 		bootbox.confirm({
 		message: "Esta seguro de querer cambiar de estado a <strong>"+nombre+"</strong>?",
 		buttons: {
@@ -183,6 +183,45 @@ function callBackchangeEstado(id,estado_id,nombre){
 	});
 }
 	
+if(estado_id==VARS.inscripcion_finanzas.estados.AUTORIZADO){
+	bootbox.confirm({
+	message: "Esta seguro de querer cambiar de estado a <strong>"+nombre+"</strong>?",
+	buttons: {
+		confirm: {
+			label: 'Si',
+			className: 'btn-success'
+		},
+		cancel: {
+			label: 'Cancelar',
+			className: 'btn-danger'
+		}
+	},
+	callback: function (result) {
+		if(result){
+			$.ajax({
+				type: "post",
+				url: "/admin/inscripcion/changestatefinan",
+				data: {
+					"id":id,
+					"estado_id":estado_id
+				},
+				dataType: "json",
+				success: function (response) {
+					console.log(response);
+					if(response.content=="OK"){
+						alert("Cambio correcto correctamente");
+						tabla.ajax.reload(null,false);
+					}
+				},
+				error: function (e) {
+					console.log(e.responseText);
+				}
+			});
+		}
+	}
+});
+}
+
 }
 function cancelarById(id){
 

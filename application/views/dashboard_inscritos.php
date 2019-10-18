@@ -219,7 +219,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script> -->
-
+<script src="/assets/js/global_vars.js"></script>
 <script src="/dist/js/jquery-externs/jquery.dataTables.min.js"></script>
 <script src="/dist/js/jquery-externs/bootbox.min.js"></script>
 <script src="/dist/js/jquery-externs/dataTables.buttons.min.js"></script>
@@ -230,6 +230,7 @@
 <script src="/dist/js/jquery-externs/buttons.print.min.js"></script>
 <script src="/bower_components/select2/dist/js/select2.min.js"></script>
 <script src="/assets/js/dboard_inscripciones.js"></script>
+
 <script>
 	$('#select2-estado-finanzas').select2();
 	
