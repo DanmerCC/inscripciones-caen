@@ -168,6 +168,7 @@ $route['administracion/vista/programascalendar'] = 'admin/Programa/viewCalendar'
 $route['administracion/vista/beneficios'] = 'admin/Beneficio';
 $route['administracion/vista/alumnos'] = 'admin/Alumno';
 $route['administracion/vista/solicitudes'] = 'admin/Solicitud';
+$route['administracion/solicitud/changestatefinan']='admin/Solicitud/changeEstadoFinanzas';
 $route['administracion/vista/informes'] = 'admin/InformeController';
 $route['administracion/vista/reportes'] = 'admin/ReportesController';
 $route['administracion/vista/inscripciones'] ='admin/InscripcionController/index';

@@ -58,6 +58,7 @@
                 <th>tipo_financiamiento</th>
                 <th>documento</th>
                 <th>curso_numeracion</th>
+                <th>Finanzas</th>
                 <th>Pagos</th>
                 <th>Comentario</th>
                 <th>fecha_registro</th>
@@ -72,6 +73,7 @@
                 <th>tipo_financiamiento</th>
                 <th>documento</th>
                 <th>curso_numeracion</th>
+                <th>Finanzas</th>
                 <th>Pagos</th>
                 <th>Comentario</th>
                 <th>fecha_registro</th>
