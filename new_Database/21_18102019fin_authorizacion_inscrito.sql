@@ -6,7 +6,7 @@ CREATE TABLE `fin_authorizacion_inscrito` (
 	`comentario` VARCHAR(255) NOT NULL DEFAULT '',
 	PRIMARY KEY (`id`),
 	INDEX (`inscripcion_id`),
-	INDEX (`usuario_id`),
+	INDEX (`author_usuario_id`),
 	INDEX (`tipo_id`)
 ) ENGINE = InnoDB;
 

@@ -183,7 +183,14 @@ function callBackchangeEstado(id,estado_id,nombre){
 	});
 }
 	
-if(estado_id==VARS.inscripcion_finanzas.estados.AUTORIZADO){
+	if(estado_id==VARS.inscripcion_finanzas.estados.AUTORIZADO){
+		console.log(getFormHtmlAutorizacion())
+		bootbox.confirm(getFormHtmlAutorizacion(), function(result) {
+			if(result)
+				$('#infos').submit();
+	});
+
+	/*
 	bootbox.confirm({
 	message: "Esta seguro de querer cambiar de estado a <strong>"+nombre+"</strong>?",
 	buttons: {
@@ -219,7 +226,7 @@ if(estado_id==VARS.inscripcion_finanzas.estados.AUTORIZADO){
 			});
 		}
 	}
-});
+});*/
 }
 
 }
@@ -363,4 +370,25 @@ function load_details_state_finanzas(id){
 	MDL_DETALLE_FINANZAS.open(id)
 }
 
+
+function getFormHtmlAutorizacion(){
+	return `
+	<form>
+		<div class='form-group'>
+			<label>Tipo</label>
+			<select name='slct-mdl-tipos' class='form-control'>
+				<option value="1">Primer elemento</option>
+				<option value="2">Primer elemento</option>
+				<option value="3">Primer elemento</option>
+				<option value="4">Primer elemento</option>
+			</select>
+		</div>
+		<div class='form-group'>
+			<label>Comentario</label>
+			<input type='text' class='form-control'/>
+			<textarea name='textarea'/>
+		</div>
+	</form>
+	`;
+}
 
