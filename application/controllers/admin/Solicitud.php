@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Solicitud extends CI_Controller
 {
+	private $usuario_actual;
 	
 	public function __construct()
 
@@ -20,7 +21,9 @@ class Solicitud extends CI_Controller
 		$this->load->helper('mihelper');
 		$this->load->model('Notificacion_model');
 		$this->load->model('EstadoFinanzasSolicitud_model');
+		$this->load->model('FinObservacionesSolicitud_model');
 		$this->estado_finanzasSolicitud=$this->EstadoFinanzasSolicitud_model->all();
+		$this->usuario_actual=$this->nativesession->get('idUsuario');
 	}
     public function index(){
 		
@@ -175,7 +178,7 @@ class Solicitud extends CI_Controller
 		}
 		$result=$this->Solicitud_model->setEstadoFinanzas($solicitudId,$id_estado);
 		if($id_estado==$this->EstadoFinanzasSolicitud_model->OBSERVADO){
-			$result2=$this->FinObservaciones_model->create($solicitudId,$this->usuario_actual,$comentario);
+			$result2=$this->FinObservacionesSolicitud_model->create($solicitudId,$this->usuario_actual,$comentario);
 		}
 		if($result){
 			$result=array(

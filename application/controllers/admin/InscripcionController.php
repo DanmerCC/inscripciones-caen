@@ -8,6 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class InscripcionController extends CI_Controller {
 
 	private $estado_finazas;
+	private $usuario_actual;
 
 	public function __construct()
 	{
@@ -20,6 +21,8 @@ class InscripcionController extends CI_Controller {
 		$this->load->library('opciones');
 		$this->load->model('EstadoFinanzas_model');
 		$this->estado_finanzas=$this->EstadoFinanzas_model->all();
+		$this->load->model('FinObservaciones_model');
+		$this->usuario_actual=$this->nativesession->get('idUsuario');
 		
 	}
 
@@ -39,6 +42,7 @@ class InscripcionController extends CI_Controller {
 			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
 			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
 			$data['estados_finanzas']=$this->estado_finanzas;
+			$data["modal_details_finance"]=$this->load->view('modals/detalles_finanzas','',TRUE);
 			$this->load->view('dashboard_inscritos',$data);
 		}else
 		{
@@ -186,7 +190,18 @@ class InscripcionController extends CI_Controller {
 				"5" => $value["email"],
 				"6" => (isset($value["celular"])?$value["celular"]:" ")." - ".(isset($value["telefono_casa"])?$value["telefono_casa"]:" "),
 				"7" => $value["created"],
-				"8" => $can_edit_finanzas?$this->HTML_drop_down($value["id_inscripcion"],$value["estado_finanzas"]):$this->HTML_btn_default($value["estado_finanzas"]),
+				"8" => "<div class='input-group-btn'>".
+							($can_edit_finanzas?
+											
+												$this->HTML_drop_down(
+													$value["id_inscripcion"],
+													$value["estado_finanzas"],
+													$value["estado_finanzas_id"]
+												):
+												$this->HTML_btn_default($value["estado_finanzas"])
+							).
+							$this->HTML_details_icon($value["id_inscripcion"],$value["estado_finanzas_id"]).
+						"</div>",
 				"9" => $is_anulated?"<span class='label label-success'>Cargado</span>":"<span class='label label-danger'>Anulado</span>"
 			);
 		}
@@ -306,10 +321,15 @@ class InscripcionController extends CI_Controller {
 	public function changeEstadoFinanzas(){
 		$id_inscripcion=$this->input->post('id');
 		$id_estado=$this->input->post('estado_id');
+		$comentario=$this->input->post('comentario');
+		
 		if(empty($id_inscripcion)||(empty($id_estado))){
 			return show_error('Solicitud erronea faltan datos');
 		}
 		$result=$this->Inscripcion_model->setEstadoFinanzas($id_inscripcion,$id_estado);
+		if($id_estado==$this->EstadoFinanzas_model->OBSERVADO){
+			$result2=$this->FinObservaciones_model->create($id_inscripcion,$this->usuario_actual,$comentario);
+		}
 		if($result){
 			$result=array(
 				"content"=>"OK",
@@ -320,25 +340,169 @@ class InscripcionController extends CI_Controller {
 		}
 	}
 
-	private function HTML_drop_down($id,$text){
+	private function HTML_drop_down($id,$text,$estado_finanzas_id=null,$other_html_elelemt=''){
 		$list="";
+		$is_obserbated=false;
+		if($estado_finanzas_id!=null){
+			$is_obserbated=($this->EstadoFinanzas_model->OBSERVADO!=$estado_finanzas_id);
+		}
+		$disabled_html=$is_obserbated?' disabled '."onclick='' ":" onclick='load_details_state_finanzas(".$id.")' ";
+		$details_icon="<a class='btn btn-social-icon btn-instagram' $disabled_html ><i class='fa fa-fw fa-info-circle'></i></a>";
 		
 		for ($i=0; $i < count($this->estado_finanzas); $i++) {
 			$nombre=$this->estado_finanzas[$i]['nombre'];
 			$id_estado=$this->estado_finanzas[$i]['id'];
 			$list=$list."<li onclick='ins.change_estado($id,$id_estado,".'"'.$nombre.'"'.")'><a href='#'>$nombre</a></li>";
 		}
-		return "<div class='input-group-btn'>
+		return "
                   <button type='button' class='btn btn btn-default dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>$text
                     <span class='fa fa-caret-down'></span></button>
                   <ul class='dropdown-menu'>
                     $list
-                  </ul>
-                </div>";
+				  </ul>".
+				 ($other_html_elelemt). 
+                "";
+	}
+
+	private function HTML_details_icon($id_inscripcion,$estado_finanzas_id=null){
+		$is_obserbated=false;
+		if($estado_finanzas_id!=null){
+			$is_obserbated=($this->EstadoFinanzas_model->OBSERVADO!=$estado_finanzas_id);
+		}
+		$disabled_html=$is_obserbated?' disabled '."onclick='' ":" onclick='load_details_state_finanzas(".$id_inscripcion.")' ";
+		$details_icon="<a class='btn btn-social-icon btn-instagram' $disabled_html ><i class='fa fa-fw fa-info-circle'></i></a>";
+		return $details_icon;
 	}
 
 	private function HTML_btn_default($text){
-		return "<button type='button' class='btn btn-default'>$text</button>";
+		return "<button type='button' style='cursor: default;' class='btn btn-default'>$text</button>";
+	}
+
+	private function estado_archivos_by_solicitud($solicitud_id){
+		$solicitud=$this->Solicitud_model->getAllColumnsById($solicitud_id);
+		$data=[];
+
+		$data["solicitudFiles"]=[
+			[
+				"name"=>"Solicitud de Admision",
+				"identifier"=>"solad",
+				"statechecked"=>(boolean)$solicitud["check_sol_ad"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/sol-ad/".$solicitud["idSolicitud"].".pdf"),
+				"fileName"=>$solicitud["idSolicitud"]
+            ],
+            [
+				"name"=>"Proyecto de Investigacion",
+				"identifier"=>"pinvs",
+				"statechecked"=>(boolean)$solicitud["check_proyect_invest"],
+                "stateUpload"=>file_exists(CC_BASE_PATH."/files/pinvs/".$solicitud["idSolicitud"].".pdf"),
+                "fileName"=>$solicitud["idSolicitud"]
+            ],
+            [
+                "name"=>"Hoja de datos",
+				"identifier"=>"hdatos",
+				"statechecked"=>(boolean)$solicitud["check_hdatos"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/hojadatos/".$solicitud["idSolicitud"].".pdf"),
+				"fileName"=>$solicitud["idSolicitud"]
+			]
+
+		];
+		return $data;
+	}
+
+	private function estado_archivos_by_alumno($alumno_id){
+		$this->load->model('Alumno_model');
+		$alumno=$this->Alumno_model->findById($alumno_id)[0];
+		$data=[];
+		$data=$alumno;
+		$data["documentosObject"]=[
+			[
+				"name"=>"curriculum",
+				"identifier"=>"cv",
+				"statechecked"=>(boolean)$alumno["check_cv_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/cvs/".$alumno["documento"].".pdf"),
+				"fileName"=>$alumno['documento']
+			],
+			[
+				"name"=>"declaracion jurada",
+				"identifier"=>"dj",
+				"statechecked"=>(boolean)$alumno["check_dj_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/djs/".$alumno["documento"].".pdf"),
+				"fileName"=>$alumno['documento']
+			],
+			[
+				"name"=>"dni",
+				"identifier"=>"dni",
+				"statechecked"=>(boolean)$alumno["check_dni_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf"),
+				"fileName"=>$alumno['documento']
+			],
+			[
+				"name"=>"bachiller",
+				"identifier"=>"bach",
+				"statechecked"=>(boolean)$alumno["check_bach_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/bachiller/".$alumno["documento"].".pdf"),
+				"fileName"=>$alumno['documento']
+			],
+			[
+				"name"=>"maestria",
+				"identifier"=>"maes",
+				"statechecked"=>(boolean)$alumno["check_maes_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/maestria/".$alumno["documento"].".pdf"),
+				"fileName"=>$alumno['documento']
+			],
+			[
+				"name"=>"Doctorado",
+				"identifier"=>"doct",
+				"statechecked"=>(boolean)$alumno["check_doct_pdf"],
+				"stateUpload"=>file_exists(CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf"),
+				"fileName"=>$alumno['documento']
+			]
+
+		];
+
+
+		$imagen;
+			if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".jpg")){
+				$imagen="data:image/jpg;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".jpg"));
+
+			}else if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".png")){
+				$imagen="data:image/png;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".png"));
+
+			}else if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".gif")){
+				$imagen="data:image/gif;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".gif"));
+				
+			}else{
+				$imagen="/dist/img/avatar5.png";
+			}
+		$data["fotoData"]=$imagen;
+		
+		return $data;
+	}
+
+
+	public function get_estado_archivos($id){
+		$solicitud=$this->estado_archivos_by_solicitud($id);
+		$estado_archivos_solicitud=$this->estado_archivos_by_solicitud($solicitud['idSolicitud']);
+		header("Content-type:application/json");
+		echo json_encode([
+			"content"=>[],
+			"status"=>"OK",
+			"result"=>($estado_archivos_solicitud)
+				
+		],JSON_UNESCAPED_UNICODE);
+	}
+
+	public function get_estado_archivos_solicitud_include_person_files($id){
+		$solicitud=$this->Solicitud_model->getOrFail($id);
+		$estado_archivos_solicitud=$this->estado_archivos_by_solicitud($solicitud['idSolicitud']);
+		$estado_archivos_persona=$this->estado_archivos_by_alumno($solicitud['alumno']);
+		header("Content-type:application/json");
+		echo json_encode([
+			"content"=>[],
+			"status"=>"OK",
+			"result"=>($estado_archivos_solicitud)
+				
+		],JSON_UNESCAPED_UNICODE);
 	}
 
 }

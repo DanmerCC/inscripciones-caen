@@ -453,7 +453,7 @@ function callBackchangeEstado(id,estado_id,nombre){
 			if(result){
 				$.ajax({
 					type: "post",
-					url: "/admin/inscripcion/changestatefinan",
+					url: "/administracion/solicitud/changestatefinan",
 					data: {
 						"id":id,
 						"estado_id":estado_id
@@ -478,4 +478,44 @@ function callBackchangeEstado(id,estado_id,nombre){
 }
 function inscription_call_back(result){
 
+}
+var MDL_DETALLE_FINANZAS={
+	open:open_function,
+	clean:limpiar_function
+}
+function open_function(id_inscripcion,successCallBack){
+	$.ajax({
+		type: "get",
+		url: "/admin/finobservacion/solicitud/"+id_inscripcion,
+		data: "",
+		dataType: "json",
+		success: function (response) {
+			limpiar_function()
+			if(typeof response.comentario !='undefined'){
+				$("#mdl_body_details_finance").html(make_html_comentario(response.comentario))
+			}
+				
+			if( typeof successCallBack !='undefined'){
+				successCallBack()
+			}
+			$("#mdl_details_finance").modal('show')
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(xhr.status);
+			alert(thrownError);
+		}
+	});
+}
+
+function limpiar_function(){
+	$("#mdl_body_details_finance").html("");
+}
+
+function make_html_comentario(comentario){
+	return `<a class="btn btn-block btn-social btn-vk">
+					<i class="fa fa-commenting"></i> ${comentario}
+				</a>`;
+}
+function load_details_state_finanzas_solicitud(id){
+	MDL_DETALLE_FINANZAS.open(id)
 }

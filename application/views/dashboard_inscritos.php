@@ -106,7 +106,8 @@
                 <th>Programa</th>
                 <th>Documento</th>
                 <th>Correo</th>
-                <th>Telefonos</th>
+								<th>Telefonos</th>
+								<th>Fecha de Registro</th>
                 <th>Finanzas</th>
                 <th>Estado</th>
               </tfoot>
@@ -200,7 +201,11 @@
   <div class="control-sidebar-bg"></div>
 
   <div id="contentModals"></div>
-  <!-- /.modal -->
+	<!-- /.modal -->
+	
+	<?php
+		$this->load->view('modals/detalles_finanzas');
+	?>
 <!-- 
   </div>
 </div> -->

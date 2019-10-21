@@ -180,6 +180,8 @@ $route['admin/read'] = 'admin/NotificationController/read';
 
 
 $route['admin/inscripcion/changestatefinan']='admin/InscripcionController/changeEstadoFinanzas';
+$route['admin/finobservacion/inscripcion/(:num)']='admin/FinanzasObservacionController/get_by_inscripcion_id/$1';
+$route['admin/finobservacion/solicitud/(:num)']='admin/FinanzasObservacionController/get_by_solicitud_id/$1';
 
 //**Models with inscription */
 $route['admin/inscr/create'] = 'admin/InscripcionController/create';
@@ -197,7 +199,8 @@ $route['int/solicitud/(:num)'] = 'intranetCaen/Solicitud/pdf/$1';
 ///CASEDE
 $route['casede/datatable/listar'] = 'CasedeController/listarComoDatatable';
 $route['administracion/vista/casede'] = 'CasedeController';
-
+$route['casede/marcaAsistenciaq'] = 'CasedeController/marcarAsistenciaQ';
+$route['casede/marcaAsistenciad'] = 'CasedeController/marcarAsistenciaD';
 $route['certifica']='CertificadoController/verificar';
 
 
@@ -271,3 +274,5 @@ $route['admin/uploading'] = 'admin/FilesController/recive_file';
 
 
 $route['use/inscripcion'] = 'InfoForUseController/index';
+
+$route['solicitud/files_state/(:num)'] = 'admin/InscripcionController/get_estado_archivos_solicitud_include_person_files/$1';
