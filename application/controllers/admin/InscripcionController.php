@@ -332,8 +332,8 @@ class InscripcionController extends CI_Controller {
 		if($id_estado==$this->EstadoFinanzas_model->OBSERVADO){
 			$result2=$this->FinObservaciones_model->create($id_inscripcion,$this->usuario_actual,$comentario);
 		}
-		$last_query1=$this->db->last_query();
-		//	function create($usuario_id,$inscripcion_id,$tipo_id,$comentario=''){
+		
+		$result_autorizacion=false;
 		if($id_estado==$this->EstadoFinanzas_model->AUTORIZADO){
 			$tipo=$this->input->post('tipo_id');
 			$result_autorizacion=$this->FinanzasAuthorization_model->create($this->usuario_actual,$id_inscripcion,$tipo,$comentario);

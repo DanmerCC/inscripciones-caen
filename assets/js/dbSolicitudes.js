@@ -397,10 +397,10 @@ function callBackchangeEstado(id,estado_id,nombre){
 	if(estado_id==3){
 			bootbox.prompt({
 			title:"Observacion",
-			message: "Esta seguro de querer cambiar de estado a <strong>"+nombre+"</strong>?",
+			message: "Ingrese la observacion?",
 			buttons: {
 				confirm: {
-					label: 'Si',
+					label: 'Guardar',
 					className: 'btn-success'
 				},
 				cancel: {

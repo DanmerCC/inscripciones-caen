@@ -117,7 +117,7 @@ function callBackchangeEstado(id,estado_id,nombre){
 			message: "Esta seguro de querer cambiar de estado a <strong>"+nombre+"</strong>?",
 			buttons: {
 				confirm: {
-					label: 'Si',
+					label: 'Guardar',
 					className: 'btn-success'
 				},
 				cancel: {

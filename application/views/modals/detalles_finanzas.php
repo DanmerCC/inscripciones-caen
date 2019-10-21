@@ -42,8 +42,8 @@ function open_function(id_inscripcion,successCallBack){
 			if(inscripcion.estado_finanzas_id==MDL_DETALLE_FINANZAS_AUTORIZADO){
 				new_content_html=new_content_html+make_html_infobox('Aprobado por Finanzas:'+autorizacion.autor.correo,autorizacion.tipo.nombre,autorizacion.comentario)
 			}else{
-				if(typeof response.comentario !='undefined'){
-					new_content_html=new_content_html+make_html_comentario(inscripcion.comentario)
+				if(typeof observacion !='undefined'){
+					new_content_html=new_content_html+make_html_comentario(observacion.comentario)
 				}
 			}
 			
