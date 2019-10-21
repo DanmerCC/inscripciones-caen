@@ -200,7 +200,7 @@ class InscripcionController extends CI_Controller {
 													$value["estado_finanzas"],
 													$value["estado_finanzas_id"]
 												):
-												$this->HTML_btn_default($value["estado_finanzas"])
+												$this->HTML_btn_default($value["estado_finanzas"],$value["estado_finanzas_id"])
 							).
 							$this->HTML_details_icon($value["id_inscripcion"],$value["estado_finanzas_id"]).
 						"</div>",
@@ -359,12 +359,18 @@ class InscripcionController extends CI_Controller {
 		$details_icon="<a class='btn btn-social-icon btn-instagram' $disabled_html ><i class='fa fa-fw fa-info-circle'></i></a>";
 		
 		for ($i=0; $i < count($this->estado_finanzas); $i++) {
+			$isgreen=$this->estado_finanzas[$i]['id']==$this->EstadoFinanzas_model->AUTORIZADO;
+			$if_is_green_class=$isgreen?' text-green ':'';
 			$nombre=$this->estado_finanzas[$i]['nombre'];
 			$id_estado=$this->estado_finanzas[$i]['id'];
-			$list=$list."<li onclick='ins.change_estado($id,$id_estado,".'"'.$nombre.'"'.")'><a href='#'>$nombre</a></li>";
+			$list=$list."<li  onclick='ins.change_estado($id,$id_estado,".'"'.$nombre.'"'.")'><a class='$if_is_green_class' href='#'>$nombre</a></li>";
 		}
+
+		$btn_is_green=$estado_finanzas_id==$this->EstadoFinanzas_model->AUTORIZADO;
+		$if_validate_class=$btn_is_green?' text-green ':'';
 		return "
-                  <button type='button' class='btn btn btn-default dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>$text
+				  <button type='button' class='btn btn btn-default dropdown-toggle $if_validate_class' data-toggle='dropdown' aria-expanded='false'>
+				  $text
                     <span class='fa fa-caret-down'></span></button>
                   <ul class='dropdown-menu'>
                     $list
@@ -383,8 +389,15 @@ class InscripcionController extends CI_Controller {
 		return $details_icon;
 	}
 
-	private function HTML_btn_default($text){
-		return "<button type='button' style='cursor: default;' class='btn btn-default'>$text</button>";
+	private function HTML_btn_default($text,$estado_id){
+		$if_is_green_class='';
+		if($estado_id!=null){
+			if($estado_id==$this->EstadoFinanzas_model->AUTORIZADO){
+				$if_is_green_class=' text-green ';
+			}
+		}
+		
+		return "<button type='button' style='cursor: default;' class='btn btn-default $if_is_green_class'>$text</button>";
 	}
 
 	private function estado_archivos_by_solicitud($solicitud_id){

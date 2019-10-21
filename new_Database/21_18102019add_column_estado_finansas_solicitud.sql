@@ -29,4 +29,6 @@ ALTER TABLE `fin_observaciones_solicitud` ADD INDEX(`solicitud_id`);
 ALTER TABLE `fin_observaciones_solicitud`
   ADD CONSTRAINT `fk_fin_observaciones_solicitud_usuario_id` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `fk_fin_observaciones_solicitud_id` FOREIGN KEY (`solicitud_id`) REFERENCES `solicitud` (`idSolicitud`);
-  
+
+
+INSERT INTO `auth_permisos` (`id`, `nombre`) VALUES (2, 'change_solicitud_estado_finanzas');

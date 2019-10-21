@@ -136,7 +136,7 @@ class Solicitud extends CI_Controller
 								$rspta[$i]["estado_finanzas"],
 								$rspta[$i]["estado_finanzas_id"]
 							):
-							$this->HTML_btn_default($rspta[$i]["estado_finanzas"])
+							$this->HTML_btn_default($rspta[$i]["estado_finanzas"],$rspta[$i]["estado_finanzas_id"])
 						).$this->HTML_details_icon($rspta[$i]["idSolicitud"],$rspta[$i]["estado_finanzas_id"])."</div>",
 
                 "9" => (($rspta[$i]["marcaPago"]=='0')?' <button class="btn btn-alert"   title="click para marcar como verificado" onclick="marcarPago('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-thumb-tack" aria-hidden="true"></i></button>':
@@ -164,8 +164,11 @@ class Solicitud extends CI_Controller
 		return $details_icon;
 	}
 
-	private function HTML_btn_default($text){
-		return "<button type='button' style='cursor: default;' class='btn btn-default'>$text</button>";
+	private function HTML_btn_default($text,$estado_finanzas_id){
+		$is_validated=$this->EstadoFinanzasSolicitud_model->VALIDADO==$estado_finanzas_id;
+		$class_if_is_validated=$is_validated?' text-green':'';
+
+		return "<button type='button' style='cursor: default;' class='btn btn-default $class_if_is_validated'>$text</button>";
 	}
 
 	public function changeEstadoFinanzas(){
@@ -200,12 +203,16 @@ class Solicitud extends CI_Controller
 		$details_icon="<a class='btn btn-social-icon btn-instagram' $disabled_html ><i class='fa fa-fw fa-info-circle'></i></a>";
 		
 		for ($i=0; $i < count($this->estado_finanzasSolicitud); $i++) {
+			$is_green=$this->EstadoFinanzasSolicitud_model->VALIDADO==$this->estado_finanzasSolicitud[$i]['id'];
+			$class_if_is_validado=$is_green?' text-green ':'';
 			$nombre=$this->estado_finanzasSolicitud[$i]['nombre'];
 			$id_estado=$this->estado_finanzasSolicitud[$i]['id'];
-			$list=$list."<li onclick='sol.change_estado($id,$id_estado,".'"'.$nombre.'"'.")'><a href='#'>$nombre</a></li>";
+			$list=$list."<li onclick='sol.change_estado($id,$id_estado,".'"'.$nombre.'"'.")'><a class='$class_if_is_validado' href='#'>$nombre</a></li>";
 		}
+		$btn_is_green=$estado_finanzas_id==$this->EstadoFinanzasSolicitud_model->VALIDADO;
+		$if_validate_class=$btn_is_green?' text-green ':'';
 		return "
-                  <button type='button' class='btn btn btn-default dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>$text
+                  <button type='button' class='$if_validate_class btn btn btn-default dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>$text
                     <span class='fa fa-caret-down'></span></button>
                   <ul class='dropdown-menu'>
                     $list
