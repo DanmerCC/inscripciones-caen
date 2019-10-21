@@ -428,4 +428,16 @@ class Solicitud_model extends CI_Model
 		$this->db->update($this->tbl_solicitud,$data);
 		return $this->db->affected_rows()==1;
 	}
+	/**
+	 * @var integer id
+	 * @var integer estado_id
+	 */
+	public function setEstadoFinanzas($id,$estado_id){
+		$data=array(
+			$this->estado_finanzas_id=>$estado_id
+		);
+		$this->db->where($this->id, $id);
+		$this->db->update($this->table,$data);
+		return ($this->db->affected_rows()==1);
+	}
 }

@@ -170,11 +170,11 @@ class Solicitud extends CI_Controller
 		$id_estado=$this->input->post('estado_id');
 		$comentario=$this->input->post('comentario');
 		
-		if(empty($id_inscripcion)||(empty($id_estado))){
+		if(empty($solicitudId)||(empty($id_estado))){
 			return show_error('Solicitud erronea faltan datos');
 		}
-		$result=$this->Inscripcion_model->setEstadoFinanzas($solicitudId,$id_estado);
-		if($id_estado==$this->EstadoFinanzasSolicitud_model-->OBSERVADO){
+		$result=$this->Solicitud_model->setEstadoFinanzas($solicitudId,$id_estado);
+		if($id_estado==$this->EstadoFinanzasSolicitud_model->OBSERVADO){
 			$result2=$this->FinObservaciones_model->create($solicitudId,$this->usuario_actual,$comentario);
 		}
 		if($result){
