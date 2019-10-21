@@ -168,9 +168,11 @@ $route['administracion/vista/programascalendar'] = 'admin/Programa/viewCalendar'
 $route['administracion/vista/beneficios'] = 'admin/Beneficio';
 $route['administracion/vista/alumnos'] = 'admin/Alumno';
 $route['administracion/vista/solicitudes'] = 'admin/Solicitud';
+$route['administracion/solicitud/changestatefinan']='admin/Solicitud/changeEstadoFinanzas';
 $route['administracion/vista/informes'] = 'admin/InformeController';
 $route['administracion/vista/reportes'] = 'admin/ReportesController';
 $route['administracion/vista/inscripciones'] ='admin/InscripcionController/index';
+$route['administracion/vista/dowloadFilter'] ='admin/InscripcionController/dowloadFilter';
 
 $route['admin/parts/nuevoprograma'] = 'admin/Programa/newPrograma';
 $route['admin/notifications'] = 'admin/NotificationController/index';
@@ -181,6 +183,7 @@ $route['admin/inscripcion/changestatefinan']='admin/InscripcionController/change
 $route['admin/finobservacion/inscripcion/(:num)']='admin/FinanzasObservacionController/get_by_inscripcion_id/$1';
 $route['admin/details/inscripcion/(:num)']='admin/InscripcionController/get_details/$1';
 $route['admin/tipoAutorizaciones']='admin/FinanzasTipoAutorizacionController/all';
+$route['admin/finobservacion/solicitud/(:num)']='admin/FinanzasObservacionController/get_by_solicitud_id/$1';
 
 //**Models with inscription */
 $route['admin/inscr/create'] = 'admin/InscripcionController/create';

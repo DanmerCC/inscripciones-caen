@@ -3,6 +3,8 @@ use SebastianBergmann\GlobalState\Exception;
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
+
 class InscripcionController extends CI_Controller {
 
 	private $estado_finazas;
@@ -48,6 +50,45 @@ class InscripcionController extends CI_Controller {
 		{
 			redirect('administracion/login');
 		}
+	}
+
+	public function dowloadFilter()
+	{
+		$this->load->helper('Report');
+		
+		$value=$this->input->get("search");
+		$deletes=(boolean)($this->input->get('anulado')==='true');
+		$column_nine=$this->input->get('estados');
+		$estados=($column_nine=="")?[]:explode(',',$column_nine);
+		$this->load->model('Auth_Permisions');
+
+		$this->Inscripcion_model->global_stado_finanzas=$estados;
+
+		if(strlen($value)>0){
+			$rspta = $this->Inscripcion_model->get_all_to_export_and_filter($value,$deletes);
+		}else{
+			$rspta = $this->Inscripcion_model->get_all_to_export($deletes);
+		}
+		$cuerpo = array();
+		foreach ($rspta as $key => $item) {
+			$cuerpo[] = array(
+				($key+1),
+				$item['nombres'],
+				$item['apellido_paterno']." ".$item['apellido_materno'],
+				$item['documento'],
+				$item['email'],
+				$item['celular']."-".$item['telefono_casa'],
+				$item['nombre_user'],
+				$item['numeracion']." ".$item['tipo_curso']." ".$item['nombre_curso'],
+				$item['grado_profesion'],
+				$item['estado_civil'],
+				$item['created'],
+			);
+		}
+		$headers = ["N°","NOMBRES","APELLIDOS","DOCUMENTO","CORREO","TELEFONOS","USUARIO","PROGRAMAS","GRADO PROFESION","ESTADO CIVIL","FECHA DE REGISTRO"];
+
+		process_and_export_excel($headers,$cuerpo);
+		
 	}
 
 	public function create(){

@@ -389,7 +389,133 @@ function request_bootbox(id){
 	});
 }
 
+var sol={
+	//"cancel":cancelarById,
+	"change_estado":callBackchangeEstado
+};
+function callBackchangeEstado(id,estado_id,nombre){
+	if(estado_id==3){
+			bootbox.prompt({
+			title:"Observacion",
+			message: "Esta seguro de querer cambiar de estado a <strong>"+nombre+"</strong>?",
+			buttons: {
+				confirm: {
+					label: 'Si',
+					className: 'btn-success'
+				},
+				cancel: {
+					label: 'Cancelar',
+					className: 'btn-danger'
+				}
+			},
+			callback: function (result) {
+				
+				if(result!=null){
+					$.ajax({
+						type: "post",
+						url: "/administracion/solicitud/changestatefinan",
+						data: {
+							"id":id,
+							"estado_id":estado_id,
+							"comentario":result
+						},
+						dataType: "json",
+						success: function (response) {
+							console.log(response);
+							if(response.content=="OK"){
+								alert("Cambio correcto correctamente");
+								tabla.ajax.reload(null,false);
+							}
+						},
+						error: function (e) {
+							console.log(e.responseText);
+						}
+					});
+				}
+			}
+		});
+	}
 
+	if(estado_id!=3){
+		bootbox.confirm({
+		message: "Esta seguro de querer cambiar de estado a <strong>"+nombre+"</strong>?",
+		buttons: {
+			confirm: {
+				label: 'Si',
+				className: 'btn-success'
+			},
+			cancel: {
+				label: 'Cancelar',
+				className: 'btn-danger'
+			}
+		},
+		callback: function (result) {
+			if(result){
+				$.ajax({
+					type: "post",
+					url: "/administracion/solicitud/changestatefinan",
+					data: {
+						"id":id,
+						"estado_id":estado_id
+					},
+					dataType: "json",
+					success: function (response) {
+						console.log(response);
+						if(response.content=="OK"){
+							alert("Cambio correcto correctamente");
+							tabla.ajax.reload(null,false);
+						}
+					},
+					error: function (e) {
+						console.log(e.responseText);
+					}
+				});
+			}
+		}
+	});
+}
+	
+}
 function inscription_call_back(result){
 
+}
+var MDL_DETALLE_FINANZAS={
+	open:open_function,
+	clean:limpiar_function
+}
+function open_function(id_inscripcion,successCallBack){
+	$.ajax({
+		type: "get",
+		url: "/admin/finobservacion/solicitud/"+id_inscripcion,
+		data: "",
+		dataType: "json",
+		success: function (response) {
+			limpiar_function()
+			if(typeof response.comentario !='undefined'){
+				$("#mdl_body_details_finance").html(make_html_comentario(response.comentario))
+			}
+				
+			if( typeof successCallBack !='undefined'){
+				successCallBack()
+			}
+			$("#mdl_details_finance").modal('show')
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(xhr.status);
+			alert(thrownError);
+		}
+	});
+}
+
+function limpiar_function(){
+	$("#mdl_body_details_finance").html("");
+}
+
+function make_html_comentario(comentario){
+	return `<a class="btn btn-block btn-social btn-vk">
+					<i class="fa fa-commenting"></i> ${comentario}
+				</a>`;
+}
+function load_details_state_finanzas_solicitud(id){
+	MDL_DETALLE_FINANZAS.open(id)
 }
