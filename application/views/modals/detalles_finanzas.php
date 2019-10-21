@@ -19,6 +19,8 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script>
+var MDL_DETALLE_FINANZAS_AUTORIZADO=<?=$this->EstadoFinanzas_model->AUTORIZADO; ?>
+
 var MDL_DETALLE_FINANZAS={
 	open:open_function,
 	clean:limpiar_function
@@ -27,18 +29,29 @@ var MDL_DETALLE_FINANZAS={
 function open_function(id_inscripcion,successCallBack){
 	$.ajax({
 		type: "get",
-		url: "/admin/finobservacion/inscripcion/"+id_inscripcion,
+		url: "/admin/details/inscripcion/"+id_inscripcion,
 		data: "",
 		dataType: "json",
 		success: function (response) {
+			let inscripcion=response;
+			let observacion=response.ultima_observacion
+			let autorizacion=response.ultima_autorizacion
+
 			limpiar_function()
-			if(typeof response.comentario !='undefined'){
-				$("#mdl_body_details_finance").html(make_html_comentario(response.comentario))
+			var new_content_html="";
+			if(inscripcion.estado_finanzas_id==MDL_DETALLE_FINANZAS_AUTORIZADO){
+				new_content_html=new_content_html+make_html_infobox('Aprobado por Finanzas:'+autorizacion.autor.correo,autorizacion.tipo.nombre,autorizacion.comentario)
+			}else{
+				if(typeof response.comentario !='undefined'){
+					new_content_html=new_content_html+make_html_comentario(inscripcion.comentario)
+				}
 			}
+			
 				
 			if( typeof successCallBack !='undefined'){
 				successCallBack()
 			}
+			$("#mdl_body_details_finance").html(new_content_html)
 			$("#mdl_details_finance").modal('show')
 		},
 		error: function (xhr, ajaxOptions, thrownError) {
@@ -56,5 +69,25 @@ function make_html_comentario(comentario){
 	return `<a class="btn btn-block btn-social btn-vk">
 					<i class="fa fa-commenting"></i> ${comentario}
 				</a>`;
+}
+
+function make_html_infobox(title,subtitle,description){
+	return `<div class="info-box bg-green">
+		<span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
+
+		<div class="info-box-content">
+			<span class="info-box-text">${title}</span>
+			<span class="info-box-number">${subtitle}</span>
+
+			<div class="progress">
+			<div class="progress-bar" style="width: 100%"></div>
+			</div>
+				<span class="progress-description">
+				${description}
+				</span>
+		</div>
+		<!-- /.info-box-content -->
+	</div>
+	`
 }
 </script>

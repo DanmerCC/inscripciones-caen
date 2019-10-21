@@ -179,6 +179,8 @@ $route['admin/read'] = 'admin/NotificationController/read';
 
 $route['admin/inscripcion/changestatefinan']='admin/InscripcionController/changeEstadoFinanzas';
 $route['admin/finobservacion/inscripcion/(:num)']='admin/FinanzasObservacionController/get_by_inscripcion_id/$1';
+$route['admin/details/inscripcion/(:num)']='admin/InscripcionController/get_details/$1';
+$route['admin/tipoAutorizaciones']='admin/FinanzasTipoAutorizacionController/all';
 
 //**Models with inscription */
 $route['admin/inscr/create'] = 'admin/InscripcionController/create';

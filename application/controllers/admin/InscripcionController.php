@@ -20,6 +20,9 @@ class InscripcionController extends CI_Controller {
 		$this->load->model('EstadoFinanzas_model');
 		$this->estado_finanzas=$this->EstadoFinanzas_model->all();
 		$this->load->model('FinObservaciones_model');
+		$this->load->model('FinanzasAuthorization_model');
+		$this->load->model('FinanzasTipoAuthorization_model');
+		$this->load->model('User_model');
 		$this->usuario_actual=$this->nativesession->get('idUsuario');
 		
 	}
@@ -40,7 +43,6 @@ class InscripcionController extends CI_Controller {
 			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
 			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
 			$data['estados_finanzas']=$this->estado_finanzas;
-			$data["modal_details_finance"]=$this->load->view('modals/detalles_finanzas','',TRUE);
 			$this->load->view('dashboard_inscritos',$data);
 		}else
 		{
@@ -289,7 +291,14 @@ class InscripcionController extends CI_Controller {
 		if($id_estado==$this->EstadoFinanzas_model->OBSERVADO){
 			$result2=$this->FinObservaciones_model->create($id_inscripcion,$this->usuario_actual,$comentario);
 		}
-		if($result){
+		$last_query1=$this->db->last_query();
+		//	function create($usuario_id,$inscripcion_id,$tipo_id,$comentario=''){
+		if($id_estado==$this->EstadoFinanzas_model->AUTORIZADO){
+			$tipo=$this->input->post('tipo_id');
+			$result_autorizacion=$this->FinanzasAuthorization_model->create($this->usuario_actual,$id_inscripcion,$tipo,$comentario);
+		}
+
+		if($result || $result_autorizacion){
 			$result=array(
 				"content"=>"OK",
 			);
@@ -324,11 +333,11 @@ class InscripcionController extends CI_Controller {
 	}
 
 	private function HTML_details_icon($id_inscripcion,$estado_finanzas_id=null){
-		$is_obserbated=false;
+		$is_disableted=false;
 		if($estado_finanzas_id!=null){
-			$is_obserbated=($this->EstadoFinanzas_model->OBSERVADO!=$estado_finanzas_id);
+			$is_disableted=!(($this->EstadoFinanzas_model->OBSERVADO==$estado_finanzas_id)||($this->EstadoFinanzas_model->AUTORIZADO==$estado_finanzas_id));
 		}
-		$disabled_html=$is_obserbated?' disabled '."onclick='' ":" onclick='load_details_state_finanzas(".$id_inscripcion.")' ";
+		$disabled_html=$is_disableted?' disabled '."onclick='' ":" onclick='load_details_state_finanzas(".$id_inscripcion.")' ";
 		$details_icon="<a class='btn btn-social-icon btn-instagram' $disabled_html ><i class='fa fa-fw fa-info-circle'></i></a>";
 		return $details_icon;
 	}
@@ -462,6 +471,28 @@ class InscripcionController extends CI_Controller {
 			"result"=>($estado_archivos_solicitud)
 				
 		],JSON_UNESCAPED_UNICODE);
+	}
+
+	public function get_details($id_inscripcion){
+		$inscripcion=$this->Inscripcion_model->find_by_id($id_inscripcion);
+		if($inscripcion!=NULL){
+
+			$ultima_observacion=$this->FinObservaciones_model->ultimo($id_inscripcion);
+			$ultima_autorizacion=$this->FinanzasAuthorization_model->ultimo($id_inscripcion);
+
+			if($ultima_autorizacion!=""){
+				$author=$this->User_model->findOrFail($ultima_autorizacion["author_usuario_id"]);
+				$tipo_autorizacion=$this->FinanzasTipoAuthorization_model->getOrFail($ultima_autorizacion['tipo_id']);
+				$ultima_autorizacion["autor"]=$author;
+				$ultima_autorizacion["tipo"]=$tipo_autorizacion;
+			}
+			$inscripcion["ultima_observacion"]=$ultima_observacion==""?new stdClass:$ultima_observacion;
+			$inscripcion["ultima_autorizacion"]=$ultima_autorizacion==""?new stdClass:$ultima_autorizacion;
+		}
+		/*** */
+		header('Content-Type: application/json');
+		echo json_encode($inscripcion);
+		exit;
 	}
 
 }

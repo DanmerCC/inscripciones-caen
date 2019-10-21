@@ -184,10 +184,38 @@ function callBackchangeEstado(id,estado_id,nombre){
 }
 	
 	if(estado_id==VARS.inscripcion_finanzas.estados.AUTORIZADO){
-		console.log(getFormHtmlAutorizacion())
-		bootbox.confirm(getFormHtmlAutorizacion(), function(result) {
-			if(result)
-				$('#infos').submit();
+		
+		getFormHtmlAutorizacion(htmlResult=>{
+			bootbox.confirm(htmlResult, function(result) {
+				if(result){
+					var object_data={
+						tipo_id:$('#frm-bootbox-autorization #txtarea-mdl-tipos').val(),
+						comentario:$('#frm-bootbox-autorization #slct-mdl-tipos').val(),
+					}
+					console.log(object_data)
+					$.ajax({
+						type: "post",
+						url: "/admin/inscripcion/changestatefinan",
+						data: {
+							"id":id,
+							"estado_id":estado_id,
+							tipo_id:$('#frm-bootbox-autorization #slct-mdl-tipos').val(),
+							comentario:$('#frm-bootbox-autorization #txtarea-mdl-tipos').val()
+						},
+						dataType: "json",
+						success: function (response) {
+							if(response.content=="OK"){
+								alert("Cambio correcto correctamente");
+								tabla.ajax.reload(null,false);
+							}
+						},
+						error: function (e) {
+							console.log(e.responseText);
+						}
+					});
+				}
+		})
+
 	});
 
 	/*
@@ -371,24 +399,39 @@ function load_details_state_finanzas(id){
 }
 
 
-function getFormHtmlAutorizacion(){
-	return `
-	<form>
-		<div class='form-group'>
-			<label>Tipo</label>
-			<select name='slct-mdl-tipos' class='form-control'>
-				<option value="1">Primer elemento</option>
-				<option value="2">Primer elemento</option>
-				<option value="3">Primer elemento</option>
-				<option value="4">Primer elemento</option>
-			</select>
-		</div>
-		<div class='form-group'>
-			<label>Comentario</label>
-			<input type='text' class='form-control'/>
-			<textarea name='textarea'/>
-		</div>
-	</form>
-	`;
+function getFormHtmlAutorizacion(successHtmlMakeCallBack){
+	let tipos;
+	getTiposAuthorizaciones(function(data){
+		 tipos=data;
+		 var htmlTipos="";
+		tipos.forEach(x=>{
+			htmlTipos=htmlTipos+`<option value="${x.id}">${x.nombre}</option>`;	
+		})
+		successHtmlMakeCallBack( `
+				<form id='frm-bootbox-autorization'>
+					<div class='form-group'>
+						<label>Tipo</label>
+						<select name='slct-mdl-tipos' class='form-control' id="slct-mdl-tipos">
+							${htmlTipos}
+						</select>
+					</div>
+					<div class='form-group'>
+						<label>Comentario</label>
+						<textarea id='txtarea-mdl-tipos' rows="4" style="margin: 0px; width: 570px; height: 126px;" cols="60" name='textarea'/>
+					</div>
+				</form>
+				`);
+	})
+	
+	
 }
 
+function getTiposAuthorizaciones(successCallBakc){
+	$.ajax({
+		type: "get",
+		url: "/admin/tipoAutorizaciones",
+		data: "",
+		dataType: "json",
+		success: successCallBakc
+	});
+}

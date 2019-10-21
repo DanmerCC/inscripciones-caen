@@ -30,7 +30,8 @@ class Inscripcion_model extends CI_Model
 		$this->public_columns=[
 			$this->id,
 			$this->solicitud_id,
-			$this->created_user_id
+			$this->created_user_id,
+			$this->estado_finanzas_id
 		];
 		$this->where_filters=array(
 			$this->deleted=>NULL
@@ -88,7 +89,7 @@ class Inscripcion_model extends CI_Model
 				implode(',',$this->public_columns)
 			)
 			->from($this->table)
-			->where($this->conditions)
+			->where($conditions)
 			->get();
 		if($result->num_rows()===1){
 			return  $result->result_array()[0];
