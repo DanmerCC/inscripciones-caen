@@ -23,6 +23,7 @@ class InscripcionController extends CI_Controller {
 		$this->estado_finanzas=$this->EstadoFinanzas_model->all();
 		$this->load->model('FinObservaciones_model');
 		$this->load->model('FinanzasAuthorization_model');
+		$this->load->model('EstadoFinanzasSolicitud_model');
 		$this->load->model('FinanzasTipoAuthorization_model');
 		$this->load->model('User_model');
 		$this->usuario_actual=$this->nativesession->get('idUsuario');
@@ -99,10 +100,15 @@ class InscripcionController extends CI_Controller {
 			die();
 		}
 		if($this->nativesession->get('tipo')!='admin'){
+			
 			show_error("No tiene permisos necesarios");
 			die();
 		}
-		
+		$solicitud=$this->Solicitud_model->getOrFail($idSolicitud);
+		/*
+		if($solicitud["estado_finanzas_id"]==$this->EstadoFinanzasSolicitud_model->VALIDADO){
+			
+		}*/
 		$idUsuario=$this->nativesession->get('idUsuario');
 		$this->db->trans_start();
 		$this->db->trans_strict(FALSE);
