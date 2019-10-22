@@ -11,6 +11,7 @@ class Solicitud_model extends CI_Model
 	private $check_hdatos='check_hdatos';
 	private $state='estado';
 	private $notification_mensaje='notification_mensaje';
+	private $estado_finanzas_id = 'estado_finanzas_id';
 	/**
 	 * var @sent cuando la solicitud ya esta enviada
 	 */
@@ -108,6 +109,7 @@ class Solicitud_model extends CI_Model
 		->join('alumno a','s.alumno=a.id_alumno','left')
 		->join('curso c' , 's.programa=c.id_curso','left')
 		->join('tipo_curso tc' ,'c.idTipo_curso=tc.idTipo_Curso','left')
+		->join('estado_finanzas_solicitud ef','s.estado_finanzas_id = ef.id')
 		->group_start()
 			->where(array(
 				's.'.$this->sent.' IS NULL '=>NULL,
@@ -123,6 +125,7 @@ class Solicitud_model extends CI_Model
 		's.estado estado,s.programa,'.
 		's.alumno as alumno,'.
 		's.tipo_financiamiento,'.
+		's.estado_finanzas_id,'.
 		's.fecha_registro,'.
 		'a.documento,'.
 		'a.nombres,'.
@@ -132,6 +135,7 @@ class Solicitud_model extends CI_Model
 		'c.numeracion curso_numeracion ,'.
 		's.marcaPago ,'.
 		's.comentario ,'.
+		'ef.nombre as estado_finanzas,'.
 		's.notification_mensaje');
 	}
 
@@ -423,5 +427,30 @@ class Solicitud_model extends CI_Model
 		$this->db->where($this->id,$id);
 		$this->db->update($this->tbl_solicitud,$data);
 		return $this->db->affected_rows()==1;
+	}
+	/**
+	 * @var integer id
+	 * @var integer estado_id
+	 */
+	public function setEstadoFinanzas($id,$estado_id){
+		$data=array(
+			$this->estado_finanzas_id=>$estado_id
+		);
+		$this->db->where($this->id, $id);
+		$this->db->update($this->tbl_solicitud,$data);
+		return ($this->db->affected_rows()==1);
+	}
+
+	public function getOrFail($id){
+		$this->db->select()
+		->from($this->tbl_solicitud)
+		->where($this->id,$id);
+		$result=$this->db->get();
+		if($result->num_rows()==1){
+			$row_result=$result->result_array()[0];
+		}else{
+			return new Exception("Solicitud no existe");
+		}
+		return $row_result;
 	}
 }

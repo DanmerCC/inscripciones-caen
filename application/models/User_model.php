@@ -4,6 +4,8 @@
  */
 class User_model extends CI_Model
 {
+	private $table='usuario';
+	private $id='id';
 	
 	function __construct()
 	{
@@ -63,6 +65,19 @@ class User_model extends CI_Model
 			return null;
 		}
 		return $result->result_array()[0];
+	}
+
+	public function findOrFail($id_user){
+		$this->db->select('correo');
+		$this->db->from($this->table);
+		$this->db->where($this->id,$id_user);
+		$result=$this->db->get();
+		if($result->num_rows()==1){
+			return $result->result_array()[0];
+		}else{
+			throw new Exception("Usuario no encontrado");
+		}
+		
 	}
 
 

@@ -166,6 +166,9 @@ class Notificacion_model extends MY_Model
 	}
 
 	public function notifications_id_by_solicituds($arrays_id){
+		if(count($arrays_id)==0){
+			return [];
+		}
 		$id_user=$this->nativesession->get('idUsuario');
 		$actual_config=$this->getConfig();
 		return $this->db->select('count(notifications.id) as cant,sol.idSolicitud,notifications.id as noti_id')
@@ -183,21 +186,4 @@ class Notificacion_model extends MY_Model
 		->get()->result_array();
 	}
 
-	public function notifications_id_by_solicitudsv1($arrays_id){
-		$id_user=$this->nativesession->get('idUsuario');
-		$actual_config=$this->getConfig();
-
-		return $this->db->select('count(nt.id) as cant,s.idSolicitud')
-				->from('solicitud s')
-				->join('notifications_solicituds ns','s.idSolicitud=ns.solicitud_id','left')
-				->join('notifications nt','ns.notifications_id=nt.id','left')
-				->join('usuario', 'usuario.tipousuario = nt.tipo_usuario_id', 'left')
-				->join('read_notifications rn','rn.notification_id=nt.id' ,'left')
-				->where('usuario.id',$id_user)
-				->where('rn.notification_id IS NULL',NULL)
-				->where('nt.time >',$actual_config)
-				->where_in('s.idSolicitud',$arrays_id)
-				->group_by('s.idSolicitud')
-				->get()->result_array();
-	}
 }

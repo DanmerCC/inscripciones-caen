@@ -8,6 +8,7 @@ class Inscripcion_model extends CI_Model
 	private $id='id_inscripcion';
 	private $solicitud_id='solicitud_id';
 	private $created_user_id='created_user_id';
+	private $estado_finanzas_id='estado_finanzas_id';
 	private $created='created';
 	//** Determina si el registro existe */
 	private $deleted='deleted';
@@ -18,6 +19,10 @@ class Inscripcion_model extends CI_Model
 
 	private $public_columns=[];
 
+	public $global_stado_finanzas=[];
+
+	public $array_estado_finanzas=[];
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -25,11 +30,14 @@ class Inscripcion_model extends CI_Model
 		$this->public_columns=[
 			$this->id,
 			$this->solicitud_id,
-			$this->created_user_id
+			$this->created_user_id,
+			$this->estado_finanzas_id
 		];
 		$this->where_filters=array(
 			$this->deleted=>NULL
 		);
+		$this->load->model('EstadoFinanzas_model');
+		$this->array_estado_finanzas=$this->EstadoFinanzas_model->all();
 	}
 
 	/**
@@ -81,7 +89,7 @@ class Inscripcion_model extends CI_Model
 				implode(',',$this->public_columns)
 			)
 			->from($this->table)
-			->where($this->conditions)
+			->where($conditions)
 			->get();
 		if($result->num_rows()===1){
 			return  $result->result_array()[0];
@@ -113,7 +121,7 @@ class Inscripcion_model extends CI_Model
 	* get a page only no deleted marked
 	*/
 	public function get_page($start,$limit = 10,$deletes=true){
-		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.documento,a.email,a.celular,a.telefono_casa,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created ,ins.id_inscripcion');
+		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,ins.'.$this->estado_finanzas_id.',ef.nombre as estado_finanzas,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.documento,a.email,a.celular,a.telefono_casa,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created ,ins.id_inscripcion');
 		$this->db->from($this->table.' ins');
 		$this->dtq_join_solicitud_usuario_curso_tipo_curso_alumno();
 		
@@ -124,6 +132,7 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
+		$this->dt_query_datatable_filter_array();
 		
 		$this->db->limit($limit,$start);
 		
@@ -141,6 +150,7 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
+		$this->dt_query_datatable_filter_array();
 		$result=$this->db->get()->result_array();
 		if(count($result)==1){
 			return $result[0]['count'];
@@ -153,7 +163,7 @@ class Inscripcion_model extends CI_Model
 	 * SELECT ins.*,a.nombres,a.apellido_paterno,a.apellido_materno FROM  inscripcion ins left JOIN solicitud s ON ins.solicitud_id = s.idSolicitud left JOIN curso c on c.id_curso = s.programa left JOIN alumno a on s.alumno = a.id_alumno LIMIT ?,?
 	 */
 	public function get_page_and_filter($start,$limit,$text,$deletes=true){
-		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.documento,a.email,a.celular,a.telefono_casa,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created,ins.id_inscripcion');
+		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,ins.'.$this->estado_finanzas_id.',ef.nombre as estado_finanzas,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.documento,a.email,a.celular,a.telefono_casa,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created,ins.id_inscripcion');
 		$this->db->from($this->table.' ins');
 		$this->db->group_start();
 			$this->db->like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
@@ -169,6 +179,7 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
+		$this->dt_query_datatable_filter_array();
 		$this->db->limit($limit,$start);
         return resultToArray($this->db->get());
 	}
@@ -190,12 +201,60 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
+		$this->dt_query_datatable_filter_array();
+
 		$result=$this->db->get()->result_array();
 		if(count($result)==1){
 			return $result[0]['count'];
 		}
         return null;
 	}
+
+
+	/**
+	 * Estas dos functiones traen datos para expportar en excel
+	 */
+	public function get_all_to_export_and_filter($text,$deletes=true){
+		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,ef.nombre as estado_finanzas,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.*,tc.nombre as tipo_curso,u.acceso as nombre_user,ins.created as created,ins.id_inscripcion');
+		$this->db->from($this->table.' ins');
+		$this->db->group_start();
+			$this->db->like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
+			$this->db->or_like('a.nombres',$text);
+			$this->db->or_like('a.apellido_paterno',$text);
+			$this->db->or_like('a.apellido_materno',$text);
+		$this->db->group_end();
+		$this->dtq_join_solicitud_usuario_curso_tipo_curso_alumno();
+		if(!$deletes){
+			$this->db->where(
+				array(
+					'ins.'.$this->deleted=>NULL
+				)
+			);
+		}
+		$this->dt_query_datatable_filter_array();
+		//$this->db->limit($limit,$start);
+        return resultToArray($this->db->get());
+	}
+
+	public function get_all_to_export($deletes=true){
+		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,ef.nombre as estado_finanzas,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.*,tc.nombre as tipo_curso,u.acceso as nombre_user,ins.created as created ,ins.id_inscripcion');
+		$this->db->from($this->table.' ins');
+		$this->dtq_join_solicitud_usuario_curso_tipo_curso_alumno();
+		
+		if(!$deletes){
+			$this->db->where(
+				array(
+					'ins.'.$this->deleted=>NULL
+				)
+			);
+		}
+		$this->dt_query_datatable_filter_array();
+		
+		//$this->db->limit($limit,$start);
+		
+        return resultToArray($this->db->get());
+	}
+
 
 	/**
 	 * get all inscriptions array value format
@@ -411,12 +470,52 @@ class Inscripcion_model extends CI_Model
 		return resultToArray($this->db->get());
 	}
 
+	/**
+	 * Funcion de part querys comunes en datatables
+	 * joins y ordenamiento 
+	 *
+	 * @return void
+	 */
 	public function dtq_join_solicitud_usuario_curso_tipo_curso_alumno(){
 		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
 		$this->db->join('usuario u','ins.created_user_id = u.id','left');
 		$this->db->join('curso c','c.id_curso = s.programa','left');
 		$this->db->join('tipo_curso tc','c.idTipo_curso = tc.idTipo_curso','left');
 		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
+		$this->db->join('estado_finanzas ef','ins.estado_finanzas_id = ef.id');
+		$this->db->order_by('ins.created','desc');
 	}
 
+/**
+ * @var integer id
+ * @var integer estado_id
+ */
+	public function setEstadoFinanzas($id,$estado_id){
+		$data=array(
+			$this->estado_finanzas_id=>$estado_id
+		);
+		$this->db->where($this->id, $id);
+		$this->db->update($this->table,$data);
+		return ($this->db->affected_rows()==1);
+	}
+
+	function dt_query_datatable_filter_array(){
+
+		$ids=c_extract($this->array_estado_finanzas,'id');
+		if(count($this->global_stado_finanzas)>0){
+			$this->db->group_start();
+			for ($i=0; $i < count($this->global_stado_finanzas); $i++) {
+				
+				if(in_array($this->global_stado_finanzas[$i],$ids)){
+					$this->db->or_where($this->estado_finanzas_id,$this->global_stado_finanzas[$i]);
+				}else{
+					throw new Exception("Error no se detecto un estado validado");
+				}
+			}
+			$this->db->group_end();
+		}else{
+			
+		}
+		
+	}
 }

@@ -16,10 +16,16 @@ function cargarDataTable(){
 				url: '/admin/dataTable/inscripciones',
 				type: "post",
 				dataType: "json",
+				data:{
+					"asdasd":1
+				},
 				error: function (e) {
 					console.log(e.responseText);
 				}
 			},
+	"initComplete":function( settings, json){
+		createRouteExport();
+	},
 	"bDestroy": true,
 	"iDisplayLength": 15, // paginacion
 	"order": [[0, "desc"]],
@@ -48,11 +54,18 @@ function cargarDataTable(){
 
 $(document).ready(function(){
 
+	$('#select2-estado-finanzas').change((evt)=>{
+		var select=$('#select2-estado-finanzas');
+		//console.log(select.val());
+		tabla.column(9).search(select.val()).draw();
+		createRouteExport();
+	})
+
 	$("#slct_anulados").change(()=>{
-		//console.log($("#slct_anulados").attr("checked"));
 		var input_select=document.getElementById('slct_anulados');
 		console.log(input_select.checked)
 		tabla.column(8).search(input_select.checked).draw();
+		createRouteExport();
 		//tabla.ajax.reload(null,false);
 	})
 
@@ -60,6 +73,7 @@ $(document).ready(function(){
 
     $("#selectProgram").change(function(){
         tabla.search($(this).val()).draw();
+		createRouteExport();
     });
 
     //contruirTitulos(dataTables.solicitudes.thead);
@@ -92,9 +106,167 @@ function loadDataToSelect(){
 }
 
 ins={
-	"cancel":cancelarById
+	"cancel":cancelarById,
+	"change_estado":callBackchangeEstado
 };
 
+function callBackchangeEstado(id,estado_id,nombre){
+	if(estado_id==3){
+			bootbox.prompt({
+			title:"Observacion",
+			message: "Esta seguro de querer cambiar de estado a <strong>"+nombre+"</strong>?",
+			buttons: {
+				confirm: {
+					label: 'Guardar',
+					className: 'btn-success'
+				},
+				cancel: {
+					label: 'Cancelar',
+					className: 'btn-danger'
+				}
+			},
+			callback: function (result) {
+				
+				if(result!=null){
+					$.ajax({
+						type: "post",
+						url: "/admin/inscripcion/changestatefinan",
+						data: {
+							"id":id,
+							"estado_id":estado_id,
+							"comentario":result
+						},
+						dataType: "json",
+						success: function (response) {
+							console.log(response);
+							if(response.content=="OK"){
+								alert("Cambio correcto correctamente");
+								tabla.ajax.reload(null,false);
+							}
+						},
+						error: function (e) {
+							console.log(e.responseText);
+						}
+					});
+				}
+			}
+		});
+	}
+
+	if(estado_id!=3 && estado_id!=VARS.inscripcion_finanzas.estados.AUTORIZADO){
+		bootbox.confirm({
+		message: "Esta seguro de querer cambiar de estado a <strong>"+nombre+"</strong>?",
+		buttons: {
+			confirm: {
+				label: 'Si',
+				className: 'btn-success'
+			},
+			cancel: {
+				label: 'Cancelar',
+				className: 'btn-danger'
+			}
+		},
+		callback: function (result) {
+			if(result){
+				$.ajax({
+					type: "post",
+					url: "/admin/inscripcion/changestatefinan",
+					data: {
+						"id":id,
+						"estado_id":estado_id
+					},
+					dataType: "json",
+					success: function (response) {
+						console.log(response);
+						if(response.content=="OK"){
+							alert("Cambio correcto correctamente");
+							tabla.ajax.reload(null,false);
+						}
+					},
+					error: function (e) {
+						console.log(e.responseText);
+					}
+				});
+			}
+		}
+	});
+}
+	
+	if(estado_id==VARS.inscripcion_finanzas.estados.AUTORIZADO){
+		
+		getFormHtmlAutorizacion(htmlResult=>{
+			bootbox.confirm(htmlResult, function(result) {
+				if(result){
+					var object_data={
+						tipo_id:$('#frm-bootbox-autorization #txtarea-mdl-tipos').val(),
+						comentario:$('#frm-bootbox-autorization #slct-mdl-tipos').val(),
+					}
+					console.log(object_data)
+					$.ajax({
+						type: "post",
+						url: "/admin/inscripcion/changestatefinan",
+						data: {
+							"id":id,
+							"estado_id":estado_id,
+							tipo_id:$('#frm-bootbox-autorization #slct-mdl-tipos').val(),
+							comentario:$('#frm-bootbox-autorization #txtarea-mdl-tipos').val()
+						},
+						dataType: "json",
+						success: function (response) {
+							if(response.content=="OK"){
+								alert("Cambio correcto correctamente");
+								tabla.ajax.reload(null,false);
+							}
+						},
+						error: function (e) {
+							console.log(e.responseText);
+						}
+					});
+				}
+		})
+
+	});
+
+	/*
+	bootbox.confirm({
+	message: "Esta seguro de querer cambiar de estado a <strong>"+nombre+"</strong>?",
+	buttons: {
+		confirm: {
+			label: 'Si',
+			className: 'btn-success'
+		},
+		cancel: {
+			label: 'Cancelar',
+			className: 'btn-danger'
+		}
+	},
+	callback: function (result) {
+		if(result){
+			$.ajax({
+				type: "post",
+				url: "/admin/inscripcion/changestatefinan",
+				data: {
+					"id":id,
+					"estado_id":estado_id
+				},
+				dataType: "json",
+				success: function (response) {
+					console.log(response);
+					if(response.content=="OK"){
+						alert("Cambio correcto correctamente");
+						tabla.ajax.reload(null,false);
+					}
+				},
+				error: function (e) {
+					console.log(e.responseText);
+				}
+			});
+		}
+	}
+});*/
+}
+
+}
 function cancelarById(id){
 
 	bootbox.confirm({
@@ -230,4 +402,51 @@ function cargarData(id){
     });
 }
 
+function createRouteExport(){
+	let search = tabla.ajax.params().search.value;
+	let anulado = tabla.ajax.params().columns[8].search.value;
+	let estados = tabla.ajax.params().columns[9].search.value;
+	document.getElementById('btnExport').attributes.href.nodeValue = "/administracion/vista/dowloadFilter?search="+search+"&anulado="+anulado+"&estados="+estados;
+}
 
+function load_details_state_finanzas(id){
+	MDL_DETALLE_FINANZAS.open(id)
+}
+
+
+function getFormHtmlAutorizacion(successHtmlMakeCallBack){
+	let tipos;
+	getTiposAuthorizaciones(function(data){
+		 tipos=data;
+		 var htmlTipos="";
+		tipos.forEach(x=>{
+			htmlTipos=htmlTipos+`<option value="${x.id}">${x.nombre}</option>`;	
+		})
+		successHtmlMakeCallBack( `
+				<form id='frm-bootbox-autorization'>
+					<div class='form-group'>
+						<label>Tipo</label>
+						<select name='slct-mdl-tipos' class='form-control' id="slct-mdl-tipos">
+							${htmlTipos}
+						</select>
+					</div>
+					<div class='form-group'>
+						<label>Comentario</label>
+						<textarea id='txtarea-mdl-tipos' rows="4" style="margin: 0px; width: 570px; height: 126px;" cols="60" name='textarea'/>
+					</div>
+				</form>
+				`);
+	})
+	
+	
+}
+
+function getTiposAuthorizaciones(successCallBakc){
+	$.ajax({
+		type: "get",
+		url: "/admin/tipoAutorizaciones",
+		data: "",
+		dataType: "json",
+		success: successCallBakc
+	});
+}

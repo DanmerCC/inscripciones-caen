@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Solicitud extends CI_Controller
 {
+	private $usuario_actual;
 	
 	public function __construct()
 
@@ -19,6 +20,10 @@ class Solicitud extends CI_Controller
 		$this->load->model('Permiso_model');
 		$this->load->helper('mihelper');
 		$this->load->model('Notificacion_model');
+		$this->load->model('EstadoFinanzasSolicitud_model');
+		$this->load->model('FinObservacionesSolicitud_model');
+		$this->estado_finanzasSolicitud=$this->EstadoFinanzasSolicitud_model->all();
+		$this->usuario_actual=$this->nativesession->get('idUsuario');
 	}
     public function index(){
 		
@@ -72,7 +77,11 @@ class Solicitud extends CI_Controller
 		$length=$this->input->post('length');
         $activeSearch=((strlen($search["value"])!=0))||empty($search);
         $cantidad=$this->Solicitud_model->count_sent_less();
-        
+		
+		$this->load->model('Auth_Permisions');
+		
+		$can_edit_finanzas_solicitud=$this->Auth_Permisions->can('change_solicitud_estado_finanzas');
+
         if($activeSearch){
             $rspta = resultToArray($this->Solicitud_model->get_data_for_datatable($start,$length,$search["value"]));
         }else{
@@ -119,12 +128,22 @@ class Solicitud extends CI_Controller
                 "4" => $rspta[$i]["apellido_materno"],
                 "5" => $rspta[$i]["tipo_financiamiento"],
                 "6" => $rspta[$i]["documento"],
-                "7" => $rspta[$i]["curso_numeracion"]."".$rspta[$i]["nombretipoCurso"]." ".$rspta[$i]["curso_nombre"],
-                "8" => (($rspta[$i]["marcaPago"]=='0')?' <button class="btn btn-alert"   title="click para marcar como verificado" onclick="marcarPago('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-thumb-tack" aria-hidden="true"></i></button>':
+				"7" => $rspta[$i]["curso_numeracion"]."".$rspta[$i]["nombretipoCurso"]." ".$rspta[$i]["curso_nombre"],
+				"8" => "<div class='input-group-btn'>".
+						($can_edit_finanzas_solicitud?	
+							$this->HTML_drop_down(
+								$rspta[$i]["idSolicitud"],
+								$rspta[$i]["estado_finanzas"],
+								$rspta[$i]["estado_finanzas_id"]
+							):
+							$this->HTML_btn_default($rspta[$i]["estado_finanzas"],$rspta[$i]["estado_finanzas_id"])
+						).$this->HTML_details_icon($rspta[$i]["idSolicitud"],$rspta[$i]["estado_finanzas_id"])."</div>",
+
+                "9" => (($rspta[$i]["marcaPago"]=='0')?' <button class="btn btn-alert"   title="click para marcar como verificado" onclick="marcarPago('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-thumb-tack" aria-hidden="true"></i></button>':
                 ' <button class="btn btn-warning" onclick="quitarmarcaPago('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-thumb-tack" aria-hidden="true"></i></button>'),
-                "9" => '<textarea class="form-control" onclick="editComent('.$rspta[$i]["idSolicitud"].');" readonly="readonly">'.$rspta[$i]["comentario"].'</textarea>',
-                "10" => $rspta[$i]["fecha_registro"],
-                "11" => ($rspta[$i]["estado"]=='0')?'<span class="label bg-red">Sin atender</span>':'<span class="label bg-green">Atendido</span>'
+                "10" => '<textarea class="form-control" onclick="editComent('.$rspta[$i]["idSolicitud"].');" readonly="readonly">'.$rspta[$i]["comentario"].'</textarea>',
+                "11" => $rspta[$i]["fecha_registro"],
+                "12" => ($rspta[$i]["estado"]=='0')?'<span class="label bg-red">Sin atender</span>':'<span class="label bg-green">Atendido</span>'
             );
          }    
         $results = array(
@@ -133,7 +152,75 @@ class Solicitud extends CI_Controller
             "iTotalDisplayRecords" => ($activeSearch)?$this->Solicitud_model->count_with_filter($search["value"]):$cantidad, //enviamos total de registros a visualizar
             "aaData" => $data);
         echo json_encode($results);
-        }
+	}
+
+	private function HTML_details_icon($idSolicitud,$estado_finanzas_id=null){
+		$is_obserbated=false;
+		if($estado_finanzas_id!=null){
+			$is_obserbated=($this->EstadoFinanzasSolicitud_model->OBSERVADO!=$estado_finanzas_id);
+		}
+		$disabled_html=$is_obserbated?' disabled '."onclick='' ":" onclick='load_details_state_finanzas_solicitud(".$idSolicitud.")' ";
+		$details_icon="<a class='btn btn-social-icon btn-instagram' $disabled_html ><i class='fa fa-fw fa-info-circle'></i></a>";
+		return $details_icon;
+	}
+
+	private function HTML_btn_default($text,$estado_finanzas_id){
+		$is_validated=$this->EstadoFinanzasSolicitud_model->VALIDADO==$estado_finanzas_id;
+		$class_if_is_validated=$is_validated?' text-green':'';
+
+		return "<button type='button' style='cursor: default;' class='btn btn-default $class_if_is_validated'>$text</button>";
+	}
+
+	public function changeEstadoFinanzas(){
+		$solicitudId=$this->input->post('id');
+		$id_estado=$this->input->post('estado_id');
+		$comentario=$this->input->post('comentario');
+		
+		if(empty($solicitudId)||(empty($id_estado))){
+			return show_error('Solicitud erronea faltan datos');
+		}
+		$result=$this->Solicitud_model->setEstadoFinanzas($solicitudId,$id_estado);
+		if($id_estado==$this->EstadoFinanzasSolicitud_model->OBSERVADO){
+			$result2=$this->FinObservacionesSolicitud_model->create($solicitudId,$this->usuario_actual,$comentario);
+		}
+		if($result){
+			$result=array(
+				"content"=>"OK",
+			);
+			echo json_encode($result);
+		}else{
+			echo "No actualizado";
+		}
+	}
+
+	private function HTML_drop_down($id,$text,$estado_finanzas_id=null,$other_html_elelemt=''){
+		$list="";
+		$is_obserbated=false;
+		if($estado_finanzas_id!=null){
+			$is_obserbated=($this->EstadoFinanzasSolicitud_model->OBSERVADO!=$estado_finanzas_id);
+		}
+		$disabled_html=$is_obserbated?' disabled '."onclick='' ":" onclick='load_details_state_finanzas_solicitud(".$id.")' ";
+		$details_icon="<a class='btn btn-social-icon btn-instagram' $disabled_html ><i class='fa fa-fw fa-info-circle'></i></a>";
+		
+		for ($i=0; $i < count($this->estado_finanzasSolicitud); $i++) {
+			$is_green=$this->EstadoFinanzasSolicitud_model->VALIDADO==$this->estado_finanzasSolicitud[$i]['id'];
+			$class_if_is_validado=$is_green?' text-green ':'';
+			$nombre=$this->estado_finanzasSolicitud[$i]['nombre'];
+			$id_estado=$this->estado_finanzasSolicitud[$i]['id'];
+			$list=$list."<li onclick='sol.change_estado($id,$id_estado,".'"'.$nombre.'"'.")'><a class='$class_if_is_validado' href='#'>$nombre</a></li>";
+		}
+		$btn_is_green=$estado_finanzas_id==$this->EstadoFinanzasSolicitud_model->VALIDADO;
+		$if_validate_class=$btn_is_green?' text-green ':'';
+		return "
+                  <button type='button' class='$if_validate_class btn btn btn-default dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>$text
+                    <span class='fa fa-caret-down'></span></button>
+                  <ul class='dropdown-menu'>
+                    $list
+				  </ul>".
+				 ($other_html_elelemt). 
+                "";
+	}
+
         public function dataTableAtendidas(){
         $rspta = $this->mihelper->resultToArray($this->Solicitud_model->atendidas());
         //vamos a declarar un array
