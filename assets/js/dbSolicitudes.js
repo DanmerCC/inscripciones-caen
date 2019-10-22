@@ -2,6 +2,16 @@ var tabla;
 $("#btn-salir").prop('href','/administracion/salir');
 $(document).ready(function(){
 
+	
+
+	//Iniciando filtro de Solcitudes
+	$('#select2-estado-finanzas').select2();
+	$('#select2-estado-finanzas').change((evt)=>{
+		var select=$('#select2-estado-finanzas');
+		//console.log(select.val());
+		tabla.column(2).search(select.val()).draw();
+		createRouteExport();
+	})
     //Load inicial para listar programas
     loadDataToSelect();
 

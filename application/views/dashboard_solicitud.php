@@ -8,6 +8,7 @@
 <?php $this->load->view('adminlte/linksHead');?>
 <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css"> -->
 <link rel="stylesheet" href="/dist/css/jquery-externs/jquery.dataTables.min.css">
+<link href="/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/css/effects.css">
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
@@ -40,7 +41,37 @@
       <div class=""><!-- container -->
           <div class="panel-body table-responsive" id="listadoregistros">
           <div class='row'>
-            <div class='col-sm-6'></div>
+            <!---->
+					<div class="col-md-6">
+						<div class="box box-success box-solid collapsed-box">
+							<div class="box-header with-border">
+								<h3 class="box-title">Filtros Finanzas</h3>
+
+								<div class="box-tools pull-right">
+									<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+									</button>
+								</div>
+								<!-- /.box-tools -->
+							</div>
+							<!-- /.box-header -->
+							<div class="box-body" style="">
+								<div class="row">
+									<div class="col-md-12">
+										<label class="label-checkbox" for="select2-estado-finanzas">Estados Finanzas</label>
+										<select data-placeholder="Seleccione estado" name="filtro_estado_finanzas[]" multiple class="chosen-select" id="select2-estado-finanzas">
+										
+											<?php for ($i=0; $i < count($estados_finanzas); $i++){ ?>
+												<option value="<?=$estados_finanzas[$i]["id"];?>" selected><?=$estados_finanzas[$i]["nombre"];?></option>
+											<?php } ?>
+										</select>
+									</div>
+								</div>
+								<!-- /.box-body -->
+							</div>
+							<!-- /.box -->
+						</div>
+					</div>
+					<!---->
             <div class='col-sm-6'>
               <select class="form-control" name="prueba1" id="selectProgram">
                 <!-- container -->
@@ -293,7 +324,7 @@
 <script src="/dist/js/jquery-externs/pdfmake.min.js"></script>
 <script src="/dist/js/jquery-externs/buttons.html5.min.js"></script>
 <script src="/dist/js/jquery-externs/buttons.print.min.js"></script>
-
+<script src="/bower_components/select2/dist/js/select2.min.js"></script>
 
 <script src="/assets/plugins/bootbox/bootbox.all.min.js"></script>
 <!-- <script src="/assets/js/dboardAlumno.js"></script> -->
