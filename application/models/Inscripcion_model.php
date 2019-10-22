@@ -30,7 +30,8 @@ class Inscripcion_model extends CI_Model
 		$this->public_columns=[
 			$this->id,
 			$this->solicitud_id,
-			$this->created_user_id
+			$this->created_user_id,
+			$this->estado_finanzas_id
 		];
 		$this->where_filters=array(
 			$this->deleted=>NULL
@@ -88,7 +89,7 @@ class Inscripcion_model extends CI_Model
 				implode(',',$this->public_columns)
 			)
 			->from($this->table)
-			->where($this->conditions)
+			->where($conditions)
 			->get();
 		if($result->num_rows()===1){
 			return  $result->result_array()[0];
@@ -208,6 +209,52 @@ class Inscripcion_model extends CI_Model
 		}
         return null;
 	}
+
+
+	/**
+	 * Estas dos functiones traen datos para expportar en excel
+	 */
+	public function get_all_to_export_and_filter($text,$deletes=true){
+		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,ef.nombre as estado_finanzas,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.*,tc.nombre as tipo_curso,u.acceso as nombre_user,ins.created as created,ins.id_inscripcion');
+		$this->db->from($this->table.' ins');
+		$this->db->group_start();
+			$this->db->like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
+			$this->db->or_like('a.nombres',$text);
+			$this->db->or_like('a.apellido_paterno',$text);
+			$this->db->or_like('a.apellido_materno',$text);
+		$this->db->group_end();
+		$this->dtq_join_solicitud_usuario_curso_tipo_curso_alumno();
+		if(!$deletes){
+			$this->db->where(
+				array(
+					'ins.'.$this->deleted=>NULL
+				)
+			);
+		}
+		$this->dt_query_datatable_filter_array();
+		//$this->db->limit($limit,$start);
+        return resultToArray($this->db->get());
+	}
+
+	public function get_all_to_export($deletes=true){
+		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,ef.nombre as estado_finanzas,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.*,tc.nombre as tipo_curso,u.acceso as nombre_user,ins.created as created ,ins.id_inscripcion');
+		$this->db->from($this->table.' ins');
+		$this->dtq_join_solicitud_usuario_curso_tipo_curso_alumno();
+		
+		if(!$deletes){
+			$this->db->where(
+				array(
+					'ins.'.$this->deleted=>NULL
+				)
+			);
+		}
+		$this->dt_query_datatable_filter_array();
+		
+		//$this->db->limit($limit,$start);
+		
+        return resultToArray($this->db->get());
+	}
+
 
 	/**
 	 * get all inscriptions array value format

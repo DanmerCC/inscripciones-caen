@@ -17,9 +17,11 @@ class Login extends CI_Controller {
 
 	public function index()
 	{
+		$user_name=$this->input->get('user');
 		$data['cabecera'] = $this->load->view('adminlte/linksHead',NULL,TRUE);
 		$data['footer'] = $this->load->view('adminlte/scriptsFooter',NULL,TRUE);
 		$data['action'] = "postulante/verificacion";
+		$data['user_default'] = $user_name;
 		$this->load->view('login',$data);
 	}
 
