@@ -6,6 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Solicitud extends CI_Controller
 {
 	private $usuario_actual;
+	private $estado_finanzasSolicitud;
 	
 	public function __construct()
 
@@ -37,6 +38,8 @@ class Solicitud extends CI_Controller
             $data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
 			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
 			$data['notificaciones']=$this->Notificacion_model->fromSolicitud(16);
+			$data['estados_finanzas']=$this->estado_finanzasSolicitud;
+			
             $this->load->view('dashboard_solicitud',$data);
         }else
         {
@@ -76,19 +79,28 @@ class Solicitud extends CI_Controller
 		$start=$this->input->post('start');
 		$length=$this->input->post('length');
         $activeSearch=((strlen($search["value"])!=0))||empty($search);
-        $cantidad=$this->Solicitud_model->count_sent_less();
-		
+
+		$columns=$this->input->post('columns');
+
+		$programa_filtro=$columns[7]["search"]["value"];
+
+		$column_filtros=$columns[2]["search"]["value"];
+		$estados=($column_filtros=="")?[]:explode(',',$column_filtros);
 		$this->load->model('Auth_Permisions');
 		
 		$can_edit_finanzas_solicitud=$this->Auth_Permisions->can('change_solicitud_estado_finanzas');
-
+		
+		$this->Solicitud_model->global_stado_finanzas=$estados;
+		$this->Solicitud_model->program_id_filter=$programa_filtro;
+		$cantidad=$this->Solicitud_model->count_sent_less();
         if($activeSearch){
             $rspta = resultToArray($this->Solicitud_model->get_data_for_datatable($start,$length,$search["value"]));
         }else{
             $rspta = resultToArray($this->Solicitud_model->get_data_for_datatable($start,$length));
 		}
-        $data = Array();
-		//echo var_dump($rspta);
+		
+		$data = Array();
+		
 		$solicitud_ids=c_extract($rspta,'idSolicitud');
 		
 		$notifications_by_solicituds=$this->Notificacion_model->notifications_id_by_solicituds($solicitud_ids);

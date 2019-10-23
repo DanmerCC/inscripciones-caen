@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class InscripcionController extends CI_Controller {
 
-	private $estado_finazas;
+	private $estado_finanzas;
 	private $usuario_actual;
 
 	public function __construct()

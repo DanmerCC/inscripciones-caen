@@ -12,6 +12,14 @@ class Solicitud_model extends CI_Model
 	private $state='estado';
 	private $notification_mensaje='notification_mensaje';
 	private $estado_finanzas_id = 'estado_finanzas_id';
+
+
+	public $global_stado_finanzas=[];
+	public $array_estado_finanzas=[];
+
+
+	public $program_id_filter='';
+
 	/**
 	 * var @sent cuando la solicitud ya esta enviada
 	 */
@@ -20,6 +28,8 @@ class Solicitud_model extends CI_Model
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->model('EstadoFinanzasSolicitud_model');
+		$this->array_estado_finanzas=$this->EstadoFinanzasSolicitud_model->all();
 		$this->load->helper('mihelper');
 	}
 
@@ -84,6 +94,8 @@ class Solicitud_model extends CI_Model
 				$this->db->or_like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
 			$this->db->group_end();
 		}
+		$this->query_part_filter_estado_finanzas();
+		$this->query_part_filter_by_program('s');
 
 		return $this->db->get();
 	}
@@ -100,6 +112,8 @@ class Solicitud_model extends CI_Model
 				$this->db->or_like('s.comentario',$text);
 				$this->db->or_like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
 			$this->db->group_end();
+		$this->query_part_filter_estado_finanzas();
+		$this->query_part_filter_by_program('s');
 		return $this->db->get()->num_rows();
 	}
 
@@ -143,6 +157,8 @@ class Solicitud_model extends CI_Model
 		$this->db->select($this->id)->from($this->tbl_solicitud)->where(array(
 			$this->sent.' IS NULL'=>NULL,
 		));
+		$this->query_part_filter_estado_finanzas();
+		$this->query_part_filter_by_program();
 		return $this->db->get()->num_rows();
 		
 	}
@@ -452,5 +468,41 @@ class Solicitud_model extends CI_Model
 			return new Exception("Solicitud no existe");
 		}
 		return $row_result;
+	}
+
+	function query_part_filter_estado_finanzas(){
+
+		$ids=c_extract($this->array_estado_finanzas,'id');
+		if(count($this->global_stado_finanzas)>0){
+			$this->db->group_start();
+			for ($i=0; $i < count($this->global_stado_finanzas); $i++) {
+				
+				if(in_array($this->global_stado_finanzas[$i],$ids)){
+					$this->db->or_where($this->estado_finanzas_id,$this->global_stado_finanzas[$i]);
+				}else{
+					
+					throw new Exception("Error  se detecto un  estado invalidado en ".__METHOD__);
+				}
+			}
+			$this->db->group_end();
+		}else{
+			
+		}
+		
+	}
+
+	private function query_part_filter_by_program($prefix=null){
+		
+		if(!empty($this->program_id_filter)){
+			
+			$this->db->group_start();
+				if($prefix!=null){
+					$this->db->or_where($prefix.'.'.$this->id_programa,$this->program_id_filter);
+				}else{
+					$this->db->or_where($this->id_programa,$this->program_id_filter);
+				}
+				
+			$this->db->group_end();
+		}
 	}
 }
