@@ -17,7 +17,7 @@ $(document).ready(function(){
     loadDataToSelect();
 
     $("#selectProgram").change(function(){
-        tabla.search($(this).val()).draw();
+        tabla.column(7).search($(this).val()).draw();
     });
 
     //contruirTitulos(dataTables.solicitudes.thead);
@@ -212,7 +212,7 @@ function loadDataToSelect(){
 function listProgramasActivos(array){
     result="<option value='' disabled required selected>Seleciona una opcion</option>";
     for (var i = 0; i < array.length; i++) {
-        result=result+"<option value='"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"'>"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"</option>";
+        result=result+"<option value="+array[i].id_curso+">"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"</option>";
     }
     return result;
 }

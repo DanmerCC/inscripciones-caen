@@ -17,6 +17,9 @@ class Solicitud_model extends CI_Model
 	public $global_stado_finanzas=[];
 	public $array_estado_finanzas=[];
 
+
+	public $program_id_filter='';
+
 	/**
 	 * var @sent cuando la solicitud ya esta enviada
 	 */
@@ -92,6 +95,7 @@ class Solicitud_model extends CI_Model
 			$this->db->group_end();
 		}
 		$this->query_part_filter_estado_finanzas();
+		$this->query_part_filter_by_program('s');
 
 		return $this->db->get();
 	}
@@ -108,6 +112,8 @@ class Solicitud_model extends CI_Model
 				$this->db->or_like('s.comentario',$text);
 				$this->db->or_like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
 			$this->db->group_end();
+		$this->query_part_filter_estado_finanzas();
+		$this->query_part_filter_by_program('s');
 		return $this->db->get()->num_rows();
 	}
 
@@ -151,6 +157,8 @@ class Solicitud_model extends CI_Model
 		$this->db->select($this->id)->from($this->tbl_solicitud)->where(array(
 			$this->sent.' IS NULL'=>NULL,
 		));
+		$this->query_part_filter_estado_finanzas();
+		$this->query_part_filter_by_program();
 		return $this->db->get()->num_rows();
 		
 	}
@@ -473,9 +481,6 @@ class Solicitud_model extends CI_Model
 					$this->db->or_where($this->estado_finanzas_id,$this->global_stado_finanzas[$i]);
 				}else{
 					
-					print_r ($ids);
-					echo '</pre>';
-					exit;
 					throw new Exception("Error  se detecto un  estado invalidado en ".__METHOD__);
 				}
 			}
@@ -484,5 +489,20 @@ class Solicitud_model extends CI_Model
 			
 		}
 		
+	}
+
+	private function query_part_filter_by_program($prefix=null){
+		
+		if(!empty($this->program_id_filter)){
+			
+			$this->db->group_start();
+				if($prefix!=null){
+					$this->db->or_where($prefix.'.'.$this->id_programa,$this->program_id_filter);
+				}else{
+					$this->db->or_where($this->id_programa,$this->program_id_filter);
+				}
+				
+			$this->db->group_end();
+		}
 	}
 }

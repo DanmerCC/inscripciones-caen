@@ -43,7 +43,7 @@
           <div class='row'>
             <!---->
 					<div class="col-md-6">
-						<div class="box box-success box-solid collapsed-box">
+						<div class="box box-solid collapsed-box">
 							<div class="box-header with-border">
 								<h3 class="box-title">Filtros Finanzas</h3>
 
