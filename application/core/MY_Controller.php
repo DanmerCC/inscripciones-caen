@@ -115,5 +115,9 @@ class MY_Controller extends CI_Controller
         }else{
             return false;
         }
-    }
+	}
+	
+	protected function verifyBearerToken($token){
+		return $this->Apitoken_model->exist($token);
+	}
 }

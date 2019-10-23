@@ -115,7 +115,7 @@ class Inscritos_Controller extends MY_Controller {
 	}
 
 	public function changeStateInscripcion($inscripcionId){
-		
+
 		header('Access-Control-Allow-Origin: *');
 		
 		$estadoId=$this->input->post('estado_id');
@@ -148,9 +148,6 @@ class Inscritos_Controller extends MY_Controller {
 		header($protocol . ' ' . $code . ' ' . $text);
 	}
 
-	public function verifyBearerToken($token){
-		return true;
-	}
 	public function decoded($number){
 		return $number;
 		//return hexdec($number);
