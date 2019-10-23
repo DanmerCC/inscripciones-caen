@@ -1,4 +1,5 @@
 var tabla;
+
 $("#btn-salir").prop('href','/administracion/salir');
 $(document).ready(function(){
 
