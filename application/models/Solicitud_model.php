@@ -25,6 +25,8 @@ class Solicitud_model extends CI_Model
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->model('EstadoFinanzasSolicitud_model');
+		$this->array_estado_finanzas=$this->EstadoFinanzasSolicitud_model->all();
 		$this->load->helper('mihelper');
 	}
 
@@ -470,7 +472,11 @@ class Solicitud_model extends CI_Model
 				if(in_array($this->global_stado_finanzas[$i],$ids)){
 					$this->db->or_where($this->estado_finanzas_id,$this->global_stado_finanzas[$i]);
 				}else{
-					throw new Exception("Error  se detecto un estado invalidado en ");
+					
+					print_r ($ids);
+					echo '</pre>';
+					exit;
+					throw new Exception("Error  se detecto un  estado invalidado en ".__METHOD__);
 				}
 			}
 			$this->db->group_end();

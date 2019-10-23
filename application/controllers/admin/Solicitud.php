@@ -6,6 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Solicitud extends CI_Controller
 {
 	private $usuario_actual;
+	private $estado_finanzasSolicitud;
 	
 	public function __construct()
 
@@ -22,7 +23,7 @@ class Solicitud extends CI_Controller
 		$this->load->model('Notificacion_model');
 		$this->load->model('EstadoFinanzasSolicitud_model');
 		$this->load->model('FinObservacionesSolicitud_model');
-		$this->estado_finanzas=$this->EstadoFinanzasSolicitud_model->all();
+		$this->estado_finanzasSolicitud=$this->EstadoFinanzasSolicitud_model->all();
 		$this->usuario_actual=$this->nativesession->get('idUsuario');
 	}
     public function index(){
@@ -93,8 +94,8 @@ class Solicitud extends CI_Controller
         }else{
             $rspta = resultToArray($this->Solicitud_model->get_data_for_datatable($start,$length));
 		}
-        $data = Array();
-		//echo var_dump($rspta);
+		$data = Array();
+		
 		$solicitud_ids=c_extract($rspta,'idSolicitud');
 		
 		$notifications_by_solicituds=$this->Notificacion_model->notifications_id_by_solicituds($solicitud_ids);
