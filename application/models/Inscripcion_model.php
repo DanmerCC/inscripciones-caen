@@ -9,6 +9,7 @@ class Inscripcion_model extends CI_Model
 	private $solicitud_id='solicitud_id';
 	private $created_user_id='created_user_id';
 	private $estado_finanzas_id='estado_finanzas_id';
+	private $estado_admision_id='estado_admision_id';
 	private $created='created';
 	//** Determina si el registro existe */
 	private $deleted='deleted';
@@ -483,6 +484,7 @@ class Inscripcion_model extends CI_Model
 		$this->db->join('tipo_curso tc','c.idTipo_curso = tc.idTipo_curso','left');
 		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
 		$this->db->join('estado_finanzas ef','ins.estado_finanzas_id = ef.id');
+		$this->db->join('estado_admisions ea','ins.estado_admision_id = ea.id');
 		$this->db->order_by('ins.created','desc');
 	}
 
@@ -517,5 +519,14 @@ class Inscripcion_model extends CI_Model
 			
 		}
 		
+	}
+
+	function changeState($id,$estado_id){
+		$data=array(
+			$this->estado_admision_id=>$estado_id
+		);
+		$this->db->where($this->id, $id);
+		$this->db->update($this->table,$data);
+		return $this->db->affected_rows()==1;
 	}
 }

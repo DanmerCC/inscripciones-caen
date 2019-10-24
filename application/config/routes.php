@@ -250,8 +250,12 @@ $route['api/v1/tipoProgramas'] = 'apiRest/Programa_Controller/listTipos';
 $route['api/v1/tipoPrograma/(:num)'] = 'apiRest/Programa_Controller/tipo/$1';
 $route['api/v1/files/([a-zA-Z]+)/(:num)'] = 'apiRest/Files_Controller/getFile';
 
+///Danger
+$route['api/v1/inscrito/(:num)/changestate'] = 'apiRest/Inscritos_Controller/changeStateInscripcion/$1';
+///Danger
+
 /***
- * Chart estadistics
+* Chart estadistics
 */
 
 $route['chart/alumno'] = 'ChartsController/alumno_columns';
@@ -266,6 +270,8 @@ $route['chart/alumno/count'] = 'ChartsController/get_count_data_alumno';
 $route['chart/inscrito'] = 'ChartsController/get_chart';
 
 
+$route['chart/inscrito'] = 'ChartsController/get_chart';
+
 /***
  * documentos autogenerados v2
  */
@@ -276,5 +282,6 @@ $route['admin/uploading'] = 'admin/FilesController/recive_file';
 
 
 $route['use/inscripcion'] = 'InfoForUseController/index';
+$route['use/inscripciones'] = 'dashboard/EstadisticInscripcionesController/report';
 
 $route['solicitud/files_state/(:num)'] = 'admin/InscripcionController/get_estado_archivos_solicitud_include_person_files/$1';
