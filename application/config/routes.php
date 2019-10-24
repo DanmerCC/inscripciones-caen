@@ -283,5 +283,9 @@ $route['admin/uploading'] = 'admin/FilesController/recive_file';
 
 $route['use/inscripcion'] = 'InfoForUseController/index';
 $route['use/inscripciones'] = 'dashboard/EstadisticInscripcionesController/report';
+$route['stadistics/inscritos'] = 'dashboard/EstadisticInscripcionesController/report';
+$route['stadistics/inscritos/programa'] = 'dashboard/EstadisticInscripcionesController/inscritosPorPrograma';
+$route['stadistics/inscritos/exalumnos/programa'] = 'dashboard/EstadisticInscripcionesController/exalumnosInscritosPorPrograma';
+$route['stadistics/inscritos/genero'] = 'dashboard/EstadisticInscripcionesController/porGenero';
 
 $route['solicitud/files_state/(:num)'] = 'admin/InscripcionController/get_estado_archivos_solicitud_include_person_files/$1';
