@@ -41,7 +41,7 @@
       <div class=""><!-- container -->
           <div class="panel-body table-responsive" id="listadoregistros">
 					<div class='row'>
-					<!---->
+					<!--FILTROS FINANZAS-->
 					<div class="col-md-3">
 						<div class="box box-success box-solid collapsed-box">
 							<div class="box-header with-border">
@@ -71,7 +71,38 @@
 							<!-- /.box -->
 						</div>
 					</div>
-					<!---->
+					<!--FILTROS FINANZAS-->
+					<!--FILTROS ADMISION-->
+					<div class="col-md-3">
+						<div class="box box-solid collapsed-box">
+							<div class="box-header with-border">
+								<h3 class="box-title">Filtros Admision</h3>
+
+								<div class="box-tools pull-right">
+									<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+									</button>
+								</div>
+								<!-- /.box-tools -->
+							</div>
+							<!-- /.box-header -->
+							<div class="box-body" style="">
+								<div class="row">
+									<div class="col-md-12">
+										<label class="label-checkbox" for="select2-estado-admision">Estados admision</label>
+										<select data-placeholder="Seleccione estado" name="filtro_estado_admision[]" multiple class="chosen-select" id="select2-estado-admision">
+										
+											<?php for ($i=0; $i < count($estados_admision); $i++){ ?>
+												<option value="<?=$estados_admision[$i]["id"];?>" selected><?=$estados_admision[$i]["nombre"];?></option>
+											<?php } ?>
+										</select>
+									</div>
+								</div>
+								<!-- /.box-body -->
+							</div>
+							<!-- /.box -->
+						</div>
+					</div>
+					<!--FILTROS ADMISION-->
 					<div class='col-sm-2'>
 						<input class="conic" type="checkbox" name="slct_anulados" value="true" id="slct_anulados">
 						<label class="label-checkbox" for="slct_anulados">Incluir Anulados</label>
@@ -85,7 +116,22 @@
 						</select>
 					</div>
               
-            </div>
+						</div>
+						<div>
+							<div>
+								Ocultar/Mostrar:
+								 <a class="toggle-vis" data-column="1">Nombres</a> -
+									<a class="toggle-vis" data-column="2">Apellidos</a> -
+									 <a class="toggle-vis" data-column="3">Programa</a> - 
+									 <a class="toggle-vis" data-column="4">Documento</a> - 
+									 <a class="toggle-vis" data-column="5">Correo</a>-
+									 <a class="toggle-vis" data-column="6">Telefonos</a>-
+									 <a class="toggle-vis" data-column="7">Fecha de Registro</a>-
+									 <a class="toggle-vis" data-column="8">Finanzas</a>-
+									 <a class="toggle-vis" data-column="9">Anulado</a>-
+									 <a class="toggle-vis" data-column="10">Admision</a>-
+							</div>
+						</div>
             <table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
               <thead>
                 <th>Opciones</th>
@@ -98,6 +144,7 @@
 								<th>Fecha de Registro</th>
 								<th>Finanzas</th>
 								<th>Estado</th>
+								<th>Admision</th>
               </thead>
               <tfoot>
               <th>Opciones</th>
@@ -110,6 +157,7 @@
 								<th>Fecha de Registro</th>
                 <th>Finanzas</th>
                 <th>Estado</th>
+                <th>Admision</th>
               </tfoot>
             </table>
           </div>
@@ -236,7 +284,7 @@
 
 <script>
 	$('#select2-estado-finanzas').select2();
-	
+	$('#select2-estado-admision').select2();
 
 </script>
 </body>

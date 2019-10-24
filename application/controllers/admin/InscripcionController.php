@@ -27,6 +27,7 @@ class InscripcionController extends CI_Controller {
 		$this->load->model('FinanzasTipoAuthorization_model');
 		$this->load->model('User_model');
 		$this->usuario_actual=$this->nativesession->get('idUsuario');
+		$this->load->model('EstadoAdmisionInscripcion_model');
 		
 	}
 
@@ -46,6 +47,7 @@ class InscripcionController extends CI_Controller {
 			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
 			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
 			$data['estados_finanzas']=$this->estado_finanzas;
+			$data['estados_admision']=$this->EstadoAdmisionInscripcion_model->all();
 			$this->load->view('dashboard_inscritos',$data);
 		}else
 		{
@@ -165,11 +167,14 @@ class InscripcionController extends CI_Controller {
 		$deletes=(boolean)($columns[8]["search"]["value"]==='true');
 		$column_nine=$columns[9]["search"]["value"];
 		$estados=($column_nine=="")?[]:explode(',',$column_nine);
-		
+
+		$value_estados_admision=$columns[10]["search"]["value"];
+		$filters_values_estados_admision=($value_estados_admision=="")?[]:explode(',',$value_estados_admision);
 		$this->load->model('Auth_Permisions');
 		
 		$can_edit_finanzas=$this->Auth_Permisions->can('change_inscripcion_estado_finanzas');
 		$this->Inscripcion_model->global_stado_finanzas=$estados;
+		$this->Inscripcion_model->filter_estado_admision_ids=$filters_values_estados_admision;
 
 		if(strlen($search["value"])>0){
 			
@@ -181,6 +186,7 @@ class InscripcionController extends CI_Controller {
 			$cantidad = $this->Inscripcion_model->get_count($deletes);
 			$rspta = $this->Inscripcion_model->get_page($start,$length,$deletes);
 		}
+		$query=$this->db->last_query();
 		$data = Array();
 		$i=0;
 		foreach ($rspta as $value) {
@@ -210,7 +216,8 @@ class InscripcionController extends CI_Controller {
 							).
 							$this->HTML_details_icon($value["id_inscripcion"],$value["estado_finanzas_id"]).
 						"</div>",
-				"9" => $is_anulated?"<span class='label label-success'>Cargado</span>":"<span class='label label-danger'>Anulado</span>"
+				"9" => $is_anulated?"<span class='label label-success'>Cargado</span>":"<span class='label label-danger'>Anulado</span>",
+				"10" => array("id"=>$value["estado_admisions_id"],"nombre"=>$value["nombre_estado_admision"])
 			);
 		}
 		$results = array(
@@ -218,7 +225,7 @@ class InscripcionController extends CI_Controller {
 			"iTotalRecords" => $cantidad, //enviamos el total de registros al datatables
 			"iTotalDisplayRecords" => $cantidad, //enviamos total de registros a visualizar
 			"aaData" => $data,
-			"query"=>$this->db->last_query()
+			"query"=>$this->Inscripcion_model->filter_estado_admision_ids
 		);
 		echo json_encode($results);
 	}
