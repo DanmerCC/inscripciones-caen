@@ -20,10 +20,7 @@ class EstadisticInscripcionesController extends MY_Controller
 		$fechaFin=$this->input->post('fecha_fin');
 
 		$data=$this->EstadisticsInscripcion_model->inscritosPorFechas($fechaInicio,$fechaFin,$programas_ids);
-		echo '<pre>';
-		print_r($this->db->last_query());
-		echo '</pre>';
-		exit;
+
 		$fechas=[];
 		for ($i=0; $i < count($data); $i++) { 
 			if(!array_key_exists($data[$i]["fecha"],$fechas)){
