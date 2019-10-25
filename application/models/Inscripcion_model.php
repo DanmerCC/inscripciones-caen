@@ -24,6 +24,8 @@ class Inscripcion_model extends CI_Model
 
 	public $array_estado_finanzas=[];
 
+	public $filter_estado_admision_ids=[];
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -38,6 +40,7 @@ class Inscripcion_model extends CI_Model
 			$this->deleted=>NULL
 		);
 		$this->load->model('EstadoFinanzas_model');
+		$this->load->model('EstadoAdmisionInscripcion_model');//EstadoAdmisionInscripcion_model
 		$this->array_estado_finanzas=$this->EstadoFinanzas_model->all();
 	}
 
@@ -122,7 +125,28 @@ class Inscripcion_model extends CI_Model
 	* get a page only no deleted marked
 	*/
 	public function get_page($start,$limit = 10,$deletes=true){
-		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,ins.'.$this->estado_finanzas_id.',ef.nombre as estado_finanzas,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.documento,a.email,a.celular,a.telefono_casa,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created ,ins.id_inscripcion');
+		$this->db->select(
+			's.idSolicitud,'.
+			'ins.id_inscripcion,'.
+			'ins.deleted as f_anulado,'.
+			'ins.'.$this->estado_finanzas_id.','.
+			'ef.nombre as estado_finanzas,'.
+			'c.id_curso,'.
+			'c.nombre as nombre_curso,'.
+			'c.numeracion,'.
+			'a.nombres as nombres,'.
+			'a.documento,'.
+			'a.email,'.
+			'a.celular,'.
+			'a.telefono_casa,'.
+			'tc.nombre as tipo_curso,'.
+			'a.apellido_paterno,'.
+			'a.apellido_materno,'.
+			'u.acceso as nombre_user,'.
+			'ins.created as created ,'.
+			'ins.id_inscripcion,'.
+			'ea.id as estado_admisions_id,'.
+			'ea.nombre as nombre_estado_admision');
 		$this->db->from($this->table.' ins');
 		$this->dtq_join_solicitud_usuario_curso_tipo_curso_alumno();
 		
@@ -133,7 +157,8 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
-		$this->dt_query_datatable_filter_array();
+		$this->dt_query_datatable_filter_array('ins');
+		$this->query_part_for_filter_by_estado_admision('ins');
 		
 		$this->db->limit($limit,$start);
 		
@@ -151,7 +176,8 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
-		$this->dt_query_datatable_filter_array();
+		$this->dt_query_datatable_filter_array('ins');
+		$this->query_part_for_filter_by_estado_admision('ins');
 		$result=$this->db->get()->result_array();
 		if(count($result)==1){
 			return $result[0]['count'];
@@ -164,7 +190,28 @@ class Inscripcion_model extends CI_Model
 	 * SELECT ins.*,a.nombres,a.apellido_paterno,a.apellido_materno FROM  inscripcion ins left JOIN solicitud s ON ins.solicitud_id = s.idSolicitud left JOIN curso c on c.id_curso = s.programa left JOIN alumno a on s.alumno = a.id_alumno LIMIT ?,?
 	 */
 	public function get_page_and_filter($start,$limit,$text,$deletes=true){
-		$this->db->select('s.idSolicitud,ins.id_inscripcion,ins.deleted as f_anulado,ins.'.$this->estado_finanzas_id.',ef.nombre as estado_finanzas,c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.documento,a.email,a.celular,a.telefono_casa,tc.nombre as tipo_curso,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,ins.created as created,ins.id_inscripcion');
+		$this->db->select(
+			's.idSolicitud,'.
+			'ins.id_inscripcion,'.
+			'ins.deleted as f_anulado,'.
+			'ins.'.$this->estado_finanzas_id.','.
+			'ef.nombre as estado_finanzas,'.
+			'c.id_curso,'.
+			'c.nombre as nombre_curso,'.
+			'c.numeracion,'.
+			'a.nombres as nombres,'.
+			'a.documento,'.
+			'a.email,'.
+			'a.celular,'.
+			'a.telefono_casa,'.
+			'tc.nombre as tipo_curso,'.
+			'a.apellido_paterno,'.
+			'a.apellido_materno,'.
+			'u.acceso as nombre_user,'.
+			'ins.created as created,'.
+			'ins.id_inscripcion,'.
+			'ea.id as estado_admisions_id,'.
+			'ea.nombre as nombre_estado_admision');
 		$this->db->from($this->table.' ins');
 		$this->db->group_start();
 			$this->db->like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
@@ -180,7 +227,8 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
-		$this->dt_query_datatable_filter_array();
+		$this->dt_query_datatable_filter_array('ins');
+		$this->query_part_for_filter_by_estado_admision('ins');
 		$this->db->limit($limit,$start);
         return resultToArray($this->db->get());
 	}
@@ -202,7 +250,9 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
-		$this->dt_query_datatable_filter_array();
+		$this->dt_query_datatable_filter_array('ins');
+		$this->query_part_for_filter_by_estado_admision('ins');
+		
 
 		$result=$this->db->get()->result_array();
 		if(count($result)==1){
@@ -501,7 +551,7 @@ class Inscripcion_model extends CI_Model
 		return ($this->db->affected_rows()==1);
 	}
 
-	function dt_query_datatable_filter_array(){
+	function dt_query_datatable_filter_array($prefix=null){
 
 		$ids=c_extract($this->array_estado_finanzas,'id');
 		if(count($this->global_stado_finanzas)>0){
@@ -509,9 +559,37 @@ class Inscripcion_model extends CI_Model
 			for ($i=0; $i < count($this->global_stado_finanzas); $i++) {
 				
 				if(in_array($this->global_stado_finanzas[$i],$ids)){
-					$this->db->or_where($this->estado_finanzas_id,$this->global_stado_finanzas[$i]);
+					if($prefix==null){
+						$this->db->or_where($this->estado_finanzas_id,$this->global_stado_finanzas[$i]);
+					}else{
+						$this->db->or_where($prefix.'.'.$this->estado_finanzas_id,$this->global_stado_finanzas[$i]);
+					}
 				}else{
 					throw new Exception("Error no se detecto un estado validado");
+				}
+			}
+			$this->db->group_end();
+		}else{
+			
+		}
+		
+	}
+
+	function query_part_for_filter_by_estado_admision($prefix=null){
+
+		$ids=c_extract($this->EstadoAdmisionInscripcion_model->all(),'id');
+		if(count($this->filter_estado_admision_ids)>0){
+			$this->db->group_start();
+			for ($i=0; $i < count($this->filter_estado_admision_ids); $i++) {
+				
+				if(in_array($this->filter_estado_admision_ids[$i],$ids)){
+					if($prefix==null){
+						$this->db->or_where($this->estado_admision_id,$this->filter_estado_admision_ids[$i]);
+					}else{
+						$this->db->or_where($prefix.'.'.$this->estado_admision_id,$this->filter_estado_admision_ids[$i]);
+					}
+				}else{
+					throw new Exception("Error no se detecto un estado admision validado");
 				}
 			}
 			$this->db->group_end();

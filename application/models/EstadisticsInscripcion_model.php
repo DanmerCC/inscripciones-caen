@@ -51,9 +51,46 @@ class EstadisticsInscripcion_model extends CI_Model
 		if(count($programa_ids)>0){
 			$this->db->where_in("solicitud.programa",$programa_ids);
 		}
+		
 		$this->db->group_by('DATE(inscripcion.created)');
 		$this->db->group_by('solicitud.programa');
 		
+		return $this->db->get()->result_array();
+	}
+
+	public function inscritosPorPrograma(){
+		$this->db->select('COUNT(solicitud.idSolicitud) as cantidad,alumno.si_militar,solicitud.programa,')
+		->from('alumno')
+		->join('solicitud','solicitud.alumno=alumno.id_alumno')
+		->join('inscripcion','inscripcion.solicitud_id=solicitud.idSolicitud')
+		->group_by('alumno.si_militar,solicitud.programa');
+
+		return $this->db->get()->result_array();
+	}
+
+	public function exalumnosPorPrograma(){
+		$this->db->select(
+			'COUNT(inscripcion.id_inscripcion) as cantidad,'.
+			'alumno.curso_caen,'.
+			'alumno.curso_maestria,'.
+			'solicitud.programa,'
+		)
+		->from('alumno')
+		->join('solicitud','solicitud.alumno=alumno.id_alumno')
+		->join('inscripcion','inscripcion.solicitud_id = solicitud.idSolicitud')
+		->group_by('alumno.curso_caen,alumno.curso_maestria ,solicitud.programa');
+		return $this->db->get()->result_array();
+	}
+
+	function porGenero(){
+		$this->db->select(
+			'COUNT(inscripcion.id_inscripcion) as cantidad,'.
+			'alumno.genero'
+		)
+		->from('alumno')
+		->join('solicitud','solicitud.alumno =alumno.id_alumno')
+		->join('inscripcion','inscripcion.solicitud_id = solicitud.idSolicitud')
+		->group_by('alumno.genero');
 		return $this->db->get()->result_array();
 	}
 }

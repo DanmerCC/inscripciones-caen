@@ -25,6 +25,7 @@ function cargarDataTable(){
 			},
 	"initComplete":function( settings, json){
 		createRouteExport();
+		tabla.column(8).visible(false)
 	},
 	"bDestroy": true,
 	"iDisplayLength": 15, // paginacion
@@ -48,11 +49,34 @@ function cargarDataTable(){
             "next": "Siguiente",
             "previous": "Anterior"
         }
-    }, //ordenar(columna, orden)
+	}, //ordenar(columna, orden)
+	"columnDefs": [ {
+		"targets": 10,
+		"render": function ( data, type, row, meta ) {
+		  return getHtmlEstadoAdmision(data);
+		}
+	  } ]
 }).DataTable();
+
+$('a.toggle-vis').on( 'click', function (e) {
+		e.preventDefault();
+
+		// Get the column API object
+		var column = tabla.column( $(this).attr('data-column') );
+
+		// Toggle the visibility
+		column.visible( ! column.visible() );
+	} );
 }
 
 $(document).ready(function(){
+
+	$('#select2-estado-admision').change((evt)=>{
+		var select=$('#select2-estado-admision');
+		//console.log(select.val());
+		tabla.column(10).search(select.val()).draw();
+		createRouteExport();
+	})
 
 	$('#select2-estado-finanzas').change((evt)=>{
 		var select=$('#select2-estado-finanzas');
@@ -63,7 +87,7 @@ $(document).ready(function(){
 
 	$("#slct_anulados").change(()=>{
 		var input_select=document.getElementById('slct_anulados');
-		console.log(input_select.checked)
+		//console.log(input_select.checked)
 		tabla.column(8).search(input_select.checked).draw();
 		createRouteExport();
 		//tabla.ajax.reload(null,false);
@@ -449,4 +473,25 @@ function getTiposAuthorizaciones(successCallBakc){
 		dataType: "json",
 		success: successCallBakc
 	});
+}
+
+function getHtmlEstadoAdmision(estado){
+	if(estado.id==1){
+		return label_success(estado.nombre)
+	}
+	if(estado.id==2){
+		return label_danger(estado.nombre)
+	}
+	
+		return label(estado.nombre)
+}
+ 
+function label_success(text){
+	return `<span class="label label-success">${text}</span>`; 
+}
+function label_danger(text){
+	return `<span class="label label-success">${text}</span>`; 
+}
+function label(text){
+	return `<span class="label">${text}</span>`; 
 }
