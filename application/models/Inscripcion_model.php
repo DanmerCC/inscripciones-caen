@@ -607,4 +607,16 @@ class Inscripcion_model extends CI_Model
 		$this->db->update($this->table,$data);
 		return $this->db->affected_rows()==1;
 	}
+
+	function getOneOrFail($id){
+		$this->db->select()
+		->from($this->table)
+		->where($this->id,$id);
+		$result=$this->db->get();
+		if($result->num_rows()==1){
+			return $result->result_array()[0];
+		}else{
+			throw new Exception("Error al buscar la inscripcion con id".$id);
+		}
+	}
 }
