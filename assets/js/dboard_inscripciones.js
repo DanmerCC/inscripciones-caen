@@ -25,6 +25,7 @@ function cargarDataTable(){
 			},
 	"initComplete":function( settings, json){
 		createRouteExport();
+		tabla.column(8).visible(false)
 	},
 	"bDestroy": true,
 	"iDisplayLength": 15, // paginacion
@@ -58,14 +59,14 @@ function cargarDataTable(){
 }).DataTable();
 
 $('a.toggle-vis').on( 'click', function (e) {
-	e.preventDefault();
+		e.preventDefault();
 
-	// Get the column API object
-	var column = tabla.column( $(this).attr('data-column') );
+		// Get the column API object
+		var column = tabla.column( $(this).attr('data-column') );
 
-	// Toggle the visibility
-	column.visible( ! column.visible() );
-} );
+		// Toggle the visibility
+		column.visible( ! column.visible() );
+	} );
 }
 
 $(document).ready(function(){
