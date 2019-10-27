@@ -299,6 +299,9 @@ $route['stadistics/inscritos/genero'] = 'dashboard/EstadisticInscripcionesContro
 /***Segun edades */
 $route['stadistics/inscritos/edades'] = 'dashboard/EstadisticInscripcionesController/getInscritosPorCicloDeVida';
 
+/** Militares civiles */
+$route['stadistics/inscritos/militares'] = 'dashboard/EstadisticInscripcionesController/getDataMilitars';
+
 $route['solicitud/files_state/(:num)'] = 'admin/InscripcionController/get_estado_archivos_solicitud_include_person_files/$1';
 
 

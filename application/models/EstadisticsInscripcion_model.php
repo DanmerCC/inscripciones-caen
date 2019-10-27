@@ -93,4 +93,14 @@ class EstadisticsInscripcion_model extends CI_Model
 		->group_by('alumno.genero');
 		return $this->db->get()->result_array();
 	}
+
+	function bySi_militarColumn(){
+		$this->db->select("COUNT(inscripcion.id_inscripcion)as cantidad,IF(alumno.si_militar='0','MILITAR','CIVIL') AS tipo");
+		$this->db->from('alumno');
+		$this->db->join('solicitud','solicitud.alumno=alumno.id_alumno');
+		$this->db->join('inscripcion','inscripcion.solicitud_id=solicitud.idSolicitud');
+		$this->db->group_by('si_militar');
+		$result=$this->db->get();
+		return $result->result_array();
+	}
 }

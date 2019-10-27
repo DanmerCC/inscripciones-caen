@@ -121,6 +121,10 @@ class EstadisticInscripcionesController extends MY_Controller
 		]);
 	}
 
+	function getDataMilitars(){
+		return $this->response($this->EstadisticsInscripcion_model->bySi_militarColumn());
+	}
+
 	function addHeaderCrosOriginHeader(){
 		header('Content-Type: application/json');
 		header("Access-Control-Allow-Origin: *");
