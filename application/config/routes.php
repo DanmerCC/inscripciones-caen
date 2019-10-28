@@ -302,6 +302,9 @@ $route['stadistics/inscritos/edades'] = 'dashboard/EstadisticInscripcionesContro
 /** Militares civiles */
 $route['stadistics/inscritos/militares'] = 'dashboard/EstadisticInscripcionesController/getDataMilitars';
 
+/** Militares civiles */
+$route['stadistics/inscritos/procedencia'] = 'dashboard/EstadisticInscripcionesController/porLugarDeProcedencia';
+
 $route['solicitud/files_state/(:num)'] = 'admin/InscripcionController/get_estado_archivos_solicitud_include_person_files/$1';
 
 

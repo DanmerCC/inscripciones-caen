@@ -41,25 +41,8 @@ class EstadisticInscripcionesController extends MY_Controller
 	}
 	
 	function inscritosPorPrograma(){
-		$data=$this->EstadisticsInscripcion_model->inscritosPorPrograma();
-		$result["militares"]=[];
-		$result["civiles"]=[];
-		for ($i=0; $i < count($data); $i++) {
-			if($data[$i]["si_militar"]=="0"){
-				array_push($result["civiles"],[
-					"programa_id"=>$data[$i]["programa"],
-					"cantidad"=>$data[$i]["cantidad"]
-				]);
-			}elseif($data[$i]["si_militar"]=="1"){
-				array_push($result["militares"],[
-					"programa_id"=>$data[$i]["programa"],
-					"cantidad"=>$data[$i]["cantidad"]
-				]);
-			}
-			
-		}
 		
-		$this->response($result);
+		return $this->response($this->EstadisticsInscripcion_model->porPrograma());
 	}
 	/**
 	 * Cuantos con exalumnos del caen en los inscritos
@@ -123,6 +106,10 @@ class EstadisticInscripcionesController extends MY_Controller
 
 	function getDataMilitars(){
 		return $this->response($this->EstadisticsInscripcion_model->bySi_militarColumn());
+	}
+
+	function porLugarDeProcedencia(){
+		return $this->response($this->EstadisticsInscripcion_model->porLugarDeProcedencia());
 	}
 
 	function addHeaderCrosOriginHeader(){
