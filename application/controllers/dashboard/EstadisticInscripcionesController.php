@@ -11,7 +11,9 @@ class EstadisticInscripcionesController extends MY_Controller
 		$this->load->library('Nativesession');
         $this->load->helper('url');
         $this->load->model('Informes_model');
-        $this->load->model('EstadisticsInscripcion_model');
+		$this->load->model('EstadisticsInscripcion_model');
+		$this->addHeaderCrosOriginHeader();
+		
     }
     
     public function report(){
@@ -20,10 +22,7 @@ class EstadisticInscripcionesController extends MY_Controller
 		$fechaFin=$this->input->post('fecha_fin');
 
 		$data=$this->EstadisticsInscripcion_model->inscritosPorFechas($fechaInicio,$fechaFin,$programas_ids);
-		echo '<pre>';
-		print_r($this->db->last_query());
-		echo '</pre>';
-		exit;
+
 		$fechas=[];
 		for ($i=0; $i < count($data); $i++) { 
 			if(!array_key_exists($data[$i]["fecha"],$fechas)){
@@ -73,5 +72,57 @@ class EstadisticInscripcionesController extends MY_Controller
 
 	function porGenero(){
 		return $this->response($this->EstadisticsInscripcion_model->porGenero());
+	}
+
+	/***
+	 * 
+	 */
+	function getInscritosPorCicloDeVida(){
+		$this->db->select(
+			"COUNT(inscripcion.id_inscripcion) as cantidad,".
+			"TIMESTAMPDIFF(YEAR, alumno.fecha_nac, CURDATE()) as edad"
+		);
+		$this->db->from('alumno');
+		$this->db->join('solicitud','alumno.id_alumno = solicitud.alumno');
+		$this->db->join('inscripcion','inscripcion.solicitud_id = solicitud.idSolicitud');
+		$this->db->group_by('edad');
+		$result=$this->db->get()->result_array();
+		$cantidadDeJovenes=0;
+		$cantidadDeAdultos=0;
+		$cantidadDeAdultosMayores=0;
+
+		$RangeJovenes=[
+			'start'=>18,
+			'end'=>35
+		];
+		$RangeAdultos=[
+			'start'=>35,
+			'end'=>50
+		];
+		$RangeAdultosMayor=[
+			'start'=>50,
+			'end'=>200
+		];
+		for ($i=0; $i <count($result); $i++) { 
+			if($result[$i]["edad"]>=$RangeJovenes['start']&&$result[$i]["edad"]>=$RangeJovenes['end']){
+				$cantidadDeJovenes++;
+			}
+			if($result[$i]["edad"]>=$RangeAdultos['start']&&$result[$i]["edad"]>=$RangeAdultos['end']){
+				$cantidadDeAdultos++;
+			}
+			if($result[$i]["edad"]>=$RangeAdultosMayor['start']&&$result[$i]["edad"]>=$RangeAdultosMayor['end']){
+				$cantidadDeAdultosMayores++;
+			}
+		}
+		$this->response([
+			'jovens'=>$cantidadDeJovenes,
+			'adultos'=>$cantidadDeAdultos,
+			'adultoMayor'=>$cantidadDeAdultosMayores,
+		]);
+	}
+
+	function addHeaderCrosOriginHeader(){
+		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
 	}
 }
