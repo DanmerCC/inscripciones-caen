@@ -19,7 +19,7 @@ class MY_Controller extends CI_Controller
         $this->load->model('Permiso_model');
         $this->load->model('Apitoken_model');
     }
-    
+
     function response($data,$status=200){
 
 

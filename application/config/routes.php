@@ -301,6 +301,4 @@ $route['stadistics/inscritos/edades'] = 'dashboard/EstadisticInscripcionesContro
 
 $route['solicitud/files_state/(:num)'] = 'admin/InscripcionController/get_estado_archivos_solicitud_include_person_files/$1';
 
-
-
-
+$route['admin/entrevista/byinscripcion/(:num)'] = 'admin/EntrevistaController/byInscripcion/$1';

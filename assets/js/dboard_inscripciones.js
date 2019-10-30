@@ -380,14 +380,14 @@ function makeTemplateIconsDocuments(nombre,estado,identifier,nameFile){
 function cargarData(id){
 	
 	var idquerytarget=this.target;
-	console.log(id);
+	//console.log(id);
     $.ajax({
         type: "get",
         url: "/secure/inscrito/"+id,
         data: "",
         dataType: "json",
         success: function (response) {
-			console.log(response);
+			//console.log(response);
             if(response.status=="NO FOUND"){
                 alert("Ocurrio un error. El alumno no pudo ser encontrado");
             }else{
@@ -417,6 +417,7 @@ function cargarData(id){
 				}
 				$(idquerytarget+' #mdl-icons-filesOfSol').html(htmlfilesOfSol);
 				$(idquerytarget+' #mdl-icons-documents').html(htmlDocuments);
+				$("#mdl_datos_inscritos").modal('show');
             }
             
 		},

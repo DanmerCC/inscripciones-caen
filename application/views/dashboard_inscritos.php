@@ -272,6 +272,9 @@
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script> -->
 <script src="/assets/js/global_vars.js"></script>
 <script src="/dist/js/jquery-externs/jquery.dataTables.min.js"></script>
+<?php
+	$this->load->view('modals/detalles_entrevistas'); 
+?>
 <script src="/dist/js/jquery-externs/bootbox.min.js"></script>
 <script src="/dist/js/jquery-externs/dataTables.buttons.min.js"></script>
 <script src="/dist/js/jquery-externs/buttons.flash.min.js"></script>
