@@ -4,7 +4,7 @@
  */
 class InterviewProgramed_model extends MY_Model
 {
-	private $table='';
+	private $table='intvw_programmed_interviews';
 	private $id='id';
 
 	private $alumno_id='alumno_id';
@@ -42,6 +42,28 @@ class InterviewProgramed_model extends MY_Model
 		$this->db->trans_commit();
 		$correct_query=$this->db->affected_rows()==1;
 		return $correct_query;
+	}
+
+	function byIdInscripcion($idInscripcion){
+		$this->db->select();
+		$this->db->from($this->table);
+		$this->db->where($this->inscripcion_id,$idInscripcion);
+		$result=$this->db->get();
+		return $result->result_array();
+	}
+
+	function lastedById($idInscripcion){
+		$this->db->select();
+		$this->db->from($this->table);
+		$this->db->where($this->inscripcion_id,$idInscripcion);
+		$this->db->limit(1);
+		$this->db->order_by($this->id,'desc');
+		$result=$this->db->get();
+		if($result->num_rows()==1){
+			return $result->result_array()[0];
+		}else{
+			return new stdClass;
+		}
 	}
 
 }

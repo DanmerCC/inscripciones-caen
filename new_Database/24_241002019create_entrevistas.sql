@@ -1,4 +1,4 @@
-CREATE TABLE `caenedup_caen2`.`intvw_state_programmed_interviews` (
+CREATE TABLE `intvw_state_programmed_interviews` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`nombre` VARCHAR(50) NOT NULL,
 	`descripcion` VARCHAR(150) NOT NULL,
@@ -9,10 +9,10 @@ INSERT INTO
 	`intvw_state_programmed_interviews` (`id`, `nombre`, `descripcion`)
 VALUES
 	(1, 'pendiente', 'estado por defecto'),
-	(2,'realizada','se marca al empezar la entrevista') 
+	(2,'realizada','se marca al empezar la entrevista');
 	
 	
-CREATE TABLE `caenedup_caen2`.`intvw_programmed_interviews` (
+CREATE TABLE `intvw_programmed_interviews` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`alumno_id` INT NOT NULL,
 	`inscripcion_id` INT NOT NULL,

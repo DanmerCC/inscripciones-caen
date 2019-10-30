@@ -289,3 +289,6 @@ $route['stadistics/inscritos/exalumnos/programa'] = 'dashboard/EstadisticInscrip
 $route['stadistics/inscritos/genero'] = 'dashboard/EstadisticInscripcionesController/porGenero';
 
 $route['solicitud/files_state/(:num)'] = 'admin/InscripcionController/get_estado_archivos_solicitud_include_person_files/$1';
+
+
+$route['admin/entrevista/byinscripcion/(:num)'] = 'admin/EntrevistaController/byInscripcion/$1';
