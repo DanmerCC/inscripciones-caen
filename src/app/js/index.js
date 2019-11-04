@@ -4,6 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import esLocale from '@fullcalendar/core/locales/es';
+import { ENOBUFS } from 'constants';
 var entrevistas = [];
 var calendar;
 document.addEventListener('DOMContentLoaded', function () {
@@ -64,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				//cargar_modal_detalles_entrevistas()
 			},
 			eventClick:function(infoEvent){
+				console.log(infoEvent)
 				if(typeof cargar_modal_detalles_entrevistas=='undefined'){
 					console.log("Error al llamar a  cargar_modal_detalles_entrevistas ")
 				}else{
@@ -89,11 +91,18 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 			disableResizing:false,
 			eventReceive:function(info){
+				console.log(info)
 				createEntrevista(info.draggedEl.dataset.idinscripcion,formatDate(info.event.start),function(response){
+					//info.event.id=info.draggedEl.dataset.idinscripcion;
+					console.log(info.event.id)
+					console.log(info.draggedEl.dataset.idinscripcion)
 					response=JSON.parse(response)
 					if(response.status=='OK'){
 						info.draggedEl.remove()
 						calendar.addEvent(makeEvent(response.data))
+						
+						console.log(info.event.remove())
+						calendar.render()
 					}else{
 						alert("Error al intentar crear entrevista")
 						console.log("Error al eliminar una entrevistas")
@@ -169,7 +178,7 @@ function getNextColor(){
 		  title  : entrevista["nombres"]+' '+entrevista["apellido_paterno"],
 		  start  : entrevista["fecha_programado"],
 		  end    : entrevista["fecha_programado"],
-		  color: '#378006'
+		  color: entrevista["color_estado"]
 		}
   }
   
@@ -253,10 +262,10 @@ function getNextColor(){
 
   function getDraggableItem(data){
 	  return `
-	  	<li class="item-interview item " data-event='${buildableToDataEvent(data)}' data-idinscripcion='${data.id_inscripcion}>
+	  	<li class="item-interview item " data-event='${buildableToDataEvent(data)}' data-idinscripcion='${data.id_inscripcion}'>
 			<div class="" '>
 				<div class="product-img">
-					<img src="dist/img/default-50x50.gif" alt="${data.nombre_tipo_curso}">
+					<img src="/dist/img/avatar5.png" alt="${data.nombre_tipo_curso}">
 				</div>
 				<div class="product-info">
 					<a href="javascript:void(0)" class="product-title">${data.nombre_curso}

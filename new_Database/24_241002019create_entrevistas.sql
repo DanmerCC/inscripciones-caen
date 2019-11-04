@@ -28,10 +28,24 @@ CREATE TABLE `intvw_programmed_interviews` (
 
 ALTER TABLE `intvw_programmed_interviews` ADD UNIQUE(`inscripcion_id`);
 
-ALTER TABLE `intvw_programmed_interviews`
-  ADD CONSTRAINT `fk_intvw_programmed_interviews_alumno_id` FOREIGN KEY (`alumno_id`) REFERENCES `alumno` (`id_alumno`),
-  ADD CONSTRAINT `fk_intvw_programmed_interviews_inscripcion_id` FOREIGN KEY (`inscripcion_id`) REFERENCES `inscripcion` (`id_inscripcion`),
-  ADD CONSTRAINT `fk_intvw_programmed_interviews_estado_id` FOREIGN KEY (`estado_id`) REFERENCES `intvw_state_programmed_interviews` (`id`);
+ALTER TABLE
+	`intvw_programmed_interviews`
+ADD
+	CONSTRAINT `fk_intvw_programmed_interviews_alumno_id` FOREIGN KEY (`alumno_id`) REFERENCES `alumno` (`id_alumno`),
+ADD
+	CONSTRAINT `fk_intvw_programmed_interviews_inscripcion_id` FOREIGN KEY (`inscripcion_id`) REFERENCES `inscripcion` (`id_inscripcion`),
+ADD
+	CONSTRAINT `fk_intvw_programmed_interviews_estado_id` FOREIGN KEY (`estado_id`) REFERENCES `intvw_state_programmed_interviews` (`id`);
+
+
+--INICIO DE SCRIPT 
+
+ALTER TABLE `inscripcion`  ADD `estado_admision_id` int(11) NOT NULL DEFAULT '1';
+
+ALTER TABLE
+	`inscripcion`
+ADD
+	CONSTRAINT `fk_inscripciones_estado_admision_id` FOREIGN KEY (`estado_admision_id`) REFERENCES `intvw_state_programmed_interviews` (`id`);
 
 ALTER TABLE `inscripcion`  ADD `state_interview_id` INT NULL DEFAULT NULL  AFTER `estado_admision_id`;
 ALTER TABLE `inscripcion` ADD INDEX(`state_interview_id`);
@@ -56,3 +70,8 @@ CREATE TABLE `adms_evaluaciones` (
 	INDEX (`programa_id`),
 	INDEX (`created_user_id`)
 ) ENGINE = InnoDB;
+
+
+ALTER TABLE `intvw_state_programmed_interviews` ADD `hex_color` VARCHAR(50) NOT NULL AFTER `descripcion`;
+UPDATE `intvw_state_programmed_interviews` SET `hex_color` = '#378006' WHERE `intvw_state_programmed_interviews`.`id` = 2;
+UPDATE `intvw_state_programmed_interviews` SET `hex_color` = '#DB8E10' WHERE `intvw_state_programmed_interviews`.`id` = 1;

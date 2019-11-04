@@ -69,9 +69,13 @@ class InterviewProgramed_model extends MY_Model
 	}
 
 	function getAll(){
-		$this->db->select($this->table.'.*,alumno.nombres,alumno.apellido_paterno');
+		$this->db->select($this->table.'.*,alumno.nombres,alumno.apellido_paterno,'.
+							'intvw_state_programmed_interviews.nombre as nombre_estado,'.
+							'intvw_state_programmed_interviews.hex_color as color_estado'
+							);
 		$this->db->from($this->table);
 		$this->db->join('alumno','alumno.id_alumno='.$this->table.'.alumno_id');
+		$this->db->join('intvw_state_programmed_interviews','intvw_state_programmed_interviews.id='.$this->table.'.estado_id');
 		$result=$this->db->get();
 		return $result->result_array();
 	}
@@ -144,7 +148,11 @@ class InterviewProgramed_model extends MY_Model
 		$this->db->join('alumno','alumno.id_alumno=solicitud.alumno');
 		$this->db->join('curso','curso.id_curso=solicitud.programa');
 		$this->db->join('tipo_curso','curso.idTipo_curso=tipo_curso.idTipo_curso');
-		$this->db->where_not_in('inscripcion.id_inscripcion',$all_programed_ids);
+
+		if(count($all_programed_ids)>0){
+			$this->db->where_not_in('inscripcion.id_inscripcion',$all_programed_ids);
+		}
+
 		if($filter_programa_id!=null){
 			$this->db->where('solicitud.programa',$filter_programa_id);
 		}
