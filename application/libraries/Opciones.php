@@ -107,7 +107,18 @@ class Opciones
                 ],
                 "active"=>false
             ];
-
+	$this->opciones['entrevistas']=[
+                "text"=>"Entrevistas",
+                "href"=>"/administracion/vista/entrevistas",
+                "submenu"=>[
+                    [
+                        "text"=>"Todos",
+                        "atributos"=>"id=''"
+                    ]
+                    
+                ],
+                "active"=>false
+            ];
         array_push($this->arreglo, $this->opciones['alumnos']);
         array_push($this->arreglo, $this->opciones['matriculas']);
         array_push($this->arreglo, $this->opciones['programas']);
@@ -116,6 +127,7 @@ class Opciones
         array_push($this->arreglo, $this->opciones['informes']);
 		array_push($this->arreglo, $this->opciones['reportes']);
 		array_push($this->arreglo, $this->opciones['inscripciones']);
+		array_push($this->arreglo, $this->opciones['entrevistas']);
         
         //print ("<pre>".print_r($this->arreglo[0],true)."</pre>");
         return $this->arreglo;

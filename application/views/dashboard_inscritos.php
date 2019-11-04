@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="/assets/css/global.css">
 <link rel="stylesheet" href="/dist/css/jquery-externs/jquery.dataTables.min.css">
 <link href="/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
+<link href='<?=base_url()?>assets/plugins/calendar/core/main.css' rel='stylesheet' />
+<link href='<?=base_url()?>assets/plugins/calendar/daygrid/main.css' rel='stylesheet' />
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 <!-- Site wrapper -->
@@ -145,6 +147,7 @@
 								<th>Finanzas</th>
 								<th>Estado</th>
 								<th>Admision</th>
+								<th>Entrevistas</th>
               </thead>
               <tfoot>
               <th>Opciones</th>
@@ -157,7 +160,8 @@
 								<th>Fecha de Registro</th>
                 <th>Finanzas</th>
                 <th>Estado</th>
-                <th>Admision</th>
+								<th>Admision</th>
+								<th>Entrevistas</th>
               </tfoot>
             </table>
           </div>
@@ -274,7 +278,10 @@
 <script src="/dist/js/jquery-externs/jquery.dataTables.min.js"></script>
 <?php
 	$this->load->view('modals/detalles_entrevistas'); 
+	$this->load->view('modals/calendar_entrevistas');
+	 
 ?>
+
 <script src="/dist/js/jquery-externs/bootbox.min.js"></script>
 <script src="/dist/js/jquery-externs/dataTables.buttons.min.js"></script>
 <script src="/dist/js/jquery-externs/buttons.flash.min.js"></script>
@@ -283,12 +290,22 @@
 <script src="/dist/js/jquery-externs/buttons.html5.min.js"></script>
 <script src="/dist/js/jquery-externs/buttons.print.min.js"></script>
 <script src="/bower_components/select2/dist/js/select2.min.js"></script>
+<script src="/bower_components/datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
+<script src='<?=base_url()?>assets/plugins/calendar/core/main.js'></script>
+<script src='<?=base_url()?>assets/plugins/calendar/interaction/main.js'></script>
+<script src='<?=base_url()?>assets/plugins/calendar/daygrid/main.js'></script>
 <script src="/assets/js/dboard_inscripciones.js"></script>
-
+<style>
+.datepicker {
+      z-index: 1600 !important; /* has to be larger than 1050 */
+    }
+</style>
 <script>
 	$('#select2-estado-finanzas').select2();
 	$('#select2-estado-admision').select2();
-
+	$(document).ready(function(){
+		$.datetimepicker.setLocale('es');
+	})
 </script>
 </body>
 </html>

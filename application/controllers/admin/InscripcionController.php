@@ -42,7 +42,6 @@ class InscripcionController extends CI_Controller {
 			$identidad["nombres"]=$this->nativesession->get('acceso');
 			$opciones["rutaimagen"]=$identidad["rutaimagen"];
 			$opciones["menu"]=$this->opciones->segun($this->Permiso_model->lista($this->nativesession->get('idUsuario')),'Inscripcion');
-
 			$data['cabecera']=$this->load->view('adminlte/linksHead','',TRUE);
 			$data['footer']=$this->load->view('adminlte/scriptsFooter','',TRUE);
 			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
@@ -215,7 +214,8 @@ class InscripcionController extends CI_Controller {
 							$this->HTML_details_icon($value["id_inscripcion"],$value["estado_finanzas_id"]).
 						"</div>",
 				"9" => $is_anulated?"<span class='label label-success'>Cargado</span>":"<span class='label label-danger'>Anulado</span>",
-				"10" => array("id"=>$value["estado_admisions_id"],"nombre"=>$value["nombre_estado_admision"])
+				"10" => array("id"=>$value["estado_admisions_id"],"nombre"=>$value["nombre_estado_admision"]),
+				"11"=>$this->StateInterviewProgramed_model->loadFromMemoryById($value["state_interview_id"])
 			);
 		}
 		$results = array(

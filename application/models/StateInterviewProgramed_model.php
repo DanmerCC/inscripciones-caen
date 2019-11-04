@@ -23,6 +23,21 @@ class StateInterviewProgramed_model extends MY_Model
 		return $this->states_preload;
 	}
 
+	function loadFromMemoryById($id=null){
+		$states=$this->loadFromMemory();
+		$state_finded=null;
+		if(empty($id)){
+			return null;
+		}
+		for ($i=0; $i < count($states); $i++) { 
+			if($states[$i][$this->id]==$id){
+				$state_finded=$states[$i];
+			}
+		}
+		return $state_finded;
+	}
+
+
 	/***
 	 * @return array con todos los registros y columnas de un modelo  
 	*/
