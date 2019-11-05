@@ -5,6 +5,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class EntrevistaController extends MY_Controller
 {
+	private $can_create_entrevista=false;
+	private $can_change_date_entrevista=false;
 	
 	function __construct()
 	{
@@ -14,6 +16,7 @@ class EntrevistaController extends MY_Controller
         $this->load->model('Permiso_model');
 		$this->load->library('NativeSession');
 		$this->load->library('opciones');
+		$this->load->model('Auth_Permisions');
     }
 
 	public function index(){
@@ -27,6 +30,8 @@ class EntrevistaController extends MY_Controller
 		$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
 		$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
 		$this->load->view('dashboard_entrevistas',$data);
+		$this->can_edit_entrevista=$this->Auth_Permisions->can('create_programed_entrevistas');
+		$this->can_change_date_entrevista=$this->Auth_Permisions->can('change_date_entrevista');
 	}
 
     /***
@@ -45,6 +50,9 @@ class EntrevistaController extends MY_Controller
 	}
 
 	function create(){
+		if(!$this->can_create_entrevista){
+			$this->response("Error",401);
+		}
 		$id_inscripcion_id=$this->input->post('id_inscripcion');
 		$fecha_programado=$this->input->post('fecha_programado');
 		
@@ -69,6 +77,9 @@ class EntrevistaController extends MY_Controller
 	}
 
 	function changeDate(){
+		if(!$this->can_change_date_entrevista){
+			$this->response("Error",401);
+		}
 		$idEntrevista=$this->input->post('id_entrevista');
 		$fecha_programado=$this->input->post('fecha_programado');
 		

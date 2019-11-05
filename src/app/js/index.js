@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	$("#slct-programs-filter-calendar").change(function () {
 		getEntrevistasSugeridas(function (response) {
 
-			let newItems = "	";
+			let newItems = " ";
 			JSON.parse(response).forEach(x => {
 				newItems += getDraggableItem(x);
 			})
@@ -57,7 +57,16 @@ document.addEventListener('DOMContentLoaded', function () {
 		eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc) {
 
 			actualizaFechaEntrevista(event.event.id, formatDate(event.event.start), function (response) {
-
+				try{
+					response = JSON.parse(response)
+				}
+				catch(e){
+					console.log("Error al procesar respuesta")
+					console.log(e)
+					alert("No puedes cambiar una programacion de entrevistas")
+					event.revert();
+					return
+				}
 			})
 		},
 		events: function (info, successCallback, failureCallback) {
@@ -112,15 +121,23 @@ document.addEventListener('DOMContentLoaded', function () {
 				})
 			}
 		},
-		disableResizing: false,
+		disableResizing: true,
 		eventReceive: function (info) {
 			console.log(info)
 			createEntrevista(info.draggedEl.dataset.idinscripcion, formatDate(info.event.start), function (response) {
 				//info.event.id=info.draggedEl.dataset.idinscripcion;
 				
 				console.log(info.draggedEl.dataset.idinscripcion)
-				response = JSON.parse(response)
-				if (response.status == 'OK') {
+				try{
+					
+					response = JSON.parse(response)
+				}catch(e){
+					console.log("Error al procesar respuesta")
+					console.log(e)
+					alert("No puedes crear una programacion de entrevistas")
+					return
+				}
+				if (JSON.parse(response).status == 'OK') {
 					info.draggedEl.remove()
 					calendar.addEvent(makeEvent(response.data))
 					
@@ -128,6 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					console.log(info.event.remove())
 					//calendar.render()
 				} else {
+					info.revert();
 					alert("Error al intentar crear entrevista")
 					console.log("Error al eliminar una entrevistas")
 				}
@@ -211,7 +229,7 @@ function getNumberHexRamdom() {
 function makeEvent(entrevista) {
 	return {
 		id: entrevista.id,
-		title: entrevista["nombres"] + ' ' + entrevista["apellido_paterno"],
+		title: entrevista["nombres"] + ' ' + entrevista["apellido_paterno"]+ ' ' + entrevista["apellido_materno"],
 		start: entrevista["fecha_programado"],
 		end: entrevista["fecha_programado"],
 		color: entrevista["color_estado"]
@@ -307,7 +325,7 @@ function getDraggableItem(data) {
 					<a href="javascript:void(0)" class="product-title">${data.nombre_curso}
 						<span class="label label-warning pull-right"></span></a>
 					<span class="product-description">
-						${data.nombres}
+						${data.nombres} ${data.apellido_paterno} ${data.apellido_materno}
 					</span>
 				</div>
 			</div>

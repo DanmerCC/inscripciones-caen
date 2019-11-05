@@ -69,7 +69,7 @@ class InterviewProgramed_model extends MY_Model
 	}
 
 	function getAll(){
-		$this->db->select($this->table.'.*,alumno.nombres,alumno.apellido_paterno,'.
+		$this->db->select($this->table.'.*,alumno.nombres,alumno.apellido_paterno,alumno.apellido_materno,'.
 							'intvw_state_programmed_interviews.nombre as nombre_estado,'.
 							'intvw_state_programmed_interviews.hex_color as color_estado'
 							);

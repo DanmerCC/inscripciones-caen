@@ -72,3 +72,7 @@ CREATE TABLE `adms_evaluaciones` (
 ALTER TABLE `intvw_state_programmed_interviews` ADD `hex_color` VARCHAR(50) NOT NULL AFTER `descripcion`;
 UPDATE `intvw_state_programmed_interviews` SET `hex_color` = '#378006' WHERE `intvw_state_programmed_interviews`.`id` = 2;
 UPDATE `intvw_state_programmed_interviews` SET `hex_color` = '#DB8E10' WHERE `intvw_state_programmed_interviews`.`id` = 1;
+
+
+INSERT INTO `auth_permisos` (`id`, `nombre`) VALUES (NULL, 'create_programed_entrevistas');
+INSERT INTO `auth_permisos` (`id`, `nombre`) VALUES (NULL, 'change_date_entrevista');
