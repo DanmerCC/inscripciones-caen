@@ -38,10 +38,7 @@ ADD
 	CONSTRAINT `fk_intvw_programmed_interviews_estado_id` FOREIGN KEY (`estado_id`) REFERENCES `intvw_state_programmed_interviews` (`id`);
 
 
---INICIO DE SCRIPT 
-
-ALTER TABLE `inscripcion`  ADD `estado_admision_id` int(11) NOT NULL DEFAULT '1';
-
+--INICIO DE SCRIPT
 ALTER TABLE
 	`inscripcion`
 ADD

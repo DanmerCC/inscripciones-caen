@@ -104,7 +104,16 @@ class InterviewProgramed_model extends MY_Model
 	}
 
 	function get($id){
-		$result=$this->db->select()->from($this->table)->where($this->id,$id)->get();
+		$result=$this->db
+			->select(
+				$this->table.'.*,'.
+				'intvw_state_programmed_interviews.nombre as nombre_estado,'.
+				'intvw_state_programmed_interviews.hex_color as color_estado'
+			)
+			->from($this->table)
+			->join('intvw_state_programmed_interviews','intvw_state_programmed_interviews.id='.$this->table.'.estado_id')
+			->where($this->table.'.'.$this->id,$id)
+			->get();
 		if($result->num_rows()==1){
 			return $result->result_array()[0];
 		}elseif($result->num_rows()==0){
@@ -116,9 +125,12 @@ class InterviewProgramed_model extends MY_Model
 
 	function getByInscripcion($id){
 		$result=$this->db
-		->select($this->table.'.*,alumno.nombres,alumno.apellido_paterno,alumno.apellido_materno')
+		->select($this->table.'.*,alumno.nombres,alumno.apellido_paterno,alumno.apellido_materno,'.
+				'intvw_state_programmed_interviews.nombre as nombre_estado,'.
+				'intvw_state_programmed_interviews.hex_color as color_estado')
 		->from($this->table)
 		->join('alumno','alumno.id_alumno='.$this->table.'.'.$this->alumno_id)
+		->join('intvw_state_programmed_interviews','intvw_state_programmed_interviews.id='.$this->table.'.estado_id')
 		->where($this->inscripcion_id,$id)->get();
 		if($result->num_rows()==1){
 			return $result->result_array()[0];
@@ -180,6 +192,9 @@ class InterviewProgramed_model extends MY_Model
 	}
 	
 	function update($interview_id,$estado_id){
+
+		$returnDefaultObject=new stdClass;
+
 		$this->db->trans_begin();
 		
 		$inscripcion=$this->get($interview_id);
@@ -191,8 +206,11 @@ class InterviewProgramed_model extends MY_Model
 		$status=$this->db->affected_rows()==1;
 		if($status){
 			$this->db->trans_commit();
+			return $this->get($interview_id);
+			
 		}else{
 			$this->db->trans_rollback();
+			return $returnDefaultObject;
 		}
 
 		return $status;

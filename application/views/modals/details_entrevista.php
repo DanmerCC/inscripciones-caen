@@ -18,6 +18,7 @@
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
+	<div id="update-calendar"></div>
 </div><!-- /.modal -->
 <script>
 
@@ -76,6 +77,7 @@ $(document).ready(function(){
 			success: function (response) {
 				if(response.status=='OK'){
 					MDL_ENTREVISTAS_DETAILS.close();
+					$("#update-calendar").trigger("click")
 				}
 			}
 		});
