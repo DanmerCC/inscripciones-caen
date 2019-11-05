@@ -283,9 +283,30 @@ $route['admin/uploading'] = 'admin/FilesController/recive_file';
 
 $route['use/inscripcion'] = 'InfoForUseController/index';
 $route['use/inscripciones'] = 'dashboard/EstadisticInscripcionesController/report';
+
+/** Inscripciones por dia*/
 $route['stadistics/inscritos'] = 'dashboard/EstadisticInscripcionesController/report';
+
+/** Inscripciones por programa*/
 $route['stadistics/inscritos/programa'] = 'dashboard/EstadisticInscripcionesController/inscritosPorPrograma';
+
+//**Exalumnos */
 $route['stadistics/inscritos/exalumnos/programa'] = 'dashboard/EstadisticInscripcionesController/exalumnosInscritosPorPrograma';
+
+/** Inscripciones por genero*/
 $route['stadistics/inscritos/genero'] = 'dashboard/EstadisticInscripcionesController/porGenero';
 
+/***Segun edades */
+$route['stadistics/inscritos/edades'] = 'dashboard/EstadisticInscripcionesController/getInscritosPorCicloDeVida';
+
+/** Militares civiles */
+$route['stadistics/inscritos/militares'] = 'dashboard/EstadisticInscripcionesController/getDataMilitars';
+
+/** Militares civiles */
+$route['stadistics/inscritos/procedencia'] = 'dashboard/EstadisticInscripcionesController/porLugarDeProcedencia';
+
 $route['solicitud/files_state/(:num)'] = 'admin/InscripcionController/get_estado_archivos_solicitud_include_person_files/$1';
+
+
+
+
