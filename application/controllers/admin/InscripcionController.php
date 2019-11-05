@@ -28,6 +28,7 @@ class InscripcionController extends CI_Controller {
 		$this->load->model('User_model');
 		$this->usuario_actual=$this->nativesession->get('idUsuario');
 		$this->load->model('EstadoAdmisionInscripcion_model');
+        $this->load->model('StateInterviewProgramed_model');
 		
 	}
 
@@ -41,7 +42,6 @@ class InscripcionController extends CI_Controller {
 			$identidad["nombres"]=$this->nativesession->get('acceso');
 			$opciones["rutaimagen"]=$identidad["rutaimagen"];
 			$opciones["menu"]=$this->opciones->segun($this->Permiso_model->lista($this->nativesession->get('idUsuario')),'Inscripcion');
-
 			$data['cabecera']=$this->load->view('adminlte/linksHead','',TRUE);
 			$data['footer']=$this->load->view('adminlte/scriptsFooter','',TRUE);
 			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
@@ -193,10 +193,7 @@ class InscripcionController extends CI_Controller {
 			$i++;
 			$is_anulated=!isset($value["f_anulado"]);
 				$data[] = array(
-				"0" => 
-				($is_anulated?"<button class='btn btn-danger' onclick='ins.cancel(".$value["id_inscripcion"].");'><i class='fa fa-trash-o' aria-hidden='true'></i> Anular</button>":"").
-					($is_anulated?'<div class="btn btn-info" data-toggle="modal" data-target="#mdl_datos_inscritos" onclick="modalDataInscrito.loadData('.$value["idSolicitud"].');"><i class="fa fa-eye"></i></div>':'').
-					($is_anulated?('<a href="'.base_url()."postulante/pdf/".$value["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a>'):''),
+				"0" => $this->innerInscripcionOptionsComponet($value,$is_anulated),
 				"1" => $value["nombres"],
 				"2" => $value["apellido_paterno"]." ".$value["apellido_materno"],
 				"3" => $value["numeracion"]." ".$value["tipo_curso"]." ".$value["nombre_curso"],
@@ -207,7 +204,7 @@ class InscripcionController extends CI_Controller {
 				"8" => "<div class='input-group-btn'>".
 							($can_edit_finanzas?
 											
-												$this->HTML_drop_down(
+												$this->HTML_drop_down_estado_finanzas(
 													$value["id_inscripcion"],
 													$value["estado_finanzas"],
 													$value["estado_finanzas_id"]
@@ -217,7 +214,8 @@ class InscripcionController extends CI_Controller {
 							$this->HTML_details_icon($value["id_inscripcion"],$value["estado_finanzas_id"]).
 						"</div>",
 				"9" => $is_anulated?"<span class='label label-success'>Cargado</span>":"<span class='label label-danger'>Anulado</span>",
-				"10" => array("id"=>$value["estado_admisions_id"],"nombre"=>$value["nombre_estado_admision"])
+				"10" => array("id"=>$value["estado_admisions_id"],"nombre"=>$value["nombre_estado_admision"]),
+				"11"=>$this->StateInterviewProgramed_model->loadFromMemoryById($value["state_interview_id"])
 			);
 		}
 		$results = array(
@@ -362,7 +360,7 @@ class InscripcionController extends CI_Controller {
 		}
 	}
 
-	private function HTML_drop_down($id,$text,$estado_finanzas_id=null,$other_html_elelemt=''){
+	private function HTML_drop_down_estado_finanzas($id,$text,$estado_finanzas_id=null,$other_html_elelemt=''){
 		$list="";
 		$is_obserbated=false;
 		if($estado_finanzas_id!=null){
@@ -391,6 +389,39 @@ class InscripcionController extends CI_Controller {
 				 ($other_html_elelemt). 
                 "";
 	}
+
+	/**
+	 * @var array options
+	 */
+	private function HTML_drop_down_opciones($options=[],$default_option,$gray=false){
+		$optionConcat="";
+		for ($i=0; $i < count($options) ; $i++) { 
+			$optionConcat.="<li>".$options[$i]."</li>";
+		}
+		return "<div class='btn-group'>
+		<button type='button' class='btn btn-default'>
+			$default_option
+		</button>
+		<button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>
+		  <span class='caret'></span>
+		  <span class='sr-only'>Toggle Dropdown</span>
+		</button>
+		<ul class='dropdown-menu ".($gray?'bg-gray':'')."' role='menu'>
+		  ".((count($options)>0)?$optionConcat:'')."
+		</ul>
+	  </div>";
+	}
+
+	public function innerInscripcionOptionsComponet($inscripcion,$is_anulated){
+		$optionsToContainer=[
+			($is_anulated?"<button class='btn btn-danger' onclick='ins.cancel(".$inscripcion["id_inscripcion"].");'><i class='fa fa-trash-o' aria-hidden='true'></i> Anular</button>":""),
+			($is_anulated?('<button href="'.base_url()."postulante/pdf/".$inscripcion["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></button>'):''),
+			($is_anulated?"<button class='btn btn-success' onclick='MDL_ENTREVISTAS_INSCRIPCION.open(".$inscripcion["id_inscripcion"].");'><i class='fa fa-fw fa-calendar-check-o' aria-hidden='true'></i> Entrevista</button>":"")
+		];
+		$detailsOption=($is_anulated?'<div onclick="modalDataInscrito.loadData('.$inscripcion["idSolicitud"].');"><i class="fa fa-eye"></i></div>':'');
+		$optionsContainer=$this->HTML_drop_down_opciones($optionsToContainer,$detailsOption);
+		return $optionsContainer;
+		}
 
 	private function HTML_details_icon($id_inscripcion,$estado_finanzas_id=null){
 		$is_disableted=false;

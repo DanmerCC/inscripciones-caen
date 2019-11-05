@@ -456,5 +456,16 @@ class Programa_model extends CI_Model
 		
         return resultToArray($this->db->get());
 	}
+
+	function getOneOrFail($id){
+		$this->db->select()->from($this->table);
+		$this->db->where($this->id,$id);
+		$result=$this->db->get();
+		if($result->num_rows()==1){
+			return $result->result_array()[0];
+		}else{
+			throw new Exception("Error al buscar un programa");
+		}
+	}
 	
 }

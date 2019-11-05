@@ -215,16 +215,45 @@ class Solicitud extends CI_Controller
 		$details_icon="<a class='btn btn-social-icon btn-instagram' $disabled_html ><i class='fa fa-fw fa-info-circle'></i></a>";
 		
 		for ($i=0; $i < count($this->estado_finanzasSolicitud); $i++) {
-			$is_green=$this->EstadoFinanzasSolicitud_model->VALIDADO==$this->estado_finanzasSolicitud[$i]['id'];
-			$class_if_is_validado=$is_green?' text-green ':'';
+			
+
+			$class_color='';
+
+			switch ($this->estado_finanzasSolicitud[$i]['id']) {
+				case $this->EstadoFinanzasSolicitud_model->VALIDADO:
+					$class_color=' text-green ';
+					break;
+				case $this->EstadoFinanzasSolicitud_model->OBSERVADO:
+					$class_color=' text-red ';
+					break;
+				
+				default:
+					# code...
+					break;
+			}
 			$nombre=$this->estado_finanzasSolicitud[$i]['nombre'];
 			$id_estado=$this->estado_finanzasSolicitud[$i]['id'];
-			$list=$list."<li onclick='sol.change_estado($id,$id_estado,".'"'.$nombre.'"'.")'><a class='$class_if_is_validado' href='#'>$nombre</a></li>";
+			$list=$list."<li onclick='sol.change_estado($id,$id_estado,".'"'.$nombre.'"'.")'><a class='$class_color' href='#'>$nombre</a></li>";
 		}
-		$btn_is_green=$estado_finanzas_id==$this->EstadoFinanzasSolicitud_model->VALIDADO;
-		$if_validate_class=$btn_is_green?' text-green ':'';
+
+		$btn_class_color=' ';
+
+		switch ($estado_finanzas_id) {
+			case $this->EstadoFinanzasSolicitud_model->VALIDADO:
+				$btn_class_color=' text-green ';
+				break;
+				
+			case $this->EstadoFinanzasSolicitud_model->OBSERVADO:
+				$btn_class_color=' text-red ';
+				break;
+			
+			default:
+				//por defecto
+				break;
+		}
+
 		return "
-                  <button type='button' class='$if_validate_class btn btn btn-default dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>$text
+                  <button type='button' class='$btn_class_color btn btn-default dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>$text
                     <span class='fa fa-caret-down'></span></button>
                   <ul class='dropdown-menu'>
                     $list

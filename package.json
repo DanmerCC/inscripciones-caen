@@ -1,0 +1,44 @@
+{
+  "name": "inscripciones-caen",
+  "version": "1.0.0",
+  "description": "What is CodeIgniter\r ###################",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanmerCC/inscripciones-caen.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanmerCC/inscripciones-caen/issues"
+  },
+  "homepage": "https://github.com/DanmerCC/inscripciones-caen#readme",
+  "dependencies": {
+    "@babel/polyfill": "^7.6.0",
+    "@fullcalendar/core": "^4.3.1",
+    "@fullcalendar/daygrid": "^4.3.0",
+    "@fullcalendar/interaction": "^4.3.0",
+    "@fullcalendar/list": "^4.3.0",
+    "@fullcalendar/timegrid": "^4.3.0",
+    "assets-webpack-plugin": "^3.9.10",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.6",
+    "babel-preset-env": "^1.7.0",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}

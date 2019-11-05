@@ -30,3 +30,4 @@ error_log
 application/config/database.php
 bower_components/*
 captcha_images/*
+node_modules
