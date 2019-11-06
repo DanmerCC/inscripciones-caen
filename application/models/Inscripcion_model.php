@@ -14,6 +14,7 @@ class Inscripcion_model extends CI_Model
 	//** Determina si el registro existe */
 	private $deleted='deleted';
 	private $modified='modified';
+	private $state_interview_id='state_interview_id';
 
 	private $where_filters=[];
 
@@ -146,7 +147,9 @@ class Inscripcion_model extends CI_Model
 			'ins.created as created ,'.
 			'ins.id_inscripcion,'.
 			'ea.id as estado_admisions_id,'.
-			'ea.nombre as nombre_estado_admision');
+			'ea.nombre as nombre_estado_admision,'.
+			'state_interview_id'
+		);
 		$this->db->from($this->table.' ins');
 		$this->dtq_join_solicitud_usuario_curso_tipo_curso_alumno();
 		
@@ -211,7 +214,8 @@ class Inscripcion_model extends CI_Model
 			'ins.created as created,'.
 			'ins.id_inscripcion,'.
 			'ea.id as estado_admisions_id,'.
-			'ea.nombre as nombre_estado_admision');
+			'ea.nombre as nombre_estado_admision,'.
+			'state_interview_id');
 		$this->db->from($this->table.' ins');
 		$this->db->group_start();
 			$this->db->like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);
@@ -604,6 +608,34 @@ class Inscripcion_model extends CI_Model
 			$this->estado_admision_id=>$estado_id
 		);
 		$this->db->where($this->id, $id);
+		$this->db->update($this->table,$data);
+		return $this->db->affected_rows()==1;
+	}
+
+	function getOneOrFail($id){
+		$this->db->select()
+		->from($this->table)
+		->where($this->id,$id);
+		$result=$this->db->get();
+		if($result->num_rows()==1){
+			return $result->result_array()[0];
+		}else{
+			throw new Exception("Error al buscar la inscripcion con id".$id);
+		}
+	}
+
+	/**
+	 * Actualiza el estado de entrevista del la inscripcion function
+	 *
+	 * @param int $idInscripcion
+	 * @param int $idEstado
+	 * @return boolean
+	 */
+	function updateEstadoEntrevista($idInscripcion,$idEstado){
+		$this->db->where($this->id,$idInscripcion);
+		$data=array(
+			$this->state_interview_id=>$idEstado
+		);
 		$this->db->update($this->table,$data);
 		return $this->db->affected_rows()==1;
 	}

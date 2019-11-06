@@ -29,3 +29,4 @@ error_log
 
 application/config/database.php
 bower_components/*
+node_modules

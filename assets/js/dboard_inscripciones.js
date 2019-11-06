@@ -55,6 +55,12 @@ function cargarDataTable(){
 		"render": function ( data, type, row, meta ) {
 		  return getHtmlEstadoAdmision(data);
 		}
+	  },
+	  {
+		"targets": 11,
+		"render": function ( data, type, row, meta ) {
+		  return getHtmlEstadoEntrevista(data);
+		}
 	  } ]
 }).DataTable();
 
@@ -70,7 +76,9 @@ $('a.toggle-vis').on( 'click', function (e) {
 }
 
 $(document).ready(function(){
-
+	MDL_ENTREVISTAS_INSCRIPCION.onsave=function(){
+		tabla.ajax.reload(null,false);
+	}
 	$('#select2-estado-admision').change((evt)=>{
 		var select=$('#select2-estado-admision');
 		//console.log(select.val());
@@ -380,14 +388,14 @@ function makeTemplateIconsDocuments(nombre,estado,identifier,nameFile){
 function cargarData(id){
 	
 	var idquerytarget=this.target;
-	console.log(id);
+	//console.log(id);
     $.ajax({
         type: "get",
         url: "/secure/inscrito/"+id,
         data: "",
         dataType: "json",
         success: function (response) {
-			console.log(response);
+			//console.log(response);
             if(response.status=="NO FOUND"){
                 alert("Ocurrio un error. El alumno no pudo ser encontrado");
             }else{
@@ -417,6 +425,7 @@ function cargarData(id){
 				}
 				$(idquerytarget+' #mdl-icons-filesOfSol').html(htmlfilesOfSol);
 				$(idquerytarget+' #mdl-icons-documents').html(htmlDocuments);
+				$("#mdl_datos_inscritos").modal('show');
             }
             
 		},
@@ -485,12 +494,28 @@ function getHtmlEstadoAdmision(estado){
 	
 		return label(estado.nombre)
 }
+
+function getHtmlEstadoEntrevista(estado){
+	if(estado==null){
+		return label_danger("No registrado")
+	}else{
+		if(estado.id==1){
+			return label_success(estado.nombre)
+		}
+		if(estado.id==2){
+			return label_danger(estado.nombre)
+		}
+	}
+	
+	
+		return label(estado.nombre)
+}
  
 function label_success(text){
 	return `<span class="label label-success">${text}</span>`; 
 }
 function label_danger(text){
-	return `<span class="label label-success">${text}</span>`; 
+	return `<span class="label label-danger">${text}</span>`; 
 }
 function label(text){
 	return `<span class="label">${text}</span>`; 

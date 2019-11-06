@@ -307,6 +307,14 @@ $route['stadistics/inscritos/procedencia'] = 'dashboard/EstadisticInscripcionesC
 
 $route['solicitud/files_state/(:num)'] = 'admin/InscripcionController/get_estado_archivos_solicitud_include_person_files/$1';
 
+$route['admin/entrevista/byinscripcion/(:num)'] = 'admin/EntrevistaController/byInscripcion/$1';
+$route['admin/entrevista/create'] = 'admin/EntrevistaController/create';
+$route['admin/entrevistas'] = 'admin/EntrevistaController/list';
+$route['admin/entrevista/change/date'] = 'admin/EntrevistaController/changeDate';
+$route['admin/entrevista/buildable'] = 'admin/EntrevistaController/getBuildable';
+$route['admin/entrevista/delete'] = 'admin/EntrevistaController/delete';
+$route['admin/entrevista/(:num)'] = 'admin/EntrevistaController/getFullDatails/$1';
+$route['admin/entrevista/update'] = 'admin/EntrevistaController/update';
 
 
-
+$route['administracion/vista/entrevistas'] = 'admin/EntrevistaController/index';

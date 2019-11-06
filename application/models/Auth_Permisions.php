@@ -63,6 +63,13 @@ class Auth_Permisions extends MY_Model {
 		$permisos_nombres=c_extract($permisos,'nombre');
 		return in_array($name,$permisos_nombres);
 	}
+
+	function getPermisionCurrentUser(){
+		$id_user=$this->nativesession->get('idUsuario');
+		$permisos=$this->get_by_user($id_user);
+		$permisos_nombres=c_extract($permisos,'nombre');
+		return $permisos_nombres;
+	}
 }
                         
 /* End of file Auth_Role.php.php */
