@@ -8,10 +8,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Entrevistas CAEN</title>
 	<?php $this->load->view('adminlte/linksHead'); ?>
-	<link href='/node_modules/@fullcalendar/core/main.css' rel='stylesheet' />
-	<link href='/node_modules/@fullcalendar/daygrid/main.css' rel='stylesheet' />
-	<link href='/node_modules/@fullcalendar/timegrid/main.css' rel='stylesheet' />
-	<link href='/node_modules/@fullcalendar/list/main.css' rel='stylesheet' />
+	<link href='/assets/plugins/@fullcalendar/core/main.css' rel='stylesheet' />
+	<link href='/assets/plugins/@fullcalendar/daygrid/main.css' rel='stylesheet' />
+	<link href='/assets/plugins/@fullcalendar/timegrid/main.css' rel='stylesheet' />
+	<link href='/assets/plugins/@fullcalendar/list/main.css' rel='stylesheet' />
 </head>
 
 <body class="hold-transition skin-blue-light sidebar-mini">

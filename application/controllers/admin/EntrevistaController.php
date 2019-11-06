@@ -17,6 +17,8 @@ class EntrevistaController extends MY_Controller
 		$this->load->library('NativeSession');
 		$this->load->library('opciones');
 		$this->load->model('Auth_Permisions');
+		$this->can_create_entrevista=$this->Auth_Permisions->can('create_programed_entrevistas');
+		$this->can_change_date_entrevista=$this->Auth_Permisions->can('change_date_entrevista');
     }
 
 	public function index(){
@@ -30,8 +32,6 @@ class EntrevistaController extends MY_Controller
 		$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
 		$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
 		$this->load->view('dashboard_entrevistas',$data);
-		$this->can_edit_entrevista=$this->Auth_Permisions->can('create_programed_entrevistas');
-		$this->can_change_date_entrevista=$this->Auth_Permisions->can('change_date_entrevista');
 	}
 
     /***

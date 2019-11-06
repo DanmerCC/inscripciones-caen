@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					alert("No puedes crear una programacion de entrevistas")
 					return
 				}
-				if (JSON.parse(response).status == 'OK') {
+				if (response.status == 'OK') {
 					info.draggedEl.remove()
 					calendar.addEvent(makeEvent(response.data))
 					
