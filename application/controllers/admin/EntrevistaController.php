@@ -7,6 +7,7 @@ class EntrevistaController extends MY_Controller
 {
 	private $can_create_entrevista=false;
 	private $can_change_date_entrevista=false;
+	private $can_change_estado_entrevista=false;
 	
 	function __construct()
 	{
@@ -19,6 +20,7 @@ class EntrevistaController extends MY_Controller
 		$this->load->model('Auth_Permisions');
 		$this->can_create_entrevista=$this->Auth_Permisions->can('create_programed_entrevistas');
 		$this->can_change_date_entrevista=$this->Auth_Permisions->can('change_date_entrevista');
+		$this->can_change_estado_entrevista=$this->Auth_Permisions->can('change_estado_entrevistas');
     }
 
 	public function index(){
@@ -122,6 +124,8 @@ class EntrevistaController extends MY_Controller
 	}
 
 	function update(){
+		$this->verifyCanEstado_entrevista();
+		
 		$entrevista_id=$this->input->post('entrevista_id');
 		$estado_id=$this->input->post('estado_id');
 		$success=$this->InterviewProgramed_model->update($entrevista_id,$estado_id);
@@ -129,6 +133,12 @@ class EntrevistaController extends MY_Controller
 			return $this->structuredResponse($success);
 		}else{
 			return $this->structuredResponse("Error",500);
+		}
+	}
+
+	private function verifyCanEstado_entrevista(){
+		if(!$this->can_change_estado_entrevista){
+			$this->response("Error",401);
 		}
 	}
 }

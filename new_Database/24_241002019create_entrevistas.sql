@@ -76,3 +76,4 @@ UPDATE `intvw_state_programmed_interviews` SET `hex_color` = '#DB8E10' WHERE `in
 
 INSERT INTO `auth_permisos` (`id`, `nombre`) VALUES (NULL, 'create_programed_entrevistas');
 INSERT INTO `auth_permisos` (`id`, `nombre`) VALUES (NULL, 'change_date_entrevista');
+INSERT INTO `auth_permisos` (`id`, `nombre`) VALUES (NULL, 'change_estado_entrevistas');

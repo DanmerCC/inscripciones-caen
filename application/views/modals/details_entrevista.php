@@ -79,6 +79,11 @@ $(document).ready(function(){
 					MDL_ENTREVISTAS_DETAILS.close();
 					$("#update-calendar").trigger("click")
 				}
+			},
+			error:function() {
+
+				alert( 'No puedes cambiar el estado!' );
+
 			}
 		});
 	});
