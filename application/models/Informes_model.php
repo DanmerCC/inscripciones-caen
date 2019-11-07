@@ -4,7 +4,7 @@
  */
 class Informes_model extends CI_Model
 {
-	private $table='persona';
+	private $table='informes';
 	private $consulta='consulta';
 	private $fecha='fecha_consulta';
 	private $nombres='nombres_apellidos';
@@ -15,15 +15,13 @@ class Informes_model extends CI_Model
 	{
 		parent::__construct();
 		$this->load->helper('mihelper');
-		$this->DB2 = $this->load->database('dbinformes', TRUE);
-		$this->load->helper('mihelper');
 	}
 
 
 	public function all(){
-		$this->DB2->select();
-		$this->DB2->from($this->table);
-		$result=$this->DB2->get();
+		$this->db->select();
+		$this->db->from($this->table);
+		$result=$this->db->get();
 		return resultToArray($result);
 	}
 	
@@ -32,8 +30,8 @@ class Informes_model extends CI_Model
 	    $data = array(
 	        'condicion'=>1
         );
-        $this->DB2->where('id_persona', $id_solicitud);
-        return $this->DB2->update($this->table, $data);
+        $this->db->where('id_persona', $id_solicitud);
+        return $this->db->update($this->table, $data);
 	    
 	}
 	
@@ -42,13 +40,13 @@ class Informes_model extends CI_Model
 	    $data = array(
 	        'condicion'=>0
         );
-        $this->DB2->where('id_persona', $id_solicitud);
-        return $this->DB2->update($this->table, $data);
+        $this->db->where('id_persona', $id_solicitud);
+        return $this->db->update($this->table, $data);
 	    
 	}
 
 	public function count(){
-		$query = $this->DB2->query('SELECT * FROM '.$this->table);
+		$query = $this->db->query('SELECT * FROM '.$this->table);
 		return $query->num_rows();
 	}
 
@@ -57,19 +55,41 @@ class Informes_model extends CI_Model
 			$this->condicion,
 		];
 		if(in_array($columnFilter,$filters)){
-			$result=$this->DB2->select()->from($this->table)->where($columnFilter,$value)->get();
+			$result=$this->db->select()->from($this->table)->where($columnFilter,$value)->get();
 			return $result->num_rows();
 		}
 		return NULL;
 	}
 	
 	public function getLastQueries($limit){
-		$this->DB2->select($this->consulta.','.$this->fecha.','.$this->nombres.','.$this->programa.','.$this->condicion);
-		$this->DB2->from($this->table);
-		$this->DB2->limit($limit);
-		$this->DB2->order_by($this->fecha,'DESC');
-		return resultToArray($this->DB2->get());
+		$this->db->select($this->consulta.','.$this->fecha.','.$this->nombres.','.$this->programa.','.$this->condicion);
+		$this->db->from($this->table);
+		$this->db->limit($limit);
+		$this->db->order_by($this->fecha,'DESC');
+		return resultToArray($this->db->get());
 	}	
 	
+	public function save(
+			$nombres_ap,
+			$email,
+			$celular,
+			$centro_laboral,
+			$programa,
+			$opt,
+			$consulta
+		){
+		
+		$data=array(
+			'nombres_apellidos'=>$nombres_ap,
+			'email'=>$email,
+			'celular'=>$celular,
+			'centro_laboral'=>$centro_laboral,
+			'tipo_programa'=>$programa,
+			'programa'=>$opt,
+			'consulta'=>$consulta
+		);
+		$result=$this->db->insert($this->table,$data);
+		return $this->db->affected_rows()==1;
+	}
 
 }
