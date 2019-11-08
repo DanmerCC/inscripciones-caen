@@ -406,45 +406,67 @@ var sol={
 };
 function callBackchangeEstado(id,estado_id,nombre){
 	if(estado_id==3){
-			bootbox.prompt({
-			title:"Observacion",
-			message: "Ingrese la observacion?",
-			buttons: {
-				confirm: {
-					label: 'Guardar',
-					className: 'btn-success'
-				},
-				cancel: {
-					label: 'Cancelar',
-					className: 'btn-danger'
+		var mensaje = "";
+		var mensage_id = null;
+		$.ajax({
+			type: "get",
+			url: "/admin/finobservacion/solicitud/"+id,
+			data: "",
+			dataType: "json",
+			success: function (response) {
+				if(typeof response.comentario !='undefined'){
+					mensaje = response.comentario;
+					mensage_id = response.id;
 				}
-			},
-			callback: function (result) {
-				
-				if(result!=null){
-					$.ajax({
-						type: "post",
-						url: "/administracion/solicitud/changestatefinan",
-						data: {
-							"id":id,
-							"estado_id":estado_id,
-							"comentario":result
+				bootbox.prompt({
+					title:"Observacion",
+					message: "Ingrese la observacion?",
+					inputType: 'textarea',
+					value: mensaje,
+					buttons: {
+						confirm: {
+							label: 'Guardar',
+							className: 'btn-success'
 						},
-						dataType: "json",
-						success: function (response) {
-							console.log(response);
-							if(response.content=="OK"){
-								alert("Cambio correcto correctamente");
-								tabla.ajax.reload(null,false);
-							}
-						},
-						error: function (e) {
-							console.log(e.responseText);
+						cancel: {
+							label: 'Cancelar',
+							className: 'btn-danger'
 						}
-					});
-				}
+					},
+					callback: function (result) {
+						
+						if(result!=null){
+							$.ajax({
+								type: "post",
+								url: "/administracion/solicitud/changestatefinan",
+								data: {
+									"id":id,
+									"estado_id":estado_id,
+									"comentario":result,
+									"mensage_id":mensage_id
+								},
+								dataType: "json",
+								success: function (response) {
+									console.log(response);
+									if(response.content=="OK"){
+										alert("Cambio correcto correctamente");
+										tabla.ajax.reload(null,false);
+									}
+								},
+								error: function (e) {
+									console.log(e.responseText);
+								}
+							});
+						}
+					}
+				});
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert(xhr.status);
+				alert(thrownError);
 			}
 		});
+		
 	}
 
 	if(estado_id!=3){

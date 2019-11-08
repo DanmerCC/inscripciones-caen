@@ -181,6 +181,7 @@ class Solicitud extends CI_Controller
 	}
 
 	public function changeEstadoFinanzas(){
+		$mensage_id=$this->input->post('mensage_id');
 		$solicitudId=$this->input->post('id');
 		$id_estado=$this->input->post('estado_id');
 		$comentario=$this->input->post('comentario');
@@ -190,7 +191,11 @@ class Solicitud extends CI_Controller
 		}
 		$result=$this->Solicitud_model->setEstadoFinanzas($solicitudId,$id_estado);
 		if($id_estado==$this->EstadoFinanzasSolicitud_model->OBSERVADO){
-			$result2=$this->FinObservacionesSolicitud_model->create($solicitudId,$this->usuario_actual,$comentario);
+			if($mensage_id!=null){
+				$result2=$this->FinObservacionesSolicitud_model->update($mensage_id,$solicitudId,$this->usuario_actual,$comentario);
+			}else{
+				$result2=$this->FinObservacionesSolicitud_model->create($solicitudId,$this->usuario_actual,$comentario);
+			}
 		}
 		if($result){
 			$result=array(

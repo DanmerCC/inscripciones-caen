@@ -35,4 +35,13 @@ class FinObservacionesSolicitud_model extends MY_Model
 		return $this->db->affected_rows()==1;
 	}
 
+	public function update($message_id,$solicitud_id,$usuario_id,$comentario){
+		$data=[
+			$this->solicitud_id=>$solicitud_id,
+			$this->usuario_id=>$usuario_id,
+			$this->comentario=>$comentario
+		];
+		$this->db->where($this->id,$message_id)->update($this->table,$data);
+	}
+
 }
