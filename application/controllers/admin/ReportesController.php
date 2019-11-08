@@ -25,10 +25,10 @@ class ReportesController extends CI_Controller {
 			$data['footer']=$this->load->view('adminlte/scriptsFooter','',TRUE);
 			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
 			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
-			$data['canEst']=$this->Reportes_model->pruebacontar("persona");
-			$data['cantDoc']=$this->Reportes_model->contDoct("persona");
-			$data['cantMae']=$this->Reportes_model->cantMae("persona");
-			$data['cantDiplo']=$this->Reportes_model->cantDiplo("persona");
+			$data['canEst']=$this->Reportes_model->pruebacontar("informes");
+			$data['cantDoc']=$this->Reportes_model->contDoct("informes");
+			$data['cantMae']=$this->Reportes_model->cantMae("informes");
+			$data['cantDiplo']=$this->Reportes_model->cantDiplo("informes");
 			
 			$this->load->view('dashboard_reportes',$data);
 

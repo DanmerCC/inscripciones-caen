@@ -4,7 +4,7 @@
  */
 class Reportes_model extends CI_Model
 {
-	private $table='persona';
+	private $table='informes';
 
 	private $id='id_persona';
 	private $nom_apellidos='nombres_apellidos';
@@ -23,15 +23,15 @@ class Reportes_model extends CI_Model
 	{
 		parent::__construct();
 		$this->load->helper('mihelper');
-		$this->DB2 = $this->load->database('dbinformes', TRUE);
-		$this->load->helper('mihelper');
+		//$this->DB2 = $this->load->database('informes', TRUE);
+		//$this->load->helper('mihelper');
 	}
 
 	private function count($column,$alias,$forColumn,$discriminator){
-		$this->DB2->select('COUNT('.$column.') as '.$alias);
-		$this->DB2->from($this->table);
-		$this->DB2->where($forColumn,$discriminator);
-		return $this->DB2->get();
+		$this->db->select('COUNT('.$column.') as '.$alias);
+		$this->db->from($this->table);
+		$this->db->where($forColumn,$discriminator);
+		return $this->db->get();
 	}
 	
 	public function report_person($programa){
@@ -44,31 +44,31 @@ class Reportes_model extends CI_Model
 
 
 	public function pruebacontar($tabla){
-		if($tabla !="persona"){
-			$this->DB2->where("condicion","1");
+		if($tabla !="informes"){
+			$this->db->where("condicion","1");
 		}		
-		$resultados=$this->DB2->get($tabla);
+		$resultados=$this->db->get($tabla);
 		return $resultados->num_rows();
 		
 	}	
 
 	public function contDoct($tabla){
-		$this->DB2->where("tipo_programa","1");		
-		$resultados=$this->DB2->get($tabla);
+		$this->db->where("tipo_programa","1");		
+		$resultados=$this->db->get($tabla);
 		return $resultados->num_rows();
 		
 	}
 
 	public function cantMae($tabla){
-		$this->DB2->where("tipo_programa","2");		
-		$resultados=$this->DB2->get($tabla);
+		$this->db->where("tipo_programa","2");		
+		$resultados=$this->db->get($tabla);
 		return $resultados->num_rows();
 		
 	}
 
 	public function cantDiplo($tabla){
-		$this->DB2->where("tipo_programa","3");		
-		$resultados=$this->DB2->get($tabla);
+		$this->db->where("tipo_programa","3");		
+		$resultados=$this->db->get($tabla);
 		return $resultados->num_rows();
 		
 	}
