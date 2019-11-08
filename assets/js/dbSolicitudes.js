@@ -406,45 +406,67 @@ var sol={
 };
 function callBackchangeEstado(id,estado_id,nombre){
 	if(estado_id==3){
-			bootbox.prompt({
-			title:"Observacion",
-			message: "Ingrese la observacion?",
-			buttons: {
-				confirm: {
-					label: 'Guardar',
-					className: 'btn-success'
-				},
-				cancel: {
-					label: 'Cancelar',
-					className: 'btn-danger'
+		var mensaje = "";
+		var mensage_id = null;
+		$.ajax({
+			type: "get",
+			url: "/admin/finobservacion/solicitud/"+id,
+			data: "",
+			dataType: "json",
+			success: function (response) {
+				if(typeof response.comentario !='undefined'){
+					mensaje = response.comentario;
+					mensage_id = response.id;
 				}
-			},
-			callback: function (result) {
-				
-				if(result!=null){
-					$.ajax({
-						type: "post",
-						url: "/administracion/solicitud/changestatefinan",
-						data: {
-							"id":id,
-							"estado_id":estado_id,
-							"comentario":result
+				bootbox.prompt({
+					title:"Observacion",
+					message: "Ingrese la observacion?",
+					inputType: 'textarea',
+					value: mensaje,
+					buttons: {
+						confirm: {
+							label: 'Guardar',
+							className: 'btn-success'
 						},
-						dataType: "json",
-						success: function (response) {
-							console.log(response);
-							if(response.content=="OK"){
-								alert("Cambio correcto correctamente");
-								tabla.ajax.reload(null,false);
-							}
-						},
-						error: function (e) {
-							console.log(e.responseText);
+						cancel: {
+							label: 'Cancelar',
+							className: 'btn-danger'
 						}
-					});
-				}
+					},
+					callback: function (result) {
+						
+						if(result!=null){
+							$.ajax({
+								type: "post",
+								url: "/administracion/solicitud/changestatefinan",
+								data: {
+									"id":id,
+									"estado_id":estado_id,
+									"comentario":result,
+									"mensage_id":mensage_id
+								},
+								dataType: "json",
+								success: function (response) {
+									console.log(response);
+									if(response.content=="OK"){
+										alert("Cambio correcto correctamente");
+										tabla.ajax.reload(null,false);
+									}
+								},
+								error: function (e) {
+									console.log(e.responseText);
+								}
+							});
+						}
+					}
+				});
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert(xhr.status);
+				alert(thrownError);
 			}
 		});
+		
 	}
 
 	if(estado_id!=3){
@@ -503,7 +525,9 @@ function open_function(id_inscripcion,successCallBack){
 		success: function (response) {
 			limpiar_function()
 			if(typeof response.comentario !='undefined'){
-				$("#mdl_body_details_finance").html(make_html_comentario(response.comentario))
+				let real_comentario = response.comentario.replace(/\n/g, "<br>");
+				console.log(real_comentario);
+				$("#mdl_body_details_finance").html(make_html_comentario(real_comentario))
 			}
 				
 			if( typeof successCallBack !='undefined'){
@@ -523,9 +547,7 @@ function limpiar_function(){
 }
 
 function make_html_comentario(comentario){
-	return `<a class="btn btn-block btn-social btn-vk">
-					<i class="fa fa-commenting"></i> ${comentario}
-				</a>`;
+	return `<div class="alert alert-danger"><p><i class="fa fa-commenting"></i> ${comentario}</p></div>`;
 }
 function load_details_state_finanzas_solicitud(id){
 	MDL_DETALLE_FINANZAS.open(id)

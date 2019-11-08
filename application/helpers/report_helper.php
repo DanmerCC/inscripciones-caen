@@ -1,6 +1,9 @@
 <?php
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 function process_and_export_excel($headers,$cuerpo){
 	$spreadsheet = new Spreadsheet();
@@ -8,6 +11,19 @@ function process_and_export_excel($headers,$cuerpo){
 
 	$fila = 2;
 	$col = 'A';
+
+	$sheet->getColumnDimension('A')->setWidth(10);
+	$sheet->getColumnDimension('B')->setWidth(20);
+	$sheet->getColumnDimension('C')->setWidth(20);
+	$sheet->getColumnDimension('D')->setWidth(20);
+	$sheet->getColumnDimension('E')->setWidth(25);
+	$sheet->getColumnDimension('F')->setWidth(20);
+	$sheet->getColumnDimension('G')->setWidth(10);
+	$sheet->getColumnDimension('H')->setWidth(40);
+	$sheet->getColumnDimension('I')->setWidth(20);
+	$sheet->getColumnDimension('J')->setWidth(15);
+	$sheet->getColumnDimension('K')->setWidth(20);
+
 	foreach ($headers as $key => $val) {
 		$sheet->setCellValue($col.$fila, $val);
 		$col++;
@@ -20,11 +36,26 @@ function process_and_export_excel($headers,$cuerpo){
 	foreach ($cuerpo as $key => $item) {
 		$col = 'A';
 		foreach ($item as $keys => $value) {
+
+			if($key%2!=0){
+				$sheet->getStyle('A'.$fila.':K'.$fila)
+				->getFill()
+				->setFillType(Fill::FILL_SOLID)
+				->getStartColor()->setARGB('f8f2e5');
+			}
+
 			$sheet->setCellValue($col.$fila, $value);
 			$col++;
 		}
 		$fila++;
 	}
+	
+	
+	$col = chr(ord($col)-1);
+	$sheet->getStyle('A2:'.$col.$fila)->getBorders()
+            ->getAllBorders()
+            ->setBorderStyle(Border::BORDER_THIN)
+			->setColor(new Color());
 
 	$spreadsheet->getActiveSheet()->setAutoFilter('A2:'.$col.$fila);
 
