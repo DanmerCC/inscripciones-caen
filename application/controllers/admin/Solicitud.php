@@ -150,12 +150,9 @@ class Solicitud extends CI_Controller
 							):
 							$this->HTML_btn_default($rspta[$i]["estado_finanzas"],$rspta[$i]["estado_finanzas_id"])
 						).$this->HTML_details_icon($rspta[$i]["idSolicitud"],$rspta[$i]["estado_finanzas_id"])."</div>",
-
-                "9" => (($rspta[$i]["marcaPago"]=='0')?' <button class="btn btn-alert"   title="click para marcar como verificado" onclick="marcarPago('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-thumb-tack" aria-hidden="true"></i></button>':
-                ' <button class="btn btn-warning" onclick="quitarmarcaPago('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-thumb-tack" aria-hidden="true"></i></button>'),
-                "10" => '<textarea class="form-control" onclick="editComent('.$rspta[$i]["idSolicitud"].');" readonly="readonly">'.$rspta[$i]["comentario"].'</textarea>',
-                "11" => $rspta[$i]["fecha_registro"],
-                "12" => ($rspta[$i]["estado"]=='0')?'<span class="label bg-red">Sin atender</span>':'<span class="label bg-green">Atendido</span>'
+                "9" => '<textarea class="form-control" onclick="editComent('.$rspta[$i]["idSolicitud"].');" readonly="readonly">'.$rspta[$i]["comentario"].'</textarea>',
+                "10" => $rspta[$i]["fecha_registro"],
+                "11" => ($rspta[$i]["estado"]=='0')?'<span class="label bg-red">Sin atender</span>':'<span class="label bg-green">Atendido</span>'
             );
          }    
         $results = array(
