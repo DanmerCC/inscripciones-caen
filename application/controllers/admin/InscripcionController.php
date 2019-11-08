@@ -207,7 +207,8 @@ class InscripcionController extends CI_Controller {
 												$this->HTML_drop_down_estado_finanzas(
 													$value["id_inscripcion"],
 													$value["estado_finanzas"],
-													$value["estado_finanzas_id"]
+													$value["estado_finanzas_id"],
+													$value["apellido_paterno"]." ".$value["apellido_materno"]." ".$value["nombres"]
 												):
 												$this->HTML_btn_default($value["estado_finanzas"],$value["estado_finanzas_id"])
 							).
@@ -360,7 +361,7 @@ class InscripcionController extends CI_Controller {
 		}
 	}
 
-	private function HTML_drop_down_estado_finanzas($id,$text,$estado_finanzas_id=null,$other_html_elelemt=''){
+	private function HTML_drop_down_estado_finanzas($id,$text,$estado_finanzas_id=null,$descripcion,$other_html_elelemt=''){
 		$list="";
 		$is_obserbated=false;
 		if($estado_finanzas_id!=null){
@@ -374,7 +375,7 @@ class InscripcionController extends CI_Controller {
 			$if_is_green_class=$isgreen?' text-green ':'';
 			$nombre=$this->estado_finanzas[$i]['nombre'];
 			$id_estado=$this->estado_finanzas[$i]['id'];
-			$list=$list."<li  onclick='ins.change_estado($id,$id_estado,".'"'.$nombre.'"'.")'><a class='$if_is_green_class' href='#'>$nombre</a></li>";
+			$list=$list."<li  onclick='ins.change_estado($id,$id_estado,".'"'.$nombre.'",'.'"'.$descripcion.'"'.")'><a class='$if_is_green_class' href='#'>$nombre</a></li>";
 		}
 
 		$btn_is_green=$estado_finanzas_id==$this->EstadoFinanzas_model->AUTORIZADO;
