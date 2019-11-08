@@ -525,7 +525,9 @@ function open_function(id_inscripcion,successCallBack){
 		success: function (response) {
 			limpiar_function()
 			if(typeof response.comentario !='undefined'){
-				$("#mdl_body_details_finance").html(make_html_comentario(response.comentario))
+				let real_comentario = response.comentario.replace(/\n/g, "<br>");
+				console.log(real_comentario);
+				$("#mdl_body_details_finance").html(make_html_comentario(real_comentario))
 			}
 				
 			if( typeof successCallBack !='undefined'){
@@ -545,9 +547,7 @@ function limpiar_function(){
 }
 
 function make_html_comentario(comentario){
-	return `<a class="btn btn-block btn-social btn-vk">
-					<i class="fa fa-commenting"></i> ${comentario}
-				</a>`;
+	return `<div class="alert alert-danger"><p><i class="fa fa-commenting"></i> ${comentario}</p></div>`;
 }
 function load_details_state_finanzas_solicitud(id){
 	MDL_DETALLE_FINANZAS.open(id)
