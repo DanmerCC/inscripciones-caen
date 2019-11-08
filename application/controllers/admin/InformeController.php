@@ -30,7 +30,6 @@ class InformeController extends CI_Controller
                 "6" => $value["programa"],
                 "7" => $value["fecha_consulta"],
                 "8" => ($value["condicion"]=="0")?"<button class='btn btn-alert' title='click para marcar como verificado' onclick='marcarInfo(".$value["id_persona"].")'><i class='fa fa-thumb-tack' aria-hidden='true'></i></button>":"<button class='btn btn-primary' title='click para marcar como no verificado' onclick='quitarmarcaInfo(".$value["id_persona"].")'><i class='fa fa-thumb-tack' aria-hidden='true'></i></button>"
-
             );
             $i++;
          }        

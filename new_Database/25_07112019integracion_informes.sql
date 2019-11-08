@@ -11,6 +11,10 @@ CREATE TABLE `informes` (
   `condicion` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB;
 
+ALTER TABLE `informes` 
+CHANGE COLUMN `id_persona` `id_persona` INT(11) NOT NULL AUTO_INCREMENT ,
+ADD PRIMARY KEY (`id_persona`);
+
 INSERT INTO `informes` (`id_persona`, `nombres_apellidos`, `email`, `celular`, `centro_laboral`, `tipo_programa`, `programa`, `consulta`, `fecha_consulta`, `condicion`) VALUES
 (1, 'Alicia  Peralta Mendoza', 'aalisnick@gmail.com', '993486333', 'Ministerio de Vivienda, Constr', '1', 'II Doctorado en Poíticas Públicas y Gestión del Estado', 'Buen día, costo, inicio y tiempo del doctorado', '2018-12-10 14:51:40', 1),
 (2, 'Juan Paitan', 'juanpaitan@outlook.com', '991169084', 'Certicom/Grupopaca.com', '3', 'XVII Diplomado en Administración de Gobiernos Regionales y Locales', 'INformacion costos. Gracias', '2018-12-10 14:51:33', 1),

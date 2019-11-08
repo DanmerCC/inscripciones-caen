@@ -38,6 +38,7 @@ class InformesController extends MY_Controller
 		);
 		if($sucess){
 			echo "Correctamente guardado";
+			exit;
 		}else{
 			show_error("Error al guardar",500);
 		}
