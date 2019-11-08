@@ -286,7 +286,7 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
-		$this->dt_query_datatable_filter_array();
+		$this->dt_query_datatable_filter_array('ins');
 		//$this->db->limit($limit,$start);
         return resultToArray($this->db->get());
 	}
@@ -303,7 +303,7 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
-		$this->dt_query_datatable_filter_array();
+		$this->dt_query_datatable_filter_array('ins');
 		
 		//$this->db->limit($limit,$start);
 		
