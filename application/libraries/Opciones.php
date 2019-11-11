@@ -118,6 +118,18 @@ class Opciones
                     
                 ],
                 "active"=>false
+			];
+	$this->opciones['evaluaciones']=[
+                "text"=>"Evaluaciones",
+                "href"=>"/administracion/vista/evaluaciones",
+                "submenu"=>[
+                    [
+                        "text"=>"Todos",
+                        "atributos"=>"id=''"
+                    ]
+                    
+                ],
+                "active"=>false
             ];
         array_push($this->arreglo, $this->opciones['alumnos']);
         array_push($this->arreglo, $this->opciones['matriculas']);
@@ -128,6 +140,7 @@ class Opciones
 		array_push($this->arreglo, $this->opciones['reportes']);
 		array_push($this->arreglo, $this->opciones['inscripciones']);
 		array_push($this->arreglo, $this->opciones['entrevistas']);
+		array_push($this->arreglo, $this->opciones['evaluaciones']);
         
         //print ("<pre>".print_r($this->arreglo[0],true)."</pre>");
         return $this->arreglo;
