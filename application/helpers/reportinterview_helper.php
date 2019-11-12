@@ -46,6 +46,7 @@ function processAndExportInterviewExcel($headers,$cuerpo){
 	
 	
 	$col = chr(ord($col)-1);
+	$fila = $fila-1;
 	$sheet->getStyle('A2:'.$col.$fila)->getBorders()
             ->getAllBorders()
             ->setBorderStyle(Border::BORDER_THIN)
