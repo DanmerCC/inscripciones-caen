@@ -317,7 +317,8 @@ function prepareData(data) {
 function getDraggableItem(data) {
 	return `
 	  	<li class="item-interview item " data-event='${buildableToDataEvent(data)}' data-idinscripcion='${data.id_inscripcion}'>
-			<div class="" '>
+		  <a href="#" style="display:none;">${data.nombres} ${data.apellido_paterno} ${data.apellido_materno}</a>
+		  	<div class="" '>
 				<div class="product-img">
 					<img src="/dist/img/avatar5.png" alt="${data.nombre_tipo_curso}">
 				</div>
@@ -350,6 +351,7 @@ function loadDataToSelectProgram() {
 			let contentString = '';
 			response.forEach(program => { contentString += programaToLi(program) })
 			$("#slct-programs-filter-calendar").html(contentString)
+			$("#programasExport").html(contentString)
 		}
 	});
 }
@@ -402,3 +404,4 @@ function verifyTrashEventsObject(jsEvent) {
 	}
 	return false;
 }
+
