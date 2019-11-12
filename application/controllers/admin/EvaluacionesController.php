@@ -38,12 +38,18 @@ class EvaluacionesController extends MY_Controller
 		$search=$this->input->post("search[]");
 		$start=$this->input->post('start');
 		$length=$this->input->post('length');
+		$columns=$this->input->post('columns[]');
+		$programa_id=($columns[3]["search"]["value"]!='')?$columns[3]["search"]["value"]:null;
+		
+		$this->Evaluacion_model->programa_id_global_filter=$programa_id;
 		$activeSearch=!(strlen($search["value"])==0);
+		
 		if(strlen($search["value"])>0){
 			$rspta = $this->Evaluacion_model->getAllEvaluacionesAndFindTextPage($start,$length,$search["value"]);
 		}else{
-			$rspta = $this->Evaluacion_model->getAllInscritosPage($start,$length);
+			$rspta = $this->Evaluacion_model->getAllEvaluaccionesPage($start,$length);
 		}
+		$query=$this->db->last_query();
 		$cantidad=$this->Evaluacion_model->count();
 	   //vamos a declarar un array
 	   $data = Array();
@@ -52,42 +58,22 @@ class EvaluacionesController extends MY_Controller
 
 	   foreach ($rspta as $value) {
 		$i++;
-		$haveFileCv=file_exists(CC_BASE_PATH."/files/cvs/".$value["documento"].".pdf");
-		$haveFileDni=file_exists(CC_BASE_PATH."/files/dni/".$value["documento"].".pdf");
-		$haveFileDj=file_exists(CC_BASE_PATH."/files/djs/".$value["documento"].".pdf");
-		$haveFileBach=file_exists(CC_BASE_PATH."/files/bachiller/".$value["documento"].".pdf");
-		$haveFileMaes=file_exists(CC_BASE_PATH."/files/maestria/".$value["documento"].".pdf");
-		$haveFileDoct=file_exists(CC_BASE_PATH."/files/doctorado/".$value["documento"].".pdf");
-
-		$checkCv=($value["check_cv_pdf"])?"<i class='fa fa-check' aria-hidden='true'></i>":"";
-		$checkDni=($value["check_dni_pdf"])?"<i class='fa fa-check' aria-hidden='true'></i>":"";
-		$checkDj=($value["check_dj_pdf"])?"<i class='fa fa-check' aria-hidden='true'></i>":"";
-		$checkBachiller=($value["check_bach_pdf"])?"<i class='fa fa-check' aria-hidden='true'></i>":"";
-		$checkMaestria=($value["check_maes_pdf"])?"<i class='fa fa-check' aria-hidden='true'></i>":"";
-		$checkDoctorado=($value["check_doct_pdf"])?"<i class='fa fa-check' aria-hidden='true'></i>":"";
-
+		$nombresApellidos=array('nombres'=>$value["nombres"],'apellidos'=>$value["apellido_paterno"].' '.$value["apellido_materno"]);
 	           $data[] = array(
-				"0" => $activeSearch?"-":(($cantidad-$i)+1),
-	           "1" => $value["grado_profesion"],
-	           "2" => $value["nombres"],
-	           "3" => $value["apellido_paterno"],
-	           "4" => $value["apellido_materno"],
-	           "5" => $value["lugar_trabajo"],
-							"6" => $value["celular"]." \n ".$value["telefono_casa"],
-							"7" => $value["email"],
-							"8" => (($haveFileCv)?"<a href='".base_url()."admin/view/pdf/cv/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkCv."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
-							"9" => (($haveFileDni)?"<a href='".base_url()."admin/view/pdf/dni/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDni."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
-							"10" => (($haveFileDj)?"<a href='".base_url()."admin/view/pdf/dj/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDj."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
-							"11" => (($haveFileBach)?"<a href='".base_url()."admin/view/pdf/bach/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkBachiller."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
-							"12" => (($haveFileMaes)?"<a href='".base_url()."admin/view/pdf/maes/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkMaestria."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
-							"13" => (($haveFileDoct)?"<a href='".base_url()."admin/view/pdf/doct/".$value["id_alumno"]."' target='_blank'><button class='btn btn-primary'><strong>Abrir".$checkDoctorado."</strong></button></a>":"<button class='btn btn-light btn-sm'>No subido</button>"),
-							);
+					"0" => $activeSearch?"-":(($cantidad-$i)+1),
+					"1" => $value["grado_profesion"],
+					"2" => $nombresApellidos,
+					"3" => $value["nombre"],
+					"4" => $value["created"]
+				);
 	    }        
 	   $results = array(
 	       "sEcho" => $this->input->post('sEcho'), //Informacion para datatables
 	       "iTotalRecords" => $cantidad, //enviamos el total de registros al datatables
 	       "iTotalDisplayRecords" => $cantidad, //enviamos total de registros a visualizar
-		   "aaData" => $data);
+		   "aaData" => $data,
+		   "qry"=>$query
+		);
 	   echo json_encode($results);
 	}
 

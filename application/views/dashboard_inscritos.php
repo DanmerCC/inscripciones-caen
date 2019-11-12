@@ -60,7 +60,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<label class="label-checkbox" for="select2-estado-finanzas">Estados Finanzas</label>
-										<select data-placeholder="Seleccione estado" name="filtro_estado_finanzas[]" multiple class="chosen-select" id="select2-estado-finanzas">
+										<select data-placeholder="Seleccione estado" name="filtro_estado_finanzas[]" multiple style="with:100%" class="chosen-select" id="select2-estado-finanzas">
 										
 											<?php for ($i=0; $i < count($estados_finanzas); $i++){ ?>
 												<option value="<?=$estados_finanzas[$i]["id"];?>" selected><?=$estados_finanzas[$i]["nombre"];?></option>
@@ -134,36 +134,45 @@
 									 <a class="toggle-vis" data-column="10">Admision</a>-
 							</div>
 						</div>
-            <table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
-              <thead>
-                <th>Opciones</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Programa</th>
-                <th>Documento</th>
-                <th>Correo</th>
-                <th>Telefonos</th>
-								<th>Fecha de Registro</th>
-								<th>Finanzas</th>
-								<th>Estado</th>
-								<th>Admision</th>
-								<th>Entrevistas</th>
-              </thead>
-              <tfoot>
-              <th>Opciones</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Programa</th>
-                <th>Documento</th>
-                <th>Correo</th>
-								<th>Telefonos</th>
-								<th>Fecha de Registro</th>
-                <th>Finanzas</th>
-                <th>Estado</th>
-								<th>Admision</th>
-								<th>Entrevistas</th>
-              </tfoot>
-            </table>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="box">
+									<div class="box-body">
+									<table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
+										<thead>
+											<th>Opciones</th>
+											<th>Nombres</th>
+											<th>Apellidos</th>
+											<th>Programa</th>
+											<th>Documento</th>
+											<th>Correo</th>
+											<th>Telefonos</th>
+											<th>Fecha de Registro</th>
+											<th>Finanzas</th>
+											<th>Estado</th>
+											<th>Admision</th>
+											<th>Entrevistas</th>
+										</thead>
+										<tfoot>
+										<th>Opciones</th>
+											<th>Nombres</th>
+											<th>Apellidos</th>
+											<th>Programa</th>
+											<th>Documento</th>
+											<th>Correo</th>
+											<th>Telefonos</th>
+											<th>Fecha de Registro</th>
+											<th>Finanzas</th>
+											<th>Estado</th>
+											<th>Admision</th>
+											<th>Entrevistas</th>
+										</tfoot>
+									</table>
+									</div>
+								</div>
+							</div>
+						</div>
+            
           </div>
       </div>
       <!-- end contenido -->

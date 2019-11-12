@@ -43,37 +43,45 @@
           <div class='row'>
 					<!---->
 					<!---->
-            <div class='col-sm-6'>
-              <select class="form-control" name="prueba1" id="selectProgram">
-                <!-- container -->
-              </select>
-            </div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<div class="box box-primary">
+								<div class="box-header">
+								<div class='col-sm-6'>
+									<select class="form-control" name="prueba1" id="selectProgram">
+										<!-- container -->
+									</select>
+								</div>
+								<div class='col-sm-3'>
+								</div>
+								</div>
+								<div class="box-body">
+								<table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
+									<thead>
+										<th>N°</th>
+										<th>Detalles</th>
+										<th>Inscrito</th>
+										<th>Programa</th>
+										<th>fecha_registro</th>
+									</thead>
+									<tfoot>
+									<tbody>
+										
+									</tbody>
+									<th>N°</th>
+										<th>Detalles</th>
+										<th>Inscrito</th>
+										<th>Programa</th>
+										<th>fecha_registro</th>
+									</tfoot>
+								</table>
+								</div>
+							
+							</div>
+						</div>
+					</div>
             
-          </div>
-            <table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
-              <thead>
-                <th>N°</th>
-                <th>Detalles</th>
-                <th>Inscrito</th>
-                <th>Programa</th>
-                <th>fecha_registro</th>
-                <th>Estado</th>
-              </thead>
-              <tfoot>
-                <th>N°</th>
-                <th>Opciones</th>
-                <th>nombres</th>
-                <th>apellido_paterno</th>
-                <th>apellido_materno</th>
-                <th>tipo_financiamiento</th>
-                <th>documento</th>
-                <th>curso_numeracion</th>
-                <th>Finanzas</th>
-                <th>Comentario</th>
-                <th>fecha_registro</th>
-                <th>Estado</th>
-              </tfoot>
-            </table>
           </div>
       </div>
       <!-- end contenido -->

@@ -1,15 +1,22 @@
 var tabla;
 
 $(document).ready(function(){
-	loadDataToSelect()
+	cargarDataTable();
+	loadDataToSelect();
+	searchByProgramaEvent()
+	
 })
 
-
+function searchByProgramaEvent(){
+	$("#selectProgram").change(function(){
+		tabla.column(3).search($("#selectProgram").val()).draw();
+	});
+}
 
 function listProgramasActivos(array){
     result="<option value='' disabled required selected>Seleciona una opcion</option>";
     for (var i = 0; i < array.length; i++) {
-        result=result+"<option value='"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"'>"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"</option>";
+        result=result+"<option value='"+array[i].id_curso+"'>"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"</option>";
     }
     return result;
 }
@@ -41,19 +48,17 @@ function cargarDataTable(){
 	],
 	"ajax":
 			{
-				url: '/admin/dataTable/inscripciones',
+				url: '/admin/dataTable/evaluaciones',
 				type: "post",
 				dataType: "json",
-				data:{
-					"asdasd":1
-				},
+				data:{},
 				error: function (e) {
 					console.log(e.responseText);
 				}
 			},
 	"initComplete":function( settings, json){
-		createRouteExport();
-		tabla.column(8).visible(false)
+		//createRouteExport();
+		//tabla.column(8).visible(false)
 	},
 	"bDestroy": true,
 	"iDisplayLength": 15, // paginacion
@@ -78,16 +83,12 @@ function cargarDataTable(){
             "previous": "Anterior"
         }
 	}, //ordenar(columna, orden)
-	"columnDefs": [ {
-		"targets": 10,
+	"columnDefs": [{
+		"targets": 2,
 		"render": function ( data, type, row, meta ) {
-		  return getHtmlEstadoAdmision(data);
+			console.log(data)
+		  return ` ${data.nombres} ${data.apellidos}`;
 		}
-	  },
-	  {
-		"targets": 11,
-		"render": function ( data, type, row, meta ) {
-		  return getHtmlEstadoEntrevista(data);
-		}
-	  } ]
+	  }]
 }).DataTable();
+}

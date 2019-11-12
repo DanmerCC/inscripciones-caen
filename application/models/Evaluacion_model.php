@@ -17,6 +17,8 @@ class Evaluacion_model extends MY_Model
 	private $created='created';
 	private $modificated='modificated';
 
+	public  $programa_id_global_filter=null;
+
 	function __construct()
 	{
 		parent::__construct();
@@ -37,16 +39,47 @@ class Evaluacion_model extends MY_Model
 		}
 	}
 
-	function getAllEvaluacionesAndFindTextPage($start,$limit,$search){
+	function getAllEvaluacionesAndFindTextPage($start,$limit,$search=''){
 		$this->query_part_select();
 		$this->db->limit($limit,$start);
-		return $this->get()->result_array();
+		if($search!=''){
+			$this->db->group_start();
+				$this->db->like('nombres',$search,'after');
+				$this->db->or_like('apellido_paterno',$search,'after');
+				$this->db->or_like('apellido_materno',$search,'after');
+			$this->db->group_end();
+		}
+		$this->filterByPrograma();
+		return $this->db->get()->result_array();
 	}
 
 	function query_part_select(){
 		$this->db->select();
 		$this->db->from($this->table);
-		$this->db->join('alumno',$this->table.'.'.$this->id.'=alumno.id_alumno');
+		$this->db->join('alumno',$this->table.'.'.$this->alumno_id.'=alumno.id_alumno');
+		$this->db->join('curso',$this->table.'.'.$this->programa_id.'=curso.id_curso');
+	}
+
+	function getAllEvaluaccionesPage($start,$limit){
+		$this->query_part_select();
+		$this->db->limit($limit,$start);
+		$this->filterByPrograma();
+		return $this->db->get()->result_array();
+	}
+
+	function count(){
+		$this->db->select($this->id);
+		$this->db->from($this->table);
+		return $this->db->get()->num_rows();
+	}
+
+
+	private function filterByPrograma(){
+		if($this->programa_id_global_filter!=null){
+			$this->db->group_start();
+				$this->db->where($this->programa_id,(int)$this->programa_id_global_filter);
+			$this->db->group_end();
+		}
 	}
 	
 }
