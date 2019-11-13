@@ -344,6 +344,18 @@ class Inscripcion_model extends CI_Model
 		}
 	}
 
+	private function getPublicColumns($alias=NULL){
+		if($alias===NULL){
+			return $this->public_columns;
+		}else{
+			$arraynew=[];
+			for ($i=0; $i < count($this->public_columns); $i++) { 
+				$arraynew[$i]=$alias.'.'.$this->public_columns[$i];
+			}
+			return $arraynew;
+		}
+	}
+
 	/**
 	* get a page only no deleted marked for api
 	*/
@@ -638,5 +650,29 @@ class Inscripcion_model extends CI_Model
 		);
 		$this->db->update($this->table,$data);
 		return $this->db->affected_rows()==1;
+	}
+
+
+	function evaluables($search='',$max_options=30){
+		$this->load->model('InterviewProgramed_model');
+		$valids=$this->InterviewProgramed_model->valids(['id']);
+		$this->db->select(
+			implode(',',
+			$this->getPublicColumns($this->table)
+			).',alumno.nombres,alumno.apellido_paterno,apellido_materno,alumno.nombres as value'
+		);
+		$this->db->from($this->table);
+		$this->db->join('solicitud','solicitud.idSolicitud='.$this->table.'.solicitud_id');
+		$this->db->join('alumno','alumno.id_alumno=solicitud.alumno');
+		$this->db->where_not_in($this->id,$valids);
+		if($search!='' && isset($search)){
+			$this->db->like('alumno.nombres',$search);
+			$this->db->or_like('alumno.apellido_paterno',$search);
+			$this->db->or_like('alumno.apellido_materno',$search);
+		}
+		$this->db->where($this->table.'.'.$this->deleted.' IS NULL',null,false);
+		$this->db->limit($max_options);
+		$result=$this->db->get();
+		return $result->result_array();
 	}
 }

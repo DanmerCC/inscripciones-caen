@@ -323,3 +323,6 @@ $route['administracion/vista/entrevistas'] = 'admin/EntrevistaController/index';
 
 $route['informes/form'] = 'InformesController/index';
 $route['informes/save'] = 'InformesController/save';
+
+
+$route['admin/evaluables'] = 'admin/InscripcionController/getEvaluables';

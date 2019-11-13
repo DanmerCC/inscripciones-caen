@@ -1,10 +1,28 @@
 var tabla;
 
 $(document).ready(function(){
-	cargarDataTable();
-	loadDataToSelect();
+	cargarDataTable()
+	loadDataToSelect()
 	searchByProgramaEvent()
-	
+	$("#input-evaluables").autocomplete({
+		source: '/admin/evaluables',
+		minLength: 1,
+		open: function(){
+			$(this).autocomplete('widget').css('z-index', 100);
+			return false;
+		},
+		select: function (event, ui) {
+			console.log(ui.item.nombres)
+			$("#input-evaluables").val(ui.item.nombres)
+		},
+	}).data("ui-autocomplete")._renderItem = function (ul, item) {
+		return $("<li class='item-suggestions'></li>")
+			.data("item.autocomplete", item)
+			.append(`
+				<option value="${item.id_inscripcion}">${item.nombres} ${item.apellido_paterno} ${item.apellido_materno}</option>
+			`)
+			.appendTo(ul);
+	};
 })
 
 function searchByProgramaEvent(){
@@ -92,3 +110,18 @@ function cargarDataTable(){
 	  }]
 }).DataTable();
 }
+
+
+function guardarEntrevista(){
+	$.ajax({
+		type: "method",
+		url: "url",
+		data: "data",
+		dataType: "dataType",
+		success: function (response) {
+			
+		}
+	});
+}
+
+

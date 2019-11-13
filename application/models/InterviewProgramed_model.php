@@ -14,7 +14,12 @@ class InterviewProgramed_model extends MY_Model
 	private $created='created';
 	private $updated='updated';
 
-	
+	private $columns=[
+		'id','alumno_id','inscripcion_id','fecha_programado','created','updated'
+	];
+
+	private $public_columns=['id','alumno_id','inscripcion_id','fecha_programado','created','updated'];
+
 	function __construct()
 	{
 		parent::__construct();
@@ -229,5 +234,32 @@ class InterviewProgramed_model extends MY_Model
 		}
 
 		return $status;
+	}
+
+	public function valids($columns=[]){
+		if(count(array_intersect($columns, $this->columns)) == count($columns)){
+			$this->db->select($columns==[]?'*':implode(',',$columns));
+			$this->db->from($this->table);
+			$this->db->where($this->estado_id,$this->StateInterviewProgramed_model->REALIZADA);
+			return c_extract($this->db->get()->result_array(),'id');
+		}else{
+			throw new Exception("valor invalido en columns array");
+		}
+	}
+
+	public function getSelectQueryPart($columns,$table=NULL){
+		$finalArray=[];
+		if(isset($table)){
+			$array_completed=[];
+			foreach($columns as $column){
+				array_push($array_completed,$table.'.'.$column);
+			}
+			$finalArray=$array_completed;
+		}else{
+			$finalArray=$columns;
+		}
+
+		return implode(',',$finalArray);
+		
 	}
 }

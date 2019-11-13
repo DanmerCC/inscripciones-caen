@@ -10,6 +10,10 @@
 <link rel="stylesheet" href="/dist/css/jquery-externs/jquery.dataTables.min.css">
 <link href="/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/css/effects.css">
+<link rel="stylesheet" href="/bower_components/jquery-ui/themes/smoothness/jquery-ui.css">
+<style>
+	.ui-widget-content{ position: absolute; cursor: default;z-index:3000 !important;}
+</style>
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 <!-- Site wrapper -->
@@ -54,6 +58,7 @@
 									</select>
 								</div>
 								<div class='col-sm-3'>
+									<div class="btn btn-primary">Nuevo</div>
 								</div>
 								</div>
 								<div class="box-body">
@@ -274,6 +279,50 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<!--modal -->
+<div class="modal fade" tabindex="-1" role="dialog" id="mdl-evaluacion-status">
+	<div class="modal-dialog modal-lg" style="display: block; padding-right: 17px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Evaluacion</h4>
+			</div>
+			<form id="frm-new-evaluacion" role="form" action="/guardarasdas">
+			<div class="modal-body">
+				<div class="panel-body" id="mdl_body_entrevistas_options">
+					
+								<div class="box-body">
+									<div class="form-group">
+										<label for="exampleInputEmail1">Email address</label>
+										<input class="form-control" name="inscripcion" id="input-evaluables"/>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputFile">File input</label>
+										<input type="file" id="exampleInputFile">
+
+										<p class="help-block">Example block-level help text here.</p>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input type="checkbox"> Check me out
+										</label>
+									</div>
+								</div>
+								<!-- /.box-body -->
+					</div>
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" onclick="guardarEntrevista();" class="btn btn-primary" id="btnSave" >Guardar Cambios</button>
+					<button type="button" class="btn btn-default" id="btnCForm" data-dismiss="modal">Cerrar</button>
+				</div>
+			</form>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+	<div id="update-calendar"></div>
+</div><!-- /.modal -->
+<!-- /.modal -->
+
 <!-- ./wrapper -->
 <?php $this->load->view('adminlte/scriptsFooter');?>
 
@@ -296,6 +345,7 @@
 <script src="/dist/js/jquery-externs/buttons.html5.min.js"></script>
 <script src="/dist/js/jquery-externs/buttons.print.min.js"></script>
 <script src="/bower_components/select2/dist/js/select2.min.js"></script>
+<script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
 
 <script src="/assets/plugins/bootbox/bootbox.all.min.js"></script>
 <!-- <script src="/assets/js/dboardAlumno.js"></script> -->
