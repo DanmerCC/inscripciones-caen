@@ -8,12 +8,14 @@ $(document).ready(function(){
 		source: '/admin/evaluables',
 		minLength: 1,
 		open: function(){
+			$("#input-evaluables").data('id',null)
 			$(this).autocomplete('widget').css('z-index', 100);
 			return false;
 		},
 		select: function (event, ui) {
 			console.log(ui.item.nombres)
 			$("#input-evaluables").val(ui.item.nombres)
+			$("#input-evaluables").data('id',ui.item.id_inscripcion)
 		},
 	}).data("ui-autocomplete")._renderItem = function (ul, item) {
 		return $("<li class='item-suggestions'></li>")
@@ -113,19 +115,19 @@ function cargarDataTable(){
 
 
 function guardarEntrevista(){
-	console.log($('#fl-evaluacion')[0].files);
 	var data = new FormData();
 	let fileInput=$('#fl-evaluacion')[0].files;
 	if(fileInput.length==1){
-		data.append('file-evaluacion',fileInput[0]);
-		console.log($("#input-evaluables").val())
-		//data.append(fileInput[0]);
+		data.append('file_evaluacion',fileInput[0]);
+		let id_inscripcion=$("#input-evaluables").data('id');
+		data.append('id_inscripcion',id_inscripcion);
 		$.ajax({
 			type: "post",
 			url: "/admin/evaluacion/save",
+            processData: false,
+            contentType: false,
 			data: data,
-			cache: false,
-			contentType:false,
+			enctype: 'multipart/form-data',
 			success: function (response) {
 				console.log(response)
 			}

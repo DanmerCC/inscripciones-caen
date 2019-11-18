@@ -88,9 +88,12 @@ class EvaluacionesController extends MY_Controller
 		$this->load->view("pdf/onlyviewpdf",array('data'=>$data,'text'=>var_dump($parturl)));
 	}
 
-	public function save(){
+	public function guardar(){
 		$id_inscripcion=$this->input->post('id_inscripcion');
-		$file=$this->input->post('id_inscripcion');
+		$file=$this->input->post('file_evaluacion');
+
+		var_dump($id_inscripcion,$file);
+		exit;
 		//$this->Evaluacion_model->
 	}
 
