@@ -12,6 +12,8 @@
 <script src="/adminlte/dist/js/adminlte.min.js"></script>
 <script src="/assets/js/globalhelper.js"></script>
 
+<script src="/bower_components/select2/dist/js/select2.min.js"></script>
+
 <!-- AdminLTE adminlte/for demo purposes -->
 <script src="/adminlte/dist/js/demo.js"></script>
 <script>

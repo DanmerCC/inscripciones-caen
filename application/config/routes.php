@@ -318,6 +318,7 @@ $route['admin/entrevista/update'] = 'admin/EntrevistaController/update';
 
 
 $route['administracion/vista/entrevistas'] = 'admin/EntrevistaController/index';
+$route['administracion/vista/exportarData'] = 'admin/EntrevistaController/exportarDataInterview';
 
 $route['informes/form'] = 'InformesController/index';
 $route['informes/save'] = 'InformesController/save';

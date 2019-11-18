@@ -141,4 +141,24 @@ class EntrevistaController extends MY_Controller
 			$this->response("Error",401);
 		}
 	}
+
+	public function exportarDataInterview(){
+		$this->load->helper('reportinterview');
+		$filter_programas=$this->input->get('programa')!=null ? $this->input->get('programa') : [];
+		$filter_estado=$this->input->get('estado');
+		$rspta=$this->InterviewProgramed_model->getAllInscritosDataByFilter($filter_programas,$filter_estado);
+		$cuerpo = array();
+		foreach ($rspta as $key => $item) {
+			$cuerpo[] = array(
+				($key+1),
+				$item['nombres'],
+				$item['apellido_paterno']." ".$item['apellido_materno'],
+				$item['documento'],
+				$item['numeracion_curso']." ".$item['nombre_tipo_curso']." ".$item['nombre_curso'],
+				$item['nombre_estado']
+			);
+		}
+		$headers = ["N°","NOMBRES","APELLIDOS","DOCUMENTO","PROGRAMAS","ESTADO ENTREVISTA"];
+		processAndExportInterviewExcel($headers,$cuerpo);
+	}
 }

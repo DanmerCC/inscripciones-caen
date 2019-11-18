@@ -12,6 +12,26 @@
 	<link href='/assets/plugins/@fullcalendar/daygrid/main.css' rel='stylesheet' />
 	<link href='/assets/plugins/@fullcalendar/timegrid/main.css' rel='stylesheet' />
 	<link href='/assets/plugins/@fullcalendar/list/main.css' rel='stylesheet' />
+	<link href="/bower_components/select2/dist/css/select2.min.css" rel="stylesheet">
+	<style>
+	* {
+		box-sizing: border-box;
+	}
+
+	#inputSearchName {
+		background-image: url('<?=base_url()?>assets/img/searchicon.png');
+		background-position: 10px 12px;
+		background-repeat: no-repeat;
+		width: 100%;
+		font-size: 16px;
+		padding: 12px 20px 12px 40px;
+		border: 1px solid #ddd;
+		margin-bottom: 12px;
+	}
+	li.select2-selection__choice {
+		color: black !important;
+	}
+	</style>
 </head>
 
 <body class="hold-transition skin-blue-light sidebar-mini">
@@ -50,7 +70,7 @@
 							<div class="box box-primary" id="box-entrevistas-pendientes">
 								<div class="box-header with-border">
 									<h3 class="box-title">Pendientes por programar</h3>
-
+									<input type="text" id="inputSearchName" onkeyup="buscarPorNombre()" placeholder="Buscar por nombres" title="Ingrese un nombre">
 									<div class="box-tools pull-right">
 										<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
 										</button>
@@ -71,7 +91,14 @@
 							</div>
 						</div>
 						<div class="col-md-8">
-							<div id="calendar"></div>
+							<div class="box box-primary">
+								<div class="box-header">
+									<button class="btn btn-success" onclick="openModalForExport()"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar en excel</button>
+								</div>
+								<div class="box-body">
+									<div id="calendar"></div>		
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -88,27 +115,101 @@
 			<strong>Copyright &copy;<a href="/">CAEN EPG</a>.</strong> All rights
 			reserved.
 		</footer>
-
-		<!-- Control Sidebar -->
-
-		<!-- /.control-sidebar -->
-
-
-		<!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
 		<div class="control-sidebar-bg"></div>
 		<div id="virutal"></div>
 		<div id="contentModals">
-
 		</div>
 	</div>
 
+	<div class="modal fade" tabindex="-1" role="dialog" id="mdl_export_entrevistas">
+		<div class="modal-dialog" style="display: block; padding-right: 17px;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Filtro para exportar entrevistas</h4>
+				</div>
+				<div class="modal-body">
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="">Curso</label>
+							<select class="form-control" style="width:100%;" id="programasExport" name="programasExport[]" multiple="multiple" placeholder="Selecciona cursos">
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="">Estado entrevista</label>
+							<select class="form-control" style="width:100%;" id="estado_entrevista" name="estado_entrevista" placeholder="Selecciona estado">
+								<option value="">Todos</option>
+								<option value="1">Pendiente</option>
+								<option value="2">Realizado</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="<?=base_url()?>administracion" target="_blank" class="btn btn-primary" id="btnExportEntrevista" >Exportar</a>
+					<button type="button" class="btn btn-default" id="btnCancelExport" data-dismiss="modal">Cancelar</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
 	<!-- ./wrapper -->
 	<?php $this->load->view('adminlte/scriptsFooter'); ?>
 	<?php $this->load->view('modals/details_entrevista'); ?>
 	<script src=" /build/app.bundle.js"></script>
 	<script src=" /assets/js/dboard_entrevistas.js"></script>
+	<script>
+		function openModalForExport(){
+			$("#mdl_export_entrevistas").modal("show");
+		}
+
+		function buscarPorNombre() {
+			var input, filter, ul, li, a, i, txtValue;
+			input = document.getElementById("inputSearchName");
+			filter = input.value.toUpperCase();
+			ul = document.getElementById("entrevistas-pendientes");
+			li = ul.getElementsByTagName("li");
+			for (i = 0; i < li.length; i++) {
+				a = li[i].getElementsByTagName("a")[0];
+				txtValue = a.textContent || a.innerText;
+				if (txtValue.toUpperCase().indexOf(filter) > -1) {
+					li[i].style.display = "";
+				} else {
+					li[i].style.display = "none";
+				}
+			}
+		}
+		
+		function makeUrlToExportData(){
+			let programasArray = $("#programasExport").val();
+			let estadoEntrevista = $("#estado_entrevista").val();
+			let stringProgramas = makeArrayToString(programasArray);
+			let rutaExport = '<?=base_url()?>administracion/vista/exportarData/?estado='+estadoEntrevista+''+stringProgramas;
+			document.getElementById('btnExportEntrevista').attributes.href.value = rutaExport;
+		}
+		function makeArrayToString(programasArray){
+			var newString = '';
+			if(programasArray.length>0){
+				for (let indice = 0; indice < programasArray.length; indice++) {
+					newString += '&programa[]='+programasArray[indice];
+				}
+			}
+			return newString;
+		}
+
+		$(document).ready(function() {
+			document.getElementById('programasExport').change = function(){
+				makeUrlToExportData();
+			};
+			document.getElementById('estado_entrevista').change = function(){
+				makeUrlToExportData();
+			};
+
+			$('#programasExport').select2();
+			$('#estado_entrevista').select2();
+		});
+		
+	</script>
 </body>
 
 </html>

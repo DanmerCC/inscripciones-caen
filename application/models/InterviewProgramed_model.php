@@ -172,6 +172,38 @@ class InterviewProgramed_model extends MY_Model
 		return $result->result_array();
 	}
 
+	function getAllInscritosDataByFilter($filter_programas=[],$filter_estado=null){
+		$this->db->select(
+			'inscripcion.id_inscripcion,'.
+			'alumno.documento,'.
+			'alumno.nombres,'.
+			'alumno.apellido_paterno,'.
+			'alumno.apellido_materno,'.
+			'curso.numeracion as numeracion_curso,'.
+			'tipo_curso.nombre as nombre_tipo_curso,'.
+			'curso.nombre as nombre_curso,'.
+			'state_intvw.nombre as nombre_estado'
+
+		);
+		$this->db->from('inscripcion');
+		$this->db->join('solicitud','solicitud.idSolicitud=inscripcion.solicitud_id');
+		$this->db->join('alumno','alumno.id_alumno=solicitud.alumno');
+		$this->db->join('curso','curso.id_curso=solicitud.programa');
+		$this->db->join('tipo_curso','curso.idTipo_curso=tipo_curso.idTipo_curso');
+		$this->db->join($this->table." intvw",'intvw.inscripcion_id=inscripcion.id_inscripcion','left');
+		$this->db->join("intvw_state_programmed_interviews state_intvw",'intvw.'.$this->estado_id.'=state_intvw.id','left');
+
+		if(count($filter_programas)>0){
+			$this->db->where_in('solicitud.programa',$filter_programas);
+		}
+
+		if($filter_estado!=null){
+			$this->db->where('intvw.'.$this->estado_id,$filter_estado);
+		}
+		$result=$this->db->get();
+		return $result->result_array();
+	}
+
 	function delete($id){
 		$this->db->trans_begin();
 		if(!empty($id)){
