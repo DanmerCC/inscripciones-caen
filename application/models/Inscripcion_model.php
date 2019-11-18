@@ -659,10 +659,13 @@ class Inscripcion_model extends CI_Model
 		$this->db->select(
 			implode(',',
 			$this->getPublicColumns($this->table)
-			).',alumno.nombres,alumno.apellido_paterno,apellido_materno,alumno.nombres as value'
+			).',alumno.nombres,alumno.apellido_paterno,apellido_materno,alumno.nombres as value,'.
+			'CONCAT(curso.numeracion," ",tipo_curso.nombre," ",curso.nombre) as full_name_programa'
 		);
 		$this->db->from($this->table);
 		$this->db->join('solicitud','solicitud.idSolicitud='.$this->table.'.solicitud_id');
+		$this->db->join('curso','solicitud.programa=curso.id_curso');
+		$this->db->join('tipo_curso','tipo_curso.idTipo_curso=curso.idTipo_curso');
 		$this->db->join('alumno','alumno.id_alumno=solicitud.alumno');
 		$this->db->where_not_in($this->id,$valids);
 		if($search!='' && isset($search)){

@@ -19,7 +19,7 @@ $(document).ready(function(){
 		return $("<li class='item-suggestions'></li>")
 			.data("item.autocomplete", item)
 			.append(`
-				<option value="${item.id_inscripcion}">${item.nombres} ${item.apellido_paterno} ${item.apellido_materno}</option>
+				<option value="${item.id_inscripcion}">${item.nombres} ${item.apellido_paterno} ${item.apellido_materno} - ${item.full_name_programa}</option>
 			`)
 			.appendTo(ul);
 	};
@@ -113,15 +113,27 @@ function cargarDataTable(){
 
 
 function guardarEntrevista(){
-	$.ajax({
-		type: "method",
-		url: "url",
-		data: "data",
-		dataType: "dataType",
-		success: function (response) {
-			
-		}
-	});
+	console.log($('#fl-evaluacion')[0].files);
+	var data = new FormData();
+	let fileInput=$('#fl-evaluacion')[0].files;
+	if(fileInput.length==1){
+		data.append('file-evaluacion',fileInput[0]);
+		console.log($("#input-evaluables").val())
+		//data.append(fileInput[0]);
+		$.ajax({
+			type: "post",
+			url: "/admin/evaluacion/save",
+			data: data,
+			cache: false,
+			contentType:false,
+			success: function (response) {
+				console.log(response)
+			}
+		});
+	}else{
+		alert("Solo se permite un archivo")
+	}
+	
 }
 
 

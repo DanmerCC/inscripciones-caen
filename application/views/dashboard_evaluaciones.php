@@ -58,7 +58,7 @@
 									</select>
 								</div>
 								<div class='col-sm-3'>
-									<div class="btn btn-primary">Nuevo</div>
+									<div class="btn btn-primary" data-toggle="modal" data-target="#mdl-evaluacion-status">Nuevo</div>
 								</div>
 								</div>
 								<div class="box-body">
@@ -293,19 +293,12 @@
 					
 								<div class="box-body">
 									<div class="form-group">
-										<label for="exampleInputEmail1">Email address</label>
+										<label for="exampleInputEmail1">Inscrito</label>
 										<input class="form-control" name="inscripcion" id="input-evaluables"/>
 									</div>
 									<div class="form-group">
-										<label for="exampleInputFile">File input</label>
-										<input type="file" id="exampleInputFile">
-
-										<p class="help-block">Example block-level help text here.</p>
-									</div>
-									<div class="checkbox">
-										<label>
-											<input type="checkbox"> Check me out
-										</label>
+										<label for="exampleInputFile">Adjunto</label>
+										<input id="fl-evaluacion" type="file" id="exampleInputFile">
 									</div>
 								</div>
 								<!-- /.box-body -->
