@@ -416,7 +416,7 @@ class InscripcionController extends CI_Controller {
 	public function innerInscripcionOptionsComponet($inscripcion,$is_anulated){
 		$optionsToContainer=[
 			($is_anulated?"<button class='btn btn-danger' onclick='ins.cancel(".$inscripcion["id_inscripcion"].");'><i class='fa fa-trash-o' aria-hidden='true'></i> Anular</button>":""),
-			($is_anulated?('<button href="'.base_url()."postulante/pdf/".$inscripcion["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></button>'):''),
+			($is_anulated?('<button class="btn "><a href="'.base_url()."postulante/pdf/".$inscripcion["idSolicitud"].'" class="btn btn-success" target="_blank" onclick=""><i class="fa fa-print"></i></a></button>'):''),
 			($is_anulated?"<button class='btn btn-success' onclick='MDL_ENTREVISTAS_INSCRIPCION.open(".$inscripcion["id_inscripcion"].");'><i class='fa fa-fw fa-calendar-check-o' aria-hidden='true'></i> Entrevista</button>":"")
 		];
 		$detailsOption=($is_anulated?'<div onclick="modalDataInscrito.loadData('.$inscripcion["idSolicitud"].');"><i class="fa fa-eye"></i></div>':'');
