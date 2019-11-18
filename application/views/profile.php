@@ -837,7 +837,7 @@
                                                         <td>
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
-                                                                <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Solicitud-de-Inscripci%C3%B3n.xls" download>Hoja de datos</a>
+                                                                <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2019/04/Solicitud-de-Inscripci%C3%B3n.xls" download>Hoja de datos</a>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -848,7 +848,7 @@
                                                         <td>
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
-                                                                    <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Solicitud-de-Admisi%C3%B3n.docx" download>Descargar Solicitud de Admisión (Formato CAEN)</a>
+                                                                    <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2019/04/Solicitud-de-Admisi%C3%B3n.docx" download>Descargar Solicitud de Admisión (Formato CAEN)</a>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -859,7 +859,7 @@
                                                         <td>
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
-                                                                    <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2015/11/Declaraci%C3%B3n-Jurada-Simple.docx" download>Descargar Declaración Jurada de no tener antecedentes Penales, Judiciales ni policiales (Formato CAEN).</a>
+                                                                    <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2019/04/Declaraci%C3%B3n-Jurada-Simple-1.docx" download>Descargar Declaración Jurada de no tener antecedentes Penales, Judiciales ni policiales (Formato CAEN).</a>
                                                                 </div>
                                                             </div>
                                                         </td>
