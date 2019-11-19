@@ -29,7 +29,7 @@ class MY_Controller extends CI_Controller
         }
 
         if($status===self::SERVER_ERROR){
-            show_error(SERVER_ERROR,"Error interno en el servidor");
+            show_error($data,self::SERVER_ERROR);
             exit;
         }
 

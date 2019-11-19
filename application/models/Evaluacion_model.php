@@ -73,7 +73,13 @@ class Evaluacion_model extends MY_Model
 		return $this->db->get()->num_rows();
 	}
 
-
+	function countByInscripcion($id_inscripcion){
+		$this->db->select("COUNT($this->id) as cantidad");
+		$this->db->from($this->table);
+		$this->db->where($this->inscripcion_id,$id_inscripcion);
+		$result=$this->db->get();
+		return $result->result_array()[0]['cantidad'];
+	}
 	private function filterByPrograma(){
 		if($this->programa_id_global_filter!=null){
 			$this->db->group_start();
@@ -81,5 +87,26 @@ class Evaluacion_model extends MY_Model
 			$this->db->group_end();
 		}
 	}
-	
+
+	public function create($id_inscripcion){
+		$this->load->model('Inscripcion_model');
+		$this->load->model('Solicitud_model');
+		try {
+			$inscripcion=$this->Inscripcion_model->getOneOrFail($id_inscripcion);
+		} catch (\Exception $e) {
+			throw $e;
+			exit;
+		}
+		$inscripcion=$this->Inscripcion_model->getOneOrFail($id_inscripcion);
+		$solicitud=$this->Solicitud_model->getOrFail($inscripcion['solicitud_id']);
+		$idUsuario=$this->nativesession->get('idUsuario');
+		$data=array(
+			'inscripcion_id'=>$inscripcion['id_inscripcion'],
+			'alumno_id'=>$solicitud['alumno'],
+			'programa_id'=>$solicitud['programa'],
+			'created_user_id'=>$idUsuario,
+		);
+		$this->db->insert($this->table,$data);
+		return $this->db->affected_rows()==1;
+	}
 }

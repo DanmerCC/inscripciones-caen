@@ -129,7 +129,17 @@ function guardarEntrevista(){
 			data: data,
 			enctype: 'multipart/form-data',
 			success: function (response) {
-				console.log(response)
+				if(response.status=='OK'){
+					alert("Correctamente guardado");
+					tabla.ajax.reload(null,false);
+					$("#mdl-evaluacion-status").modal('hide');
+					clear_mdl();
+				}else{
+					alert("Algo no esta bien");
+				}
+			},error:function(error){
+				console.log(error)
+				alert(error.responseJSON.data)
 			}
 		});
 	}else{
@@ -138,4 +148,10 @@ function guardarEntrevista(){
 	
 }
 
+
+function clear_mdl(){
+	$("#input-evaluables").data('id',null);
+	$('#fl-evaluacion')[0].value ='';
+	$("#input-evaluables").val('');
+}
 

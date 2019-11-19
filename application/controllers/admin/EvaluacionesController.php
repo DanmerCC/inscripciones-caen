@@ -89,14 +89,46 @@ class EvaluacionesController extends MY_Controller
 	}
 
 	public function guardar(){
+		
+		$this->config->load('file', TRUE);
 		$id_inscripcion=$this->input->post('id_inscripcion');
-		$file=$this->input->post('file_evaluacion');
 
-		var_dump($id_inscripcion,$file);
-		exit;
-		//$this->Evaluacion_model->
+		if($this->hasEvaluacionByIdInscripcion($id_inscripcion)){
+			$this->structuredResponse('Ya existe una evaluacion',400);
+		}
+
+		if($this->Evaluacion_model->create($id_inscripcion)){
+			$config['upload_path']          = $this->config->item('base_uploads_path','file').'/files/eval/';
+			$config['allowed_types']        = 'pdf';
+			$config['max_size']             = 4048;
+			$config['max_width']            = 1024;
+			$config['max_height']           = 768;
+			$config['file_name']           = $id_inscripcion;
+
+			$this->load->library('upload', $config);
+
+			if (!$this->upload->do_upload('file_evaluacion'))
+			{
+				$error = array('error' => $this->upload->display_errors());
+
+				$this->structuredResponse($error,500);
+			}
+			else
+			{
+				$data = array('upload_data' => $this->upload->data());
+				$this->structuredResponse($data);
+			}
+		}else{
+			$this->structuredResponse("ERROR",500);
+		}
+
+		
 	}
 
+
+	private function hasEvaluacionByIdInscripcion($id_inscripcion){
+		return $this->Evaluacion_model->countByInscripcion($id_inscripcion)>=1;
+	}
 
 	/**End class */
 	
