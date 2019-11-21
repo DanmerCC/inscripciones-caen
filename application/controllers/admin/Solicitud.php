@@ -131,8 +131,7 @@ class Solicitud extends CI_Controller
                                     ' <button class="btn btn-primary" onclick="quitarmarca('.$rspta[$i]["idSolicitud"].')"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>'
                             ).
                             ' <button class="btn btn-warning" onclick="request_bootbox('.
-                                $rspta[$i]["idSolicitud"].
-                            ');">'.
+                                $rspta[$i]["idSolicitud"].','.$rspta[$i]["estado_finanzas_id"].');">'.
 							'<i class="fa fa-user-plus" aria-hidden="true"></i></button>'
                             ,
                 "2" => $rspta[$i]["nombres"],
