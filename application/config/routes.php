@@ -327,3 +327,4 @@ $route['informes/save'] = 'InformesController/save';
 
 $route['admin/evaluables'] = 'admin/InscripcionController/getEvaluables';
 $route['admin/evaluacion/save'] = 'admin/EvaluacionesController/guardar';
+$route['pruebatoken'] = 'admin/EvaluacionesController/prueba';

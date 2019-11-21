@@ -6,6 +6,7 @@ Modelo de evaluacion acciones relacionadas a una notificacion
 
 class Evaluacion_model extends MY_Model
 {
+	private $filePrefix='eva';
 	private $table='adms_evaluaciones';
 
 	private $id='id';
@@ -108,5 +109,9 @@ class Evaluacion_model extends MY_Model
 		);
 		$this->db->insert($this->table,$data);
 		return $this->db->affected_rows()==1;
+	}
+
+	private function getUrlFile($id){
+		return base_url().$this->filePrefix.'/'.$id;
 	}
 }

@@ -5,3 +5,6 @@ ALTER TABLE `adms_evaluaciones`
   ADD CONSTRAINT `fk_alumno_id_adms_evaluaciones` FOREIGN KEY (`alumno_id`) REFERENCES `alumno` (`id_alumno`),
   ADD CONSTRAINT `fk_programa_id_adms_evaluaciones` FOREIGN KEY (`programa_id`) REFERENCES `curso` (`id_curso`),
   ADD CONSTRAINT `fk_created_user_id_adms_evaluaciones` FOREIGN KEY (`created_user_id`) REFERENCES `usuario` (`id`);
+
+
+INSERT INTO `permiso` (`idPermiso`, `url`) VALUES (NULL, 'evaluaciones');

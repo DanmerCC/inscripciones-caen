@@ -130,6 +130,12 @@ class EvaluacionesController extends MY_Controller
 		return $this->Evaluacion_model->countByInscripcion($id_inscripcion)>=1;
 	}
 
+	public function prueba(){
+		$this->load->model('MailService_model');
+		$result=$this->MailService_model->send('danmerccoscco@gmail.com','mensajedeprueba111');
+
+	}
+
 	/**End class */
 	
 }
