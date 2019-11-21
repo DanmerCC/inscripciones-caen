@@ -146,7 +146,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<a href="<?=base_url()?>administracion" target="_blank" class="btn btn-primary" id="btnExportEntrevista" >Exportar</a>
+					<a href="<?=base_url()?>administracion/vista/exportarData/?estado=" target="_blank" class="btn btn-primary" id="btnExportEntrevista" >Exportar</a>
 					<button type="button" class="btn btn-default" id="btnCancelExport" data-dismiss="modal">Cancelar</button>
 				</div>
 			</div><!-- /.modal-content -->
