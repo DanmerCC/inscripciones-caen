@@ -51,16 +51,15 @@ class MailService_model extends MY_Model
 	}
 
 	function send($to,$message){
-		if($this->token==null){
-			$this->init();
-		}
+		$this->verifyToken();
 		return $this->requestSend($to,$message);
 	}
 
 	public function sendRecoveryMessage($to,$message){
-		return $this->recoveryMessage($to,$message);
+		$this->verifyToken();
+		return $this->requestRecoveryMessage($to,$message);
 	}
-	private function recoveryMessage($to,$message){
+	private function requestRecoveryMessage($to,$message){
 		return $this->requestSend($to,$message,'recoveryPassword');
 	}
 
@@ -74,7 +73,7 @@ class MailService_model extends MY_Model
 			'Content-Type:application/json',
 			'Authorization: Bearer '.$this->token
 		);
-
+		
 		$response=$this->requestGet($this->getMessagePath(),$data,$headers);
 		return $response;
 	}
@@ -119,5 +118,11 @@ class MailService_model extends MY_Model
 
 	private function requestGet($url,$body,$headers=[]){
 		return $this->genericRequest($url,$body,$headers);
+	}
+
+	private function verifyToken(){
+		if($this->token==null){
+			$this->init();
+		}
 	}
 }

@@ -34,8 +34,7 @@ class Login extends CI_Controller {
 
 	//Funcion para enviar correo
 	public function enviarCorreo(){
-		$this->load->model('MailService_model');
-		$result=$this->MailService_model->send('danmerccoscco@gmail.com','mensajedeprueba111');	
+		$this->load->model('MailService_model');	
 		if(isset($_POST['email']) && !empty($_POST['email'])){
 			//Primero compruebo si es el correo electrónico válido o no
 			$this->form_validation->set_rules('email','Email Address','trim|required|min_length[6]|max_length[50]|valid_email|xss_clean');
@@ -108,7 +107,7 @@ class Login extends CI_Controller {
 		
 		$this->load->model('MailService_model');
 		$email_code = $this->Token_model->create_requestHash($id);
-		$json_data=json_encode(
+		$json_data=(
 			array(
 				'description'=>'Querido postulante,¡Queremos ayudarte a restablecer tu contrasena! Por favor haga click en el siguiente enlace',
 				'url'=>base_url().'login/restorepassword/'.$email.'/'.$email_code
