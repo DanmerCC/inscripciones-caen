@@ -568,4 +568,19 @@ class Alumno_model extends CI_Model
 		$this->startIdPersona=$id;
 	}
 
+	/**
+	 * Id de 
+	 * @param id Integer
+	 */
+	public function getOneOrFail($id){
+		$this->db->select($this->list_public_columns());
+		$this->db->from($this->table);
+		$this->db->where($this->id,$id);
+		$resultado=$this->db->get();
+		if($resultado->num_rows()==1){
+			return $resultado->result_array()[0];
+		}else{
+			throw new Exception("Error al buscar alumno por id");
+		}
+	}
 }

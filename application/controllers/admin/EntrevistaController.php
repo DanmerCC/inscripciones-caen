@@ -111,14 +111,16 @@ class EntrevistaController extends MY_Controller
 		$this->load->model('Inscripcion_model');
 		$this->load->model('Solicitud_model');
 		$this->load->model('Programa_model');
+		$this->load->model('Alumno_model');
 		$entrevista=$this->InterviewProgramed_model->get($id);
 		$inscripcion=$this->Inscripcion_model->getOneOrFail($entrevista['inscripcion_id']);
 		$solicitud=$this->Solicitud_model->getOrFail($inscripcion['solicitud_id']);
 		$programa=$this->Programa_model->getOneOrFail($solicitud['programa']);
-
+		$alumno=$this->Alumno_model->getOneOrFail($solicitud['alumno']);
 		$solicitud["programa"]=$programa;
 		$inscripcion["solicitud"]=$solicitud;
 		$entrevista["inscripcion"]=$inscripcion;
+		$entrevista["alumno"]=$alumno;
 		$structure=$entrevista;
 		$this->structuredResponse($structure);
 	}

@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
-class InscripcionController extends CI_Controller {
+class InscripcionController extends MY_Controller {
 
 	private $estado_finanzas;
 	private $usuario_actual;
@@ -592,6 +592,13 @@ class InscripcionController extends CI_Controller {
 		header('Content-Type: application/json');
 		echo json_encode($inscripcion);
 		exit;
+	}
+
+	function getEvaluables(){
+		$search=$this->input->get('term');
+		$evaluables=$this->Inscripcion_model->evaluables($search,5);
+		$this->response($evaluables,200);
+		
 	}
 
 }

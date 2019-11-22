@@ -33,6 +33,18 @@ var MDL_ENTREVISTAS_DETAILS={
 	onsave:undefined,
 	makeBody:function(entrevista){
 		let programa =entrevista.inscripcion.solicitud.programa;
+		let select_default=`
+		<select class='form-control' name="select-mdl-details-entrevistas" id="select-mdl-details-entrevistas">
+			<option ${entrevista.estado_id==MDL_ENTREVISTAS_STATE_PENDIENTE?'selected':''}value="${MDL_ENTREVISTAS_STATE_PENDIENTE}">Pendiente</option>
+			<option ${entrevista.estado_id==MDL_ENTREVISTAS_STATE_REALIZADA?'selected':''} value="${MDL_ENTREVISTAS_STATE_REALIZADA}">Realizado</option>
+		</select>
+		`;
+		let select_default_realizadas=`
+		<select class='form-control' name="select-mdl-details-entrevistas" id="select-mdl-details-entrevistas" disabled>
+			<option ${entrevista.estado_id==MDL_ENTREVISTAS_STATE_REALIZADA?'selected':''} value="${MDL_ENTREVISTAS_STATE_REALIZADA}">Realizado</option>
+		</select>
+		`;
+		let select_rendered=(entrevista.estado_id==MDL_ENTREVISTAS_STATE_REALIZADA)?select_default_realizadas:select_default;
 		return `
 		<div class="box box-primary">
 			<div id="mdl-id" data-entrevistaid="${entrevista.id}"></div>
@@ -40,7 +52,14 @@ var MDL_ENTREVISTAS_DETAILS={
               <h3 class="box-title"></h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
+			<div class="box-body">
+			
+			<strong><i class="fa fa-fw fa-user margin-r-5"></i> Alumno</strong>
+
+              <p class="text-muted">
+               ${entrevista.alumno.nombres} ${entrevista.alumno.apellido_paterno}  ${entrevista.alumno.apellido_materno} 
+			  </p>
+			  
               <strong><i class="fa fa-book margin-r-5"></i> Programa</strong>
 
               <p class="text-muted">
@@ -52,10 +71,8 @@ var MDL_ENTREVISTAS_DETAILS={
               <strong> Estado</strong>
 
 			  <div>
-				 <select class='form-control' name="select-mdl-details-entrevistas" id="select-mdl-details-entrevistas">
-				 	<option ${entrevista.estado_id==MDL_ENTREVISTAS_STATE_PENDIENTE?'selected':''}value="${MDL_ENTREVISTAS_STATE_PENDIENTE}">Pendiente</option>
-				 	<option ${entrevista.estado_id==MDL_ENTREVISTAS_STATE_REALIZADA?'selected':''} value="${MDL_ENTREVISTAS_STATE_REALIZADA}">Realizado</option>
-				 </select> 
+
+				 ${select_rendered}
 			  </div>
             </div>
             <!-- /.box-body -->
