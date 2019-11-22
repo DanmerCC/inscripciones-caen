@@ -113,7 +113,7 @@ class Login extends CI_Controller {
 				'url'=>base_url().'login/restorepassword/'.$email.'/'.$email_code
 			)
 		);
-		$result=$this->MailService_model->sendRecoveryMessage('danmerccoscco@gmail.com',$json_data);
+		$result=$this->MailService_model->sendRecoveryMessage($email,$json_data);
 		return $result;
 	}
 
