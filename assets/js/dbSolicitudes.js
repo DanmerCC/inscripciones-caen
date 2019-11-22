@@ -354,50 +354,69 @@ function reiniciarModalAlumno(id,obj_dom){
 }
 
 
-function request_bootbox(id){
-	bootbox.confirm({
-		title: "Desea inscribir",
-		message: "Esta seguro de enviar a INSCRITOS esta solicitud",
-		buttons: {
-			cancel: {
-				label: '<i class="fa fa-times"></i> Cancelar'
+function request_bootbox(id,estado_id){
+	if(estado_id==2){
+		bootbox.confirm({
+			title: "Desea inscribir",
+			message: "Esta seguro de enviar a INSCRITOS esta solicitud",
+			buttons: {
+				cancel: {
+					label: '<i class="fa fa-times"></i> Cancelar'
+				},
+				confirm: {
+					label: '<i class="fa fa-check"></i> Enviar'
+				}
 			},
-			confirm: {
-				label: '<i class="fa fa-check"></i> Enviar'
+			callback: function (result) {
+				if(result){
+					$.ajax({
+						type: "post",
+						url: "/admin/inscr/create",
+						dataType: "json",
+						data: {
+							"id_sol":id
+						},
+						success: function (response) {
+							console.log(response);
+							if(response.result){
+								tabla.ajax.reload(null,false);
+								alert("Completado correctamente");
+							}else{
+								$("#mdl_danger_msg #msg-modal").html("Verifique el estado de la solicitud");
+								$("#mdl_danger_msg").modal('show');
+								setTimeout(function(){
+									$("#mdl_danger_msg").modal('hide');
+								},1000)
+								//alert("verifica que la solicitud esta procesada");
+							}
+						},
+						error: function (xhr, ajaxOptions, thrownError) {
+							alert("No es posible inscribir ");
+							console.log("Error: "+xhr);
+						}
+					});
+				}
+				
 			}
-		},
-		callback: function (result) {
-            if(result){
-                $.ajax({
-                    type: "post",
-                    url: "/admin/inscr/create",
-                    dataType: "json",
-                    data: {
-                        "id_sol":id
-                    },
-                    success: function (response) {
-                        console.log(response);
-                        if(response.result){
-                            tabla.ajax.reload(null,false);
-                            alert("Completado correctamente");
-                        }else{
-							$("#mdl_danger_msg #msg-modal").html("Verifique el estado de la solicitud");
-							$("#mdl_danger_msg").modal('show');
-							setTimeout(function(){
-								$("#mdl_danger_msg").modal('hide');
-							},1000)
-                            //alert("verifica que la solicitud esta procesada");
-                        }
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        alert("No es posible inscribir ");
-                        console.log("Error: "+xhr);
-                      }
-                });
-            }
-			
+		});
+	}else{
+		if(estado_id==3){
+			let htmlBody = `<label class="alert alert-danger" style="width:100%;" 
+			for="" >Este alumno tiene una observacion esto hace que impida la 
+			inscripcion.</label>`;
+			createMensajeTemplateToException(htmlBody);
+		}else{
+			let htmlBody = `<label class="alert alert-warning" style="width:100%;" 
+			for="" >El alumno puede que se encuentre sin revision en finanzas.</label>`;
+			createMensajeTemplateToException(htmlBody);
 		}
-	});
+	}
+}
+
+
+function createMensajeTemplateToException(htmlBody){
+	$("#cuerpoModalException").html(htmlBody);
+	$("#modalObservationMessage").modal("show");
 }
 
 var sol={

@@ -301,6 +301,32 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+Copy
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="modalObservationMessage" tabindex="-1" role="dialog" aria-labelledby="modalObservationMessageModalLabelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalObservationMessageModalLabel">Mensaje</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="cuerpoModalException">
+				<label class="alert alert-danger" style="width:100%;" for="" >Este alumno tiene una observacion esto hace que impida la inscripcion.</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- ./wrapper -->
 <?php $this->load->view('adminlte/scriptsFooter');?>
 
