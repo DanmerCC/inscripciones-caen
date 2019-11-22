@@ -105,19 +105,16 @@ class Login extends CI_Controller {
 	}
 
 	private function enviarPasswordEmail2($email,$id){
-		$message = 	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-					"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html>
-					<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-					</head><body>';
-		// $message .= '<p>Querido '.$firstname.',</p>';
-		$message .= '<p>Querido postulante,</p>';
-		$message .= '<p>¡Queremos ayudarte a restablecer tu contrasena! Por favor haga <strong><a href="'.base_url().'login/restorepassword/'.$email.'/'.$email_code.'">click aqui</a></strong> para reestablecer tu password.</p>';
-		$message .= '<p>Gracias</p>';
-		$message .= '<p>El equipo de tecnologias del CAEN-EPG</p>';
-		$message .= '</body></html>';
+		
 		$this->load->model('MailService_model');
 		$email_code = $this->Token_model->create_requestHash($id);
-		$result=$this->MailService_model->send('danmerccoscco@gmail.com',base_url().'login/restorepassword/'.$email.'/'.$email_code);
+		$json_data=json_encode(
+			array(
+				'description'=>'Querido postulante,¡Queremos ayudarte a restablecer tu contrasena! Por favor haga click en el siguiente enlace',
+				'url'=>base_url().'login/restorepassword/'.$email.'/'.$email_code
+			)
+		);
+		$result=$this->MailService_model->sendRecoveryMessage('danmerccoscco@gmail.com',$json_data);
 		return $result;
 	}
 

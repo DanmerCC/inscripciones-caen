@@ -57,10 +57,18 @@ class MailService_model extends MY_Model
 		return $this->requestSend($to,$message);
 	}
 
-	private function requestSend($to,$message){
+	public function sendRecoveryMessage($to,$message){
+		return $this->recoveryMessage($to,$message);
+	}
+	private function recoveryMessage($to,$message){
+		return $this->requestSend($to,$message,'recoveryPassword');
+	}
+
+	private function requestSend($to,$message,$nameTemplate='default'){
 		$data = [
 			'email_to'=>$to,
-			'message'=>$message
+			'message'=>$message,
+			'template'=>$nameTemplate
 		];
 		$headers=array(
 			'Content-Type:application/json',
@@ -105,7 +113,6 @@ class MailService_model extends MY_Model
 			throw new Exception(curl_error($cu), curl_errno($cu));
 		}
 		curl_close($cu);
-		
 		
 		return $result;
 	}
