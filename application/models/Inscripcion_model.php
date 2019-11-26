@@ -381,12 +381,14 @@ class Inscripcion_model extends CI_Model
 	}
 
 	public function get_page_api_by_program($start,$limit = 10,$id){
-
+		
 		//Set new particular filter to inscripcion
 		$this->where_filters['id_curso']=$id;
 		$this->db->select(
 			implode(',',$this->getApicColumns('ins')).
-			',c.id_curso,c.nombre as nombre_curso,c.numeracion,a.id_alumno,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
+			',c.id_curso,c.nombre as nombre_curso,c.numeracion,a.id_alumno,
+			a.nombres as nombres,a.apellido_paterno,a.apellido_materno,
+			u.acceso as nombre_user,tc.nombre as tipo_curso,eval.id as evaluado'
 		);
 		$this->db->from($this->table.' ins');
 		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
@@ -394,6 +396,7 @@ class Inscripcion_model extends CI_Model
 		$this->db->join('curso c','c.id_curso = s.programa','left');
 		$this->db->join('tipo_curso tc','c.idTipo_curso = tc.idTipo_curso','left');
 		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
+		$this->db->join('adms_evaluaciones eval','eval.inscripcion_id=ins.id_inscripcion','left');
 		$this->db->where(
 			$this->filters('ins')
 		);			
@@ -410,7 +413,9 @@ class Inscripcion_model extends CI_Model
 
 		$this->db->select(
 			implode(',',$this->getApicColumns('ins')).
-			',c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,tc.nombre as tipo_curso'
+			',c.id_curso,c.nombre as nombre_curso,c.numeracion,a.nombres as nombres,
+			a.apellido_paterno,a.apellido_materno,u.acceso as nombre_user,
+			tc.nombre as tipo_curso,eval.id as evaluado'
 		);
 		$this->basic_query('ins');
 		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
@@ -418,6 +423,7 @@ class Inscripcion_model extends CI_Model
 		$this->db->join('curso c','c.id_curso = s.programa','left');
 		$this->db->join('tipo_curso tc','c.idTipo_curso = tc.idTipo_curso','left');
 		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
+		$this->db->join('adms_evaluaciones eval','eval.inscripcion_id=ins.id_inscripcion','left');
 		$this->db->where(
 			$this->filters('ins')
 		);
@@ -667,7 +673,9 @@ class Inscripcion_model extends CI_Model
 		$this->db->join('curso','solicitud.programa=curso.id_curso');
 		$this->db->join('tipo_curso','tipo_curso.idTipo_curso=curso.idTipo_curso');
 		$this->db->join('alumno','alumno.id_alumno=solicitud.alumno');
-		$this->db->where_not_in($this->id,$valids);
+		if($valids!=null){
+			$this->db->where_not_in($this->id,$valids);
+		}
 		if($search!='' && isset($search)){
 			$this->db->like('alumno.nombres',$search);
 			$this->db->or_like('alumno.apellido_paterno',$search);
