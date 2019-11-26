@@ -83,6 +83,11 @@ class Files_Controller extends MY_Controller {
 				$result=$this->Solicitud_model->getAllColumnsById($id);
 				$idNameAndRegist=$result["idSolicitud"];
 				break;
+			case 'eval':
+				$pathFile=CC_BASE_PATH."/files/eval/".$id.".pdf";
+				$result=$id;
+				$idNameAndRegist=$id;
+				break;
 			case 'foto':
 				$result=resultToArray($this->Alumno_model->all($id))[0];
 				$imagen;
