@@ -121,24 +121,28 @@ class Inscritos_Controller extends MY_Controller {
 		$estadoId=$this->input->post('estado_id');
 		
 		$token=$this->getBearerToken();
+		$updated=false;
+
 		if($token==null){
-			echo "Error al verificar el token".var_dump($token);
-			$this->setCustomResponseStatusHeader(401,"No authorizado");
+			//echo "Error al verificar el token".var_dump($token);
+			$this->structuredResponse("Error al leer token",401);
 			exit;
 		}
 		if($this->verifyBearerToken($token)){
 			$updated=$this->Inscripcion_model->changeState($inscripcionId,$estadoId);
+			
 		}else{
-			$this->setCustomResponseStatusHeader(401,"No authorizado");
-			echo "Token invalido".var_dump($token);
+			//$this->setCustomResponseStatusHeader(401,"No authorizado");
+			$this->structuredResponse("No authorizado",401);
+			//echo "Token invalido".var_dump($token);
 			exit;
 		}
 
 		if($updated){
-			echo "Actualizado correctamente";
+			$this->structuredResponse("Actualizado correctamente");
 			exit;
 		}else{
-			echo "No se actualizado";
+			$this->structuredResponse("No Actualizado",200);
 			exit;
 		}
 	}
