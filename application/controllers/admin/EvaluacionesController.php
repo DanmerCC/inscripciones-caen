@@ -92,36 +92,46 @@ class EvaluacionesController extends MY_Controller
 		
 		$this->config->load('file', TRUE);
 		$id_inscripcion=$this->input->post('id_inscripcion');
+		
+		$this->db->trans_begin();
+		try {
+			if($this->hasEvaluacionByIdInscripcion($id_inscripcion)){
+				$this->structuredResponse('Ya existe una evaluacion',400);
+			}
 
-		if($this->hasEvaluacionByIdInscripcion($id_inscripcion)){
-			$this->structuredResponse('Ya existe una evaluacion',400);
-		}
+			$insertid=$this->Evaluacion_model->create($id_inscripcion);
 
-		if($this->Evaluacion_model->create($id_inscripcion)){
+
 			$config['upload_path']          = $this->config->item('base_uploads_path','file').'/files/eval/';
 			$config['allowed_types']        = 'pdf';
 			$config['max_size']             = 4048;
 			$config['max_width']            = 1024;
 			$config['max_height']           = 768;
-			$config['file_name']           = $id_inscripcion;
+			$config['file_name']           	= $insertid;
 
 			$this->load->library('upload', $config);
 
 			if (!$this->upload->do_upload('file_evaluacion'))
 			{
+				
 				$error = array('error' => $this->upload->display_errors());
-
+				$error["extra"]=$this->upload->data();
+				$this->db->trans_rollback();
 				$this->structuredResponse($error,500);
 			}
 			else
 			{
 				$data = array('upload_data' => $this->upload->data());
-				$this->structuredResponse($data);
 			}
-		}else{
-			$this->structuredResponse("ERROR",500);
+
+		} catch (\Throwable $th) {
+			$this->db->trans_rollback();
+			throw new Exception("Error el el proceso de creacion de una evaluacion");
 		}
 
+		$this->db->trans_commit();
+		
+		$this->structuredResponse($data);
 		
 	}
 
@@ -131,5 +141,23 @@ class EvaluacionesController extends MY_Controller
 	}
 
 	/**End class */
-	
+	public  function prueba(){
+		$extramsg=null;
+		try {
+			$data=array(
+				'id'=>1,
+				'inscripcion_id'=>2,
+				'alumno_id'=>3,
+				'programa_id'=>4,
+				'created_user_id'=>5,
+			);
+		$this->db->insert('adms_evaluaciones',$data);
+		
+		} catch (\Exception $e) {
+			$e->getMessage();
+		}
+		$insertId = $this->db->insert_id();
+		var_dump($insertId);
+		exit;
+	}
 }

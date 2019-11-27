@@ -108,7 +108,8 @@ class Evaluacion_model extends MY_Model
 			'created_user_id'=>$idUsuario,
 		);
 		$this->db->insert($this->table,$data);
-		return $this->db->affected_rows()==1;
+		$insertId = $this->db->insert_id();
+		return $insertId;
 	}
 
 	private function getUrlFile($id){

@@ -215,10 +215,7 @@ $route['certifica']='CertificadoController/verificar';
 $route['admin/view/pdf/([a-zA-Z]+)/(:num)']='admin/FilesController/get_file_view_as_data';
 $route['admin/download/pdf/([a-zA-Z]+)/(:num)']='admin/FilesController/download_pdf';
 $route['solicitud/view/pdf/([a-zA-Z]+)/(:num)']='admin/FilesController/get_fileSolicitud_view_as_data';
-$route['prueba']='CorreoController/fileTest';
 
-
-$route['prueba']='CorreoController/fileTest';
 $route['postulante/checkingfile'] = 'admin/Alumno/set_good_file';
 
 
@@ -328,4 +325,4 @@ $route['informes/save'] = 'InformesController/save';
 
 $route['admin/evaluables'] = 'admin/InscripcionController/getEvaluables';
 $route['admin/evaluacion/save'] = 'admin/EvaluacionesController/guardar';
-$route['pruebatoken'] = 'admin/EvaluacionesController/prueba';
+$route['prueba'] = 'admin/EvaluacionesController/prueba';
