@@ -64,7 +64,8 @@ class EvaluacionesController extends MY_Controller
 					"1" => $value["grado_profesion"],
 					"2" => $nombresApellidos,
 					"3" => $value["nombre"],
-					"4" => $value["created"]
+					"4" => $value["created"],
+					"5" => array('id'=>$value["id"])
 				);
 	    }        
 	   $results = array(
@@ -140,24 +141,4 @@ class EvaluacionesController extends MY_Controller
 		return $this->Evaluacion_model->countByInscripcion($id_inscripcion)>=1;
 	}
 
-	/**End class */
-	public  function prueba(){
-		$extramsg=null;
-		try {
-			$data=array(
-				'id'=>1,
-				'inscripcion_id'=>2,
-				'alumno_id'=>3,
-				'programa_id'=>4,
-				'created_user_id'=>5,
-			);
-		$this->db->insert('adms_evaluaciones',$data);
-		
-		} catch (\Exception $e) {
-			$e->getMessage();
-		}
-		$insertId = $this->db->insert_id();
-		var_dump($insertId);
-		exit;
-	}
 }

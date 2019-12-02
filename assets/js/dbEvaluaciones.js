@@ -103,13 +103,21 @@ function cargarDataTable(){
             "previous": "Anterior"
         }
 	}, //ordenar(columna, orden)
-	"columnDefs": [{
-		"targets": 2,
-		"render": function ( data, type, row, meta ) {
-			console.log(data)
-		  return ` ${data.nombres} ${data.apellidos}`;
+	"columnDefs": [
+		{
+			"targets": 2,
+			"render": function ( data, type, row, meta ) {
+			return ` ${data.nombres} ${data.apellidos}`;
+			}
+		},
+		{
+			"targets": 5,
+			"render": function ( data, type, row, meta ) {
+
+				return `<a target="_blank" href='/admin/view/pdf/eval/${data.id}'><button class='btn btn-default'> Ver</button>`;
+			}
 		}
-	  }]
+	]
 }).DataTable();
 }
 

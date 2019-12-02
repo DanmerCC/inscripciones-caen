@@ -22,7 +22,7 @@ class FilesController extends CI_Controller {
 
 		$result;
 		$idNameAndRegist=NULL;
-		$result=resultToArray($this->Alumno_model->all($id))[0];
+		//$result=resultToArray($this->Alumno_model->all($id))[0];
 
 		switch ($segmentOfTypeFile) {
 			case 'cv':
@@ -88,6 +88,11 @@ class FilesController extends CI_Controller {
 				$result=$this->Solicitud_model->getAllColumnsById($id);
 				$idNameAndRegist=$result["idSolicitud"];
 				break;
+			case 'eval':
+				$pathFile=CC_BASE_PATH."/files/eval/".$id.".pdf";
+				//$result=$this->Solicitud_model->getAllColumnsById($id);
+				$idNameAndRegist=$id;
+				break;
 			default:
 				$pathFile="";
 				show_404();
@@ -130,7 +135,7 @@ class FilesController extends CI_Controller {
 
 		$result;
 		$idNameAndRegist=NULL;
-		$result=resultToArray($this->Alumno_model->all($id))[0];
+		//$result=resultToArray($this->Alumno_model->all($id))[0];
 
 		switch ($segmentOfTypeFile) {
 			case 'cv':
@@ -189,6 +194,10 @@ class FilesController extends CI_Controller {
 				$pathFile=CC_BASE_PATH."/files/proinves/".$id.".pdf";
 				$result=$this->Solicitud_model->getAllColumnsById($id);
 				$idNameAndRegist=$result["idSolicitud"];
+				break;
+			case 'eval':
+				$pathFile=CC_BASE_PATH."/files/eval/".$id.".pdf";
+				$idNameAndRegist=$id;
 				break;
 			default:
 				$pathFile="";
