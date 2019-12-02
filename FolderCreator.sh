@@ -45,6 +45,9 @@ fi
 if [ ! -d uploads/files/solinscripcion ]; then
     mkdir -p uploads/files/solinscripcion;
 fi 
+if [ ! -d uploads/files/eval ]; then
+    mkdir -p uploads/files/eval;
+fi 
 if [ ! -d uploads/files/trash ]; then
     mkdir -p uploads/files/trash;
 fi 
