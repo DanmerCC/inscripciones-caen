@@ -69,12 +69,22 @@ function mostrarFormPro(id){
         data: {},
         dataType: "json",
         success: function (response) {
-            
+            if(response.status=='OK'){
+                loadDataForm(response.data);
+            }else{
+                alert(response.data.message)
+            }
         }
     });
     $("#discount_id").val(id);
 	$("#form_discount .modal-title").text("Modificar beneficio");
 	$("#form_discount").modal("show");
+}
+
+function loadDataForm(model_data){
+    $.each(campos_global, function (indexInArray, valueOfElement) {
+        document.getElementById(valueOfElement).value = model_data[valueOfElement];
+    });
 }
 
 function eliminar(id) {
@@ -113,6 +123,12 @@ function save(){
             dataType: "json",
             processData: true,
             success: function (response) {
+                if(response.status=='OK'){
+                    realoadDatatable()
+                    $("#form_discount").modal("hide");
+                }else{
+                    alert(response.data.message)
+                }
             },
             complete: finishSaving()
         });
@@ -160,4 +176,8 @@ function processError(nameId,value){
         $("#"+nameId).parent('.input-group').next('span').text('Este campo es requerido.')
         $("#"+nameId).parent('.input-group').parent().parent().addClass('has-error')
     }
+}
+
+function realoadDatatable(){
+    tabla.ajax.reload(false,null);
 }

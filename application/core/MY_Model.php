@@ -51,7 +51,7 @@ class MY_Model extends CI_Model {
 		}
 	}
 
-	private function get($id=null){
+	protected function get($id=null){
 		$this->db->select(
 			implode(',',$this->getPublicColumns())
 		)->from($this->table);

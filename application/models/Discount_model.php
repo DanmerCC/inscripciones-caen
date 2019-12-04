@@ -4,19 +4,23 @@
 
 class Discount_model extends MY_Model
 {
-	private $table='discounts';
+	protected $table='discounts';
 	
-	private $id='id';
-	private $description='description';
-	private $name='name';
-	private $percentage='percentage';
+	protected $id='id';
+	protected $description='description';
+	protected $name='name';
+	protected $percentage='percentage';
 
 
-	private $public_columns=['id','description','name','percentage'];
+	protected $public_columns=['id','description','name','percentage'];
 	
 	function __construct()
 	{
 		parent::__construct();
+	}
+
+	public function getOne($id){
+		return $this->get($id)->row();
 	}
 
 	public function registrar($nombre,$description,$percentage){
@@ -25,31 +29,9 @@ class Discount_model extends MY_Model
 			$this->description => $description,
 			$this->percentage => $percentage
 		);
-		$this->db->insert($this->table,$data);
-		$ultimoId = $this->db->insert_id();
-		return $ultimoId;
+		return $this->db->insert($this->table,$data);
 	}
-/*
-	function byCurso($id){
-		$this->db->select($this->table.'.*');
-		$this->db->from($this->table);
-		$this->db->join(
-			'cursos_discount',
-			'cursos_discount.discount_id='.$this->table.'.'.$this->id);
-		$this->db->where('cursos_discount.curso_id',$id);
-		return $this->db->get()->result_array();
-	}
-
-	function bySolicitud($id){
-		$this->db->select($this->table.'.*');
-		$this->db->from($this->table);
-		$this->db->join(
-			'solicitud_discount',
-			'solicitud_discount.discount_id='.$this->table.'.'.$this->id);
-		$this->db->where('solicitud_discount.solicitud_id',$id);
-		return $this->db->get()->result_array();
-	}
-*/
+	
 	protected function relations(){
 		return [
 			'curso'=>[

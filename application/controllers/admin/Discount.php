@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once ("interfaces/Idata_controller.php");
 
-class Discount extends CI_Controller  implements Idata_controller
+class Discount extends MY_Controller  implements Idata_controller
 {
 	
 	function __construct()
@@ -19,18 +19,18 @@ class Discount extends CI_Controller  implements Idata_controller
 	}
 
     public function dataTable(){
-        $rspta = resultToArray($this->Discount_model->all());
+		$rspta = $this->Discount_model->all();
 	    //vamos a declarar un array
 	    $data = Array();
 	    header("Content-type: application/json");
 	    $i=0;
 	    foreach ($rspta as $value) {
 	            $data[] = array(
-				"0" => '<button class="btn btn-warning" onclick="mostrarFormPro(' .$value["idBeneficio"]. ')"><i class= "fa fa-pencil"></i></button>
-						<button class="btn btn-danger" onclick="eliminar(' .$value["idBeneficio"]. ')"><i class= "fa fa-trash"></i></button>',
-	            "1" => $value["nombrebeneficio"],
-	            "2" => ($value["porcentajeBeneficio"]*100)." %",
-	            "3" => $value["nombrebeneficio"]
+				"0" => '<button class="btn btn-warning" onclick="mostrarFormPro(' .$value["id"]. ')"><i class= "fa fa-pencil"></i></button>
+						<button class="btn btn-danger" onclick="eliminar(' .$value["id"]. ')"><i class= "fa fa-trash"></i></button>',
+	            "1" => $value["name"],
+	            "2" => $value["description"],
+	            "3" => $value["percentage"]." %"
 	        );
 	     }        
 	    $results = array(
@@ -60,7 +60,15 @@ class Discount extends CI_Controller  implements Idata_controller
 	}
 	
 	public function save(){
-
+		$name = $this->input->post('name');
+		$description = $this->input->post('description');
+		$percentage = $this->input->post('percentage');
+		$res = $this->Discount_model->registrar($name,$description,$percentage);
+		if($res){
+			$this->structuredResponse(array('message'=>""),200);
+		}else{
+			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
+		}
 	}
 
 	public function update($discount_id=-1){
@@ -68,7 +76,12 @@ class Discount extends CI_Controller  implements Idata_controller
 	}
 
 	public function edit($discount_id=-1){
-
+		$res = $this->Discount_model->getOne($discount_id);
+		if($res){
+			$this->structuredResponse($res,200);
+		}else{
+			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
+		}
 	}
 
 	public function delete(){
