@@ -50,15 +50,27 @@ class Opciones
                         ],
                      "active"=>false
                     ];
-    $this->opciones['beneficios']=[
+    $this->opciones['discounts']=[//beneficios
                     "text"=>"Beneficios",
-					"icon"=>"fa fa-users",
+					"icon"=>"fa fa-cogs",
 					"hasSubModule"=>true,
-                    "href"=>"/administracion/vista/beneficios",
+                    "href"=>"/administracion/vista/discounts",
                     "submenu"=>[
                             [
-                                "text"=>"Todos",
-                                "atributos"=>"id='' data-toggle='collapse' data-parent='#accordion' href='#collapse8'"
+                                "text"=>"Beneficios",
+                                "atributos"=>"id='beneficios' href='".base_url()."administracion/vista/discounts'"
+                            ],
+                            [
+                                "text"=>"Requisitos",
+                                "atributos"=>"id='beneficios' href='".base_url()."administracion/vista/requirements'"
+							],
+                            [
+                                "text"=>"Beneficio-Programa",
+                                "atributos"=>"id='beneficios' href='".base_url()."administracion/vista/discountsprograma'"
+                            ],
+                            [
+                                "text"=>"Beneficio-Requisito",
+                                "atributos"=>"id='beneficios' href='".base_url()."administracion/vista/discountsrequirement'"
                             ]
                         ],
                      "active"=>false
@@ -114,7 +126,7 @@ class Opciones
         array_push($this->arreglo, $this->opciones['alumnos']);
         array_push($this->arreglo, $this->opciones['matriculas']);
         array_push($this->arreglo, $this->opciones['programas']);
-        array_push($this->arreglo, $this->opciones['beneficios']);
+        array_push($this->arreglo, $this->opciones['discounts']);
         array_push($this->arreglo, $this->opciones['solicitudes']);
         array_push($this->arreglo, $this->opciones['informes']);
 		array_push($this->arreglo, $this->opciones['reportes']);

@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * 
  */
-class Beneficio extends CI_Controller
+class Discount extends CI_Controller
 {
 	
 	function __construct()
@@ -12,14 +12,14 @@ class Beneficio extends CI_Controller
 		$this->load->library('Nativesession');
 		$this->load->library('Mihelper');
 		$this->load->helper('url');
-		$this->load->model('Beneficio_model');
+		$this->load->model('Discount_model');
 		$this->load->helper('mihelper');
 		$this->load->library('opciones');
 		$this->load->model('Permiso_model');
 	}
 
     public function dataTable(){
-        $rspta = resultToArray($this->Beneficio_model->all());
+        $rspta = resultToArray($this->Discount_model->all());
 	    //vamos a declarar un array
 	    $data = Array();
 	    header("Content-type: application/json");
@@ -52,7 +52,7 @@ class Beneficio extends CI_Controller
 			$data['footer']=$this->load->view('adminlte/scriptsFooter','',TRUE);
 			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
 			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
-			$this->load->view('dashboard_beneficio',$data);
+			$this->load->view('dashboard_discount',$data);
 		}else
 		{
 			redirect('administracion/login');

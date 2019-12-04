@@ -34,7 +34,7 @@ function cargarDataTable(){
         ],
         "ajax":
             {
-                url: '/admin/dataTable/beneficio',
+                url: '/admin/dataTable/discounts',
                 type: "post",
                 dataType: "json",
                 error: function (e) {
@@ -45,4 +45,13 @@ function cargarDataTable(){
         "iDisplayLength": 15, // paginacion
         "order": [[0, "desc"]] //ordenar(columna, orden)
     }).DataTable();
+}
+function agregarNuevoBeneficio(){
+	$("#form_discount .modal-title").text("Agregar nuevo beneficio");
+	$("#form_discount").modal("show");
+}
+
+function mostrarFormPro(id){
+	$("#form_discount .modal-title").text("Modificar beneficio");
+	$("#form_discount").modal("show");
 }
