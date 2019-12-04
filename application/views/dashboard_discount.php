@@ -47,16 +47,14 @@
 									<thead>
 										<th>Opciones</th>
 										<th>Nombre beneficio</th>
+										<th>Descripción</th>
 										<th>Porcentaje</th>
-										<th>Monto</th>
-										<th>Tipo</th>
 									</thead>
 									<tfoot>
 										<th>Opciones</th>
 										<th>Nombre beneficio</th>
+										<th>Descripción</th>
 										<th>Porcentaje</th>
-										<th>Monto</th>
-										<th>Tipo</th>
 									</tfoot>
 								</table>
 							</div>
@@ -87,7 +85,7 @@
   <div class="control-sidebar-bg"></div>
 
   <div id="contentModals">
-    <div class="modal fade" tabindex="-1" role="dialog" id="form_discount">
+    <div class="modal fade" tabindex="-1" role="dialog" id="form_discount" data-backdrop="static" data-keyboard="false">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -95,27 +93,35 @@
 						<h4 class="modal-title">Beneficios</h4>
 					</div>
 					<div class="modal-body">
-						<div class="panel-body" id="formularioregistros">
-							<form class="form-horizontal" role="form">
+						<div class="panel-body">
+							<form class="form-horizontal" id="formularioregistros" role="form">
+								<input type="hidden" name="discount_id" id="discount_id">
 								<div class="form-group">
 									<label for="name" class="col-lg-2 control-label">Nombre</label>
 									<div class="col-lg-10">
-										<input type="text" class="form-control" id="name" placeholder="Nombre">
+										<div class="input-group col-lg-12">
+											<input type="text" class="form-control validar" id="name" name="name" placeholder="Nombre">
+										</div>
+										<span class="help-block"></span>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="description" class="col-lg-2 control-label">Descripión</label>
+									<label for="description has-error" class="col-lg-2 control-label">Descripión</label>
 									<div class="col-lg-10">
-										<input type="text" class="form-control" id="description" placeholder="Descripción">
+										<div class="input-group col-lg-12">
+											<input type="text" class="form-control validar" id="description" name="description" placeholder="Descripción">
+										</div>
+										<span class="help-block"></span>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="percentage" class="col-lg-2 control-label">Porcentaje</label>
+									<label for="percentage has-error" class="col-lg-2 control-label">Porcentaje</label>
 									<div class="col-lg-10">
 										<div class="input-group">
-											<input type="text" class="form-control" id="percentage" placeholder="Porcentaje">
+											<input type="text" class="form-control validar" id="percentage" name="percentage" placeholder="Porcentaje">
 											<span class="input-group-addon">%</span>
 										</div>
+										<span class="help-block"></span>
 									</div>
 								</div>
 							</form>
@@ -123,7 +129,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" id="btnFormPorgrama" data-dismiss="modal">Cerrar</button>
-						<button id="btnActualizarPr" type="submit" class="btn btn-primary" form="formPro">Guardar cambios</button>
+						<button id="btnActualizarPr" type="submit" class="btn btn-primary" onclick="save()" form="formPro">Guardar</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->

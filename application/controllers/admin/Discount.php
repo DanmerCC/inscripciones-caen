@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed'); 
-/**
- * 
- */
-class Discount extends CI_Controller
+
+require_once ("interfaces/Idata_controller.php");
+
+class Discount extends CI_Controller  implements Idata_controller
 {
 	
 	function __construct()
@@ -26,11 +26,11 @@ class Discount extends CI_Controller
 	    $i=0;
 	    foreach ($rspta as $value) {
 	            $data[] = array(
-	            "0" => ' <button class="btn btn-warning" onclick="mostrarFormPro(' .$value["idBeneficio"]. ')"><i class= "fa fa-pencil"></i></button>',
+				"0" => '<button class="btn btn-warning" onclick="mostrarFormPro(' .$value["idBeneficio"]. ')"><i class= "fa fa-pencil"></i></button>
+						<button class="btn btn-danger" onclick="eliminar(' .$value["idBeneficio"]. ')"><i class= "fa fa-trash"></i></button>',
 	            "1" => $value["nombrebeneficio"],
 	            "2" => ($value["porcentajeBeneficio"]*100)." %",
-	            "3" => $value["montoBeneficio"],
-	            "4" => $value["nombreTipoBeneficio"]
+	            "3" => $value["nombrebeneficio"]
 	        );
 	     }        
 	    $results = array(
@@ -57,6 +57,21 @@ class Discount extends CI_Controller
 		{
 			redirect('administracion/login');
 		}
+	}
+	
+	public function save(){
 
-    }
+	}
+
+	public function update($discount_id=-1){
+
+	}
+
+	public function edit($discount_id=-1){
+
+	}
+
+	public function delete(){
+
+	}
 }

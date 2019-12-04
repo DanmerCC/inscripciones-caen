@@ -1,7 +1,15 @@
 var tabla;
+var actionMethod;
+var campos_global = [ 'name', 'description', 'percentage' ];
+
+//$("#"+nameId).parent('.input-group').next('span').text('Este campo es requerido.')
+$('input.validar').change(function(){
+    $(this).parent('.input-group').next('span').text('')
+    $(this).parent('.input-group').parent().parent().removeClass('has-error')
+});
+
 $("#btn-salir").prop('href','/administracion/salir');
 $(document).ready(function(){
-
     //contruirTitulos(dataTables.solicitudes.thead);
     cargarDataTable();
 
@@ -18,8 +26,6 @@ $(document).ready(function(){
 
 });
 /*fin de carga automatica*/
-
-
 
 function cargarDataTable(){
 	    tabla = $('#dataTable1').dataTable({
@@ -46,12 +52,105 @@ function cargarDataTable(){
         "order": [[0, "desc"]] //ordenar(columna, orden)
     }).DataTable();
 }
+
 function agregarNuevoBeneficio(){
+    reloadForm();
+    actionMethod = 'add';
 	$("#form_discount .modal-title").text("Agregar nuevo beneficio");
 	$("#form_discount").modal("show");
 }
 
 function mostrarFormPro(id){
+    reloadForm();
+    actionMethod = 'update';
+    $.ajax({
+        type: "GET",
+        url: "/administracion/discounts/edit/"+id,
+        data: {},
+        dataType: "json",
+        success: function (response) {
+            
+        }
+    });
+    $("#discount_id").val(id);
 	$("#form_discount .modal-title").text("Modificar beneficio");
 	$("#form_discount").modal("show");
+}
+
+function eliminar(id) {
+    bootbox.confirm("Estas seguro de eliminar este beneficio?", function (result) {
+        if (result) {
+            $.ajax({
+                type: "POST",
+                url: "/administracion/discounts/delete",
+                data: {
+                    id:id
+                },
+                dataType: "json",
+                success: function (response) {
+                    
+                }
+            });
+        }
+    })
+}
+
+function save(){
+
+    saving();
+
+    let url = '';
+    if(actionMethod=='add'){
+        url = '/administracion/discounts/save';
+    }else{
+        url = '/administracion/discounts/update';
+    }
+    if(validFormData()){
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $('#formularioregistros').serialize(),
+            dataType: "json",
+            processData: true,
+            success: function (response) {
+            },
+            complete: finishSaving()
+        });
+    }else{
+        finishSaving()
+    }
+    
+}
+
+function reloadForm(){
+    $('#formularioregistros')[0].reset();
+}
+
+function saving(){
+    $("#btnActualizarPr").attr('disabled','disabled');
+    $("#btnActualizarPr").text('Guardando...');
+}
+
+function finishSaving(){
+    $("#btnActualizarPr").removeAttr('disabled');
+    $("#btnActualizarPr").text('Guardar');
+}
+
+function validFormData(){
+    let status = true;
+    campos_global.forEach(element => {
+        let value = document.getElementById(element).value;
+        if(value==''){
+            status=false;
+        }
+        processError(element,value);
+    });
+    return status;
+}
+
+function processError(nameId,value){
+    if(value==''){
+        $("#"+nameId).parent('.input-group').next('span').text('Este campo es requerido.')
+        $("#"+nameId).parent('.input-group').parent().parent().addClass('has-error')
+    }
 }

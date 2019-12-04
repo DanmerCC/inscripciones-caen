@@ -147,7 +147,6 @@ $route['admin/dataTable/inscripciones'] = 'admin/InscripcionController/datatable
 $route['admin/dataTable/evaluaciones'] = 'admin/EvaluacionesController/datatable';
 
 $route['admin/dataTable/programa'] = 'admin/Programa/dataTable';
-$route['admin/dataTable/discounts'] = 'admin/Discount/dataTable';
 $route['admin/pdf/(:num)'] = 'admin/Solicitud/pdf/$1';
 $route['admin/solicitud/marcar'] = 'admin/Solicitud/marcar';
 $route['admin/solicitud/quitarMarca'] = 'admin/Solicitud/quitarMarca';
@@ -326,3 +325,11 @@ $route['informes/save'] = 'InformesController/save';
 $route['admin/evaluables'] = 'admin/InscripcionController/getEvaluables';
 $route['admin/evaluacion/save'] = 'admin/EvaluacionesController/guardar';
 $route['prueba'] = 'admin/EvaluacionesController/prueba';
+
+//modulos beneficios
+
+$route['admin/dataTable/discounts'] = 'admin/Discount/dataTable';
+$route['administracion/discounts/save'] = 'admin/Discount/save';
+$route['administracion/discounts/update'] = 'admin/Discount/update';
+$route['administracion/discounts/edit/(:num)'] = 'admin/Discount/edit/$1';
+$route['administracion/discounts/delete'] = 'admin/Discount/save';
