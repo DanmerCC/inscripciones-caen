@@ -1,8 +1,7 @@
 <?php
 class MY_Model extends CI_Model {
 
-	private $id='';
-	private $table='';
+	
 	private $public_arguments;
 
 	function __construct()
@@ -52,10 +51,13 @@ class MY_Model extends CI_Model {
 		}
 	}
 
-	private function get(){
+	private function get($id=null){
 		$this->db->select(
 			implode(',',$this->getPublicColumns())
 		)->from($this->table);
+		if($id!=null){
+			$this->db->where($this->id,$id);
+		}
 		return $this->db->get();
 	}
 	/*
@@ -80,5 +82,31 @@ class MY_Model extends CI_Model {
 
 	function isLoged(){
 		return empty($this->nativesession->get('idUsuario'));
+	}
+
+	protected function by($column,$value){
+		$this->db->select();
+		$this->db->from($this->table);
+		$this->db->where($column,$value);
+		$result=$this->db->get();
+		return $result->result_array();
+	}
+
+	protected function byPivot($relation_pivot_name,$pivot_column_name,$pivot_column_value){
+		if(!isset($this->relations()[$relation_pivot_name])){
+			throw new Exception("la $relation_pivot_name relacion no esta definida");
+		}
+		$relation=$this->relations()[$relation_pivot_name];
+		$this->db->select($this->table.'.*');
+		$this->db->from($this->table);
+		$this->db->join(
+			$relation['pivot_table'],
+			$relation['pivot_table'].'.'.$relation['column_relation'].'='.$this->table.'.'.$this->id);
+		$this->db->where($relation['pivot_table'].'.'.$pivot_column_name,$pivot_column_value);
+		return $this->db->get()->result_array();
+	}
+
+	protected function relations(){
+		return [];
 	}
 }
