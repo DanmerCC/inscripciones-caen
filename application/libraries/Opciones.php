@@ -15,24 +15,24 @@ class Opciones
     $this->arreglo=[];
     $this->opciones=array();
     $this->opciones['alumnos']=[
-                    "text"=>"Alumnos",
+					"text"=>"Alumnos",
+					"icon"=>"fa fa-users",
+					"hasSubModule"=>false,
                     "href"=>'/administracion/vista/alumnos',
-                    "submenu"=>[
-                            [
-                                "text"=>"Solicitantes",
-                                "atributos"=>"id='solicitantes'"
-                            ]
-                        ],
                      "active"=>false
                     ];
     $this->opciones['matriculas']=[
                     "text"=>"Matriculas",
+					"icon"=>"fa fa-users",
+					"hasSubModule"=>false,
                     "href"=>"/administracion/vista/matriculas",
                     "submenu"=>[],
                     "active"=>false
                     ];
     $this->opciones['programas']=[
                     "text"=>"Programas",
+					"icon"=>"fa fa fa-book",
+					"hasSubModule"=>true,
                     "href"=>"/administracion/vista/programas",
                     "submenu"=>[
                             [
@@ -52,6 +52,8 @@ class Opciones
                     ];
     $this->opciones['beneficios']=[
                     "text"=>"Beneficios",
+					"icon"=>"fa fa-users",
+					"hasSubModule"=>true,
                     "href"=>"/administracion/vista/beneficios",
                     "submenu"=>[
                             [
@@ -63,6 +65,8 @@ class Opciones
                     ];
     $this->opciones['solicitudes']=[
                     "text"=>"Pre-inscripcion",
+					"icon"=>"fa fa-address-book",
+					"hasSubModule"=>false,
                     "href"=>"/administracion/vista/solicitudes",
                     "submenu"=>[
                             [
@@ -74,61 +78,37 @@ class Opciones
                     ];
     $this->opciones['informes']=[
                 "text"=>"Interesados",
+				"icon"=>"fa fa-users",
+				"hasSubModule"=>false,
                 "href"=>"/administracion/vista/informes",
-                "submenu"=>[
-                        [
-                            "text"=>"Todos",
-                            "atributos"=>"id='' data-toggle='collapse' data-parent='#accordion' href='#collapse8'"
-                        ]
-                    ],
                  "active"=>false                 
                 ];
     $this->opciones['reportes']=[
                 "text"=>"Reportes",
+				"icon"=>"fa fa-bar-chart",
+				"hasSubModule"=>false,
                 "href"=>"/administracion/vista/reportes",
-                "submenu"=>[
-                    [
-                        "text"=>"Todos",
-                        "atributos"=>"id='' data-toggle='collapse' data-parent='#accordion' href='#collapse8'"
-                    ]
-                    
-                ],
                 "active"=>false
 			];
 	$this->opciones['inscripciones']=[
                 "text"=>"Inscripcion",
+				"icon"=>"fa fa-pencil",
+				"hasSubModule"=>false,
                 "href"=>"/administracion/vista/inscripciones",
-                "submenu"=>[
-                    [
-                        "text"=>"Todos",
-                        "atributos"=>"id='' data-toggle='collapse' data-parent='#accordion' href='#collapse8'"
-                    ]
-                    
-                ],
                 "active"=>false
             ];
 	$this->opciones['entrevistas']=[
                 "text"=>"Entrevistas",
+				"icon"=>"fa fa-user",
+				"hasSubModule"=>false,
                 "href"=>"/administracion/vista/entrevistas",
-                "submenu"=>[
-                    [
-                        "text"=>"Todos",
-                        "atributos"=>"id=''"
-                    ]
-                    
-                ],
                 "active"=>false
 			];
 	$this->opciones['evaluaciones']=[
                 "text"=>"Evaluaciones",
+				"icon"=>"fa fa-pencil-square-o",
+				"hasSubModule"=>false,
                 "href"=>"/administracion/vista/evaluaciones",
-                "submenu"=>[
-                    [
-                        "text"=>"Todos",
-                        "atributos"=>"id=''"
-                    ]
-                    
-                ],
                 "active"=>false
             ];
         array_push($this->arreglo, $this->opciones['alumnos']);

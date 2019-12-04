@@ -38,31 +38,34 @@
     <section class="content">
       <div class=""><!-- container -->
           <div class="panel-body table-responsive" id="listadoregistros">
-            
-            <table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
-              <thead>
-                   <th>Conteo</th>
-                <th>Nombres y apellidos</th>
-                <th>Correo</th>
-                <th>Celular</th>
-                <th>Centro laboral</th>
-                <th>Consulta</th>
-                <th>Programa</th>
-                <th>Fecha de registro</th>
-                 <th>Condicion</th>
-              </thead>
-              <tfoot>
-                 <th>Conteo</th>
-                <th>Nombres y apellidos</th>
-                <th>Correo</th>
-                <th>Celular</th>
-                <th>Centro laboral</th>
-                <th>Consulta</th>
-                <th>Programa</th>
-                 <th>Fecha de registro</th>
-                 <th>Condicion</th>
-              </tfoot>
-            </table>
+						<div class="box box-primary" >
+							<div class="box-body" style="">
+								<table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
+									<thead>
+											<th>Conteo</th>
+										<th>Nombres y apellidos</th>
+										<th>Correo</th>
+										<th>Celular</th>
+										<th>Centro laboral</th>
+										<th>Consulta</th>
+										<th>Programa</th>
+										<th>Fecha de registro</th>
+										<th>Condicion</th>
+									</thead>
+									<tfoot>
+										<th>Conteo</th>
+										<th>Nombres y apellidos</th>
+										<th>Correo</th>
+										<th>Celular</th>
+										<th>Centro laboral</th>
+										<th>Consulta</th>
+										<th>Programa</th>
+										<th>Fecha de registro</th>
+										<th>Condicion</th>
+									</tfoot>
+								</table>
+							</div>
+						</div>
           </div>
       </div>
       <!-- end contenido -->

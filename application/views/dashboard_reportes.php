@@ -111,18 +111,26 @@
 
     <!-- ./col -->
     <div class="col-lg-6 col-xs-6">
-        <select name="model-chart" id="model-chart">
-            <option value="alumno">Alumnos</option>
-        </select>
-        <select name="datasets-chart" id="datasets-chart"></select>
-        <div id="checks">
-        </div>
-        <button class="btn" onclick="constructChart();">Contruir</button>
-        <canvas id="myChart" width="400" height="400"></canvas>
+			<div class="box box-primary" >
+				<div class="box-body" style="">
+					<select name="model-chart" id="model-chart">
+						<option value="alumno">Alumnos</option>
+					</select>
+					<select name="datasets-chart" id="datasets-chart"></select>
+					<div id="checks">
+					</div>
+					<button class="btn" onclick="constructChart();">Contruir</button>
+					<canvas id="myChart" width="400" height="400"></canvas>
+				</div>
+			</div>
     </div>
     <div class="col-lg-6  col-xs-6">
-        <button class="btn btn-info" onclick="getDataByChartInscrito();">Inscritos por programa</button>
-        <canvas id="chart2" width="400" height="400"></canvas>
+		<div class="box box-primary" >
+			<div class="box-body" style="">
+				<button class="btn btn-info" onclick="getDataByChartInscrito();">Inscritos por programa</button>
+				<canvas id="chart2" width="400" height="400"></canvas>
+			</div>
+		</div>
         
     </div>
     <!-- ./col -->

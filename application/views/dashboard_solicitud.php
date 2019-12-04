@@ -79,36 +79,40 @@
             </div>
             
           </div>
-            <table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
-              <thead>
-                <th>N°</th>
-                <th>Opciones</th>
-                <th>nombres</th>
-                <th>apellido_paterno</th>
-                <th>apellido_materno</th>
-                <th>tipo_financiamiento</th>
-                <th>documento</th>
-                <th>curso_numeracion</th>
-                <th>Finanzas</th>
-                <th>Comentario</th>
-                <th>fecha_registro</th>
-                <th>Estado</th>
-              </thead>
-              <tfoot>
-                <th>N°</th>
-                <th>Opciones</th>
-                <th>nombres</th>
-                <th>apellido_paterno</th>
-                <th>apellido_materno</th>
-                <th>tipo_financiamiento</th>
-                <th>documento</th>
-                <th>curso_numeracion</th>
-                <th>Finanzas</th>
-                <th>Comentario</th>
-                <th>fecha_registro</th>
-                <th>Estado</th>
-              </tfoot>
-            </table>
+						<div class="box box-primary" >
+							<div class="box-body" style="">
+								<table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
+									<thead>
+										<th>N°</th>
+										<th>Opciones</th>
+										<th>nombres</th>
+										<th>apellido_paterno</th>
+										<th>apellido_materno</th>
+										<th>tipo_financiamiento</th>
+										<th>documento</th>
+										<th>curso_numeracion</th>
+										<th>Finanzas</th>
+										<th>Comentario</th>
+										<th>fecha_registro</th>
+										<th>Estado</th>
+									</thead>
+									<tfoot>
+										<th>N°</th>
+										<th>Opciones</th>
+										<th>nombres</th>
+										<th>apellido_paterno</th>
+										<th>apellido_materno</th>
+										<th>tipo_financiamiento</th>
+										<th>documento</th>
+										<th>curso_numeracion</th>
+										<th>Finanzas</th>
+										<th>Comentario</th>
+										<th>fecha_registro</th>
+										<th>Estado</th>
+									</tfoot>
+								</table>
+							</div>
+						</div>
           </div>
       </div>
       <!-- end contenido -->

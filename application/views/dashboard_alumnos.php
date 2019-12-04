@@ -39,39 +39,43 @@
     <section class="content">
       <div class=""><!-- container -->
           <div class="panel-body" id="listadoregistros">
-            <table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover  table-responsive" style="width:100%">
-              <thead>
-                <th>N°</th>
-                <th>TITULO</th>
-                <th>NOMBRES</th>
-                <th>APELLIDOS PATERNO</th>
-                <th>APELLIDOS MATERNO</th>
-                <th>INSTITUCION DE LABOR</th>
-                <th>TELEFONO</th>
-                <th>CORREO</th>
-                <th>CURRICULUM</th>
-                <th>COPIA DE DNI</th>
-                <th>DECLARACION JURADA</th>
-                <th>BACHILLER</th>
-                <th>MAESTRIA</th>
-                <th>DOCTORADO</th>
-              </thead>
-              <tfoot>
-                <th>TITULO</th>
-                <th>NOMBRES</th>
-                <th>APELLIDOS PATERNO</th>
-                <th>APELLIDOS MATERNO</th>
-                <th>INSTITUCION DE LABOR</th>
-                <th>TELEFONO</th>
-                <th>CORREO</th>
-                <th>CURRICULUM</th>
-                <th>COPIA DE DNI</th>
-                <th>DECLARACION JURADA</th>
-                <th>BACHILLER</th>
-                <th>MAESTRIA</th>
-                <th>DOCTORADO</th>
-              </tfoot>
-            </table>
+						<div class="box box-primary" >
+							<div class="box-body" style="">
+								<table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover  table-responsive" style="width:100%">
+									<thead>
+										<th>N°</th>
+										<th>TITULO</th>
+										<th>NOMBRES</th>
+										<th>APELLIDOS PATERNO</th>
+										<th>APELLIDOS MATERNO</th>
+										<th>INSTITUCION DE LABOR</th>
+										<th>TELEFONO</th>
+										<th>CORREO</th>
+										<th>CURRICULUM</th>
+										<th>COPIA DE DNI</th>
+										<th>DECLARACION JURADA</th>
+										<th>BACHILLER</th>
+										<th>MAESTRIA</th>
+										<th>DOCTORADO</th>
+									</thead>
+									<tfoot>
+										<th>TITULO</th>
+										<th>NOMBRES</th>
+										<th>APELLIDOS PATERNO</th>
+										<th>APELLIDOS MATERNO</th>
+										<th>INSTITUCION DE LABOR</th>
+										<th>TELEFONO</th>
+										<th>CORREO</th>
+										<th>CURRICULUM</th>
+										<th>COPIA DE DNI</th>
+										<th>DECLARACION JURADA</th>
+										<th>BACHILLER</th>
+										<th>MAESTRIA</th>
+										<th>DOCTORADO</th>
+									</tfoot>
+								</table>
+							</div>
+						</div>
           </div>
       </div>
       <!-- end contenido -->

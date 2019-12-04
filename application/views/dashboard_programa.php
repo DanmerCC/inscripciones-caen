@@ -38,31 +38,36 @@
     <section class="content">
       <div class=""><!-- container -->
           <div class="panel-body table-responsive" id="listadoregistros">
-            <table id="dataTable2" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
-              <thead>
-                <th>Opciones</th>
-                <th>Nombre</th>
-                <th>Duracion</th>
-                <th>Costo Total</th>
-                <th>Vacantes</th>
-                <th>Fecha Inicio</th>
-                <th>Fecha Final</th>
-                <th>Tipo de curso</th>
-                <th>Estado</th>
-              </thead>
-              <tfoot>
-                <th>Opciones</th>
-                <th>Nombre</th>
-                <th>Duracion</th>
-                <th>Costo Total</th>
-                <th>Vacantes</th>
-                <th>Fecha Inicio</th>
-                <th>Fecha Final</th>
-                <th>Tipo de curso</th>
-                <th>Estado</th>
-              </tfoot>
-            </table>
-          </div>
+					
+						<div class="box box-primary" >
+							<div class="box-body" style="">
+								<table id="dataTable2" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
+									<thead>
+										<th>Opciones</th>
+										<th>Nombre</th>
+										<th>Duracion</th>
+										<th>Costo Total</th>
+										<th>Vacantes</th>
+										<th>Fecha Inicio</th>
+										<th>Fecha Final</th>
+										<th>Tipo de curso</th>
+										<th>Estado</th>
+									</thead>
+									<tfoot>
+										<th>Opciones</th>
+										<th>Nombre</th>
+										<th>Duracion</th>
+										<th>Costo Total</th>
+										<th>Vacantes</th>
+										<th>Fecha Inicio</th>
+										<th>Fecha Final</th>
+										<th>Tipo de curso</th>
+										<th>Estado</th>
+									</tfoot>
+								</table>
+							</div>	
+						</div>
+					</div>
       </div>
       <!-- end contenido -->
     </section>

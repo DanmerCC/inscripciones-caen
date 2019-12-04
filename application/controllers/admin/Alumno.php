@@ -23,6 +23,10 @@ class Alumno extends CI_Controller
 			$identidad["nombres"]=$this->nativesession->get('acceso');
 			$opciones["rutaimagen"]=$identidad["rutaimagen"];
 			$opciones["menu"]=$this->opciones->segun($this->Permiso_model->lista($this->nativesession->get('idUsuario')),'Alumnos');
+			//echo '<pre>';
+			//print_r($this->Permiso_model->lista($this->nativesession->get('idUsuario')));
+			//echo '</pre>';
+			//exit;
 			$data['cabecera']=$this->load->view('adminlte/linksHead','',TRUE);
 			$data['footer']=$this->load->view('adminlte/scriptsFooter','',TRUE);
 			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);

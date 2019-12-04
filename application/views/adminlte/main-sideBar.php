@@ -28,9 +28,11 @@
         <?php for ($i=0;$i<count($menu);$i++) { ?>
             <li class='<?=(($menu[$i]['active'])?"treeview active":"") ?>'>
               <a href="<?php echo isset($menu[$i]['href'])?$menu[$i]['href']:'#'; ?>">
-                <i class="fa fa-share"></i> <span><?=$menu[$i]["text"]; ?></span>
+                <i class="<?php echo isset($menu[$i]['icon'])?$menu[$i]['icon']:'fa fa-shared'; ?>"></i> <span><?=$menu[$i]["text"]; ?></span>
                 <span class="pull-right-container">
+									<?php if($menu[$i]['hasSubModule']){ ?>
                   <i class="fa fa-angle-left pull-right"></i>
+									<?php } ?>
                 </span>
               </a>
               <ul class="treeview-menu">
