@@ -124,6 +124,13 @@ function save(){
 
 function reloadForm(){
     $('#formularioregistros')[0].reset();
+
+    $(".help-block").each(function (index, element) {
+        element.textContent='';
+    });
+    $(".has-error").each(function (index, element) {
+        $(element).removeClass('has-error');
+    });
 }
 
 function saving(){
