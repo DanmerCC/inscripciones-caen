@@ -131,7 +131,7 @@ class MY_Model extends CI_Model {
 
 			return $this->db->affected_rows()==1;
 		}else{
-			throw new Exception("Error al intentar actualizar campo de ".parent::class);
+			throw new Exception("Error al intentar actualizar campo de ".static::class);
 		}
 	}
 

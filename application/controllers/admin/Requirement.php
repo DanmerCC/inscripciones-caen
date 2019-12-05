@@ -76,7 +76,7 @@ class Requirement extends MY_Controller  implements Idata_controller
 		if($res){
 			$this->structuredResponse(array('message'=>""),200);
 		}else{
-			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
+			$this->structuredResponse(array('message'=>"No se actualizo"),200);
 		}
 	}
 
