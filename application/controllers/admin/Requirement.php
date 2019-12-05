@@ -98,4 +98,14 @@ class Requirement extends MY_Controller  implements Idata_controller
 			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
 		}
 	}
+
+	public function bySolicitud($id){
+		$requirements=$this->Requirement_model->bySolicitud($id);
+		$this->structuredResponse($requirements);
+	}
+
+	public function byDiscount($id){
+		$requirements=$this->Requirement_model->byDiscount($id);
+		$this->structuredResponse($requirements);
+	}
 }

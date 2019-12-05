@@ -135,6 +135,7 @@ $route['administracion/programa/desactivar'] = 'admin/Programa/desactivar';
 $route['administracion/programa/actualizar'] = 'admin/Programa/actualizar';
 $route['administracion/programa/insertar'] = 'admin/Programa/insertar';
 $route['administracion/programa/postergar'] = 'admin/Programa/postergar';
+$route['administracion/programa/discount/(:num)'] = 'admin/Programa/byDiscount/$1';
 
 $route['admin/api/solicitud'] = 'admin/api/Solicitud';
 
@@ -332,6 +333,7 @@ $route['administracion/discounts/save'] = 'admin/Discount/save';
 $route['administracion/discounts/update'] = 'admin/Discount/update';
 $route['administracion/discounts/edit/(:num)'] = 'admin/Discount/edit/$1';
 $route['administracion/discounts/delete'] = 'admin/Discount/delete';
+$route['administracion/discounts/programas/(:num)'] = 'admin/Discount/byCurso/$1';
 
 //modulo Requirements
 $route['administracion/vista/requirements'] = 'admin/Requirement';
@@ -340,6 +342,8 @@ $route['administracion/requirements/save'] = 'admin/Requirement/save';
 $route['administracion/requirements/update'] = 'admin/Requirement/update';
 $route['administracion/requirements/edit/(:num)'] = 'admin/Requirement/edit/$1';
 $route['administracion/requirements/delete'] = 'admin/Requirement/delete';
+$route['administracion/requirements/solicitud/(:num)'] = 'admin/Requirement/bySolicitud/$1';
+$route['administracion/requirements/discount/(:num)'] = 'admin/Requirement/byDiscount/$1';
 
 //cursos descuentos
 $route['administracion/vista/cursosdiscouts'] = 'admin/Discount';

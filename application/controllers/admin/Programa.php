@@ -236,4 +236,10 @@ class Programa extends MY_Controller
 		</li>
 		</ul>";
 	}
+
+
+	public function byDiscount($id){
+		$programas=$this->Programa_model->byDiscountId($id);
+		$this->structuredResponse($programas);
+	}
 }
