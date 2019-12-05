@@ -67,10 +67,6 @@ class Opciones
                             [
                                 "text"=>"Beneficio-Programa",
                                 "atributos"=>"id='beneficios' href='".base_url()."administracion/vista/cursosdiscount'"
-                            ],
-                            [
-                                "text"=>"Beneficio-Requisito",
-                                "atributos"=>"id='beneficios' href='".base_url()."administracion/vista/discountsrequirement'"
                             ]
                         ],
                      "active"=>false
