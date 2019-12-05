@@ -38,27 +38,25 @@
     <section class="content">
       <div class=""><!-- container -->
           <div class="panel-body table-responsive" id="listadoregistros">
-						<div class="box box-primary">
-							<div class="box-header">
-								<button class="btn btn-primary pull-right" onclick="agregarNuevoBeneficio()"> <i class="fa fa-plus"></i> Agregar nuevo beneficio</button>
-							</div>
-							<div class="box-body">
-								<table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
-									<thead>
-										<th>Opciones</th>
-										<th>Nombre beneficio</th>
-										<th>Descripción</th>
-										<th>Porcentaje</th>
-									</thead>
-									<tfoot>
-										<th>Opciones</th>
-										<th>Nombre beneficio</th>
-										<th>Descripción</th>
-										<th>Porcentaje</th>
-									</tfoot>
-								</table>
-							</div>
-						</div>
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <button class="btn btn-primary pull-right" onclick="agregarNuevoBeneficioPrograma()"> <i class="fa fa-plus"></i> Agregar nuevo beneficio programa</button>
+                    </div>
+                    <div class="box-body">
+                        <table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
+                            <thead>
+                                <th>Opciones</th>
+                                <th>Curso</th>
+                                <th>Nombre beneficio</th>
+                            </thead>
+                            <tfoot>
+                                <th>Opciones</th>
+                                <th>Curso</th>
+                                <th>Nombre beneficio</th>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
           </div>
       </div>
       <!-- end contenido -->
@@ -86,60 +84,60 @@
 
   <div id="contentModals">
     <div class="modal fade" tabindex="-1" role="dialog" id="form_discount" data-backdrop="static" data-keyboard="false">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Beneficios</h4>
-				</div>
-				<div class="modal-body">
-					<div class="panel-body">
-						<form class="form-horizontal" id="formularioregistros" role="form">
-							<input type="hidden" name="discount_id" id="discount_id">
-							<div class="form-group">
-								<label for="name" class="col-lg-2 control-label">Nombre</label>
-								<div class="col-lg-10">
-									<div class="input-group col-lg-12">
-										<input type="text" class="form-control validar" id="name" name="name" placeholder="Nombre">
-									</div>
-									<span class="help-block"></span>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="description has-error" class="col-lg-2 control-label">Descripión</label>
-								<div class="col-lg-10">
-									<div class="input-group col-lg-12">
-										<input type="text" class="form-control validar" id="description" name="description" placeholder="Descripción">
-									</div>
-									<span class="help-block"></span>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="percentage has-error" class="col-lg-2 control-label">Porcentaje</label>
-								<div class="col-lg-10">
-									<div class="input-group">
-										<input type="text" class="form-control validar" id="percentage" name="percentage" placeholder="Porcentaje">
-										<span class="input-group-addon">%</span>
-									</div>
-									<span class="help-block"></span>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" id="btnFormPorgrama" data-dismiss="modal">Cerrar</button>
-					<button id="btnActualizarPr" type="submit" class="btn btn-primary" onclick="save()" form="formPro">Guardar</button>
-				</div>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	  </div><!-- /.modal --> 
-	  <div class="modal fade" tabindex="-1" role="dialog" id="viewDiscountModal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Requerimiento para beneficio: </h4>
+                    <h4 class="modal-title">Beneficio programa</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel-body">
+                        <form class="form-horizontal" id="formularioregistros" role="form">
+                            <input type="hidden" name="cursodiscount_id" id="cursodiscount_id">
+                            <div class="form-group">
+                                <label for="curso_id" class="col-lg-2 control-label">Cursos</label>
+                                <div class="col-lg-10">
+                                    <div class="input-group col-lg-12">
+                                        <select class="form-control validar" id="curso_id" name="curso_id" placeholder="Cursos">
+                                            <option value="">Elejir::</option>
+                                            <option value="">Mastreria em dadas</option>
+                                            <option value="">Desarrollo y defensa nacionañ</option>
+                                            <option value="">Otro</option>
+                                        </select>
+                                    </div>
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="discount_id" class="col-lg-2 control-label">Beneficios</label>
+                                <div class="col-lg-10">
+                                    <div class="input-group col-lg-12">
+                                        <select class="form-control validar" id="discount_id" name="discount_id" placeholder="Beneficio">
+                                            <option value="">Elejir::</option>
+                                            <option value="">Beca 19</option>
+                                            <option value="">Primer puesto</option>
+                                            <option value="">Model</option>
+                                        </select>
+                                    </div>
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="btnFormPorgrama" data-dismiss="modal">Cerrar</button>
+                    <button id="btnActualizarPr" type="submit" class="btn btn-primary" onclick="save()" form="formPro">Guardar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="viewRequirementModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Requerimientos de beneficios: </h4>
                 </div>
                 <div class="modal-body">
                     <div class="panel">
@@ -152,7 +150,7 @@
                                         <th>Acción</th>
                                     </tr>
                                 </thead>
-                                <tbody id="cuerpoTablePrograma">
+                                <tbody id="cuerpoTableRequirements">
                                 </tbody>
                             </table>
                         </div>
@@ -165,6 +163,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    
   </div>
 </div>
 
@@ -191,7 +190,7 @@
 <script src="/dist/js/jquery-externs/buttons.html5.min.js"></script>
 <script src="/dist/js/jquery-externs/buttons.print.min.js"></script>
 
-<script src="/assets/js/dboard_discount.js"></script>
+<script src="/assets/js/dboard_cursodiscount.js"></script>
 
 </body>
 </html>

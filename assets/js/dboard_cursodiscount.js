@@ -40,7 +40,7 @@ function cargarDataTable(){
         ],
         "ajax":
             {
-                url: '/admin/dataTable/discounts',
+                url: '/admin/dataTable/cursosdiscount',
                 type: "post",
                 dataType: "json",
                 error: function (e) {
@@ -53,23 +53,16 @@ function cargarDataTable(){
     }).DataTable();
 }
 
-function agregarNuevoBeneficio(){
-    reloadForm();
-    actionMethod = 'add';
-	$("#form_discount .modal-title").text("Agregar nuevo beneficio");
-	$("#form_discount").modal("show");
-}
-
-function verProgramas(discount_id){
+function verRequisitos(discount_id){
     $.ajax({
         type: "GET",
-        url: "/administracion/programa/discount/"+discount_id,
+        url: "/administracion/requirements/discount/"+discount_id,
         data: {},
         dataType: "json",
         success: function (response) {
             if(response.status == 'OK'){
-                document.getElementById("cuerpoTablePrograma").innerHTML = makeTemplateTable(response.data)
-                $("#viewDiscountModal").modal("show");
+                document.getElementById("cuerpoTableRequirements").innerHTML = makeTemplateTable(response.data)
+                $("#viewRequirementModal").modal("show");
             }else{
                 alert("Ocurrio un error al traer datos");
             }
@@ -96,7 +89,6 @@ function makeTemplateTable(data)
             <td colspan="3">No se entronto datos</td>
         </tr>`;
     }
-    
     return template;
 }
 
@@ -105,12 +97,19 @@ function quitarPrograma(id)
     alert("Quitado de la lista");
 }
 
+function agregarNuevoBeneficioPrograma(){
+    reloadForm();
+    actionMethod = 'add';
+	$("#form_discount .modal-title").text("Agregar nuevo beneficio");
+	$("#form_discount").modal("show");
+}
+
 function mostrarFormPro(id){
     reloadForm();
     actionMethod = 'update';
     $.ajax({
         type: "GET",
-        url: "/administracion/discounts/edit/"+id,
+        url: "/administracion/cursosdiscount/edit/"+id,
         data: {},
         dataType: "json",
         success: function (response) {
@@ -133,11 +132,11 @@ function loadDataForm(model_data){
 }
 
 function eliminar(id) {
-    bootbox.confirm("Estas seguro de eliminar este beneficio?", function (result) {
+    bootbox.confirm("Estas seguro de eliminar esta relación?", function (result) {
         if (result) {
             $.ajax({
                 type: "POST",
-                url: "/administracion/discounts/delete",
+                url: "/administracion/cursosdiscount/delete",
                 data: {
                     id:id
                 },
@@ -161,9 +160,9 @@ function save(){
 
     let url = '';
     if(actionMethod=='add'){
-        url = '/administracion/discounts/save';
+        url = '/administracion/cursosdiscount/save';
     }else{
-        url = '/administracion/discounts/update';
+        url = '/administracion/cursosdiscount/update';
     }
     if(validFormData()){
         $.ajax({

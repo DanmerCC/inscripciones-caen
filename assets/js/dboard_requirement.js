@@ -100,6 +100,7 @@ function eliminar(id) {
                 success: function (response) {
                     if (response.status=='OK') {
                         alert("Se elimino con éxito")
+                        realoadDatatable();
                     }else{
                         alert(response.data.message)
                     }
