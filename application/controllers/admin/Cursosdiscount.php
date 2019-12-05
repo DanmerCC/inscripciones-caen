@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once ("interfaces/Idata_controller.php");
 
-class Discount extends MY_Controller  implements Idata_controller
+class Cursosdiscount extends MY_Controller  implements Idata_controller
 {
 	
 	function __construct()
@@ -19,7 +19,8 @@ class Discount extends MY_Controller  implements Idata_controller
 	}
 
     public function dataTable(){
-		$rspta = $this->Discount_model->all();
+       // $rspta = $this->Discount_model->all();
+        $rspta = [["id"=>"1","name"=>"PERES","description"=>"SEA","percentage"=>"10"],["id"=>"2","name"=>"sasfFA","description"=>"AFAFAFS","percentage"=>"20"]];
 	    //vamos a declarar un array
 	    $data = Array();
 	    header("Content-type: application/json");
@@ -27,8 +28,8 @@ class Discount extends MY_Controller  implements Idata_controller
 	    foreach ($rspta as $value) {
 	            $data[] = array(
 				"0" => '<button class="btn btn-warning" onclick="mostrarFormPro(' .$value["id"]. ')"><i class= "fa fa-pencil"></i></button>
-						<button class="btn btn-danger" onclick="eliminar(' .$value["id"]. ')"><i class= "fa fa-trash"></i></button>
-						<button class="btn btn-info" onclick="verProgramas(' .$value["id"]. ')"><i class= "fa fa-eye"></i></button>',
+                        <button class="btn btn-danger" onclick="eliminar(' .$value["id"]. ')"><i class= "fa fa-trash"></i></button>
+                        <button class="btn btn-info" onclick="verRequisitos(' .$value["id"]. ')"><i class= "fa fa-eye"></i></button>',
 	            "1" => $value["name"],
 	            "2" => $value["description"],
 	            "3" => $value["percentage"]." %"
@@ -53,7 +54,7 @@ class Discount extends MY_Controller  implements Idata_controller
 			$data['footer']=$this->load->view('adminlte/scriptsFooter','',TRUE);
 			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
 			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
-			$this->load->view('dashboard_discount',$data);
+			$this->load->view('dashboard_cursodiscount',$data);
 		}else
 		{
 			redirect('administracion/login');

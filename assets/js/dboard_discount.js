@@ -60,6 +60,47 @@ function agregarNuevoBeneficio(){
 	$("#form_discount").modal("show");
 }
 
+function verProgramas(discount_id){
+    /*$.ajax({
+        type: "GET",
+        url: "/administracion/programa/discount/"+discount_id,
+        data: {},
+        dataType: "json",
+        success: function (response) {
+            
+        }
+    });*/
+    let array_data = [
+        {"id":"1","name":"Curso"},
+        {"id":"2","name":"Curso 2"},
+        {"id":"3","name":"Curso 2"}
+    ];
+    
+    document.getElementById("cuerpoTablePrograma").innerHTML = makeTemplateTable(array_data)
+    $("#viewDiscountModal").modal("show");
+}
+
+function makeTemplateTable(data)
+{
+    let template = '';
+    data.forEach((element,i) => {
+        template +=`<tr>
+            <td>${i+1}</td>
+            <td>${element.name}</td>
+            <td>
+                <button class="btn btn-danger btn-sm" 
+                onclick="quitarPrograma(${element.id})">Quitar</button>
+            </td>
+        </tr>`;
+    });
+    return template;
+}
+
+function quitarPrograma(id)
+{
+    alert("Quitado de la lista");
+}
+
 function mostrarFormPro(id){
     reloadForm();
     actionMethod = 'update';
@@ -100,6 +141,7 @@ function eliminar(id) {
                 success: function (response) {
                     if (response.status=='OK') {
                         alert("Se elimino con éxito")
+                        realoadDatatable();
                     }else{
                         alert(response.data.message)
                     }

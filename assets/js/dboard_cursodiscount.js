@@ -1,6 +1,6 @@
 var tabla;
 var actionMethod;
-var campos_global = [ 'name'];
+var campos_global = [ 'name', 'description', 'percentage' ];
 
 //$("#"+nameId).parent('.input-group').next('span').text('Este campo es requerido.')
 $('input.validar').change(function(){
@@ -40,7 +40,7 @@ function cargarDataTable(){
         ],
         "ajax":
             {
-                url: '/admin/dataTable/requirements',
+                url: '/admin/dataTable/cursosdiscount',
                 type: "post",
                 dataType: "json",
                 error: function (e) {
@@ -53,10 +53,53 @@ function cargarDataTable(){
     }).DataTable();
 }
 
-function agregarNuevoBeneficio(){
+function verRequisitos(discount_id){
+    /*$.ajax({
+        type: "GET",
+        url: "/administracion/requirements/discount/"+discount_id,
+        data: {},
+        dataType: "json",
+        success: function (response) {
+            let array_data = [{"id":"1","name":"Curso"},{"id":"2","name":"Curso 2"},{"id":"3","name":"Curso 2"}];
+            makeTemplateTable(array_data)
+        }
+    });*/
+    let array_data = [
+        {"id":"1","name":"Requisito"},
+        {"id":"2","name":"Requisito 2"},
+        {"id":"3","name":"Requisito 3"}
+    ];
+    
+    document.getElementById("cuerpoTableRequirements").innerHTML = makeTemplateTable(array_data)
+    
+    $("#viewRequirementModal").modal("show");
+}
+
+function makeTemplateTable(data)
+{
+    let template = '';
+    data.forEach((element,i) => {
+        template +=`<tr>
+            <td>${i+1}</td>
+            <td>${element.name}</td>
+            <td>
+                <button class="btn btn-danger btn-sm" 
+                onclick="quitarPrograma(${element.id})">Quitar</button>
+            </td>
+        </tr>`;
+    });
+    return template;
+}
+
+function quitarPrograma(id)
+{
+    alert("Quitado de la lista");
+}
+
+function agregarNuevoBeneficioPrograma(){
     reloadForm();
     actionMethod = 'add';
-	$("#form_discount .modal-title").text("Agregar nuevo requerimiento");
+	$("#form_discount .modal-title").text("Agregar nuevo beneficio");
 	$("#form_discount").modal("show");
 }
 
@@ -65,7 +108,7 @@ function mostrarFormPro(id){
     actionMethod = 'update';
     $.ajax({
         type: "GET",
-        url: "/administracion/requirements/edit/"+id,
+        url: "/administracion/cursosdiscount/edit/"+id,
         data: {},
         dataType: "json",
         success: function (response) {
@@ -76,8 +119,8 @@ function mostrarFormPro(id){
             }
         }
     });
-    $("#requirement_id").val(id);
-	$("#form_discount .modal-title").text("Modificar requerimiento");
+    $("#discount_id").val(id);
+	$("#form_discount .modal-title").text("Modificar beneficio");
 	$("#form_discount").modal("show");
 }
 
@@ -88,11 +131,11 @@ function loadDataForm(model_data){
 }
 
 function eliminar(id) {
-    bootbox.confirm("Estas seguro de eliminar este beneficio?", function (result) {
+    bootbox.confirm("Estas seguro de eliminar esta relación?", function (result) {
         if (result) {
             $.ajax({
                 type: "POST",
-                url: "/administracion/requirements/delete",
+                url: "/administracion/cursosdiscount/delete",
                 data: {
                     id:id
                 },
@@ -116,9 +159,9 @@ function save(){
 
     let url = '';
     if(actionMethod=='add'){
-        url = '/administracion/requirements/save';
+        url = '/administracion/cursosdiscount/save';
     }else{
-        url = '/administracion/requirements/update';
+        url = '/administracion/cursosdiscount/update';
     }
     if(validFormData()){
         $.ajax({
