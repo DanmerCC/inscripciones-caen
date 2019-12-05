@@ -2,19 +2,19 @@
 
 
 
-class Programa_model extends CI_Model
+class Programa_model extends MY_Model
 {
-	private $table='curso';
-	private $id='id_curso';
-	private $name='nombre';
-	private $duracion='duracion';
-	private $costo_total='costo_total';
-	private $vacantes='vacantes';
-	private $fecha_inicio='fecha_inicio';
-	private $fecha_final='fecha_final';
-	private $tipo='idTipo_curso';
-	private $estado='estado';
-	private $numeracion='numeracion';
+	protected $table='curso';
+	protected $id='id_curso';
+	protected $name='nombre';
+	protected $duracion='duracion';
+	protected $costo_total='costo_total';
+	protected $vacantes='vacantes';
+	protected $fecha_inicio='fecha_inicio';
+	protected $fecha_final='fecha_final';
+	protected $tipo='idTipo_curso';
+	protected $estado='estado';
+	protected $numeracion='numeracion';
 
 	private $state_filter="";
 	private $type_filter="";
@@ -42,6 +42,21 @@ class Programa_model extends CI_Model
 		$this->load->model('Permiso_model');
 
 
+	}
+
+	protected function relations(){
+		return [
+			'discount'=>[
+				'pivot_table'=>'cursos_discouts',
+				'column_relation'=>'curso_id',
+				'column_other_relation'=>'discount_id'
+			]
+		];
+	}
+
+	function byDiscountId($id){
+		$result= $this->byPivot('discount','discount_id',$id);
+		return $result;
 	}
 
 	public function all(){
@@ -467,5 +482,6 @@ class Programa_model extends CI_Model
 			throw new Exception("Error al buscar un programa");
 		}
 	}
+
 	
 }

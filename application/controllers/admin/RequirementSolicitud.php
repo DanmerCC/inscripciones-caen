@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once ("interfaces/Idata_controller.php");
 
-class Requirement extends MY_Controller  implements Idata_controller
+class RequirementSolicitud extends MY_Controller  implements Idata_controller
 {
 	
 	function __construct()
@@ -19,6 +19,7 @@ class Requirement extends MY_Controller  implements Idata_controller
 	}
 
     public function dataTable(){
+		/*
 		$rspta = $this->Requirement_model->all();
 	    //vamos a declarar un array
 	    $data = Array();
@@ -36,10 +37,11 @@ class Requirement extends MY_Controller  implements Idata_controller
 	        "iTotalRecords" => count($data), //enviamos el total de registros al datatables
 	        "iTotalDisplayRecords" => count($data), //enviamos total de registros a visualizar
 	        "aaData" => $data);
-	    echo json_encode($results);
+	    echo json_encode($results);*/
     }
 
     public function index(){
+		/*
     	if ($this->nativesession->get('tipo')=='admin') {
 			$identidad["rutaimagen"]="/dist/img/avatar5.png";
 			$identidad["nombres"]=$this->nativesession->get('acceso');
@@ -54,58 +56,24 @@ class Requirement extends MY_Controller  implements Idata_controller
 		}else
 		{
 			redirect('administracion/login');
-		}
+		}*/
 	}
 	
 	public function save(){
-		$name = $this->input->post('name');
-		$res = $this->Requirement_model->registrar($name);
-		if($res){
-			$this->structuredResponse(array('message'=>""),200);
-		}else{
-			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
-		}
+		$solicitud_id=$this->input->post('solicitud_id');
+		$requirement_id=$this->input->post('requirement_id');
+		$this->Requirement_model->addSolicitud($solicitud_id,$requirement_id);
 	}
 
 	public function update(){
-		$name = $this->input->post('name');
-		$requirement_id = $this->input->post('requirement_id');
-		$data=[];
-		$data["name"]=$name;
-		$res = $this->Requirement_model->update($requirement_id,$data);
-		if($res){
-			$this->structuredResponse(array('message'=>""),200);
-		}else{
-			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
-		}
+		
 	}
 
 	public function edit($requirement_id=-1){
-		$res = $this->Requirement_model->getOne($requirement_id);
-		if($res){
-			$this->structuredResponse($res,200);
-		}else{
-			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
-		}
+		
 	}
 
 	public function delete(){
-		$requirement_id = $this->input->post('id');
-		$res = $this->Requirement_model->delete($requirement_id);
-		if($res){
-			$this->structuredResponse($res,200);
-		}else{
-			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
-		}
-	}
-
-	public function bySolicitud($id){
-		$requirements=$this->Requirement_model->bySolicitud($id);
-		$this->structuredResponse($requirements);
-	}
-
-	public function byDiscount($id){
-		$requirements=$this->Requirement_model->byDiscount($id);
-		$this->structuredResponse($requirements);
+		
 	}
 }
