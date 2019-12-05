@@ -54,40 +54,41 @@ function cargarDataTable(){
 }
 
 function verRequisitos(discount_id){
-    /*$.ajax({
+    $.ajax({
         type: "GET",
         url: "/administracion/requirements/discount/"+discount_id,
         data: {},
         dataType: "json",
         success: function (response) {
-            let array_data = [{"id":"1","name":"Curso"},{"id":"2","name":"Curso 2"},{"id":"3","name":"Curso 2"}];
-            makeTemplateTable(array_data)
+            if(response.status == 'OK'){
+                document.getElementById("cuerpoTableRequirements").innerHTML = makeTemplateTable(response.data)
+                $("#viewRequirementModal").modal("show");
+            }else{
+                alert("Ocurrio un error al traer datos");
+            }
         }
-    });*/
-    let array_data = [
-        {"id":"1","name":"Requisito"},
-        {"id":"2","name":"Requisito 2"},
-        {"id":"3","name":"Requisito 3"}
-    ];
-    
-    document.getElementById("cuerpoTableRequirements").innerHTML = makeTemplateTable(array_data)
-    
-    $("#viewRequirementModal").modal("show");
+    });
 }
 
 function makeTemplateTable(data)
 {
     let template = '';
-    data.forEach((element,i) => {
+    if(data.length>0){
+        data.forEach((element,i) => {
+            template +=`<tr>
+                <td>${i+1}</td>
+                <td>${element.name}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" 
+                    onclick="quitarPrograma(${element.id})">Quitar</button>
+                </td>
+            </tr>`;
+        });
+    }else{
         template +=`<tr>
-            <td>${i+1}</td>
-            <td>${element.name}</td>
-            <td>
-                <button class="btn btn-danger btn-sm" 
-                onclick="quitarPrograma(${element.id})">Quitar</button>
-            </td>
+            <td colspan="3">No se entronto datos</td>
         </tr>`;
-    });
+    }
     return template;
 }
 
