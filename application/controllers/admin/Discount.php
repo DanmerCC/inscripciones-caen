@@ -19,7 +19,7 @@ class Discount extends CI_Controller  implements Idata_controller
 	}
 
     public function dataTable(){
-        $rspta = resultToArray($this->Discount_model->all());
+        $rspta = ($this->Discount_model->all());
 	    //vamos a declarar un array
 	    $data = Array();
 	    header("Content-type: application/json");

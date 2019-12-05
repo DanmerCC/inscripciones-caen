@@ -4,12 +4,12 @@
 
 class Discount_model extends MY_Model
 {
-	private $table='discounts';
+	protected $table='discounts';
 	
-	private $id='id';
-	private $description='description';
-	private $name='name';
-	private $percentage='percentage';
+	protected $id='id';
+	protected $description='description';
+	protected $name='name';
+	protected $percentage='percentage';
 
 
 	private $public_columns=['id','description','name','percentage'];
