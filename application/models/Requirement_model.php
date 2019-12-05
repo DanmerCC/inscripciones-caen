@@ -69,7 +69,8 @@ class Requirement_model extends MY_Model
 		];
 	}
 
-	public function addSolicitud($id,$idSolicitud){
+	/**addSolicitud */
+	public function addInSolicitudPivot($id,$idSolicitud){
 		$this->addInPivot('solicitud',$id,$idSolicitud);
 	}
 }

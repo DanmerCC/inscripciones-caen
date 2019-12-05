@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once ("interfaces/Idata_controller.php");
 
-class RequirementSolicitud extends MY_Controller  implements Idata_controller
+class CursoDiscountController extends MY_Controller  implements Idata_controller
 {
 	
 	function __construct()
@@ -12,7 +12,7 @@ class RequirementSolicitud extends MY_Controller  implements Idata_controller
 		$this->load->library('Nativesession');
 		$this->load->library('Mihelper');
 		$this->load->helper('url');
-		$this->load->model('Requirement_model');
+		$this->load->model('Programa_model');
 		$this->load->helper('mihelper');
 		$this->load->library('opciones');
 		$this->load->model('Permiso_model');
@@ -60,9 +60,14 @@ class RequirementSolicitud extends MY_Controller  implements Idata_controller
 	}
 	
 	public function save(){
-		$solicitud_id=$this->input->post('solicitud_id');
-		$requirement_id=$this->input->post('requirement_id');
-		$this->Requirement_model->addInSolicitudPivot($solicitud_id,$requirement_id);
+		$curso_id=$this->input->post('curso_id');
+		$discount_id=$this->input->post('discount_id');
+		$status=$this->Discount_model->addInCursoPivot($curso_id,$discount_id);
+		if($status){
+			$this->structuredResponse(array("message"=>""),200);
+		}else{
+			$this->structuredResponse(array("message"=>"Error interno"),500);
+		}
 	}
 
 	public function update(){
