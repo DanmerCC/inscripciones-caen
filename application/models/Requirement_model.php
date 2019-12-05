@@ -30,6 +30,18 @@ class Requirement_model extends MY_Model
 		return $this->parentUpdate($id,$data);
 	}
 
+	public function getOne($id){
+		$this->db->select();
+		$this->db->from($this->table);
+		$this->db->where($this->id,$id);
+		$result=$this->db->get();
+		if($result->num_rows()==1){
+			return $result->result_array()[0];
+		}else{
+			throw new Exception("Error buscar un discount");
+		}
+	}
+
 	function delete($id){
 		return $this->parentDelete($id);
 	}

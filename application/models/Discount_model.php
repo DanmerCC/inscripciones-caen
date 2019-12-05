@@ -26,7 +26,7 @@ class Discount_model extends MY_Model
 		$this->db->where($this->id,$id);
 		$result=$this->db->get();
 		if($result->num_rows()==1){
-			return $result->result->array()[0];
+			return $result->result_array()[0];
 		}else{
 			throw new Exception("Error buscar un discount");
 		}

@@ -342,9 +342,9 @@ $route['administracion/requirements/edit/(:num)'] = 'admin/Requirement/edit/$1';
 $route['administracion/requirements/delete'] = 'admin/Requirement/delete';
 
 //cursos descuentos
-$route['administracion/vista/cursosdiscouts'] = 'admin/Requirement';
-$route['admin/dataTable/cursosdiscouts'] = 'admin/Requirement/dataTable';
-$route['administracion/cursosdiscouts/save'] = 'admin/Requirement/save';
-$route['administracion/cursosdiscouts/update'] = 'admin/Requirement/update';
-$route['administracion/cursosdiscouts/edit/(:num)'] = 'admin/Requirement/edit/$1';
-$route['administracion/cursosdiscouts/delete'] = 'admin/Requirement/delete';
+$route['administracion/vista/cursosdiscouts'] = 'admin/Discount';
+$route['admin/dataTable/cursosdiscouts'] = 'admin/Discount/dataTable';
+$route['administracion/cursosdiscouts/save'] = 'admin/Discount/save';
+$route['administracion/cursosdiscouts/update'] = 'admin/Discount/update';
+$route['administracion/cursosdiscouts/edit/(:num)'] = 'admin/Discount/edit/$1';
+$route['administracion/cursosdiscouts/delete'] = 'admin/Discount/delete';
