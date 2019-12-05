@@ -4,14 +4,13 @@
 
 class Requirement_model extends MY_Model
 {
-	public $table='requirements';
+	protected $table='requirements';
 	
-	public $id='id';
-	private $name='name';
+	protected $id='id';
+	protected $name='name';
 
-
-	private $public_columns=['id','name'];
-	private $fillable=['name'];
+	protected $public_columns=['id','name'];
+	protected $fillable=['name'];
 
 	function __construct()
 	{
@@ -59,12 +58,18 @@ class Requirement_model extends MY_Model
 		return [
 			'discount'=>[
 				'pivot_table'=>'discount_requirement',
-				'column_relation'=>'requirement_id'
+				'column_relation'=>'requirement_id',
+				'column_other_relation'=>'discount_id'
 			],
 			'solicitud'=>[
 				'pivot_table'=>'solicitud_requirement',
-				'column_relation'=>'requirement_id'
+				'column_relation'=>'requirement_id',
+				'column_other_relation'=>'solicitud_id'
 			],
 		];
+	}
+
+	public function addSolicitud($id,$idSolicitud){
+		$this->addInPivot('solicitud',$id,$idSolicitud);
 	}
 }

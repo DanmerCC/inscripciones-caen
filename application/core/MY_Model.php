@@ -103,6 +103,22 @@ class MY_Model extends CI_Model {
 		return $this->db->get()->result_array();
 	}
 
+/*
+	protected function relations(){
+		return [
+			'discount'=>[
+				'pivot_table'=>'discount_requirement',
+				'column_relation'=>'requirement_id',
+				'column_other_relation'=>'discount_id'
+			],
+			'solicitud'=>[
+				'pivot_table'=>'solicitud_requirement',
+				'column_relation'=>'requirement_id',
+				'column_other_relation'=>'discount_id'
+			],
+		];
+	}*/
+
 	protected function relations(){
 		return [];
 	}
@@ -124,5 +140,25 @@ class MY_Model extends CI_Model {
 		$this->db->where($this->id, $id);
 		$this->db->delete($this->table);
 		return $this->db->affected_rows()==1;
+	}
+
+
+	function addInPivot($nameRelation,$idCurrentModelId,$idRelation){
+		
+		$this->verifyExistRelation($nameRelation);
+		
+		$relation=$this->relations()[$nameRelation];
+		$data=[];
+		$data[$relation["column_relation"]]=$idRelation;
+		$data[$relation["column_other_relation"]]=$idCurrentModelId;
+		
+		$this->db->insert($relation["pivot_table"],$data);
+		return $this->db->affected_rows()==1;
+	}
+
+	private function verifyExistRelation($relation_pivot_name){
+		if(!isset($this->relations()[$relation_pivot_name])){
+			throw new Exception("la $relation_pivot_name relacion no esta definida");
+		}
 	}
 }
