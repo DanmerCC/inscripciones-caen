@@ -76,7 +76,7 @@ class Discount extends MY_Controller  implements Idata_controller
 		$data["name"] = $this->input->post('name');
 		$data["description"] = $this->input->post('description');
 		$data["percentage"] = $this->input->post('percentage');
-		$id=$this->input->post('id');
+		$id=$this->input->post('discount_id');
 		$status=$this->Discount_model->update($id,$data);
 		if($status){
 			return $this->structuredResponse(array('message'=>""),200);
