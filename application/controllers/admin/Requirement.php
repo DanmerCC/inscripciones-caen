@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once ("interfaces/Idata_controller.php");
 
-class Discount extends MY_Controller  implements Idata_controller
+class Requirement extends MY_Controller  implements Idata_controller
 {
 	
 	function __construct()
@@ -12,14 +12,14 @@ class Discount extends MY_Controller  implements Idata_controller
 		$this->load->library('Nativesession');
 		$this->load->library('Mihelper');
 		$this->load->helper('url');
-		$this->load->model('Discount_model');
+		$this->load->model('Requirement_model');
 		$this->load->helper('mihelper');
 		$this->load->library('opciones');
 		$this->load->model('Permiso_model');
 	}
 
     public function dataTable(){
-		$rspta = $this->Discount_model->all();
+		$rspta = $this->Requirement_model->all();
 	    //vamos a declarar un array
 	    $data = Array();
 	    header("Content-type: application/json");
@@ -29,8 +29,6 @@ class Discount extends MY_Controller  implements Idata_controller
 				"0" => '<button class="btn btn-warning" onclick="mostrarFormPro(' .$value["id"]. ')"><i class= "fa fa-pencil"></i></button>
 						<button class="btn btn-danger" onclick="eliminar(' .$value["id"]. ')"><i class= "fa fa-trash"></i></button>',
 	            "1" => $value["name"],
-	            "2" => $value["description"],
-	            "3" => $value["percentage"]." %"
 	        );
 	     }        
 	    $results = array(
@@ -52,7 +50,7 @@ class Discount extends MY_Controller  implements Idata_controller
 			$data['footer']=$this->load->view('adminlte/scriptsFooter','',TRUE);
 			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
 			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
-			$this->load->view('dashboard_discount',$data);
+			$this->load->view('dashboard_requirement',$data);
 		}else
 		{
 			redirect('administracion/login');
@@ -61,9 +59,7 @@ class Discount extends MY_Controller  implements Idata_controller
 	
 	public function save(){
 		$name = $this->input->post('name');
-		$description = $this->input->post('description');
-		$percentage = $this->input->post('percentage');
-		$res = $this->Discount_model->registrar($name,$description,$percentage);
+		$res = $this->Requirement_model->registrar($name);
 		if($res){
 			$this->structuredResponse(array('message'=>""),200);
 		}else{
@@ -71,23 +67,21 @@ class Discount extends MY_Controller  implements Idata_controller
 		}
 	}
 
-	public function update($discount_id=-1){
+	public function update(){
+		$name = $this->input->post('name');
+		$requirement_id = $this->input->post('requirement_id');
 		$data=[];
-		$data["name"] = $this->input->post('name');
-		$data["description"] = $this->input->post('description');
-		$data["percentage"] = $this->input->post('percentage');
-		$id=$this->input->post('id');
-		$status=$this->Discount_model->update($id,$data);
-		if($status){
-			return $this->structuredResponse(array('message'=>""),200);
+		$data["name"]=$name;
+		$res = $this->Requirement_model->update($requirement_id,$data);
+		if($res){
+			$this->structuredResponse(array('message'=>""),200);
 		}else{
-			return $this->structuredResponse(array('message'=>"No se actualizo ningun campo"),200);
+			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
 		}
-		
 	}
 
-	public function edit($discount_id=-1){
-		$res = $this->Discount_model->getOne($discount_id);
+	public function edit($requirement_id=-1){
+		$res = $this->Requirement_model->getOne($requirement_id);
 		if($res){
 			$this->structuredResponse($res,200);
 		}else{
@@ -96,8 +90,8 @@ class Discount extends MY_Controller  implements Idata_controller
 	}
 
 	public function delete(){
-		$discount_id = $this->input->post('id');
-		$res = $this->Discount_model->delete($discount_id);
+		$requirement_id = $this->input->post('id');
+		$res = $this->Requirement_model->delete($requirement_id);
 		if($res){
 			$this->structuredResponse($res,200);
 		}else{

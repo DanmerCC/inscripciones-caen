@@ -1,6 +1,6 @@
 var tabla;
 var actionMethod;
-var campos_global = [ 'name', 'description', 'percentage' ];
+var campos_global = [ 'name'];
 
 //$("#"+nameId).parent('.input-group').next('span').text('Este campo es requerido.')
 $('input.validar').change(function(){
@@ -40,7 +40,7 @@ function cargarDataTable(){
         ],
         "ajax":
             {
-                url: '/admin/dataTable/discounts',
+                url: '/admin/dataTable/requirements',
                 type: "post",
                 dataType: "json",
                 error: function (e) {
@@ -56,7 +56,7 @@ function cargarDataTable(){
 function agregarNuevoBeneficio(){
     reloadForm();
     actionMethod = 'add';
-	$("#form_discount .modal-title").text("Agregar nuevo beneficio");
+	$("#form_discount .modal-title").text("Agregar nuevo requerimiento");
 	$("#form_discount").modal("show");
 }
 
@@ -65,7 +65,7 @@ function mostrarFormPro(id){
     actionMethod = 'update';
     $.ajax({
         type: "GET",
-        url: "/administracion/discounts/edit/"+id,
+        url: "/administracion/requirements/edit/"+id,
         data: {},
         dataType: "json",
         success: function (response) {
@@ -76,8 +76,8 @@ function mostrarFormPro(id){
             }
         }
     });
-    $("#discount_id").val(id);
-	$("#form_discount .modal-title").text("Modificar beneficio");
+    $("#requirement_id").val(id);
+	$("#form_discount .modal-title").text("Modificar requerimiento");
 	$("#form_discount").modal("show");
 }
 
@@ -92,7 +92,7 @@ function eliminar(id) {
         if (result) {
             $.ajax({
                 type: "POST",
-                url: "/administracion/discounts/delete",
+                url: "/administracion/requirements/delete",
                 data: {
                     id:id
                 },
@@ -115,9 +115,9 @@ function save(){
 
     let url = '';
     if(actionMethod=='add'){
-        url = '/administracion/discounts/save';
+        url = '/administracion/requirements/save';
     }else{
-        url = '/administracion/discounts/update';
+        url = '/administracion/requirements/update';
     }
     if(validFormData()){
         $.ajax({
