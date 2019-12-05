@@ -11,7 +11,8 @@ class Requirement_model extends MY_Model
 
 
 	private $public_columns=['id','name'];
-	
+	private $fillable=['name'];
+
 	function __construct()
 	{
 		parent::__construct();

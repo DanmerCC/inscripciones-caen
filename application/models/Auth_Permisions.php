@@ -35,7 +35,7 @@ class Auth_Permisions extends MY_Model {
 	
 	function get_by_user($id_user){
 		/*echo '<pre>';
-		print_r(c_extract($this->AuthRole_model->get($id_user),'id'));
+		print_r(c_extract($this->AuthRole_model->getRolesByUserId($id_user),'id'));
 		echo '</pre>';
 		exit;*/
 		/*$this->db->select('auth_roles_users.auth_roles_id');
@@ -43,7 +43,7 @@ class Auth_Permisions extends MY_Model {
 		$this->db->where('users_id',$id_user);
 		$sub=$this->db->get_compiled_select();*/
 
-		$ids=$this->AuthRole_model->get($id_user);
+		$ids=$this->AuthRole_model->getRolesByUserId($id_user);
 		if(count($ids)>0){
 			$this->db->select('p.*');
 			$this->db->from($this->table.' p');

@@ -21,7 +21,7 @@ class AuthRole_model extends MY_Model {
 	 * 
 	 * @var integer id_user 
 	 */
-	function get($id_user){
+	function getRolesByUserId($id_user){
 
 		$this->db->select('ar.*');
 		$this->db->from('auth_roles_users aru');
