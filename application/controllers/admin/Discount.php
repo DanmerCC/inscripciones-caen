@@ -72,7 +72,18 @@ class Discount extends MY_Controller  implements Idata_controller
 	}
 
 	public function update($discount_id=-1){
-
+		$data=[];
+		$data["name"] = $this->input->post('name');
+		$data["description"] = $this->input->post('description');
+		$data["percentage"] = $this->input->post('percentage');
+		$id=$this->input->post('id');
+		$status=$this->Discount_model->update($id,$data);
+		if($status){
+			return $this->structuredResponse(array('message'=>""),200);
+		}else{
+			return $this->structuredResponse(array('message'=>"No se actualizo ningun campo"),200);
+		}
+		
 	}
 
 	public function edit($discount_id=-1){
@@ -84,7 +95,13 @@ class Discount extends MY_Controller  implements Idata_controller
 		}
 	}
 
-	public function delete(){
+	public function delete($id){
 
+		$res=$this->Discount_model->delete($id);
+		if($res){
+			$this->structuredResponse($res,200);
+		}else{
+			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
+		}
 	}
 }

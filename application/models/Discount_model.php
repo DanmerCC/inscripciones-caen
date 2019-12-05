@@ -13,14 +13,23 @@ class Discount_model extends MY_Model
 
 
 	protected $public_columns=['id','description','name','percentage'];
-	
+	protected $fillable=['description','name','percentage'];
+
 	function __construct()
 	{
 		parent::__construct();
 	}
 
 	public function getOne($id){
-		return $this->get($id)->row();
+		$this->db->select();
+		$this->db->from($this->table);
+		$this->db->where($this->id,$id);
+		$result=$this->db->get();
+		if($result->num_rows()==1){
+			return $result->result->array()[0];
+		}else{
+			throw new Exception("Error buscar un discount");
+		}
 	}
 
 	public function registrar($nombre,$description,$percentage){
@@ -51,5 +60,15 @@ class Discount_model extends MY_Model
 
 	function bySolicitud($id){
 		return $this->byPivot('solicitud','solicitud_id',$id);
+	}
+
+	function update($id,$values){
+		
+		return $this->parentUpdate($id,$values);
+		
+	}
+
+	function delete($id){
+		return $this->parentDelete($id);
 	}
 }

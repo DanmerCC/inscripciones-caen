@@ -26,26 +26,13 @@ class Requirement_model extends MY_Model
 		return $ultimoId;
 	}
 
-/*
-	function bySolicitud($id){
-		$this->db->select($this->table.'.*');
-		$this->db->from($this->table);
-		$this->db->join(
-			'solicitud_requirement',
-			'solicitud_requirement.requirement_id='.$this->table.'.'.$this->id);
-		$this->db->where('solicitud_requirement.solicitud_id',$id);
-		return $this->db->get()->result_array();
+	public function update($id,$data){
+		return $this->parentUpdate($id,$data);
 	}
 
-	function byDiscount($id){
-		$this->db->select($this->table.'.*');
-		$this->db->from($this->table);
-		$this->db->join(
-			'discount_requirement',
-			'discount_requirement.requirement_id='.$this->table.'.'.$this->id);
-		$this->db->where('discount_requirement.discount_id',$id);
-		return $this->db->get()->result_array();
-	}*/
+	function delete($id){
+		return $this->parentDelete($id);
+	}
 
 	function bySolicitud($id){
 		return $this->byPivot('solicitud','solicitud_id',$id);

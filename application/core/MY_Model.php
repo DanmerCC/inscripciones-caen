@@ -51,13 +51,10 @@ class MY_Model extends CI_Model {
 		}
 	}
 
-	protected function get($id=null){
+	protected function get(){
 		$this->db->select(
 			implode(',',$this->getPublicColumns())
 		)->from($this->table);
-		if($id!=null){
-			$this->db->where($this->id,$id);
-		}
 		return $this->db->get();
 	}
 	/*
@@ -108,5 +105,22 @@ class MY_Model extends CI_Model {
 
 	protected function relations(){
 		return [];
+	}
+
+	protected function parentUpdate($id,$values){
+		if(!array_diff_key(array_flip($values), $this->fillable)){
+			$this->db->where($this->id,$id);
+			$this->db->update($this->table,$values);
+			return $this->db->affected_rows()==1;
+		}else{
+			throw new Exception("Error al intentar actualizar campo de ".self::class);
+		}
+	}
+
+	
+	function parentDelete($id){
+		$this->db->where($this->id, $id);
+		$this->db->delete($this->table);
+		return $this->db->affected_rows()==1;
 	}
 }
