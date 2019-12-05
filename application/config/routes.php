@@ -165,7 +165,6 @@ $route['administracion/vista/solicitantes'] = 'admin/Solicitud';
 $route['administracion/vista/matriculas'] = 'admin/Matricula';
 $route['administracion/vista/programas'] = 'admin/Programa';
 $route['administracion/vista/programascalendar'] = 'admin/Programa/viewCalendar';
-$route['administracion/vista/discounts'] = 'admin/Discount';
 $route['administracion/vista/alumnos'] = 'admin/Alumno';
 $route['administracion/vista/solicitudes'] = 'admin/Solicitud';
 $route['administracion/solicitud/changestatefinan']='admin/Solicitud/changeEstadoFinanzas';
@@ -327,9 +326,25 @@ $route['admin/evaluacion/save'] = 'admin/EvaluacionesController/guardar';
 $route['prueba'] = 'admin/EvaluacionesController/prueba';
 
 //modulos beneficios
-
+$route['administracion/vista/discounts'] = 'admin/Discount';
 $route['admin/dataTable/discounts'] = 'admin/Discount/dataTable';
 $route['administracion/discounts/save'] = 'admin/Discount/save';
 $route['administracion/discounts/update'] = 'admin/Discount/update';
 $route['administracion/discounts/edit/(:num)'] = 'admin/Discount/edit/$1';
-$route['administracion/discounts/delete'] = 'admin/Discount/save';
+$route['administracion/discounts/delete'] = 'admin/Discount/delete';
+
+//modulo Requirements
+$route['administracion/vista/requirements'] = 'admin/Requirement';
+$route['admin/dataTable/requirements'] = 'admin/Requirement/dataTable';
+$route['administracion/requirements/save'] = 'admin/Requirement/save';
+$route['administracion/requirements/update'] = 'admin/Requirement/update';
+$route['administracion/requirements/edit/(:num)'] = 'admin/Requirement/edit/$1';
+$route['administracion/requirements/delete'] = 'admin/Requirement/delete';
+
+//cursos descuentos
+$route['administracion/vista/cursosdiscouts'] = 'admin/Requirement';
+$route['admin/dataTable/cursosdiscouts'] = 'admin/Requirement/dataTable';
+$route['administracion/cursosdiscouts/save'] = 'admin/Requirement/save';
+$route['administracion/cursosdiscouts/update'] = 'admin/Requirement/update';
+$route['administracion/cursosdiscouts/edit/(:num)'] = 'admin/Requirement/edit/$1';
+$route['administracion/cursosdiscouts/delete'] = 'admin/Requirement/delete';
