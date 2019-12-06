@@ -103,6 +103,20 @@ class MY_Model extends CI_Model {
 		return $this->db->get()->result_array();
 	}
 
+	protected function byNotInPivot($relation_pivot_name,$pivot_column_name,$pivot_column_value){
+		if(!isset($this->relations()[$relation_pivot_name])){
+			throw new Exception("la $relation_pivot_name relacion no esta definida");
+		}
+		$relation=$this->relations()[$relation_pivot_name];
+		$this->db->select($this->table.'.*');
+		$this->db->from($this->table);
+		$this->db->join(
+			$relation['pivot_table'],
+			$relation['pivot_table'].'.'.$relation['column_relation'].'='.$this->table.'.'.$this->id,'LEFT');
+		$this->db->where($relation['pivot_table'].'.'.$pivot_column_name." !=",$pivot_column_value);
+		$this->db->or_where($relation['pivot_table'].'.'.$pivot_column_name." IS NULL",null);
+		return $this->db->get()->result_array();
+	}
 /*
 	protected function relations(){
 		return [

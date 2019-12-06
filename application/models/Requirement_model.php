@@ -54,6 +54,10 @@ class Requirement_model extends MY_Model
 		return $this->byPivot('discount','discount_id',$id);
 	}
 
+	function byDiscountRestante($id){
+		return $this->byNotInPivot('discount','discount_id',$id);
+	}
+
 	protected function relations(){
 		return [
 			'discount'=>[

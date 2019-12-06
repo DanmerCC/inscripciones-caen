@@ -28,7 +28,8 @@ class Discount extends MY_Controller  implements Idata_controller
 	            $data[] = array(
 				"0" => '<button class="btn btn-warning" onclick="mostrarFormPro(' .$value["id"]. ')"><i class= "fa fa-pencil"></i></button>
 						<button class="btn btn-danger" onclick="eliminar(' .$value["id"]. ')"><i class= "fa fa-trash"></i></button>
-						<button class="btn btn-info" onclick="verProgramas(' .$value["id"]. ')"><i class= "fa fa-eye"></i></button>',
+						<button class="btn btn-info" onclick="verProgramas(' .$value["id"]. ')"><i class= "fa fa-eye"></i></button>
+						<button class="btn btn-success" onclick="agregarRequisitos('.$value["id"].',\''.$value["name"].'\')"><i class= "fa fa-plus"></i></button>',
 	            "1" => $value["name"],
 	            "2" => $value["description"],
 	            "3" => $value["percentage"]." %"
@@ -72,7 +73,7 @@ class Discount extends MY_Controller  implements Idata_controller
 		}
 	}
 
-	public function update($discount_id=-1){
+	public function update(){
 		$data=[];
 		$data["name"] = $this->input->post('name');
 		$data["description"] = $this->input->post('description');

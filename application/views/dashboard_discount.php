@@ -144,6 +144,22 @@
                 <div class="modal-body">
                     <div class="panel">
                         <div class="panel-body">
+                          <div class="row">
+                            <div class="col-md-8">
+                              <div class="form-group">
+                                <label for="programa_id">Programas</label>
+                                <select name="programa_id" id="programa_id" class="form-control">
+                                  <option value="">SELECCIONAR</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                <br>
+                                <button class="btn btn-success">Agregar</button>
+                              </div>
+                            </div>
+                          </div>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -161,6 +177,53 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" id="btnFormPorgrama" data-dismiss="modal">Cerrar</button>
                     <button id="btnActualizarPr" type="submit" class="btn btn-primary" onclick="save()" form="formPro">Guardar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="viewDiscountRequirementModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Requerimiento para beneficio: <strong id="nombreBeneficio"></strong></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel">
+                        <div class="panel-body">
+                          <div class="row">
+                            <div class="col-md-8">
+                              <div class="form-group">
+                                <label for="requirement_id">Requisitos</label>
+                                <select name="requirement_id" id="requirement_id" class="form-control">
+                                  <option value="">SELECCIONAR</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                <br>
+                                <button class="btn btn-success" onclick="addNewRequirement()">Agregar</button>
+                              </div>
+                            </div>
+                          </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cuerpoTableRequisitos">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="btnFormPorgrama" data-dismiss="modal">Cerrar</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

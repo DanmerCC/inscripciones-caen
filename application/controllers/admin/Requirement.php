@@ -108,4 +108,15 @@ class Requirement extends MY_Controller  implements Idata_controller
 		$requirements=$this->Requirement_model->byDiscount($id);
 		$this->structuredResponse($requirements);
 	}
+
+	public function byDiscountRestante($id){
+		$requirements=$this->Requirement_model->byDiscount($id);
+		$new_requirements=$this->Requirement_model->byDiscountRestante($id);
+		$data = array(
+			"requirement"=>$requirements,
+			"new_requirement"=>$new_requirements
+		);
+		$this->structuredResponse($data);
+	}
+
 }

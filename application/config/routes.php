@@ -344,6 +344,14 @@ $route['administracion/requirements/edit/(:num)'] = 'admin/Requirement/edit/$1';
 $route['administracion/requirements/delete'] = 'admin/Requirement/delete';
 $route['administracion/requirements/solicitud/(:num)'] = 'admin/Requirement/bySolicitud/$1';
 $route['administracion/requirements/discount/(:num)'] = 'admin/Requirement/byDiscount/$1';
+$route['administracion/requirements/discountrestante/(:num)'] = 'admin/Requirement/byDiscountRestante/$1';
+
+//modulo discount requirement
+$route['admin/dataTable/discountrequirement'] = 'admin/DiscountRequirement/dataTable';
+$route['administracion/discountrequirement/save'] = 'admin/DiscountRequirement/save';
+$route['administracion/discountrequirement/update'] = 'admin/DiscountRequirement/update';
+$route['administracion/discountrequirement/edit/(:num)'] = 'admin/DiscountRequirement/edit/$1';
+$route['administracion/discountrequirement/delete'] = 'admin/DiscountRequirement/delete';
 
 //cursos descuentos
 $route['administracion/vista/cursosdiscount'] = 'admin/Cursosdiscount';

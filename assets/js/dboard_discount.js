@@ -1,7 +1,7 @@
 var tabla;
 var actionMethod;
 var campos_global = [ 'name', 'description', 'percentage' ];
-
+var selectedDiscountId; 
 //$("#"+nameId).parent('.input-group').next('span').text('Este campo es requerido.')
 $('input.validar').change(function(){
     $(this).parent('.input-group').next('span').text('')
@@ -68,7 +68,7 @@ function verProgramas(discount_id){
         dataType: "json",
         success: function (response) {
             if(response.status == 'OK'){
-                document.getElementById("cuerpoTablePrograma").innerHTML = makeTemplateTable(response.data)
+                document.getElementById("cuerpoTablePrograma").innerHTML = makeTemplateTablePrograma(response.data)
                 $("#viewDiscountModal").modal("show");
             }else{
                 alert("Ocurrio un error al traer datos");
@@ -77,7 +77,7 @@ function verProgramas(discount_id){
     });
 }
 
-function makeTemplateTable(data)
+function makeTemplateTablePrograma(data)
 {
     let template = '';
     if(data.length>0){
@@ -100,9 +100,123 @@ function makeTemplateTable(data)
     return template;
 }
 
+
 function quitarPrograma(id)
 {
     alert("Quitado de la lista");
+}
+
+function agregarRequisitos(id,text='')
+{
+    selectedDiscountId = id;
+    document.getElementById('nombreBeneficio').textContent = text;
+    recargarTodoRequirements(id);
+    $("#viewDiscountRequirementModal").modal("show");
+}
+
+function makeTemplateTableRequirements(requirements,discount_id)
+{
+    let template = '';
+    if(requirements.length>0){
+        requirements.forEach((element,i) => {
+            template +=`<tr>
+                <td>${i+1}</td>
+                <td>${element.name}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" 
+                    onclick="quitarRequirement(${element.id},${discount_id})">Quitar</button>
+                </td>
+            </tr>`;
+        });
+    }else{
+        template +=`<tr>
+            <td colspan="3">No se entronto datos</td>
+        </tr>`;
+    }
+    
+    return template;
+}
+
+function makeTemplateSelectRequirement(data)
+{
+    let template = '<option value="">Seleccionar:</option>';
+    if(data.length>0){
+        data.forEach((element,i) => {
+            template +=`<option value="${element.id}">${element.name}</option>`;
+        });
+    }else{
+    }
+    
+    return template;
+}
+
+function quitarRequirement(id,discount_id)
+{
+    bootbox.confirm("Estas seguro de quitar el requerimiento?", function (result) {
+        if (result) {
+            $.ajax({
+                type: "POST",
+                url: "/administracion/discountrequirement/delete",
+                data: {
+                    requirement_id:id,
+                    discount_id:discount_id
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response.status=='OK') {
+                        alert("Se elimino con éxito")
+                        recargarTodoRequirements(discount_id)
+                    }else{
+                        alert(response.data.message)
+                    }
+                }
+            });
+        }
+    })
+}
+
+function recargarTodoRequirements(discount_id)
+{
+    $.ajax({
+        type: "GET",
+        url: "/administracion/requirements/discountrestante/"+discount_id,
+        data: "",
+        dataType: "json",
+        success: function (response) {
+            if(response.status == 'OK'){
+                document.getElementById("cuerpoTableRequisitos").innerHTML = makeTemplateTableRequirements(response.data.requirement,discount_id)
+                document.getElementById("requirement_id").innerHTML = makeTemplateSelectRequirement(response.data.new_requirement);
+                
+            }else{
+                alert("Ocurrio un error al traer datos");
+            }
+        }
+    });
+}
+
+function addNewRequirement()
+{
+    let requirement_id = document.getElementById('requirement_id').value;
+    if (requirement_id!='') {
+        $.ajax({
+            type: "POST",
+            url: "/administracion/discountrequirement/save",
+            data: {
+                discount_id:selectedDiscountId,
+                requirement_id:requirement_id
+            },
+            dataType: "JSON",
+            success: function (response) {
+                if(response.status == 'OK'){
+                    recargarTodoRequirements(selectedDiscountId)
+                }else{
+                    alert("Error al guardar datos");
+                }
+            }
+        });
+    }else{
+        alert("Por favor elejir un requerimiento")
+    }
 }
 
 function mostrarFormPro(id){
