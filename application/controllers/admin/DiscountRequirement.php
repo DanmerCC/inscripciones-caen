@@ -72,6 +72,5 @@ class DiscountRequirement extends MY_Controller  implements Idata_controller
                 $this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
             }
         }
-		
 	}
 }

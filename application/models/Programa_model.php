@@ -59,6 +59,10 @@ class Programa_model extends MY_Model
 		return $result;
 	}
 
+	function byDiscountRestante($id){
+		return $this->byNotInPivot('discount','discount_id',$id);
+	}
+
 	public function all(){
 		return $this->db->query('SELECT c.id_curso,c.nombre,c.duracion,c.costo_total,c.vacantes,c.fecha_inicio,c.fecha_final,c.idTipo_curso,c.estado,c.numeracion,t.nombre as tipoNombre FROM curso c left join tipo_curso t on c.idTipo_curso = t.idTipo_curso');
 	}

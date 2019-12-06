@@ -12,7 +12,7 @@ class Cursosdiscount extends MY_Controller  implements Idata_controller
 		$this->load->library('Nativesession');
 		$this->load->library('Mihelper');
 		$this->load->helper('url');
-		$this->load->model('Discount_model');
+		$this->load->model('Cursosdiscount_model');
 		$this->load->helper('mihelper');
 		$this->load->library('opciones');
 		$this->load->model('Permiso_model');
@@ -62,10 +62,9 @@ class Cursosdiscount extends MY_Controller  implements Idata_controller
 	}
 	
 	public function save(){
-		$name = $this->input->post('name');
-		$description = $this->input->post('description');
-		$percentage = $this->input->post('percentage');
-		$res = $this->Discount_model->registrar($name,$description,$percentage);
+		$discount_id = $this->input->post('discount_id');
+		$programa_id = $this->input->post('programa_id');
+		$res = $this->Cursosdiscount_model->registrar($discount_id,$programa_id);
 		if($res){
 			$this->structuredResponse(array('message'=>""),200);
 		}else{
@@ -98,12 +97,16 @@ class Cursosdiscount extends MY_Controller  implements Idata_controller
 	}
 
 	public function delete(){
-		$discount_id = $this->input->post('id');
-		$res = $this->Discount_model->delete($discount_id);
-		if($res){
-			$this->structuredResponse($res,200);
-		}else{
-			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
-		}
+		$programa_id = $this->input->post('programa_id');
+        $discount_id = $this->input->post('discount_id');
+		$data = $this->Cursosdiscount_model->getOneDataByDiscountAndCursos($discount_id,$programa_id);
+        if($data!=null){
+            $res = $this->Cursosdiscount_model->delete($data->id);
+            if($res){
+                $this->structuredResponse($res,200);
+            }else{
+                $this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
+            }
+        }
 	}
 }

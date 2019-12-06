@@ -139,7 +139,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Requerimiento para beneficio: </h4>
+                    <h4 class="modal-title">Mis programas: <strong id="nombreBeneficiop"></strong></h4>
                 </div>
                 <div class="modal-body">
                     <div class="panel">
@@ -156,7 +156,7 @@
                             <div class="col-md-4">
                               <div class="form-group">
                                 <br>
-                                <button class="btn btn-success">Agregar</button>
+                                <button class="btn btn-success" onclick="addNewPrograma()">Agregar</button>
                               </div>
                             </div>
                           </div>
@@ -175,8 +175,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" id="btnFormPorgrama" data-dismiss="modal">Cerrar</button>
-                    <button id="btnActualizarPr" type="submit" class="btn btn-primary" onclick="save()" form="formPro">Guardar</button>
+                    <button type="button" class="btn btn-default" id="btnFormPorgramas" data-dismiss="modal">Cerrar</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

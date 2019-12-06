@@ -136,6 +136,7 @@ $route['administracion/programa/actualizar'] = 'admin/Programa/actualizar';
 $route['administracion/programa/insertar'] = 'admin/Programa/insertar';
 $route['administracion/programa/postergar'] = 'admin/Programa/postergar';
 $route['administracion/programa/discount/(:num)'] = 'admin/Programa/byDiscount/$1';
+$route['administracion/programa/discountrestante/(:num)'] = 'admin/Programa/byDiscountRestante/$1';
 
 $route['admin/api/solicitud'] = 'admin/api/Solicitud';
 

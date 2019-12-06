@@ -60,16 +60,25 @@ function agregarNuevoBeneficio(){
 	$("#form_discount").modal("show");
 }
 
-function verProgramas(discount_id){
+function verProgramas(discount_id,text = ''){
+
+    selectedDiscountId = discount_id;
+    document.getElementById('nombreBeneficiop').textContent = text;
+    recargarTodoProgramas(discount_id);
+    $("#viewDiscountModal").modal("show");
+}
+
+function recargarTodoProgramas(discount_id)
+{
     $.ajax({
         type: "GET",
-        url: "/administracion/programa/discount/"+discount_id,
+        url: "/administracion/programa/discountrestante/"+discount_id,
         data: {},
         dataType: "json",
         success: function (response) {
             if(response.status == 'OK'){
-                document.getElementById("cuerpoTablePrograma").innerHTML = makeTemplateTablePrograma(response.data)
-                $("#viewDiscountModal").modal("show");
+                document.getElementById("cuerpoTablePrograma").innerHTML = makeTemplateTablePrograma(response.data.programas,discount_id)
+                document.getElementById("programa_id").innerHTML = makeTemplateSelectPrograma(response.data.new_programas);
             }else{
                 alert("Ocurrio un error al traer datos");
             }
@@ -77,17 +86,17 @@ function verProgramas(discount_id){
     });
 }
 
-function makeTemplateTablePrograma(data)
+function makeTemplateTablePrograma(data,discount_id)
 {
     let template = '';
     if(data.length>0){
         data.forEach((element,i) => {
             template +=`<tr>
                 <td>${i+1}</td>
-                <td>${element.name}</td>
+                <td>${element.nombre}</td>
                 <td>
                     <button class="btn btn-danger btn-sm" 
-                    onclick="quitarPrograma(${element.id})">Quitar</button>
+                    onclick="quitarPrograma(${element.id_curso},${discount_id})">Quitar</button>
                 </td>
             </tr>`;
         });
@@ -100,17 +109,74 @@ function makeTemplateTablePrograma(data)
     return template;
 }
 
-
-function quitarPrograma(id)
+function makeTemplateSelectPrograma(data)
 {
-    alert("Quitado de la lista");
+    let template = '<option value="">Seleccionar:</option>';
+    if(data.length>0){
+        data.forEach((element,i) => {
+            template +=`<option value="${element.id_curso}">${element.nombre}</option>`;
+        });
+    }else{
+    }
+    
+    return template;
 }
 
-function agregarRequisitos(id,text='')
+function quitarPrograma(id,discount_id)
 {
-    selectedDiscountId = id;
+    bootbox.confirm("Estas seguro de quitar el programa?", function (result) {
+        if (result) {
+            $.ajax({
+                type: "POST",
+                url: "/administracion/cursosdiscount/delete",
+                data: {
+                    programa_id:id,
+                    discount_id:discount_id
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response.status=='OK') {
+                        alert("Se elimino con éxito")
+                        recargarTodoProgramas(discount_id)
+                    }else{
+                        alert(response.data.message)
+                    }
+                }
+            });
+        }
+    })
+}
+
+function addNewPrograma()
+{
+    let programa_id = document.getElementById('programa_id').value;
+    if (programa_id!='') {
+        $.ajax({
+            type: "POST",
+            url: "/administracion/cursosdiscount/save",
+            data: {
+                discount_id:selectedDiscountId,
+                programa_id:programa_id
+            },
+            dataType: "JSON",
+            success: function (response) {
+                if(response.status == 'OK'){
+                    recargarTodoProgramas(selectedDiscountId);
+                }else{
+                    alert("Error al guardar datos");
+                }
+            }
+        });
+    }else{
+        alert("Por favor elejir un requerimiento")
+    }
+}
+
+function agregarRequisitos(discount_id,text='')
+{
+    selectedDiscountId = discount_id;
     document.getElementById('nombreBeneficio').textContent = text;
-    recargarTodoRequirements(id);
+    recargarTodoRequirements(discount_id);
     $("#viewDiscountRequirementModal").modal("show");
 }
 
