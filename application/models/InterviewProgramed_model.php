@@ -108,7 +108,7 @@ class InterviewProgramed_model extends MY_Model
 		return $this->db->affected_rows()==1;
 	}
 
-	function get($id){
+	function getOne($id){
 		$result=$this->db
 			->select(
 				$this->table.'.*,'.

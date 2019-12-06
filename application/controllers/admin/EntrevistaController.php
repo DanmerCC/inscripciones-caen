@@ -112,7 +112,7 @@ class EntrevistaController extends MY_Controller
 		$this->load->model('Solicitud_model');
 		$this->load->model('Programa_model');
 		$this->load->model('Alumno_model');
-		$entrevista=$this->InterviewProgramed_model->get($id);
+		$entrevista=$this->InterviewProgramed_model->getOne($id);
 		$inscripcion=$this->Inscripcion_model->getOneOrFail($entrevista['inscripcion_id']);
 		$solicitud=$this->Solicitud_model->getOrFail($inscripcion['solicitud_id']);
 		$programa=$this->Programa_model->getOneOrFail($solicitud['programa']);
