@@ -922,7 +922,51 @@
                             </form>         
                         </div>
                     </div>
-                    <!-- SOLICITUDES-->
+                    <!-- DESCUENTOS-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse12">DESCUENTOS</a>
+                            </h4>
+                        </div>
+                        <div id="collapse12" class="panel-collapse collapse">
+                            <form action="" method="post" name="formulario" id="formulario" class="form-horizontal">
+                                <div class=" panel-body">
+                                        <div class="form-create">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label>Lista de decuentos solicitados por usted</label>
+                                                </div>
+                                            </div><br>
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-xs-3 col-md-4"><strong>Programa</strong></div>
+                                                            <div class="col-xs-4 col-md-2"><strong>Financiamiento</strong></div>
+                                                            <div class="col-xs-5 col-md-6"><strong>Ficha de Inscripción</strong></div>
+                                                        </div><br>
+                                                        <div id="contentSolicitudes">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <button type="button" class="btn btn-primary" onclick="addNewDiscount()">Agregar Descuento</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- <div class="form-group">
+
+                                        </div> -->
+                                    
+                                </div>
+                            </form>         
+                        </div>
+                    </div>
 
                   </div><!-- end acordion -->
               </div>
@@ -960,6 +1004,50 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Nueva</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+        
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-10">
+                        <label>Programa</label>
+                        <select name="programa" id="selectPrograma" class="form-control" form="formSolictitud">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-10">
+                        <label>Tipo financiamiento</label>
+                        <select name="tipoFinan" id="tipoFinan" class="form-control" form="formSolictitud">
+                            <option value="Contado">Contado</option>
+                            <option value="Cuotas">Cuotas</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" id="btnActualizarPr" class="btn btn-primary">Enviar Solicitud</button>
+          </div>
+        </div>
+    </form>
+  </div>
+</div>
+<!-- Modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="modalAddDiscount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form id="formSolictitud" action="/postulante/solicitar" method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

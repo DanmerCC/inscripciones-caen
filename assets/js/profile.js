@@ -843,3 +843,7 @@ function row_diseño(index,solicitud){
         "</div>"+
 	"</div><br>";
 }
+
+function addNewDiscount(){
+    $("#modalAddDiscount").modal("show");
+}
