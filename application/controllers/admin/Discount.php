@@ -19,6 +19,7 @@ class Discount extends MY_Controller  implements Idata_controller
 		$this->load->helper('mihelper');
 		$this->load->library('opciones');
 		$this->load->model('Permiso_model');
+		$this->load->model('Auth_Permisions');
 		$this->canCreate=$this->Auth_Permisions->can('create_desct_discount');
 		$this->canChange=$this->Auth_Permisions->can('change_desct_discount');
 		$this->canDelete=$this->Auth_Permisions->can('delete_desct_discount');

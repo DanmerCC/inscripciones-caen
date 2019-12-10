@@ -7,6 +7,7 @@ class Requirement extends MY_Controller  implements Idata_controller
 {
 
 	private $canCreate=false;
+	private $canDelete=false;
 
 	function __construct()
 	{

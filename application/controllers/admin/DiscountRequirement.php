@@ -20,6 +20,8 @@ class DiscountRequirement extends MY_Controller  implements Idata_controller
 		$this->load->model('Permiso_model');
 		$this->load->model('Auth_Permisions');
 		$this->canDelete=$this->Auth_Permisions->can('delete_desct_requirement');
+		$this->canChangeDiscount=$this->Auth_Permisions->can('delete_desct_requirement');
+		
     }
     
     public function dataTable(){
