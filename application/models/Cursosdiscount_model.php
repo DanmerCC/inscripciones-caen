@@ -4,7 +4,7 @@
 
 class Cursosdiscount_model extends MY_Model
 {
-	protected $table='cursos_discouts';
+	protected $table='cursos_discounts';
 	
 	protected $id='id';
 	protected $curso_id='curso_id';

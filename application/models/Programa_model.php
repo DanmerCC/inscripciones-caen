@@ -47,7 +47,7 @@ class Programa_model extends MY_Model
 	protected function relations(){
 		return [
 			'discount'=>[
-				'pivot_table'=>'cursos_discouts',
+				'pivot_table'=>'cursos_discounts',
 				'column_relation'=>'curso_id',
 				'column_other_relation'=>'discount_id'
 			]
