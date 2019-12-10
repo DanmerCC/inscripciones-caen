@@ -887,13 +887,13 @@ function changeSolicitudForDiscountEvent(evt)
     {
         $.ajax({
             type: "GET",
-            url: "administracion/discounts/solicitud/"+solicitud_id,
+            url: "/administracion/discounts/solicitud/"+solicitud_id,
             data: {},
             dataType: "json",
             success: function (response) {
                 if(response.data != null)
                 {
-                    makeSelectSolicitudes(response.data);   
+                    makeSelectDiscounts(response.data);   
                 }
             }
         });
@@ -901,6 +901,8 @@ function changeSolicitudForDiscountEvent(evt)
 }
 function makeSelectDiscounts(discounts)
 {
+    console.log(discounts);
+    return;
     /*let options = '<option value="">Elejir un descuento</option>';
     solicitudes.forEach(element => {
         options += `<option value="${element.idSolicitud}">${element.nombre}</option>`;
