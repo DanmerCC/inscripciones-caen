@@ -329,6 +329,9 @@ $route['admin/evaluables'] = 'admin/InscripcionController/getEvaluables';
 $route['admin/evaluacion/save'] = 'admin/EvaluacionesController/guardar';
 $route['prueba'] = 'admin/EvaluacionesController/prueba';
 
+//ALL LOGIG NEW DISCOUNT
+$route['postulante/solicitud/discount/store'] = 'Solicitud/storeSolicitudDiscount/$1';
+
 //modulos beneficios
 $route['administracion/vista/discounts'] = 'admin/Discount';
 $route['admin/dataTable/discounts'] = 'admin/Discount/dataTable';

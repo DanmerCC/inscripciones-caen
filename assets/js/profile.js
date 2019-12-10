@@ -901,13 +901,10 @@ function changeSolicitudForDiscountEvent(evt)
 }
 function makeSelectDiscounts(discounts)
 {
-    console.log(discounts);
-    return;
-    /*let options = '<option value="">Elejir un descuento</option>';
-    solicitudes.forEach(element => {
-        options += `<option value="${element.idSolicitud}">${element.nombre}</option>`;
-    });*/
-    var options = simulationDiscount();
+    let options = '<option value="">Elejir un descuento</option>';
+    discounts.forEach(element => {
+        options += `<option value="${element.id}">${element.name}</option>`;
+    });
     document.getElementById('tipodescuento_idd').innerHTML  = options;
 }
 
@@ -918,17 +915,20 @@ function changeDiscountForRequirementsEvent(evt)
     let discount_id = evt.target.value;
     if(discount_id!='')
     {
-        /*$.ajax({
+        $.ajax({
             type: "GET",
-            url: "",
+            url: "administracion/requirements/discount/"+discount_id,
             data: {},
             dataType: "json",
             success: function (response) {
-                
+                if(response.data != null)
+                {
+                    makeInputFileRequisitosTemplate(response.data)
+                }
             }
-        });*/
+        });
     }
-    makeInputFileRequisitosTemplate([['1'],['2']])
+    
 }
 
 function makeInputFileRequisitosTemplate(requisitos)
@@ -936,14 +936,27 @@ function makeInputFileRequisitosTemplate(requisitos)
     let rows = '';
     requisitos.forEach((element,index) => {
         rows += `<div class="form-group">
-                    <label for="file_requirement${index}">Hola como estas ${index}</label>
-                    <input type="file" id="file${index}" name="file${index}" class="form-control">
+                    <label for="file_requirement_${element.id}">${index+1}.- ${element.name}</label>
+                    <input type="file" id="file_requirement_${element.id}" name="file_requirement[${element.id}]" class="form-control">
                 </div>`;
     });
     document.getElementById('bodyRequirementUploadFiles').innerHTML = rows;
 }
 
-function simulationDiscount()
-{
-    return `<option value="">Seleccionar</option><option value="1">Rerquitisot discuentos </option><option value="1">Rerquitisot discuentos </option>`;
-}
+$("#formDiscountCreate").submit(function (e) { 
+    e.preventDefault();
+
+    $.ajax({
+        type: "POST",
+        url: "/postulante/solicitud/discount/store",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (response) {
+            if (response.data) {
+                
+            }
+        }
+    });
+});

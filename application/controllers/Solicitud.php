@@ -341,4 +341,18 @@ class Solicitud extends CI_Controller
 			exit;
 		}
 	}
+
+	public function storeSolicitudDiscount()
+	{
+		//$this->input->post('solicitud_idd')
+		//$this->input->post('tipodescuento_idd')
+		if (isset($_FILES['file_requirement'])) {
+			foreach ($_FILES['file_requirement']['name'] as $key => $itemFile) {
+				
+			}
+		} else{
+			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
+		}
+	}
+
 } 
