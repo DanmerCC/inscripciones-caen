@@ -75,6 +75,11 @@
 			transition: 0.5s;
 		}
 
+		.botonF4 {
+			background: blue;
+			margin-bottom: 201px;
+			transition: 0.5s;
+		}
 		.animacionVer {
 			transform: scale(1);
 		}
@@ -96,6 +101,9 @@
 		</button>
 		<button id="checkButton" class="btn btns botonF2">
 			<i class="fa fa-check" aria-hidden="true"></i>
+		</button>
+		<button id="buttondownload" class="btn btns botonF4">
+		<a href="<?=base_url()?>admin/download/pdf/<?= $typeFile; ?>/<?= $id; ?>" target="_blank" class="" id="descargarFile" style="font-size: 30px;"><i class="fa fa-download"></i></a>
 		</button>
 	</div>
 	
