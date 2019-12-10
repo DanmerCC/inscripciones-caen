@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Postulante CAEN</title>
+
   
 <?=$this->load->view('adminlte/linksHead','',TRUE);?>
 </head>
@@ -954,7 +955,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-5">
-                                                    <button type="button" class="btn btn-primary" onclick="addNewDiscount()">Agregar Descuento</button>
+                                                    <button type="button" class="btn btn-primary" onclick="addNewDiscount(<?=$lista['id_alumno']?>)">Agregar Descuento</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1043,34 +1044,57 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modalAddDiscount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <form id="formSolictitud" action="/postulante/solicitar" method="post">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo </h5>
+            <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo descuento</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-        
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-10">
-                        <label>Programa</label>
-                        <select name="programa" id="selectPrograma" class="form-control" form="formSolictitud">
-                        </select>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="box box-primary sombra" >
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="">Solicitudes</label>
+                                <select name="solicitud_idd" id="solicitud_idd" class="form-control">
+                                    <option value="1">sdasdfafasfafaf</option>
+                                    <option value="2">safaf faf afasf</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Tipo descuentos</label>
+                                <select name="tipodescuento_idd" id="tipodescuento_idd" class="form-control">
+                                    <option value="1">sdasdfafasfafaf</option>
+                                    <option value="2">safaf faf afasf</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Requisitos</label>
+                                <ul>
+                                    <li>Requisito 1</li>
+                                    <li>Requisito 2</li>
+                                    <li>Requisito 3</li>
+                                </ul>
+                            </div>                       
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-10">
-                        <label>Tipo financiamiento</label>
-                        <select name="tipoFinan" id="tipoFinan" class="form-control" form="formSolictitud">
-                            <option value="Contado">Contado</option>
-                            <option value="Cuotas">Cuotas</option>
-                        </select>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="">Requisito 1</label>
+                        <input type="file" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Requisito 2</label>
+                        <input type="file" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Requisito 3</label>
+                        <input type="file" class="form-control">
                     </div>
                 </div>
             </div>

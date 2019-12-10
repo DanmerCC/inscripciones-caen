@@ -844,6 +844,24 @@ function row_diseño(index,solicitud){
 	"</div><br>";
 }
 
-function addNewDiscount(){
+function addNewDiscount(alumno_id){
+    $.ajax({
+        type: "GET",
+        url: "",
+        data: {},
+        dataType: "json",
+        success: function (response)
+        {
+            
+        },
+        error: function (responseError)
+        {
+
+        },
+        complete: function ()
+        {
+            
+        }
+    });
     $("#modalAddDiscount").modal("show");
 }
