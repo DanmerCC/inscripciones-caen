@@ -1060,23 +1060,29 @@
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="">Solicitudes</label>
-                                <select name="solicitud_idd" id="solicitud_idd" class="form-control">
+                                <select name="solicitud_idd" id="solicitud_idd" class="form-control cleanerror">
                                     <option value="">Elejir</option>
                                 </select>
+                                <span class="help-block"></span>
                             </div>
                             <div class="form-group">
                                 <label for="">Tipo descuentos</label>
-                                <select name="tipodescuento_idd" id="tipodescuento_idd" class="form-control">
+                                <select name="tipodescuento_idd" id="tipodescuento_idd" class="form-control cleanerror">
                                     <option value="">Elejir una solicitud</option>
                                 </select>
+                                <span class="help-block"></span>
+                            </div> 
+                            <div class="form-group">
+                                <label for="">Descripcion de Descuento</label>
+                                <p id="descripctionDescuentoSelected">
+                                           
+                                </p>
                             </div>             
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8">
-                    <div class="form-group" id="bodyRequirementUploadFiles">
-                        <div class="alert alert">No tiene ningun requisito</div>
-                    </div>
+                <div class="col-md-8" id="bodyRequirementUploadFiles">
+                <div class="alert alert-success">Seleccionar un descuento</div>      
                 </div>
             </div>
           </div>

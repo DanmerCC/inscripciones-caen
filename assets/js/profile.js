@@ -1,3 +1,4 @@
+var global_requirement_id = [];
 var configuracion = function(){
     ///$("#aDocs").trigger('click');
     //charge fileObject
@@ -72,7 +73,8 @@ var configuracion = function(){
 	var solicitudComponets=[];
 	var solicitudFormalComponets=[];
     var proInvest=[];
-
+    configuracionInputErrors()
+    
     $("#formChangePwd").submit(function(evt){
         evt.preventDefault();
         $.ajax({
@@ -844,6 +846,20 @@ function row_diseño(index,solicitud){
 	"</div><br>";
 }
 
+function configuracionInputErrors()
+{
+    $('input.cleanerror').change(function (e) { 
+        e.preventDefault();
+        $(this).next().empty();
+        $(this).parent().removeClass('has-error');
+    });
+    $('select.cleanerror').change(function (e) { 
+        e.preventDefault();
+        $(this).next().empty();
+        $(this).parent().removeClass('has-error');
+    });
+}
+
 function openModalAddNewDiscount(alumno_id){
     $.ajax({
         type: "GET",
@@ -903,7 +919,7 @@ function makeSelectDiscounts(discounts)
 {
     let options = '<option value="">Elejir un descuento</option>';
     discounts.forEach(element => {
-        options += `<option value="${element.id}">${element.name}</option>`;
+        options += `<option description="${element.description}" value="${element.id}">${element.name}</option>`;
     });
     document.getElementById('tipodescuento_idd').innerHTML  = options;
 }
@@ -913,50 +929,102 @@ document.getElementById('tipodescuento_idd').onchange = changeDiscountForRequire
 function changeDiscountForRequirementsEvent(evt)
 {
     let discount_id = evt.target.value;
-    if(discount_id!='')
-    {
+    let descripcion = $(evt.target.children[evt.target.selectedIndex]).attr('description');
+    if (descripcion!='' && descripcion!=undefined) {
+        document.getElementById('descripctionDescuentoSelected').textContent = descripcion;
+    }else{
+        document.getElementById('descripctionDescuentoSelected').textContent = '';
+    }
+    if (discount_id!='') {
         $.ajax({
             type: "GET",
             url: "administracion/requirements/discount/"+discount_id,
             data: {},
             dataType: "json",
             success: function (response) {
-                if(response.data != null)
-                {
+                if(response.data != null && response.data.length>0) {
                     makeInputFileRequisitosTemplate(response.data)
+                } else {
+                    document.getElementById('bodyRequirementUploadFiles').innerHTML =`<div class="alert alert-danger">El beneficio seleccionado no tiene ningun requisito</div>`;
                 }
             }
         });
     }
-    
 }
 
 function makeInputFileRequisitosTemplate(requisitos)
 {
     let rows = '';
+    global_requirement_id = [];
     requisitos.forEach((element,index) => {
+        global_requirement_id.push(element.id);
         rows += `<div class="form-group">
                     <label for="file_requirement_${element.id}">${index+1}.- ${element.name}</label>
-                    <input type="file" id="file_requirement_${element.id}" name="file_requirement[${element.id}]" class="form-control">
+                    <input type="file" id="file_requirement_${element.id}" name="file_requirement[${element.id}]" class="form-control cleanerror">
+                    <span class="help-block"></span>
                 </div>`;
     });
+
     document.getElementById('bodyRequirementUploadFiles').innerHTML = rows;
+    configuracionInputErrors()
 }
 
 $("#formDiscountCreate").submit(function (e) { 
     e.preventDefault();
-
-    $.ajax({
-        type: "POST",
-        url: "/postulante/solicitud/discount/store",
-        data: new FormData(this),
-        processData: false,
-        contentType: false,
-        dataType: "json",
-        success: function (response) {
-            if (response.data) {
-                
+    if (isValidFormDiscount()) {
+        $.ajax({
+            type: "POST",
+            url: "/postulante/solicitud/discount/store",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: function (response) {
+                if (response.data) {
+                    
+                }
             }
+        });
+    }
+});
+
+function isValidFormDiscount()
+{
+    let status = true;
+    let solicitud_id = document.getElementById('solicitud_idd').value;
+    let tipodescuento = document.getElementById('tipodescuento_idd').value;
+    if(solicitud_id==''){
+        showErrorForAll(document.getElementById('solicitud_idd'));
+        status = false;
+    }
+
+    if(tipodescuento==''){
+        showErrorForAll(document.getElementById('tipodescuento_idd'));
+        status = false;
+    }
+
+    if(!isValidFilesRequirement()){
+        status = false;
+    }
+
+    return status;
+}
+
+function isValidFilesRequirement()
+{
+    let status = true;
+    global_requirement_id.forEach(idd => {
+        let tempFile = document.getElementById('file_requirement_'+idd).value;
+        if(tempFile==''){
+            status = false;
+            showErrorForAll(document.getElementById('file_requirement_'+idd));
         }
     });
-});
+    return status;
+}
+
+function showErrorForAll(element)
+{
+    element.nextElementSibling.textContent = "Por favor completar campo.";
+    element.parentElement.classList.add("has-error");
+}
