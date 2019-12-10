@@ -106,4 +106,13 @@ class Discount extends MY_Controller  implements Idata_controller
 			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
 		}
 	}
+
+	public function bySolicitud($id){
+		$this->load->model('Solicitud_model');
+		$this->load->model('Programa_model');
+		$solicitud=$this->Solicitud_model->getOrFail($id);
+		$programa=$this->Programa_model->getOneOrFail($solicitud["programa"]);
+		$discounts=$this->Discount_model->byCurso($programa["id_curso"]);
+		$this->structuredResponse($discounts);
+	}
 }

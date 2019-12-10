@@ -129,4 +129,13 @@ class MY_Controller extends CI_Controller
 		}
 		return $text;
 	}
+
+	public function issetRequestInputs($method,...$varsNames){
+		for ($i=0; $i <count($varsNames) ; $i++) { 
+			if(!$this->input->{$method}($varsNames[$i])){
+				return false;
+			}
+		}
+		return true;
+	}
 }

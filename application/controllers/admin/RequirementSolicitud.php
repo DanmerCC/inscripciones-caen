@@ -16,6 +16,8 @@ class RequirementSolicitud extends MY_Controller  implements Idata_controller
 		$this->load->helper('mihelper');
 		$this->load->library('opciones');
 		$this->load->model('Permiso_model');
+		$this->load->model('Solicitud_model');
+		$this->load->model('User_model');
 	}
 
     public function dataTable(){
@@ -60,9 +62,34 @@ class RequirementSolicitud extends MY_Controller  implements Idata_controller
 	}
 	
 	public function save(){
+
+		$id=$this->input->post('id');
+		if(!$this->issetRequestInputs('post',['solicitud_id','requirement_id'])){
+			$this->structuredResponse(array('message'=>'Se esperaba mas argumentos'),200);
+		}
+
 		$solicitud_id=$this->input->post('solicitud_id');
 		$requirement_id=$this->input->post('requirement_id');
-		$this->Requirement_model->addInSolicitudPivot($solicitud_id,$requirement_id);
+		$result=null;
+		if($this->isAlumno()){
+			//$usuario=$this->User_model->byAlumno($this->nativesession->get('idAlumno'));
+			$usuario=$this->User_model->byAlumno($id);
+			$solicitudesByAlumn=$this->Solicitud_model->getByAlumno($usuario['alumno']);
+			$ids_solicitudes=c_extract($solicitudesByAlumn,'idSolicitud');
+			if(in_array($solicitud_id,$ids_solicitudes)){
+				$result=$this->Requirement_model->addInSolicitudPivot($solicitud_id,$requirement_id);
+				$this->structuredResponse(array("message"=>"se actualizo el registro"),200);
+			}else{
+				throw new Exception("Se intento registrar una solicitud no autorizadas");
+			}
+		}
+
+		var_dump($this->isAlumno());
+		exit;
+
+		$this->structuredResponse("No tienes permiso para agregar el registro",401);
+		
+		
 	}
 
 	public function update(){
@@ -76,4 +103,13 @@ class RequirementSolicitud extends MY_Controller  implements Idata_controller
 	public function delete(){
 		
 	}
+
+	public function isAlumno(){
+		return $this->nativesession->get('tipo')=="alumno";
+	}
+
+	public function byIsAvaliableByAlumno($idAlumno){
+		//$this->;
+	}
+
 }

@@ -16,6 +16,7 @@ class Solicitud extends CI_Controller
 		$this->load->library('Mihelper');
 		$this->load->helper('url');
 		$this->load->model('Solicitud_model');
+		$this->load->model('Requirement_model');
         $this->load->library('opciones');
         $this->load->library('Pdf');
 		$this->load->model('Permiso_model');
@@ -319,8 +320,9 @@ class Solicitud extends CI_Controller
         }
 
         public function get($id){
-            header('Content-Type: application/json');
-            $result=$this->mihelper->resultToArray($this->Solicitud_model->solicitud_porId($id));
+			header('Content-Type: application/json');
+			$solicitud=$this->Solicitud_model->solicitud_porId($id);
+            $result=$this->mihelper->resultToArray($solicitud);
             echo json_encode($result);
         }
         public function getComentario($id){
@@ -508,7 +510,8 @@ class Solicitud extends CI_Controller
 		}
 	}
 
-	public function have_notification_simbol($content=''){
+	public function have_notification_simbol($content='')
+	{
 		return "<div class='viewPoint'>".($content)."</div>";
 	}
 

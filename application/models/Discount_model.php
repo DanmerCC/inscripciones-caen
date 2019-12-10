@@ -43,8 +43,8 @@ class Discount_model extends MY_Model
 	
 	protected function relations(){
 		return [
-			'curso'=>[
-				'pivot_table'=>'curso_discounts',
+			'cursos'=>[
+				'pivot_table'=>'cursos_discounts',
 				'column_relation'=>'discount_id'
 			],
 			'solicitud'=>[
@@ -55,7 +55,7 @@ class Discount_model extends MY_Model
 	}
 
 	function byCurso($id){
-		return $this->byPivot('curso','curso_id',$id);
+		return $this->byPivot('cursos','curso_id',$id);
 	}
 
 	function bySolicitud($id){

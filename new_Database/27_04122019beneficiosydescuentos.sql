@@ -12,7 +12,7 @@ CREATE TABLE `requirements` (
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
-CREATE TABLE `cursos_discouts` (
+CREATE TABLE `cursos_discounts` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`curso_id` INT NOT NULL,
 	`discount_id` INT NOT NULL,
@@ -58,9 +58,9 @@ CREATE TABLE `solicitud_discount` (
 ) ENGINE = InnoDB;
 
 
-ALTER TABLE `cursos_discouts`
-  ADD CONSTRAINT `fk_cursos_discouts_curso_id` FOREIGN KEY (`curso_id`) REFERENCES `curso` (`id_curso`),
-  ADD CONSTRAINT `fk_cursos_discouts_discount_id` FOREIGN KEY (`discount_id`) REFERENCES `discounts` (`id`);
+ALTER TABLE `cursos_discounts`
+  ADD CONSTRAINT `fk_cursos_discounts_curso_id` FOREIGN KEY (`curso_id`) REFERENCES `curso` (`id_curso`),
+  ADD CONSTRAINT `fk_cursos_discounts_discount_id` FOREIGN KEY (`discount_id`) REFERENCES `discounts` (`id`);
 
 ALTER TABLE `discount_requirement`
   ADD CONSTRAINT `fk_discount_requirement_requirement_id` FOREIGN KEY (`requirement_id`) REFERENCES `requirements` (`id`),
@@ -73,3 +73,6 @@ ALTER TABLE `solicitud_requirement`
 ALTER TABLE `solicitud_discount`
   ADD CONSTRAINT `fk_solicitud_solicitud_discount_id` FOREIGN KEY (`discount_id`) REFERENCES `discounts` (`id`),
   ADD CONSTRAINT `fk_solicitud_discount_solicitud_id` FOREIGN KEY (`solicitud_id`) REFERENCES `solicitud` (`idSolicitud`);
+
+INSERT INTO permiso(`idPermiso`,`url`) VALUES(11,'discounts');
+INSERT INTO permiso(`idPermiso`,`url`) VALUES(12,'requirements');
