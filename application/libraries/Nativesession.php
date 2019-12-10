@@ -53,5 +53,5 @@ class Nativesession
         $_SESSION = array();
         session_destroy();
         session_start();
-    }
+	}
 }

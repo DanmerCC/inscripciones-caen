@@ -75,6 +75,6 @@ class Requirement_model extends MY_Model
 
 	/**addSolicitud */
 	public function addInSolicitudPivot($id,$idSolicitud){
-		$this->addInPivot('solicitud',$id,$idSolicitud);
+		return $this->addInPivot('solicitud',$id,$idSolicitud);
 	}
 }

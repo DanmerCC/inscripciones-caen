@@ -155,6 +155,7 @@ $route['admin/solicitud/quitarMarca'] = 'admin/Solicitud/quitarMarca';
 
 $route['admin/solicitud/marcarPago'] = 'admin/Solicitud/marcarPago';
 $route['admin/solicitud/quitarMarcaPago'] = 'admin/Solicitud/quitarMarcaPago';
+$route['admin/solicitud/addRequirement'] = 'admin/RequirementSolicitud/save';
 
 $route['admin/informes/marcarInfo'] = 'admin/InformeController/marcaInfo';
 $route['admin/informes/quitarMarcaInfo'] = 'admin/InformeController/quitarMarcaInfo';
@@ -336,6 +337,7 @@ $route['administracion/discounts/update'] = 'admin/Discount/update';
 $route['administracion/discounts/edit/(:num)'] = 'admin/Discount/edit/$1';
 $route['administracion/discounts/delete'] = 'admin/Discount/delete';
 $route['administracion/discounts/programas/(:num)'] = 'admin/Discount/byCurso/$1';
+$route['administracion/discounts/solicitud/(:num)'] = 'admin/Discount/bySolicitud/$1';
 
 //modulo Requirements
 $route['administracion/vista/requirements'] = 'admin/Requirement';
