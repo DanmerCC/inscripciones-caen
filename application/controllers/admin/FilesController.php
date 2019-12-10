@@ -709,11 +709,11 @@ private function makeObjectByType($type_string){
 }
 
 
-public function verify_login_or_fail(){
-	if($this->nativesession->get("estado")!="logeado"){
-		show_error("No tiene acceso debes iniciar session",501);
-		exit;
+	public function verify_login_or_fail(){
+		if($this->nativesession->get("estado")!="logeado"){
+			show_error("No tiene acceso debes iniciar session",501);
+			exit;
+		}
 	}
-}
 
 }

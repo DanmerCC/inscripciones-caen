@@ -5,7 +5,8 @@ require_once ("interfaces/Idata_controller.php");
 
 class RequirementSolicitud extends MY_Controller  implements Idata_controller
 {
-	
+
+	private $canUpdateRequirement=false;
 	function __construct()
 	{
 		parent::__construct();
@@ -18,6 +19,8 @@ class RequirementSolicitud extends MY_Controller  implements Idata_controller
 		$this->load->model('Permiso_model');
 		$this->load->model('Solicitud_model');
 		$this->load->model('User_model');
+		$this->load->model('Permiso_model');
+		$this->canUpdateRequirement=$this->Auth_Permisions->can('change_desct_requirement');
 	}
 
     public function dataTable(){
@@ -62,6 +65,8 @@ class RequirementSolicitud extends MY_Controller  implements Idata_controller
 	}
 	
 	public function save(){
+
+		$this->validatePermision($this->canUpdateRequirement);
 
 		$id=$this->input->post('id');
 		if(!$this->issetRequestInputs('post',['solicitud_id','requirement_id'])){

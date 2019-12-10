@@ -138,4 +138,10 @@ class MY_Controller extends CI_Controller
 		}
 		return true;
 	}
+
+	protected function validatePermision($permisionValue){
+		if(!$permisionValue){
+			$this->structuredResponse(array("message"=>"No esta autorizado para esta accion"),401);
+		}
+	}
 }
