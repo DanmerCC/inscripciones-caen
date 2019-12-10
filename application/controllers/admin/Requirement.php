@@ -5,7 +5,9 @@ require_once ("interfaces/Idata_controller.php");
 
 class Requirement extends MY_Controller  implements Idata_controller
 {
-	
+
+	private $canCreate=false;
+
 	function __construct()
 	{
 		parent::__construct();
@@ -16,6 +18,10 @@ class Requirement extends MY_Controller  implements Idata_controller
 		$this->load->helper('mihelper');
 		$this->load->library('opciones');
 		$this->load->model('Permiso_model');
+		$this->load->model('Auth_Permisions');
+		$this->canCreate=$this->Auth_Permisions->can('create_desct_requirement');
+		$this->canChange=$this->Auth_Permisions->can('change_desct_requirement');
+		$this->canDelete=$this->Auth_Permisions->can('delete_desct_requirement');
 	}
 
     public function dataTable(){
@@ -58,6 +64,7 @@ class Requirement extends MY_Controller  implements Idata_controller
 	}
 	
 	public function save(){
+		$this->validatePermision($this->canCreate);
 		$name = $this->input->post('name');
 		$res = $this->Requirement_model->registrar($name);
 		if($res){
@@ -68,6 +75,7 @@ class Requirement extends MY_Controller  implements Idata_controller
 	}
 
 	public function update(){
+		$this->validatePermision($this->canUpdate);
 		$name = $this->input->post('name');
 		$requirement_id = $this->input->post('requirement_id');
 		$data=[];
@@ -90,6 +98,7 @@ class Requirement extends MY_Controller  implements Idata_controller
 	}
 
 	public function delete(){
+		$this->validatePermision($this->canDelete);
 		$requirement_id = $this->input->post('id');
 		$res = $this->Requirement_model->delete($requirement_id);
 		if($res){
@@ -118,5 +127,6 @@ class Requirement extends MY_Controller  implements Idata_controller
 		);
 		$this->structuredResponse($data);
 	}
+
 
 }

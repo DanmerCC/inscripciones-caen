@@ -5,7 +5,10 @@ require_once ("interfaces/Idata_controller.php");
 
 class Discount extends MY_Controller  implements Idata_controller
 {
-	
+	private $canCreate=false;
+	private $canUpdate=false;
+	private $canDelete=false;
+
 	function __construct()
 	{
 		parent::__construct();
@@ -16,6 +19,9 @@ class Discount extends MY_Controller  implements Idata_controller
 		$this->load->helper('mihelper');
 		$this->load->library('opciones');
 		$this->load->model('Permiso_model');
+		$this->canCreate=$this->Auth_Permisions->can('create_desct_discount');
+		$this->canChange=$this->Auth_Permisions->can('change_desct_discount');
+		$this->canDelete=$this->Auth_Permisions->can('delete_desct_discount');
 	}
 
     public function dataTable(){
@@ -62,6 +68,7 @@ class Discount extends MY_Controller  implements Idata_controller
 	}
 	
 	public function save(){
+		$this->validatePermision($this->canCreate);
 		$name = $this->input->post('name');
 		$description = $this->input->post('description');
 		$percentage = $this->input->post('percentage');
@@ -74,6 +81,7 @@ class Discount extends MY_Controller  implements Idata_controller
 	}
 
 	public function update(){
+		$this->validatePermision($this->canUpdate);
 		$data=[];
 		$data["name"] = $this->input->post('name');
 		$data["description"] = $this->input->post('description');
@@ -98,6 +106,7 @@ class Discount extends MY_Controller  implements Idata_controller
 	}
 
 	public function delete(){
+		$this->validatePermision($this->canDelete);
 		$discount_id = $this->input->post('id');
 		$res = $this->Discount_model->delete($discount_id);
 		if($res){
