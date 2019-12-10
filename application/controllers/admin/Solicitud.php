@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * 
  */
-class Solicitud extends CI_Controller
+class Solicitud extends MY_Controller
 {
 	private $usuario_actual;
 	private $estado_finanzasSolicitud;
@@ -510,6 +510,12 @@ class Solicitud extends CI_Controller
 
 	public function have_notification_simbol($content=''){
 		return "<div class='viewPoint'>".($content)."</div>";
+	}
+
+	public function getAlumnoBySolicitud($alumno_id)
+	{
+		$solicitudes = $this->Solicitud_model->getSolicitudProgramaByAlumno($alumno_id);
+		return $this->structuredResponse($solicitudes,200);
 	}
 
 }

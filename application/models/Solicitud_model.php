@@ -293,6 +293,14 @@ class Solicitud_model extends CI_Model
 		$this->db->where('alumno',$idAlumno);
 		return resultToArray($this->db->get());
 	}
+	
+	function getSolicitudProgramaByAlumno($idAlumno){
+		$this->db->select("p.idSolicitud,CONCAT(c.nombre,' - ',c.numeracion) as nombre");
+		$this->db->from($this->tbl_solicitud.' p');
+		$this->db->join('curso c','c.id_curso=p.'.$this->id_programa);
+		$this->db->where('alumno',$idAlumno);
+		return resultToArray($this->db->get());
+	}
 
 	function countByAlumno($idAlumno){
 		$this->db->select($this->id);

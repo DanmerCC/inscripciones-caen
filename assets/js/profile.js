@@ -844,24 +844,104 @@ function row_diseño(index,solicitud){
 	"</div><br>";
 }
 
-function addNewDiscount(alumno_id){
+function openModalAddNewDiscount(alumno_id){
     $.ajax({
         type: "GET",
-        url: "",
+        url: "/administracion/solicitud/alumno/"+alumno_id,
         data: {},
         dataType: "json",
         success: function (response)
         {
-            
+            if(response.data != null)
+            {
+                makeSelectSolicitudes(response.data);   
+            }
         },
         error: function (responseError)
         {
-
+            alert("Error")
         },
         complete: function ()
         {
-            
         }
     });
     $("#modalAddDiscount").modal("show");
+}
+
+function makeSelectSolicitudes(solicitudes)
+{
+    let options = '<option value="">Elejir una solicitud</option>';
+    solicitudes.forEach(element => {
+        options += `<option value="${element.idSolicitud}">${element.nombre}</option>`;
+    });
+    document.getElementById('solicitud_idd').innerHTML = options;
+}
+
+
+document.getElementById('solicitud_idd').onchange = changeSolicitudForDiscountEvent;
+
+function changeSolicitudForDiscountEvent(evt)
+{
+    let solicitud_id = evt.target.value;
+    if(solicitud_id!='')
+    {
+        $.ajax({
+            type: "GET",
+            url: "administracion/discounts/solicitud/"+solicitud_id,
+            data: {},
+            dataType: "json",
+            success: function (response) {
+                if(response.data != null)
+                {
+                    makeSelectSolicitudes(response.data);   
+                }
+            }
+        });
+    }
+}
+function makeSelectDiscounts(discounts)
+{
+    /*let options = '<option value="">Elejir un descuento</option>';
+    solicitudes.forEach(element => {
+        options += `<option value="${element.idSolicitud}">${element.nombre}</option>`;
+    });*/
+    var options = simulationDiscount();
+    document.getElementById('tipodescuento_idd').innerHTML  = options;
+}
+
+document.getElementById('tipodescuento_idd').onchange = changeDiscountForRequirementsEvent;
+
+function changeDiscountForRequirementsEvent(evt)
+{
+    let discount_id = evt.target.value;
+    if(discount_id!='')
+    {
+        /*$.ajax({
+            type: "GET",
+            url: "",
+            data: {},
+            dataType: "json",
+            success: function (response) {
+                
+            }
+        });*/
+    }
+    makeInputFileRequisitosTemplate([['1'],['2']])
+}
+
+function makeInputFileRequisitosTemplate(requisitos)
+{
+    let rows = '';
+    requisitos.forEach((element,index) => {
+        rows += `<div class="form-group">
+                    <label for="file_requirement${index}">Hola como estas ${index}</label>
+                    <input type="file" id="file${index}" name="file${index}" class="form-control">
+                </div>`;
+    });
+    document.getElementById('bodyRequirementUploadFiles').innerHTML = rows;
+}
+
+function simulationDiscount()
+{
+    return `<option value="">Seleccionar</option><option value="1">Rerquitisot discuentos </option><option value="1">Rerquitisot discuentos </option>`;
 }

@@ -955,7 +955,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-5">
-                                                    <button type="button" class="btn btn-primary" onclick="addNewDiscount(<?=$lista['id_alumno']?>)">Agregar Descuento</button>
+                                                    <button type="button" class="btn btn-primary" onclick="openModalAddNewDiscount(<?=$lista['id_alumno']?>)">Agregar Descuento</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1061,40 +1061,21 @@
                             <div class="form-group">
                                 <label for="">Solicitudes</label>
                                 <select name="solicitud_idd" id="solicitud_idd" class="form-control">
-                                    <option value="1">sdasdfafasfafaf</option>
-                                    <option value="2">safaf faf afasf</option>
+                                    <option value="">Elejir</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="">Tipo descuentos</label>
                                 <select name="tipodescuento_idd" id="tipodescuento_idd" class="form-control">
-                                    <option value="1">sdasdfafasfafaf</option>
-                                    <option value="2">safaf faf afasf</option>
+                                    <option value="">Elejir una solicitud</option>
                                 </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Requisitos</label>
-                                <ul>
-                                    <li>Requisito 1</li>
-                                    <li>Requisito 2</li>
-                                    <li>Requisito 3</li>
-                                </ul>
-                            </div>                       
+                            </div>             
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="">Requisito 1</label>
-                        <input type="file" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="">Requisito 2</label>
-                        <input type="file" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="">Requisito 3</label>
-                        <input type="file" class="form-control">
+                <div class="col-md-8">
+                    <div class="form-group" id="bodyRequirementUploadFiles">
+                        <div class="alert alert">No tiene ningun requisito</div>
                     </div>
                 </div>
             </div>
