@@ -44,3 +44,21 @@ if(!function_exists('c_extract')){
 		return $response;
 	}
 }
+
+
+if(!function_exists('changePrimaryKeyToIndex')){
+	//formateamos la fecha y la hora, función de cesarcancino.com
+	function changePrimaryKeyToIndex($array_object,$primary_key_column){
+		$keys=array_unique(c_extract($array_object,$primary_key_column));
+		if(count($keys)!==count($array_object)){
+			throw new Exception("la columna contiene datos repetidos");
+		}
+		$response= [];
+		$i=0;
+		for($i=0;$i<count($array_object);$i++){
+		    $response[$array_object[$i][$primary_key_column]]=$array_object[$i];
+		}
+
+		return $response;
+	}
+}

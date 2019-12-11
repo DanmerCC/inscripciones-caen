@@ -344,14 +344,18 @@ class Solicitud extends CI_Controller
 
 	public function storeSolicitudDiscount()
 	{
+		var_dump($_FILES);
+				exit;
 		//$this->input->post('solicitud_idd')
 		//$this->input->post('tipodescuento_idd')
 		if (isset($_FILES['file_requirement'])) {
 			foreach ($_FILES['file_requirement']['name'] as $key => $itemFile) {
-				
+				var_dump($_FILES);
+				exit;
 			}
 		} else{
-			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
+			echo "Error gravisimo!!!!!!!!!!!!!!!!!";
+			//$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
 		}
 	}
 

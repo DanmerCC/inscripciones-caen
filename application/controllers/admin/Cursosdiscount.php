@@ -16,6 +16,7 @@ class Cursosdiscount extends MY_Controller  implements Idata_controller
 		$this->load->helper('mihelper');
 		$this->load->library('opciones');
 		$this->load->model('Permiso_model');
+		$this->load->model('Discount_model');
 	}
 
     public function dataTable(){
