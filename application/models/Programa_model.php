@@ -71,28 +71,23 @@ class Programa_model extends MY_Model
 		return $result;
 	}
 
-<<<<<<< HEAD
-	function byDiscountRestante($curso_ids){
-		$this->db->select($this->table.'.*');
-		$this->db->from($this->table);
-		if ($curso_ids!=null) {
-			$this->db->where_not_in($this->id,$curso_ids);
-		}
-		return $this->db->get()->result_array();
-=======
 	function getTiposWithPrimaryKeyAsKey(){
 		$tipos=$this->db->select()->from('tipo_curso')->get()->result_array();
 		$arrayRelacionado=changePrimaryKeyToIndex($tipos,'idTipo_curso');
 		return $arrayRelacionado;
 	}
 
-	function byDiscountRestante($id){
-		$programas=$this->byNotInPivot('discount','discount_id',$id);
+	function byDiscountRestante($curso_ids){
+		$this->db->select($this->table.'.*');
+		$this->db->from($this->table);
+		if ($curso_ids!=null) {
+			$this->db->where_not_in($this->id,$curso_ids);
+		}
+		$programas=$this->db->get()->result_array();
 		for ($i=0; $i < count($programas) ; $i++) { 
 			$programas[$i]["tipo"]=$this->preload_tipos[$programas[$i]["idTipo_curso"]];
 		}
 		return $programas;
->>>>>>> cef4d72973e201e4e18c227fb7a97cae6c101c06
 	}
 
 	public function all(){

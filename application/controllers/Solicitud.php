@@ -380,7 +380,6 @@ class Solicitud extends MY_Controller
 
 
 		} else{
-			echo "Error gravisimo!!!!!!!!!!!!!!!!!";
 			$this->structuredResponse(array('message'=>"Subir todos los documentos"),500);
 		}
 	}
@@ -390,7 +389,6 @@ class Solicitud extends MY_Controller
 		$this->load->library('upload');
 		$newFilesData = array();
 		$files = $_FILES;
-		$cpt = count($_FILES['file_requirement']['name']);
 		foreach ($_FILES['file_requirement']['name'] as $key => $itemFile) {
 
 			$_FILES['file_requirement']['name']= $files['file_requirement']['name'][$key];

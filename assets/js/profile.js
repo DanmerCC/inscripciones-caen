@@ -863,6 +863,7 @@ function configuracionInputErrors()
 
 function loadAllDiscountList()
 {
+    /*
     $.ajax({
         type: "GET",
         url: "/administracion/discounts/solicitud/",
@@ -871,7 +872,7 @@ function loadAllDiscountList()
         success: function (response) {
             
         }
-    });
+    });*/
 }
 
 function openModalAddNewDiscount(alumno_id){
