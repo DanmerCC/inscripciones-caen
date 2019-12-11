@@ -380,7 +380,8 @@ class Solicitud extends MY_Controller
 
 
 		} else{
-			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
+			echo "Error gravisimo!!!!!!!!!!!!!!!!!";
+			$this->structuredResponse(array('message'=>"Subir todos los documentos"),500);
 		}
 	}
 

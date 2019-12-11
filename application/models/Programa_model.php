@@ -5,6 +5,7 @@
 class Programa_model extends MY_Model
 {
 	protected $table='curso';
+	
 	protected $id='id_curso';
 	protected $name='nombre';
 	protected $duracion='duracion';
@@ -19,12 +20,14 @@ class Programa_model extends MY_Model
 	private $state_filter="";
 	private $type_filter="";
 
+	private $preload_tipos=[];
+
 	private $public_columns=[];
 
 	function __construct()
 	{
 		parent::__construct();
-
+		$this->preloadTypes();
 		$this->public_columns=[
 			$this->id,
 			$this->name,
@@ -54,11 +57,21 @@ class Programa_model extends MY_Model
 		];
 	}
 
+	public function preloadTypes(){
+		if(count($this->preload_tipos)==0){
+			$this->preload_tipos=$this->getTiposWithPrimaryKeyAsKey();
+		}
+	}
+
 	function byDiscountId($id){
 		$result= $this->byPivot('discount','discount_id',$id);
+		for ($i=0; $i < count($result) ; $i++) { 
+			$result[$i]["tipo"]=$this->preload_tipos[$result[$i]["idTipo_curso"]];
+		}
 		return $result;
 	}
 
+<<<<<<< HEAD
 	function byDiscountRestante($curso_ids){
 		$this->db->select($this->table.'.*');
 		$this->db->from($this->table);
@@ -66,6 +79,20 @@ class Programa_model extends MY_Model
 			$this->db->where_not_in($this->id,$curso_ids);
 		}
 		return $this->db->get()->result_array();
+=======
+	function getTiposWithPrimaryKeyAsKey(){
+		$tipos=$this->db->select()->from('tipo_curso')->get()->result_array();
+		$arrayRelacionado=changePrimaryKeyToIndex($tipos,'idTipo_curso');
+		return $arrayRelacionado;
+	}
+
+	function byDiscountRestante($id){
+		$programas=$this->byNotInPivot('discount','discount_id',$id);
+		for ($i=0; $i < count($programas) ; $i++) { 
+			$programas[$i]["tipo"]=$this->preload_tipos[$programas[$i]["idTipo_curso"]];
+		}
+		return $programas;
+>>>>>>> cef4d72973e201e4e18c227fb7a97cae6c101c06
 	}
 
 	public function all(){
