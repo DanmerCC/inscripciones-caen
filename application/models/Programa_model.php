@@ -27,7 +27,6 @@ class Programa_model extends MY_Model
 	function __construct()
 	{
 		parent::__construct();
-		$this->preloadTypes();
 		$this->public_columns=[
 			$this->id,
 			$this->name,
@@ -43,6 +42,7 @@ class Programa_model extends MY_Model
 		$this->load->helper('mihelper');
 		$this->load->library('Nativesession');
 		$this->load->model('Permiso_model');
+		$this->preloadTypes();
 
 
 	}
@@ -73,7 +73,7 @@ class Programa_model extends MY_Model
 
 	function getTiposWithPrimaryKeyAsKey(){
 		$tipos=$this->db->select()->from('tipo_curso')->get()->result_array();
-		$arrayRelacionado=changePrimaryKeyToIndex($tipos,'idTipo_curso');
+		$arrayRelacionado = changePrimaryKeyToIndex($tipos,'idTipo_curso');
 		return $arrayRelacionado;
 	}
 
