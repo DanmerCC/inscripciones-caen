@@ -59,8 +59,13 @@ class Programa_model extends MY_Model
 		return $result;
 	}
 
-	function byDiscountRestante($id){
-		return $this->byNotInPivot('discount','discount_id',$id);
+	function byDiscountRestante($curso_ids){
+		$this->db->select($this->table.'.*');
+		$this->db->from($this->table);
+		if ($curso_ids!=null) {
+			$this->db->where_not_in($this->id,$curso_ids);
+		}
+		return $this->db->get()->result_array();
 	}
 
 	public function all(){

@@ -887,7 +887,7 @@
                             </h4>
                         </div>
                         <div id="collapse8" class="panel-collapse collapse <?=($config_acordion[Config_Acordion::$nineth_acordion])?"in":"";?>">
-                            <form action="" method="post" name="formulario" id="formulario" class="form-horizontal">
+                            <form action="" method="post" name="formulario" id="formularioa" class="form-horizontal">
                                 <div class=" panel-body">
                                         <div class="form-create">
                                             <div class="row">
@@ -932,7 +932,7 @@
                             </h4>
                         </div>
                         <div id="collapse12" class="panel-collapse collapse">
-                            <form action="" method="post" name="formulario" id="formulario" class="form-horizontal">
+                            <form action="" method="post" name="formulario" id="formularioe" class="form-horizontal">
                                 <div class=" panel-body">
                                         <div class="form-create">
                                             <div class="row">
@@ -1001,7 +1001,7 @@
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <form id="formSolictitud" action="/postulante/solicitar" method="post">
+    <form id="formSolictitud" action="/postulante/solicitar" method="post" >
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Nueva</h5>
@@ -1081,8 +1081,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8" id="bodyRequirementUploadFiles">
-                <div class="alert alert-success">Seleccionar un descuento</div>      
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+                          <span class="alert alert-danger" style="display:none" id="errorGenericoDiscount"></span>
+                        </div>
+                        <div class="col-md-12">
+                          <h4>Requerimientos</h4>
+                        </div>
+                        <hr>
+                        <div class="col-md-12" id="bodyRequirementUploadFiles">
+                            <div class="alert alert-success">Seleccionar un descuento</div>
+                        </div>
+                    </div>
                 </div>
             </div>
           </div>

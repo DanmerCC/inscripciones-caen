@@ -121,7 +121,8 @@ class Requirement extends MY_Controller  implements Idata_controller
 
 	public function byDiscountRestante($id){
 		$requirements=$this->Requirement_model->byDiscount($id);
-		$new_requirements=$this->Requirement_model->byDiscountRestante($id);
+		$requirement_ids = c_extract($requirements,'id');
+		$new_requirements=$this->Requirement_model->byDiscountRestante($requirement_ids);
 		$data = array(
 			"requirement"=>$requirements,
 			"new_requirement"=>$new_requirements

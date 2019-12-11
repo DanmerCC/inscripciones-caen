@@ -6,7 +6,7 @@ require_once ("interfaces/Idata_controller.php");
 class Discount extends MY_Controller  implements Idata_controller
 {
 	private $canCreate=false;
-	private $canUpdate=false;
+	private $canChange=false;
 	private $canDelete=false;
 
 	function __construct()
@@ -82,7 +82,7 @@ class Discount extends MY_Controller  implements Idata_controller
 	}
 
 	public function update(){
-		$this->validatePermision($this->canUpdate);
+		$this->validatePermision($this->canChange);
 		$data=[];
 		$data["name"] = $this->input->post('name');
 		$data["description"] = $this->input->post('description');
@@ -125,4 +125,5 @@ class Discount extends MY_Controller  implements Idata_controller
 		$discounts=$this->Discount_model->byCurso($programa["id_curso"]);
 		$this->structuredResponse($discounts);
 	}
+
 }

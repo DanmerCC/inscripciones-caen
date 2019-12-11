@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * 
  */
-class Solicitud extends CI_Controller
+class Solicitud extends MY_Controller
 {
 	
 	public function __construct()
@@ -344,15 +344,85 @@ class Solicitud extends CI_Controller
 
 	public function storeSolicitudDiscount()
 	{
-		//$this->input->post('solicitud_idd')
-		//$this->input->post('tipodescuento_idd')
 		if (isset($_FILES['file_requirement'])) {
-			foreach ($_FILES['file_requirement']['name'] as $key => $itemFile) {
-				
+			$filesData = $this->do_upload();
+			$this->db->trans_start();
+			try {
+				$solicitud_discount_data = array(
+					'solicitud_id' => $this->input->post('solicitud_idd'),
+					'discount_id' => $this->input->post('tipodescuento_idd')
+				);
+				$this->Solicitud_model->saveSDolicitudDiscount($solicitud_discount_data);
+				for ($i=0; $i < count($filesData); $i++) { 
+					$array = array(
+						'requirement_id'=> $filesData[$i]['requirement_id'],
+						'solicitud_id'=> $this->input->post('solicitud_idd'),
+						'file'=>$filesData[$i]['file_name']
+					);
+					$this->Solicitud_model->addRequirement($array);
+				}
+			} catch (\Exception $th) {
+				$this->db->trans_rollback();
+				$this->structuredResponse(array('message'=>$th->getMessage()),500);
 			}
+			
+			$this->db->trans_complete();
+			if ($this->db->trans_status() === FALSE)
+			{
+				$this->db->trans_rollback();
+				$this->structuredResponse(array('message'=>"Error al guardar "),500);
+			}
+			else
+			{
+				$this->db->trans_commit();
+				$this->structuredResponse(array('message'=>""),200);
+			}
+
+
 		} else{
 			$this->structuredResponse(array('message'=>"Ocurrio un error interno"),500);
 		}
+	}
+
+	private function do_upload()
+	{
+		$this->load->library('upload');
+		$newFilesData = array();
+		$files = $_FILES;
+		$cpt = count($_FILES['file_requirement']['name']);
+		foreach ($_FILES['file_requirement']['name'] as $key => $itemFile) {
+
+			$_FILES['file_requirement']['name']= $files['file_requirement']['name'][$key];
+			$_FILES['file_requirement']['type']= $files['file_requirement']['type'][$key];
+			$_FILES['file_requirement']['tmp_name']= $files['file_requirement']['tmp_name'][$key];
+			$_FILES['file_requirement']['error']= $files['file_requirement']['error'][$key];
+			$_FILES['file_requirement']['size']= $files['file_requirement']['size'][$key];   
+			
+			$file_name = date('Ymdhis')."_".$key."_".$this->input->post('tipodescuento_idd');
+			
+			$this->upload->initialize($this->set_upload_options($file_name));
+			if (!$this->upload->do_upload('file_requirement')) {
+				$this->structuredResponse(array('message'=>$this->upload->display_errors()),500);
+				exit;
+			} else {
+				$newFilesData[] = array(
+					'file_name' => $this->upload->data()['file_name'],
+					'requirement_id' => $key
+				);
+			}
+		}
+		return $newFilesData;
+	}
+
+	private function set_upload_options($fileName)
+	{   
+		//upload an image options
+		$config = array();
+		$config['upload_path'] = CC_BASE_PATH."/files/requirement/";
+		$config['allowed_types'] = 'pdf';
+		$config['overwrite']     = true;
+		$config['file_name'] 	 = $fileName;
+		return $config;
 	}
 
 } 

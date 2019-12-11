@@ -20,7 +20,7 @@ class Cursosdiscount extends MY_Controller  implements Idata_controller
 
     public function dataTable(){
        // $rspta = $this->Discount_model->all();
-        $rspta = [["id"=>"1","name"=>"PERES","description"=>"SEA","percentage"=>"10"],["id"=>"2","name"=>"sasfFA","description"=>"AFAFAFS","percentage"=>"20"]];
+        $rspta = [["id"=>"1","name"=>"PERsES","description"=>"SEA","percentage"=>"10"],["id"=>"2","name"=>"sasfFA","description"=>"AFAFAFS","percentage"=>"20"]];
 	    //vamos a declarar un array
 	    $data = Array();
 	    header("Content-type: application/json");

@@ -54,8 +54,13 @@ class Requirement_model extends MY_Model
 		return $this->byPivot('discount','discount_id',$id);
 	}
 
-	function byDiscountRestante($id){
-		return $this->byNotInPivot('discount','discount_id',$id);
+	function byDiscountRestante($requirement_ids){
+		$this->db->select($this->table.'.*');
+		$this->db->from($this->table);
+		if ($requirement_ids!=null) {
+			$this->db->where_not_in($this->id,$requirement_ids);
+		}
+		return $this->db->get()->result_array();
 	}
 
 	protected function relations(){

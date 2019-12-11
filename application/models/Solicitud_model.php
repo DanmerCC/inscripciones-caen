@@ -513,4 +513,14 @@ class Solicitud_model extends CI_Model
 			$this->db->group_end();
 		}
 	}
+
+	public function saveSDolicitudDiscount($param)
+	{
+		$this->db->insert("solicitud_discount",$param);
+	}
+
+	public function addRequirement($param)
+	{
+		$this->db->insert("solicitud_requirement",$param);
+	}
 }

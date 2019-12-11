@@ -567,6 +567,7 @@ $("#si_militar").on('change',function(){
     desactStateMil(!$(this).prop('checked'));
 });
 
+loadAllDiscountList();
 
 }
 
@@ -860,7 +861,21 @@ function configuracionInputErrors()
     });
 }
 
+function loadAllDiscountList()
+{
+    $.ajax({
+        type: "GET",
+        url: "/administracion/discounts/solicitud/",
+        data: {},
+        dataType: "json",
+        success: function (response) {
+            
+        }
+    });
+}
+
 function openModalAddNewDiscount(alumno_id){
+    resetFormDiscount();
     $.ajax({
         type: "GET",
         url: "/administracion/solicitud/alumno/"+alumno_id,
@@ -960,7 +975,7 @@ function makeInputFileRequisitosTemplate(requisitos)
         global_requirement_id.push(element.id);
         rows += `<div class="form-group">
                     <label for="file_requirement_${element.id}">${index+1}.- ${element.name}</label>
-                    <input type="file" id="file_requirement_${element.id}" name="file_requirement[${element.id}]" class="form-control cleanerror">
+                    <input type="file" id="file_requirement_${element.id}" name="file_requirement[${element.id}]" accept="application/pdf" class="form-control cleanerror">
                     <span class="help-block"></span>
                 </div>`;
     });
@@ -980,13 +995,32 @@ $("#formDiscountCreate").submit(function (e) {
             contentType: false,
             dataType: "json",
             success: function (response) {
-                if (response.data) {
-                    
+                if (response.status == 'OK') {
+                    $("#modalAddDiscount").modal("hide");
+                } else {
+                    alert("No se puedo guardar");
+                }
+            },
+            error: function(error) {
+                if (error.status == 500) {
+                    document.getElementById('errorGenericoDiscount').innerText = error.responseJSON.data.message;
+                    document.getElementById('errorGenericoDiscount').style.display = "block";
+                } else if (error.status == 401) {
+                    alert(error.responseJSON.data.message);
+                    document.getElementById('errorGenericoDiscount').innerText = error.responseJSON.data.message;
+                    document.getElementById('errorGenericoDiscount').style.display = "block";
+                } else {
+                    alert("Ocurrio un error interno");
                 }
             }
         });
     }
 });
+
+function resetFormDiscount()
+{
+    $("#formDiscountCreate")[0].reset();
+}
 
 function isValidFormDiscount()
 {
