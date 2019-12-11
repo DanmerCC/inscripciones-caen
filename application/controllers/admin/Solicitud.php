@@ -515,9 +515,9 @@ class Solicitud extends MY_Controller
 		return "<div class='viewPoint'>".($content)."</div>";
 	}
 
-	public function getAlumnoBySolicitud($alumno_id)
+	public function getAlumnoBySolicitud($solicitud_id)
 	{
-		$solicitudes = $this->Solicitud_model->getSolicitudProgramaByAlumno($alumno_id);
+		$solicitudes = $this->Solicitud_model->getSolicitudProgramaByAlumno($solicitud_id);
 		return $this->structuredResponse($solicitudes,200);
 	}
 

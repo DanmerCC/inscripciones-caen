@@ -9,6 +9,7 @@ class Registro extends CI_Controller
         parent::__construct();
         $this->load->helper('url');
 		$this->load->library('Nativesession');
+		$this->load->helper('mihelper');
 		$this->load->model('Programa_model');
 		$this->load->model('Notificacion_model');
     }

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Postulante extends CI_Controller {
+class Postulante extends MY_Controller {
 
 	public function __construct(){
 		parent::__construct();
@@ -912,5 +912,15 @@ class Postulante extends CI_Controller {
 		}
 	}
 
-
+	
+	
+	public function getDiscountsCurrentUser(){
+		$this->load->model('Solicitud_model');
+		$this->load->model('Discount_model');
+		$alumno = $this->Alumno_model->findByDocumento($this->nativesession->get("dni"))->row();
+		$solicitudes=$this->Solicitud_model->getByAlumno($alumno->id_alumno);
+		$solicitudes_ids=c_extract($solicitudes,'idSolicitud');
+		$discounts=$this->Discount_model->bySolicituds($solicitudes_ids);
+		$this->structuredResponse($discounts);
+	}
 }
