@@ -99,7 +99,31 @@ class MY_Model extends CI_Model {
 		$this->db->join(
 			$relation['pivot_table'],
 			$relation['pivot_table'].'.'.$relation['column_relation'].'='.$this->table.'.'.$this->id);
-		$this->db->where($relation['pivot_table'].'.'.$pivot_column_name,$pivot_column_value);
+			if(is_array($pivot_column_value)){
+				$this->db->where_in($relation['pivot_table'].'.'.$pivot_column_name,$pivot_column_value);
+			}else{
+				$this->db->where($relation['pivot_table'].'.'.$pivot_column_name,$pivot_column_value);
+			}
+		
+		return $this->db->get()->result_array();
+	}
+
+	protected function byGetPivotByPivot($relation_pivot_name,$pivot_column_name,$pivot_column_value){
+		if(!isset($this->relations()[$relation_pivot_name])){
+			throw new Exception("la $relation_pivot_name relacion no esta definida");
+		}
+		$relation=$this->relations()[$relation_pivot_name];
+		$this->db->select($relation['pivot_table'].'.*');
+		$this->db->from($this->table);
+		$this->db->join(
+			$relation['pivot_table'],
+			$relation['pivot_table'].'.'.$relation['column_relation'].'='.$this->table.'.'.$this->id);
+			if(is_array($pivot_column_value)){
+				$this->db->where_in($relation['pivot_table'].'.'.$pivot_column_name,$pivot_column_value);
+			}else{
+				$this->db->where($relation['pivot_table'].'.'.$pivot_column_name,$pivot_column_value);
+			}
+		
 		return $this->db->get()->result_array();
 	}
 

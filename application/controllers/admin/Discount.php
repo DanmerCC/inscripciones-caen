@@ -106,7 +106,8 @@ class Discount extends MY_Controller  implements Idata_controller
 		}
 	}
 
-	public function delete(){
+	public function delete()
+	{
 		$this->validatePermision($this->canDelete);
 		$discount_id = $this->input->post('id');
 		$res = $this->Discount_model->delete($discount_id);
@@ -117,7 +118,8 @@ class Discount extends MY_Controller  implements Idata_controller
 		}
 	}
 
-	public function bySolicitud($id){
+	public function bySolicitud($id)
+	{
 		$this->load->model('Solicitud_model');
 		$this->load->model('Programa_model');
 		$solicitud=$this->Solicitud_model->getOrFail($id);

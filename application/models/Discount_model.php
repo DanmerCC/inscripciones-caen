@@ -73,9 +73,10 @@ class Discount_model extends MY_Model
 	}
 
 	function bySolicituds($arrayIds){
-		$this->db->select()->from($this->table.'.*')
-		->join('solicitud_discount','solicitud_discount.solicitud_id='.$this->table.'.id')
-		->where_in($this->table.'.'.$this->id,$arrayIds);
+		$this->db->select($this->table.'.*')->from($this->table)
+		->join('solicitud_discount','solicitud_discount.discount_id='.$this->table.'.'.$this->id)
+		->where_in('solicitud_discount.solicitud_id',$arrayIds);
+		return $this->db->get()->result_array();
 	}
 
 }

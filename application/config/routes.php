@@ -92,7 +92,7 @@ $route['postulante/upload/sins'] = 'Postulante/uploadSolicitudInscripcion';
 
 $route['postulante/download/cv'] = 'Postulante/downloadCv';
 $route['postulante/stateProfileFiles'] = 'Postulante/stateOfProfileFiles';
-$route['postulante/misdescuentos'] = 'Postulante/getDiscountsCurrentUser';
+$route['postulante/misdescuentos/(:num)'] = 'Postulante/getDiscountsCurrentUser/$1';
 $route['solicitud/upload/(:num)'] = 'Solicitud/uploadHojaDeDatos/$1';
 $route['soladmision/upload/(:num)'] = 'Solicitud/upload_sol_admision/$1';
 $route['solicitud/stateFile/(:num)'] = 'Solicitud/stateFile/$1';

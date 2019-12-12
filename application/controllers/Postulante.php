@@ -914,13 +914,19 @@ class Postulante extends MY_Controller {
 
 	
 	
-	public function getDiscountsCurrentUser(){
+	public function getDiscountsCurrentUser($idSolicitud){
 		$this->load->model('Solicitud_model');
 		$this->load->model('Discount_model');
-		$alumno = $this->Alumno_model->findByDocumento($this->nativesession->get("dni"))->row();
-		$solicitudes=$this->Solicitud_model->getByAlumno($alumno->id_alumno);
-		$solicitudes_ids=c_extract($solicitudes,'idSolicitud');
-		$discounts=$this->Discount_model->bySolicituds($solicitudes_ids);
-		$this->structuredResponse($discounts);
+		$this->load->model('Requirement_model');
+		$solicitud=$this->Solicitud_model->solicitud_porId($idSolicitud)->row_array();
+		$discount=$this->Discount_model->bySolicitud($solicitud["idSolicitud"]);
+		$programa=$this->Programa_model->getById($solicitud["programa"])->row_array();
+		$requirements=$this->Requirement_model->bySolicitudWithPivot($solicitud["idSolicitud"]);
+		//$solicitud["discount"]=$discount;
+		$programa["discount"]=$discount;
+		$programa["requirements"]=$requirements;
+		$solicitud["programa"]=$programa;
+		//$solicitud["requirements"]=$requirements;
+		$this->structuredResponse($solicitud);
 	}
 }
