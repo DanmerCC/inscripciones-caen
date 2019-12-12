@@ -172,7 +172,7 @@
 
 <!-- Modal de Datos de alumno -->
 <div class="modal fade" id="mdl_datos_alumno">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -183,11 +183,8 @@
       <div class="box box-primary">
             <div class="box-body box-profile">
               <img class="profile-user-img img-responsive img-circle" id="mdl-foto" src="" alt="User profile picture">
-
-              <h3 class="profile-username text-center" id="mdl-name">Nina Mcintire</h3>
-
-              <p class="text-muted text-center" id="mdl-profesion">Software Engineer</p>
-
+              <h3 class="profile-username text-center" id="mdl-name"></h3>
+              <p class="text-muted text-center" id="mdl-profesion"></p>
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
                   <b >Solicitudes</b> <a class="pull-right" id="mdl-solicitudes">1,322</a>
@@ -202,48 +199,49 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <strong><i class="fa fa-book margin-r-5"></i> Educacion</strong>
-
-              <p class="text-muted" id="mdl-educacion">
-                B.S. in Computer Science from the University of Tennessee at Knoxville
-              </p>
-
-              <hr>
-
-              <strong><i class="fa fa-phone margin-r-5"></i> Numeros de celular</strong>
-
-              <p class="text-muted" id="mdl-celphone">
-                55555-5555
-              </p>
-
-              <hr>
-
-							<strong><i class="fa fa-envelope margin-r-5"></i> Email</strong>
-
-              <p class="text-muted" id="mdl-email">
-                
-              </p>
-
-              <hr>
-
-              <strong><i class="fa fa-pencil margin-r-5"></i> Documentos</strong>
-
-              <p>
-              <div id="mdl-icons-documents">
-              
-                <span class="label label-danger">UI Design</span>
-                <span class="label label-success">Coding</span>
-                <span class="label label-info">Javascript</span>
-                <span class="label label-warning">PHP</span>
-                <span class="label label-primary">Node.js</span>
+              <div class="row">
+                  <div class="col-md-6">
+                    <strong><i class="fa fa-phone margin-r-5"></i> Numeros de celular</strong>
+                    <p class="text-muted" id="mdl-celphone">
+                    </p>
+                  </div>
+                  <div class="col-md-6">
+                    <strong><i class="fa fa-envelope margin-r-5"></i> Email</strong>
+                    <p class="text-muted" id="mdl-email">
+                    </p>
+                  </div>
+                  <div class="col-md-6">
+                    <strong><i class="fa fa-book margin-r-5"></i> Educacion</strong>
+                    <p class="text-muted" id="mdl-educacion">
+                    </p>
+                  </div>
               </div>
-							</p>
-							<strong><i class="fa fa-pencil margin-r-5"></i> Documentos De solicitud</strong>
-
-              <p>
-              <div id="mdl-icons-filesOfSol">
+              <hr>
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="box box-solid sombra">
+                        <div class="box-header">
+                          <strong><i class="fa fa-pencil margin-r-5"></i> Documentos</strong>
+                        </div>
+                        <div class="box-body">
+                          <div id="mdl-icons-documents">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="box box-solid sombra">
+                        <div class="box-header">
+                          <strong><i class="fa fa-pencil margin-r-5"></i> Documentos De solicitud</strong>
+                        </div>
+                        <div class="box-body">
+                          <div id="mdl-icons-filesOfSol">
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                        
+                  </div>
               </div>
-              </p>
             </div>
             <!-- /.box-body -->
           </div>
