@@ -220,7 +220,7 @@
               <div class="row">
                   <div class="col-md-6">
                       <div class="box box-solid sombra">
-                        <div class="box-header">
+                        <div class="box-header bg-success">
                           <strong><i class="fa fa-pencil margin-r-5"></i> Documentos</strong>
                         </div>
                         <div class="box-body">
@@ -229,7 +229,7 @@
                         </div>
                       </div>
                       <div class="box box-solid sombra">
-                        <div class="box-header">
+                        <div class="box-header bg-success">
                           <strong><i class="fa fa-pencil margin-r-5"></i> Documentos De solicitud</strong>
                         </div>
                         <div class="box-body">
@@ -240,10 +240,11 @@
                   </div>
                   <div class="col-md-6">
                       <div class="box box-solid sombra">
-                        <div class="box-header">
-                          <strong><i class="fa fa-pencil margin-r-5"></i>Descuentos</strong>
+                        <div class="box-header bg-success">
+                          <h3 class="box-title"><i class="fa fa-pencil margin-r-5"></i>Descuentos</h3>
                         </div>
-                        <div class="box-body">
+                        <div class="box-body" id="discountsBodyAndRequirements">
+                          
                         </div>
                       </div>
                   </div>

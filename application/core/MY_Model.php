@@ -113,7 +113,7 @@ class MY_Model extends CI_Model {
 			throw new Exception("la $relation_pivot_name relacion no esta definida");
 		}
 		$relation=$this->relations()[$relation_pivot_name];
-		$this->db->select($relation['pivot_table'].'.*');
+		$this->db->select();
 		$this->db->from($this->table);
 		$this->db->join(
 			$relation['pivot_table'],

@@ -353,6 +353,7 @@ $route['administracion/requirements/delete'] = 'admin/Requirement/delete';
 $route['administracion/requirements/solicitud/(:num)'] = 'admin/Requirement/bySolicitud/$1';
 $route['administracion/requirements/discount/(:num)'] = 'admin/Requirement/byDiscount/$1';
 $route['administracion/requirements/discountrestante/(:num)'] = 'admin/Requirement/byDiscountRestante/$1';
+$route['administracion/requirements/document/(:any)'] = 'admin/FilesController/showFileRequirement/$1';
 
 //modulo discount requirement
 $route['admin/dataTable/discountrequirement'] = 'admin/DiscountRequirement/dataTable';

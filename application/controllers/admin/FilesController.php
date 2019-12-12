@@ -413,307 +413,319 @@ class FilesController extends CI_Controller {
 		echo json_encode($resultModel);
 	}
 
-public function eliminar($FileType,$id){
-	$this->load->model('Alumno_model'); 
-	$alumno=$this->Alumno_model->findById($this->nativesession->get('idAlumno'))[0];
-	$pathFile;
-	$resultModel;
-	$resultModel["state"]=NULL;
-	$resultModel["message"]=NULL;
-	$nameFile="undefined";
-	switch ($FileType) {
-		case 'cv':
-			$pathFile=CC_BASE_PATH."/files/cvs/".$alumno["documento"].".pdf";
-			$nameFile=$alumno["documento"];
-			$this->read_notification($alumno['id_alumno'],1);
-			break;
-		case 'dj':
-			$pathFile=CC_BASE_PATH."/files/djs/".$alumno["documento"].".pdf";
-			$nameFile=$alumno["documento"];
-			$this->read_notification($alumno['id_alumno'],2);
-			break;
-		case 'dni':
-			$pathFile=CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf";
-			$nameFile=$alumno["documento"];
-			$this->read_notification($alumno['id_alumno'],3);
-			break;
-		case 'bach':
-			$pathFile=CC_BASE_PATH."/files/bachiller/".$alumno["documento"].".pdf";
-			$nameFile=$alumno["documento"];
-			$this->read_notification($alumno['id_alumno'],4);
-			break;
-		case 'maes':
-			$pathFile=CC_BASE_PATH."/files/maestria/".$alumno["documento"].".pdf";
-			$nameFile=$alumno["documento"];
-			$this->read_notification($alumno['id_alumno'],5);
-			break;
-		case 'doct':
-			$pathFile=CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf";
-			$nameFile=$alumno["documento"];
-			$this->read_notification($alumno['id_alumno'],6);
-			break;
-		case 'sins':
-			$pathFile=CC_BASE_PATH."/files/sInscripcion/".$alumno["documento"].".pdf";
-			$nameFile=$alumno["documento"];
-			$this->read_notification($alumno['id_alumno'],7);
-			break;
-		case 'hdatos':
-			$pathFile=CC_BASE_PATH."/files/hojadatos/".$id.".pdf";
-			$nameFile=$id;
-			break;
-		case 'solad':
-			$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
-			$nameFile=$id;
-			break;
-		case 'pinvs':
-			$pathFile=CC_BASE_PATH."/files/proinves/".$id.".pdf";
-			$nameFile=$id;
-			break;
-		default:
-			$pathFile=NULL;
-			show_404();
-			die();
-			break;
-	}
-	if(rename($pathFile,CC_BASE_PATH."/trash/$nameFile"."_".$FileType."_".date('j-m-y').".pdf")){
-		$resultModel["state"]=true;
-		$resultModel["message"]="Borrado correctamente";
-	}else{
-		$resultModel["state"]=false;
-		$resultModel["message"]="Error al borrar";
-	}
-	echo json_encode($resultModel);
-}
-public function eliminarPorAdmin($FileType,$id){
-	
-	$this->load->model('Alumno_model'); 
-	$alumno=$this->Alumno_model->findById($id)[0];
-	$pathFile;
-	$resultModel;
-	$resultModel["state"]=NULL;
-	$resultModel["message"]=NULL;
-	$nameFile="undefined";
-	switch ($FileType) {
-		case 'cv':
-			$pathFile=CC_BASE_PATH."/files/cvs/".$alumno["documento"].".pdf";
-			$nameFile=$alumno["documento"];
-			break;
-		case 'dj':
-			$pathFile=CC_BASE_PATH."/files/djs/".$alumno["documento"].".pdf";
-			$nameFile=$alumno["documento"];
-			break;
-		case 'dni':
-			$pathFile=CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf";
-			$nameFile=$alumno["documento"];
-			break;
-		case 'bach':
-			$pathFile=CC_BASE_PATH."/files/bachiller/".$alumno["documento"].".pdf";
-			$nameFile=$alumno["documento"];
-			break;
-		case 'maes':
-			$pathFile=CC_BASE_PATH."/files/maestria/".$alumno["documento"].".pdf";
-			$nameFile=$alumno["documento"];
-			break;
-		case 'doct':
-			$pathFile=CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf";
-			$nameFile=$alumno["documento"];
-			break;
-		case 'sins':
-			$pathFile=CC_BASE_PATH."/files/sInscripcion/".$alumno["documento"].".pdf";
-			$nameFile=$alumno["documento"];
-			break;
-		case 'hdatos':
-			$pathFile=CC_BASE_PATH."/files/hojadatos/".$id.".pdf";
-			$nameFile=$id;
-			break;
-		case 'solad':
-			$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
-			$nameFile=$id;
-			break;
-		case 'pinvs':
-			$pathFile=CC_BASE_PATH."/files/proinves/".$id.".pdf";
-			$nameFile=$id;
-			break;
-		default:
-			$pathFile=NULL;
-			show_404();
-			die();
-			break;
-	}
-	if(rename($pathFile,CC_BASE_PATH."/trash/$nameFile"."_".$FileType."_".date('j-m-y').".pdf")){
-		$resultModel["state"]=true;
-		$resultModel["message"]="Borrado correctamente";
-	}else{
-		$resultModel["state"]=false;
-		$resultModel["message"]="Error al borrar";
-	}
-	echo json_encode($resultModel);
-}
-function uploads_page(){
-	$this->verify_login_or_fail();
-	$this->load->model('File_model');
-	$tipo=$this->uri->segment(4);
-	$id=$this->uri->segment(5);
-	
-	$existFile="";
-	$minNameOfClass="";
-	$obj;
-	switch ($tipo) {
-		case CurriculumFile::$min_name:
-			$obj=new CurriculumFile();
-			$minNameOfClass=CurriculumFile::$min_name;
-			break;
-
-		case DeclaracionJuradaFile::$min_name:
-			$obj=new DeclaracionJuradaFile();
-			$minNameOfClass=DeclaracionJuradaFile::$min_name;
-			break;
-
-		case DniFile::$min_name:
-			$obj=new DniFile();
-			$minNameOfClass=DniFile::$min_name;
-			break;
-
-		case BachillerFile::$min_name:
-			$obj=new BachillerFile();
-			$minNameOfClass=BachillerFile::$min_name;
-			break;
-
-		case MaestriaFile::$min_name:
-			$obj=new MaestriaFile();
-			$minNameOfClass=MaestriaFile::$min_name;
-			break;
-		case DoctoradoFile::$min_name:
-			$obj=new DoctoradoFile();
-			$minNameOfClass=DoctoradoFile::$min_name;
-			break;
-		case SolicitudFile::$min_name:
-			$obj=new SolicitudFile();
-			$minNameOfClass=SolicitudFile::$min_name;
-			break;
-		
-		case ProyectoInvestigacionFile::$min_name:
-			$obj=new ProyectoInvestigacionFile();
-			$minNameOfClass=ProyectoInvestigacionFile::$min_name;
-			break;
-
-		case HojaDatosFile::$min_name:
-			$obj=new HojaDatosFile();
-			$minNameOfClass=HojaDatosFile::$min_name;
-			break;
-		
-		default:
-			show_404();
-			exit;
-			break;
-		
-	}
-
-	$obj->id=$id;
-	$data=array(
-		'exist'=>file_exists($obj->completePath().'.pdf'),
-		'id'=>$id,
-		'min_name'=>$minNameOfClass,
-	);
-
-	$this->load->view('uploads_document',$data);
-}
-
-function recive_file(){
-	$this->verify_login_or_fail();
-	
-	$this->load->model('File_model');
-	$id=$this->input->post('id');
-	$type=$this->input->post('type');
-	
-	$obj=$this->makeObjectByType($type);
-	$obj->id=$id;
-
-	$config = array(
-		'upload_path' => $obj->path(),
-		'allowed_types' => "pdf",
-		'overwrite' => TRUE,
-		'max_size' => "20048000",
-		'file_name' => $id
-	);
-	$this->load->library('upload', $config);
-	$resultado["status"]=0;
-	$this->upload->initialize($config);
-	if($this->upload->do_upload('file'))
-	{
-		/**
-		 * Correccion de extension de PDF a dpf
-		 */
-		$file_data=$this->upload->data();
-		$estado=true;
-		if($file_data['file_ext']=="PDF"){
-			$name_correct=$id.'.pdf';
-			$new_path=$file_data['file_path'].$name_correct;
-			$estado=rename($file_data['full_path'],  $new_path);
+	public function eliminar($FileType,$id){
+		$this->load->model('Alumno_model'); 
+		$alumno=$this->Alumno_model->findById($this->nativesession->get('idAlumno'))[0];
+		$pathFile;
+		$resultModel;
+		$resultModel["state"]=NULL;
+		$resultModel["message"]=NULL;
+		$nameFile="undefined";
+		switch ($FileType) {
+			case 'cv':
+				$pathFile=CC_BASE_PATH."/files/cvs/".$alumno["documento"].".pdf";
+				$nameFile=$alumno["documento"];
+				$this->read_notification($alumno['id_alumno'],1);
+				break;
+			case 'dj':
+				$pathFile=CC_BASE_PATH."/files/djs/".$alumno["documento"].".pdf";
+				$nameFile=$alumno["documento"];
+				$this->read_notification($alumno['id_alumno'],2);
+				break;
+			case 'dni':
+				$pathFile=CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf";
+				$nameFile=$alumno["documento"];
+				$this->read_notification($alumno['id_alumno'],3);
+				break;
+			case 'bach':
+				$pathFile=CC_BASE_PATH."/files/bachiller/".$alumno["documento"].".pdf";
+				$nameFile=$alumno["documento"];
+				$this->read_notification($alumno['id_alumno'],4);
+				break;
+			case 'maes':
+				$pathFile=CC_BASE_PATH."/files/maestria/".$alumno["documento"].".pdf";
+				$nameFile=$alumno["documento"];
+				$this->read_notification($alumno['id_alumno'],5);
+				break;
+			case 'doct':
+				$pathFile=CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf";
+				$nameFile=$alumno["documento"];
+				$this->read_notification($alumno['id_alumno'],6);
+				break;
+			case 'sins':
+				$pathFile=CC_BASE_PATH."/files/sInscripcion/".$alumno["documento"].".pdf";
+				$nameFile=$alumno["documento"];
+				$this->read_notification($alumno['id_alumno'],7);
+				break;
+			case 'hdatos':
+				$pathFile=CC_BASE_PATH."/files/hojadatos/".$id.".pdf";
+				$nameFile=$id;
+				break;
+			case 'solad':
+				$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
+				$nameFile=$id;
+				break;
+			case 'pinvs':
+				$pathFile=CC_BASE_PATH."/files/proinves/".$id.".pdf";
+				$nameFile=$id;
+				break;
+			default:
+				$pathFile=NULL;
+				show_404();
+				die();
+				break;
 		}
-		
-		$resultado["status"]=($estado?1:0);
-		$resultado["data"] = array('upload_data' => $this->makeObjectByType($type)->name());
-	}else
-	{
-		$resultado["error"] = array('error' => $this->upload->display_errors());
+		if(rename($pathFile,CC_BASE_PATH."/trash/$nameFile"."_".$FileType."_".date('j-m-y').".pdf")){
+			$resultModel["state"]=true;
+			$resultModel["message"]="Borrado correctamente";
+		}else{
+			$resultModel["state"]=false;
+			$resultModel["message"]="Error al borrar";
+		}
+		echo json_encode($resultModel);
 	}
-	echo json_encode($resultado);
-}
-
-
-private function makeObjectByType($type_string){
-	$obj;
-	switch ($type_string) {
-		case CurriculumFile::$min_name:
-			$obj=new CurriculumFile();
-			break;
-
-		case DeclaracionJuradaFile::$min_name:
-			$obj=new DeclaracionJuradaFile();
-			break;
-
-		case DniFile::$min_name:
-			$obj=new DniFile();
-			break;
-
-		case BachillerFile::$min_name:
-			$obj=new BachillerFile();
-			break;
-
-		case MaestriaFile::$min_name:
-			$obj=new MaestriaFile();
-			break;
-		case DoctoradoFile::$min_name:
-			$obj=new DoctoradoFile();
-			break;
-		case SolicitudFile::$min_name:
-			$obj=new SolicitudFile();
-			break;
+	public function eliminarPorAdmin($FileType,$id){
 		
-		case ProyectoInvestigacionFile::$min_name:
-			$obj=new ProyectoInvestigacionFile();
-			break;
-
-		case HojaDatosFile::$min_name:
-			$obj=new HojaDatosFile();
-			break;
-		
-		default:
-			show_404();
-			exit;
-			break;
-		
+		$this->load->model('Alumno_model'); 
+		$alumno=$this->Alumno_model->findById($id)[0];
+		$pathFile;
+		$resultModel;
+		$resultModel["state"]=NULL;
+		$resultModel["message"]=NULL;
+		$nameFile="undefined";
+		switch ($FileType) {
+			case 'cv':
+				$pathFile=CC_BASE_PATH."/files/cvs/".$alumno["documento"].".pdf";
+				$nameFile=$alumno["documento"];
+				break;
+			case 'dj':
+				$pathFile=CC_BASE_PATH."/files/djs/".$alumno["documento"].".pdf";
+				$nameFile=$alumno["documento"];
+				break;
+			case 'dni':
+				$pathFile=CC_BASE_PATH."/files/dni/".$alumno["documento"].".pdf";
+				$nameFile=$alumno["documento"];
+				break;
+			case 'bach':
+				$pathFile=CC_BASE_PATH."/files/bachiller/".$alumno["documento"].".pdf";
+				$nameFile=$alumno["documento"];
+				break;
+			case 'maes':
+				$pathFile=CC_BASE_PATH."/files/maestria/".$alumno["documento"].".pdf";
+				$nameFile=$alumno["documento"];
+				break;
+			case 'doct':
+				$pathFile=CC_BASE_PATH."/files/doctorado/".$alumno["documento"].".pdf";
+				$nameFile=$alumno["documento"];
+				break;
+			case 'sins':
+				$pathFile=CC_BASE_PATH."/files/sInscripcion/".$alumno["documento"].".pdf";
+				$nameFile=$alumno["documento"];
+				break;
+			case 'hdatos':
+				$pathFile=CC_BASE_PATH."/files/hojadatos/".$id.".pdf";
+				$nameFile=$id;
+				break;
+			case 'solad':
+				$pathFile=CC_BASE_PATH."/files/sol-ad/".$id.".pdf";
+				$nameFile=$id;
+				break;
+			case 'pinvs':
+				$pathFile=CC_BASE_PATH."/files/proinves/".$id.".pdf";
+				$nameFile=$id;
+				break;
+			default:
+				$pathFile=NULL;
+				show_404();
+				die();
+				break;
+		}
+		if(rename($pathFile,CC_BASE_PATH."/trash/$nameFile"."_".$FileType."_".date('j-m-y').".pdf")){
+			$resultModel["state"]=true;
+			$resultModel["message"]="Borrado correctamente";
+		}else{
+			$resultModel["state"]=false;
+			$resultModel["message"]="Error al borrar";
+		}
+		echo json_encode($resultModel);
 	}
-	return $obj;
-}
+	function uploads_page(){
+		$this->verify_login_or_fail();
+		$this->load->model('File_model');
+		$tipo=$this->uri->segment(4);
+		$id=$this->uri->segment(5);
+		
+		$existFile="";
+		$minNameOfClass="";
+		$obj;
+		switch ($tipo) {
+			case CurriculumFile::$min_name:
+				$obj=new CurriculumFile();
+				$minNameOfClass=CurriculumFile::$min_name;
+				break;
 
+			case DeclaracionJuradaFile::$min_name:
+				$obj=new DeclaracionJuradaFile();
+				$minNameOfClass=DeclaracionJuradaFile::$min_name;
+				break;
+
+			case DniFile::$min_name:
+				$obj=new DniFile();
+				$minNameOfClass=DniFile::$min_name;
+				break;
+
+			case BachillerFile::$min_name:
+				$obj=new BachillerFile();
+				$minNameOfClass=BachillerFile::$min_name;
+				break;
+
+			case MaestriaFile::$min_name:
+				$obj=new MaestriaFile();
+				$minNameOfClass=MaestriaFile::$min_name;
+				break;
+			case DoctoradoFile::$min_name:
+				$obj=new DoctoradoFile();
+				$minNameOfClass=DoctoradoFile::$min_name;
+				break;
+			case SolicitudFile::$min_name:
+				$obj=new SolicitudFile();
+				$minNameOfClass=SolicitudFile::$min_name;
+				break;
+			
+			case ProyectoInvestigacionFile::$min_name:
+				$obj=new ProyectoInvestigacionFile();
+				$minNameOfClass=ProyectoInvestigacionFile::$min_name;
+				break;
+
+			case HojaDatosFile::$min_name:
+				$obj=new HojaDatosFile();
+				$minNameOfClass=HojaDatosFile::$min_name;
+				break;
+			
+			default:
+				show_404();
+				exit;
+				break;
+			
+		}
+
+		$obj->id=$id;
+		$data=array(
+			'exist'=>file_exists($obj->completePath().'.pdf'),
+			'id'=>$id,
+			'min_name'=>$minNameOfClass,
+		);
+
+		$this->load->view('uploads_document',$data);
+	}
+
+	function recive_file(){
+		$this->verify_login_or_fail();
+		
+		$this->load->model('File_model');
+		$id=$this->input->post('id');
+		$type=$this->input->post('type');
+		
+		$obj=$this->makeObjectByType($type);
+		$obj->id=$id;
+
+		$config = array(
+			'upload_path' => $obj->path(),
+			'allowed_types' => "pdf",
+			'overwrite' => TRUE,
+			'max_size' => "20048000",
+			'file_name' => $id
+		);
+		$this->load->library('upload', $config);
+		$resultado["status"]=0;
+		$this->upload->initialize($config);
+		if($this->upload->do_upload('file'))
+		{
+			/**
+			 * Correccion de extension de PDF a dpf
+			 */
+			$file_data=$this->upload->data();
+			$estado=true;
+			if($file_data['file_ext']=="PDF"){
+				$name_correct=$id.'.pdf';
+				$new_path=$file_data['file_path'].$name_correct;
+				$estado=rename($file_data['full_path'],  $new_path);
+			}
+			
+			$resultado["status"]=($estado?1:0);
+			$resultado["data"] = array('upload_data' => $this->makeObjectByType($type)->name());
+		}else
+		{
+			$resultado["error"] = array('error' => $this->upload->display_errors());
+		}
+		echo json_encode($resultado);
+	}
+
+
+	private function makeObjectByType($type_string){
+		$obj;
+		switch ($type_string) {
+			case CurriculumFile::$min_name:
+				$obj=new CurriculumFile();
+				break;
+
+			case DeclaracionJuradaFile::$min_name:
+				$obj=new DeclaracionJuradaFile();
+				break;
+
+			case DniFile::$min_name:
+				$obj=new DniFile();
+				break;
+
+			case BachillerFile::$min_name:
+				$obj=new BachillerFile();
+				break;
+
+			case MaestriaFile::$min_name:
+				$obj=new MaestriaFile();
+				break;
+			case DoctoradoFile::$min_name:
+				$obj=new DoctoradoFile();
+				break;
+			case SolicitudFile::$min_name:
+				$obj=new SolicitudFile();
+				break;
+			
+			case ProyectoInvestigacionFile::$min_name:
+				$obj=new ProyectoInvestigacionFile();
+				break;
+
+			case HojaDatosFile::$min_name:
+				$obj=new HojaDatosFile();
+				break;
+			
+			default:
+				show_404();
+				exit;
+				break;
+			
+		}
+		return $obj;
+	}
 
 	public function verify_login_or_fail(){
 		if($this->nativesession->get("estado")!="logeado"){
 			show_error("No tiene acceso debes iniciar session",501);
 			exit;
 		}
+	}
+
+	public function showFileRequirement($file_name)
+	{
+		$pathFile=CC_BASE_PATH."/files/requirement/".$file_name;
+		if((($pathFile!=""))&&(file_exists($pathFile))){
+				header('Content-type: application/pdf');
+				header('Content-Disposition: inline; filename="'.$pathFile.'"');
+				readfile($pathFile);
+				
+			}else{
+				show_404();
+			}
 	}
 
 }

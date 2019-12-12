@@ -325,8 +325,7 @@ function loadDiscountAndRequirements(solicitud)
         dataType: "json",
         success: function (response) {
             if (response.status) {
-                console.log(response.data.programa.discount);
-                //console.log(response.data.programa.requirements);
+                document.getElementById('discountsBodyAndRequirements').innerHTML = makeDiscountsHtml(response.data.programa);
             } else {
 
             }
@@ -335,6 +334,30 @@ function loadDiscountAndRequirements(solicitud)
 
         }
     });
+}
+
+function makeDiscountsHtml(parametros) {
+    let discountsRows = '';
+    parametros.discount.forEach(discount => {
+        discountsRows += `<div class="form-group">
+            <label for="">${discount.name}</label>
+            <ul class="list-group">
+                ${makeRequirementsHtml(parametros.requirements,discount.id)}
+            </ul>
+        </div>`;
+    });
+    return discountsRows;
+}
+function makeRequirementsHtml(requirements,discount_id)
+{
+    let requiremenstRows = '';
+    requirements.forEach(requirement => {
+        if(requirement.discount_id == discount_id){
+            requiremenstRows += `<li class="list-group-item"><a href="/administracion/requirements/document/${requirement.file}" target="_blank" class="">${requirement.name}</a></li>`;
+        }
+    });
+
+    return requiremenstRows;
 }
 
 function makeTemplateIconsDocuments(nombre,estado,identifier,nameFile,urlUpload,id,notification=''){
