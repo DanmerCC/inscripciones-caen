@@ -863,17 +863,91 @@ function configuracionInputErrors()
 
 function loadAllDiscountList()
 {
-    /*
+
     $.ajax({
         type: "GET",
-        url: "/administracion/discounts/solicitud/",
+        url: "/postulante/misdescuentos",
         data: {},
         dataType: "json",
         success: function (response) {
-            
+            if (response.status) {
+                if(response.data.length>0) {
+                    makeDiscountsHtmlList(response.data);
+                }else{
+                    
+                }
+            } else {
+
+            }
         }
-    });*/
+    });
 }
+
+function makeDiscountsHtmlList(discounts)
+{
+    let discountRow = '';
+    discounts.forEach(discount => {
+        discountRow +=`<div class='row'>
+            <div class='col-xs-3 col-md-4'>${discount.nombre}</div>
+            <div class='col-xs-4 col-md-3'>${discount.name}</div>
+            <div class='col-xs-5 col-md-5'>
+                <div class='row'>
+                    <div class='col-xs-6 col-md-2'><a class="btn btn-danger hide" onclick="" >Eliminar</a></div>
+                    <div class='col-xs-12 col-md-5'>
+                        <button type='button' class='btn btn-block btn-primary btn-xs' onclick="openModalDiscountInfo(${discount.solicitud_id})">
+                            Información requerida
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    });
+    
+    document.getElementById('contentDiscount').innerHTML = discountRow;
+}
+
+function openModalDiscountInfo(discount_id)
+{
+    $.ajax({
+        type: "GET",
+        url: "postulante/misdescuentos/"+discount_id,
+        data: {},
+        dataType: "json",
+        success: function (response) {
+            if (response.status) {
+                document.getElementById('discountsBodyAndRequirements').innerHTML = makeDiscountsHtml(response.data.programa);
+                $("#discountModalInformation").modal("show");
+            } else {
+                document.getElementById('discountsBodyAndRequirements').innerHTML = '<span class="alert alert-danger"></span>';
+            }
+        }
+    });
+}
+
+function makeDiscountsHtml(parametros) {
+    let discountsRows = '';
+    parametros.discount.forEach(discount => {
+        discountsRows += `<div class="form-group">
+            <label for="">${discount.name}</label>
+            <ul class="list-group">
+                ${makeRequirementsHtml(parametros.requirements,discount.id)}
+            </ul>
+        </div>`;
+    });
+    return discountsRows;
+}
+function makeRequirementsHtml(requirements,discount_id)
+{
+    let requiremenstRows = '';
+    requirements.forEach(requirement => {
+        if(requirement.discount_id == discount_id){
+            requiremenstRows += `<li class="list-group-item"><a href="/administracion/requirements/document/${requirement.file}" target="_blank" class="">${requirement.name}</a></li>`;
+        }
+    });
+
+    return requiremenstRows;
+}
+
 
 function openModalAddNewDiscount(alumno_id){
     resetFormDiscount();

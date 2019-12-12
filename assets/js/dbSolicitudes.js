@@ -327,7 +327,7 @@ function loadDiscountAndRequirements(solicitud)
             if (response.status) {
                 document.getElementById('discountsBodyAndRequirements').innerHTML = makeDiscountsHtml(response.data.programa);
             } else {
-
+                document.getElementById('discountsBodyAndRequirements').innerHTML = '<span class="alert alert-danger"></span>';
             }
         },
         error: function (error){

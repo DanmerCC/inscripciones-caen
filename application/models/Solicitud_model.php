@@ -240,6 +240,18 @@ class Solicitud_model extends CI_Model
 		return $this->db->get();
 	}
 
+	public function solicitudByIdAlumno($idAlumno){
+
+		$this->db->select('s.idSolicitud,s.programa,s.alumno,s.tipo_financiamiento,s.fecha_registro,c.numeracion,c.nombre as nombreCurso,tc.nombre as tipoCurso,a.documento,a.nombres,a.apellido_paterno,a.apellido_materno');
+		$this->db->from('solicitud s');
+		$this->db->join('curso c', 's.programa=c.id_curso','left');
+		$this->db->join('tipo_curso tc', 'c.idTipo_curso = tc.idTipo_curso','left');
+		$this->db->join('alumno a', 's.alumno = a.id_alumno','left');
+		$this->db->where('s.alumno',$idAlumno);
+
+		return $this->db->get();
+	}
+
 	//Array
 	public function byIdAndAlumno($id,$idAlumno=null){
 		return resultToArray($this->solicitud_porId($id,$idAlumno));

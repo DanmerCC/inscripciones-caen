@@ -945,10 +945,10 @@
                                                     <div class="col-xs-12 col-md-12">
                                                         <div class="row">
                                                             <div class="col-xs-3 col-md-4"><strong>Programa</strong></div>
-                                                            <div class="col-xs-4 col-md-2"><strong>Financiamiento</strong></div>
-                                                            <div class="col-xs-5 col-md-6"><strong>Ficha de Inscripción</strong></div>
+                                                            <div class="col-xs-4 col-md-4"><strong>Descuento</strong></div>
+                                                            <div class="col-xs-5 col-md-4"><strong></strong></div>
                                                         </div><br>
-                                                        <div id="contentSolicitudes">
+                                                        <div id="contentDiscount">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -959,11 +959,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                        <!-- <div class="form-group">
-
-                                        </div> -->
-                                    
                                 </div>
                             </form>         
                         </div>
@@ -1106,6 +1101,33 @@
   </div>
 </div>
 <!-- Modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="discountModalInformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <form id="formSolictitud" action="/postulante/solicitar" method="post" >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id=""><i class="fa fa-pencil margin-r-5"></i>Descuentos</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="box box-solid sombra">
+                <div class="box-body" id="discountsBodyAndRequirements">
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+    </form>
+  </div>
+</div>
+<!-- Modal -->
+
 <?php $this->load->view('adminlte/scriptsFooter');?>
 <script src="/assets/js/profile.js"></script>
 <script src="/assets/js/fileComponent.js"></script>

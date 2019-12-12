@@ -244,7 +244,6 @@
                           <h3 class="box-title"><i class="fa fa-pencil margin-r-5"></i>Descuentos</h3>
                         </div>
                         <div class="box-body" id="discountsBodyAndRequirements">
-                          
                         </div>
                       </div>
                   </div>

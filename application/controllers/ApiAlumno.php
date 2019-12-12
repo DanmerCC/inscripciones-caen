@@ -86,6 +86,8 @@ class ApiAlumno extends CI_Controller
 		echo json_encode($result,JSON_UNESCAPED_UNICODE);
 	}
 
+	
+
 	public function solicitud($id){
 		$this->load->model('Alumno_model');
 		$solicitudes=$this->Alumno_model->solicitudes($this->nativesession->get("idAlumno"));
