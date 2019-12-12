@@ -125,5 +125,4 @@ class Discount extends MY_Controller  implements Idata_controller
 		$discounts=$this->Discount_model->byCurso($programa["id_curso"]);
 		$this->structuredResponse($discounts);
 	}
-
 }

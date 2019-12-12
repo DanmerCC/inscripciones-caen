@@ -71,4 +71,11 @@ class Discount_model extends MY_Model
 	function delete($id){
 		return $this->parentDelete($id);
 	}
+
+	function bySolicituds($arrayIds){
+		$this->db->select()->from($this->table.'.*')
+		->join('solicitud_discount','solicitud_discount.solicitud_id='.$this->table.'.id')
+		->where_in($this->table.'.'.$this->id,$arrayIds);
+	}
+
 }
