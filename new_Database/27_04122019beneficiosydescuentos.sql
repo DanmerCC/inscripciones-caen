@@ -84,5 +84,5 @@ INSERT INTO permiso(`idPermiso`,`url`) VALUES(12,'requirements');
 /*
 ALTER TABLE `solicitud_requirement` ADD `discount_id` INT NOT NULL AFTER `file`, ADD INDEX (`discount_id`);
 ALTER TABLE `solicitud_requirement`
-	ADD CONSTRAINT `fk_solicitud_requirement_discount_id` FOREIGN KEY (`discount_id`) REFERENCES `discount` (`discount_id`);
+	ADD CONSTRAINT `fk_solicitud_requirement_discount_id` FOREIGN KEY (`discount_id`) REFERENCES `discounts` (`id`);
 */
