@@ -239,7 +239,13 @@
                       </div>
                   </div>
                   <div class="col-md-6">
-                        
+                      <div class="box box-solid sombra">
+                        <div class="box-header">
+                          <strong><i class="fa fa-pencil margin-r-5"></i>Descuentos</strong>
+                        </div>
+                        <div class="box-body">
+                        </div>
+                      </div>
                   </div>
               </div>
             </div>

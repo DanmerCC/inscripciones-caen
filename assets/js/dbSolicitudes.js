@@ -292,7 +292,6 @@ function cargarData(id){
                 var upload_link="#";
 				for (var i = 0; i < documentos.length; i++) {
                     var upload_link="/admin/upload/page/"+documentos[i].identifier+'/'+alumno.documento;
-                    console.log(alumno.documento);
 					htmlDocuments=htmlDocuments+makeTemplateIconsDocuments(documentos[i].name,documentos[i].stateUpload,documentos[i].identifier,documentos[i].fileName,upload_link,id,documentos[i].notification);
 					
 				}
@@ -311,6 +310,29 @@ function cargarData(id){
 				});
             }
             
+        }
+    });
+
+    loadDiscountAndRequirements(id);
+}
+
+function loadDiscountAndRequirements(solicitud)
+{
+    $.ajax({
+        type: "GET",
+        url: "/postulante/misdescuentos/"+solicitud,
+        data: {},
+        dataType: "json",
+        success: function (response) {
+            if (response.status) {
+                console.log(response.data.programa.discount);
+                //console.log(response.data.programa.requirements);
+            } else {
+
+            }
+        },
+        error: function (error){
+
         }
     });
 }
