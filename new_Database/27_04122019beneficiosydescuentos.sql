@@ -38,12 +38,14 @@ CREATE TABLE `solicitud_requirement` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`requirement_id` INT NOT NULL,
 	`solicitud_id` INT NOT NULL,
+	`discount_id` INT NOT NULL,
 	`file` VARCHAR(250) NOT NULL,
 	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`),
 	INDEX (`requirement_id`),
-	INDEX (`solicitud_id`)
+	INDEX (`solicitud_id`),
+	INDEX (`discount_id`)
 ) ENGINE = InnoDB;
 
 CREATE TABLE `solicitud_discount` (
@@ -68,7 +70,8 @@ ALTER TABLE `discount_requirement`
 
 ALTER TABLE `solicitud_requirement`
   ADD CONSTRAINT `fk_solicitud_requirement_requirement_id` FOREIGN KEY (`requirement_id`) REFERENCES `requirements` (`id`),
-  ADD CONSTRAINT `fk_solicitud_requirement_solicitud_id` FOREIGN KEY (`solicitud_id`) REFERENCES `solicitud` (`idSolicitud`);
+  ADD CONSTRAINT `fk_solicitud_requirement_solicitud_id` FOREIGN KEY (`solicitud_id`) REFERENCES `solicitud` (`idSolicitud`),
+ADD CONSTRAINT `fk_solicitud_requirement_discount_id` FOREIGN KEY (`discount_id`) REFERENCES `discount` (`discount_id`);
 
 ALTER TABLE `solicitud_discount`
   ADD CONSTRAINT `fk_solicitud_solicitud_discount_id` FOREIGN KEY (`discount_id`) REFERENCES `discounts` (`id`),
@@ -76,3 +79,10 @@ ALTER TABLE `solicitud_discount`
 
 INSERT INTO permiso(`idPermiso`,`url`) VALUES(11,'discounts');
 INSERT INTO permiso(`idPermiso`,`url`) VALUES(12,'requirements');
+
+
+/*
+ALTER TABLE `solicitud_requirement` ADD `discount_id` INT NOT NULL AFTER `file`, ADD INDEX (`discount_id`);
+ALTER TABLE `solicitud_requirement`
+	ADD CONSTRAINT `fk_solicitud_requirement_discount_id` FOREIGN KEY (`discount_id`) REFERENCES `discount` (`discount_id`);
+*/
