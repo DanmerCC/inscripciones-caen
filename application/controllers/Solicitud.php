@@ -357,6 +357,7 @@ class Solicitud extends MY_Controller
 					$array = array(
 						'requirement_id'=> $filesData[$i]['requirement_id'],
 						'solicitud_id'=> $this->input->post('solicitud_idd'),
+						'discount_id'=> $this->input->post('tipodescuento_idd'),
 						'file'=>$filesData[$i]['file_name']
 					);
 					$this->Solicitud_model->addRequirement($array);
