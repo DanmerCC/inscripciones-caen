@@ -895,7 +895,7 @@ function makeDiscountsHtmlList(discounts)
                     <div class='col-xs-6 col-md-2'><a class="btn btn-danger hide" onclick="" >Eliminar</a></div>
                     <div class='col-xs-12 col-md-5'>
                         <button type='button' class='btn btn-block btn-primary btn-xs' onclick="openModalDiscountInfo(${discount.solicitud_id})">
-                            Información requerida
+                            Ver mis requisitos
                         </button>
                     </div>
                 </div>
