@@ -1103,6 +1103,7 @@ $("#formDiscountCreate").submit(function (e) {
 function resetFormDiscount()
 {
     $("#formDiscountCreate")[0].reset();
+    document.getElementById('bodyRequirementUploadFiles').innerHTML = '<div class="alert alert-success">Seleccionar un descuento</div>';
 }
 
 function isValidFormDiscount()
