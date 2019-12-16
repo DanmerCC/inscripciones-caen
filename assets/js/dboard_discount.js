@@ -93,7 +93,7 @@ function makeTemplateTablePrograma(data,discount_id)
         data.forEach((element,i) => {
             template +=`<tr>
                 <td>${i+1}</td>
-                <td>${element.nombre}</td>
+                <td>${element.numeracion} ${element.tipo.nombre} ${element.nombre}</td>
                 <td>
                     <button class="btn btn-danger btn-sm" 
                     onclick="quitarPrograma(${element.id_curso},${discount_id})">Quitar</button>
@@ -114,7 +114,7 @@ function makeTemplateSelectPrograma(data)
     let template = '<option value="">Seleccionar:</option>';
     if(data.length>0){
         data.forEach((element,i) => {
-            template +=`<option value="${element.id_curso}">${element.nombre}</option>`;
+            template +=`<option value="${element.id_curso}">${element.numeracion} ${element.tipo.nombre} ${element.nombre}</option>`;
         });
     }else{
     }
