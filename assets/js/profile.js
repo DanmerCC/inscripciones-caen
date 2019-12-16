@@ -1072,6 +1072,7 @@ $("#formDiscountCreate").submit(function (e) {
             success: function (response) {
                 if (response.status == 'OK') {
                     $("#modalAddDiscount").modal("hide");
+                    loadAllDiscountList();
                 } else {
                     alert("No se puedo guardar");
                 }

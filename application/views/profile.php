@@ -953,6 +953,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <hr>
                                             <div class="row">
                                                 <div class="col-sm-5">
                                                     <button type="button" class="btn btn-primary" onclick="openModalAddNewDiscount(<?=$lista['id_alumno']?>)">Agregar Descuento</button>
