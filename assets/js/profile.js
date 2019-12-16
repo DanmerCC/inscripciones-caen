@@ -1048,11 +1048,17 @@ function makeInputFileRequisitosTemplate(requisitos)
     global_requirement_id = [];
     requisitos.forEach((element,index) => {
         global_requirement_id.push(element.id);
-        rows += `<div class="form-group">
-                    <label for="file_requirement_${element.id}">${index+1}.- ${element.name}</label>
-                    <p>${element.description}</p>
-                    <input type="file" id="file_requirement_${element.id}" name="file_requirement[${element.id}]" accept="application/pdf" class="form-control cleanerror">
-                    <span class="help-block"></span>
+        rows += `<div class="box box-solid">
+                    <div class="box-body"> 
+                    <div class="form-group">
+                        <div class="box-header bg-success">
+                            <label for="file_requirement_${element.id}">${index+1}.- ${element.name}</label>
+                        </div>
+                            <p>${element.description}</p>
+                            <input type="file" id="file_requirement_${element.id}" name="file_requirement[${element.id}]" accept="application/pdf" class="form-control cleanerror">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
                 </div>`;
     });
 
