@@ -19,6 +19,7 @@ class Auth_Permisions extends MY_Model {
 		//parent::__construct();
 		$this->load->library('Nativesession');
 		$this->load->model('AuthRole_model');
+		$this->load->model('TipoUsuario_model');
 		$this->load->helper('mihelper');
 	}
 		 
@@ -64,7 +65,7 @@ class Auth_Permisions extends MY_Model {
 
 		$id_user=$this->nativesession->get('idUsuario');
 		if($this->config->item('app_env') == 'local'){
-			$tipoUsers = $this->AuthRole_model->getRolesByUserId($id_user);
+			$tipoUsers = $this->TipoUsuario_model->getTipoUsuarioByUserId($id_user);
 			if($this->verifiIfIsAdmin($tipoUsers)) {
 				return true;
 			}
