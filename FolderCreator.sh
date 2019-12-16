@@ -48,6 +48,9 @@ fi
 if [ ! -d uploads/files/eval ]; then
     mkdir -p uploads/files/eval;
 fi 
+if [ ! -d uploads/files/requirement ]; then
+    mkdir -p uploads/files/requirement;
+fi 
 if [ ! -d uploads/files/trash ]; then
     mkdir -p uploads/files/trash;
 fi 
