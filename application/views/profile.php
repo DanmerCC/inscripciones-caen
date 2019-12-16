@@ -1108,7 +1108,7 @@
 <!-- Modal -->
 <div class="modal fade" id="discountModalInformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
-    <form id="formSolictitud" action="/postulante/solicitar" method="post" >
+    <form id="formSolictitudssad" action="/postulante/solicitar" method="post" >
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title" id=""><i class="fa fa-pencil margin-r-5"></i>Descuentos</h4>

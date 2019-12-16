@@ -888,7 +888,7 @@ function makeDiscountsHtmlList(discounts)
     let discountRow = '';
     discounts.forEach(discount => {
         discountRow +=`<div class='row'>
-            <div class='col-xs-3 col-md-4'>${discount.nombre}</div>
+            <div class='col-xs-3 col-md-4'>${discount.numeracion} ${discount.tipo} ${discount.nombre}</div>
             <div class='col-xs-4 col-md-3'>${discount.name}</div>
             <div class='col-xs-5 col-md-5'>
                 <div class='row'>
