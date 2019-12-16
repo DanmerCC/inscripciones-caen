@@ -194,11 +194,11 @@
           <div class="box box-primary">
             <div class="box-body box-profile">
               <img class="profile-user-img img-responsive img-circle" id="mdl-foto" src="" alt="User profile picture">
-              <h3 class="profile-username text-center" id="mdl-name">Nina Mcintire</h3>
-              <p class="text-muted text-center" id="mdl-profesion">Software Engineer</p>
+              <h3 class="profile-username text-center" id="mdl-name"></h3>
+              <p class="text-muted text-center" id="mdl-profesion"></p>
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b >Solicitudes</b> <a class="pull-right" id="mdl-solicitudes">1,322</a>
+                  <b >Solicitudes</b> <a class="pull-right" id="mdl-solicitudes"></a>
                 </li>
               </ul>
 
@@ -206,29 +206,53 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">Otros datos</h3>
                 </div>
-                <div class="box body">
-                  <strong><i class="fa fa-book margin-r-5"></i> Educacion</strong>
-                  <p class="text-muted" id="mdl-educacion">
-                    B.S. in Computer Science from the University of Tennessee at Knoxville
-                  </p>
-                  <hr>
-                  <strong><i class="fa fa-phone margin-r-5"></i> Numeros de celular</strong>
-                  <p class="text-muted" id="mdl-celphone">
-                    55555-5555
-                  </p>
-                  <hr>
-                  <strong><i class="fa fa-envelope margin-r-5"></i> Email</strong>
-                  <p class="text-muted" id="mdl-email"></p>
-                  <hr>
-                  <strong><i class="fa fa-pencil margin-r-5"></i> Documentos</strong>
-                  <p>
-                    <div id="mdl-icons-documents">
-                    </div>
-                  </p>
-                  <strong><i class="fa fa-pencil margin-r-5"></i> Documentos De solicitud</strong>
-                  <p>
-                    <div id="mdl-icons-filesOfSol"></div>
-                  </p>
+                <div class="box-body">
+					<div class="row">
+						<div class="col-md-6">
+							<strong><i class="fa fa-book margin-r-5"></i> Educacion</strong>
+							<p class="text-muted" id="mdl-educacion"></p>
+						</div>
+						<div class="col-md-6">
+							<strong><i class="fa fa-phone margin-r-5"></i> Numeros de celular</strong>
+							<p class="text-muted" id="mdl-celphone"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<strong><i class="fa fa-envelope margin-r-5"></i> Email</strong>
+							<p class="text-muted" id="mdl-email"></p>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="box box-solid sombra">
+								<div class="box-header bg-success">
+									<strong><i class="fa fa-pencil margin-r-5"></i> Documentos</strong>
+								</div>
+								<div class="box-body">
+									<div id="mdl-icons-documents"></div>
+								</div>
+							</div>
+							<div class="box box-solid sombra">
+								<div class="box-header bg-success">
+								<strong><i class="fa fa-pencil margin-r-5"></i> Documentos De solicitud</strong>
+								</div>
+								<div class="box-body">
+									<div id="mdl-icons-filesOfSol"></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="box box-solid sombra">
+								<div class="box-header bg-success">
+								<h3 class="box-title"><i class="fa fa-pencil margin-r-5"></i>Descuentos</h3>
+								</div>
+								<div class="box-body" id="discountsBodyAndRequirements">
+								</div>
+							</div>
+						</div>
+					</div>
                 </div>
               </div>
             </div>

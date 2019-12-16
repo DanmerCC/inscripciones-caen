@@ -114,6 +114,50 @@ $(document).ready(function(){
 
 });
 
+function loadDiscountAndRequirements(solicitud)
+{
+    $.ajax({
+        type: "GET",
+        url: "/postulante/misdescuentos/"+solicitud,
+        data: {},
+        dataType: "json",
+        success: function (response) {
+            if (response.status) {
+                document.getElementById('discountsBodyAndRequirements').innerHTML = makeDiscountsHtml(response.data.programa);
+            } else {
+                document.getElementById('discountsBodyAndRequirements').innerHTML = '<span class="alert alert-danger"></span>';
+            }
+        },
+        error: function (error){
+
+        }
+    });
+}
+
+function makeDiscountsHtml(parametros) {
+    let discountsRows = '';
+    parametros.discount.forEach(discount => {
+        discountsRows += `<div class="form-group">
+            <label for="">${discount.name}</label>
+            <ul class="list-group">
+                ${makeRequirementsHtml(parametros.requirements,discount.id)}
+            </ul>
+        </div>`;
+    });
+    return discountsRows;
+}
+
+function makeRequirementsHtml(requirements,discount_id)
+{
+    let requiremenstRows = '';
+    requirements.forEach(requirement => {
+        if(requirement.discount_id == discount_id){
+            requiremenstRows += `<li class="list-group-item"><a href="/administracion/requirements/document/${requirement.file}" target="_blank" class="">${requirement.name}</a></li>`;
+        }
+    });
+
+    return requiremenstRows;
+}
 
 function listProgramasActivos(array){
     result="<option value='' disabled required selected>Seleciona una opcion</option>";
@@ -344,7 +388,7 @@ function eliminarContenido(){
 
 function makeTemplateIconsDocuments(nombre,estado,identifier,nameFile){
     template=''+
-    ((estado)?"<a href='/admin/view/pdf/"+identifier+"/"+nameFile+"' target='_blank'>":"")+
+    ((estado)?"<a href='/admin/view/pdf/"+identifier+"/"+nameFile+"' target='_blank'>":"<div class='container' ></div>")+
     '<span class="'+((estado)?"label label-primary":"label label-danger")+'">'+
     nombre+
     '</span>'+
@@ -399,7 +443,8 @@ function cargarData(id){
 		error: function (e) {
 			console.log(e.responseText);
 		}
-    });
+	});
+	loadDiscountAndRequirements(id);
 }
 
 function createRouteExport(){
