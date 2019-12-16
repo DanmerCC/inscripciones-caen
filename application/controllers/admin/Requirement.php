@@ -67,7 +67,8 @@ class Requirement extends MY_Controller  implements Idata_controller
 	public function save(){
 		$this->validatePermision($this->canCreate);
 		$name = $this->input->post('name');
-		$res = $this->Requirement_model->registrar($name);
+		$description = $this->input->post('description');
+		$res = $this->Requirement_model->registrar($name,$description);
 		if($res){
 			$this->structuredResponse(array('message'=>""),200);
 		}else{
@@ -76,11 +77,13 @@ class Requirement extends MY_Controller  implements Idata_controller
 	}
 
 	public function update(){
-		$this->validatePermision($this->canUpdate);
+		$this->validatePermision($this->canChange);
 		$name = $this->input->post('name');
+		$description = $this->input->post('description');
 		$requirement_id = $this->input->post('requirement_id');
 		$data=[];
 		$data["name"]=$name;
+		$data["description"]=$description;
 		$res = $this->Requirement_model->update($requirement_id,$data);
 		if($res){
 			$this->structuredResponse(array('message'=>""),200);

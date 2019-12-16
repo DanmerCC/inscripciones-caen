@@ -96,7 +96,16 @@
 									<label for="name" class="col-lg-2 control-label">Nombre</label>
 									<div class="col-lg-10">
 										<div class="input-group col-lg-12">
-											<input type="text" class="form-control validar" maxlength="25" id="name" name="name" placeholder="Nombre">
+											<input type="text" class="form-control validar" maxlength="50" id="name" name="name" placeholder="Nombre">
+										</div>
+										<span class="help-block"></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="name" class="col-lg-2 control-label">Descripción</label>
+									<div class="col-lg-10">
+										<div class="input-group col-lg-12">
+											<textarea class="form-control validar" id="description" name="description" placeholder="Descripción"></textarea>
 										</div>
 										<span class="help-block"></span>
 									</div>

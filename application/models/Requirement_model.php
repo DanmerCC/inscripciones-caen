@@ -8,18 +8,20 @@ class Requirement_model extends MY_Model
 	
 	protected $id='id';
 	protected $name='name';
+	protected $description='description';
 
-	protected $public_columns=['id','name'];
-	protected $fillable=['name'];
+	protected $public_columns=['id','name','description'];
+	protected $fillable=['name','description'];
 
 	function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function registrar($nombre){
+	public function registrar($nombre, $description){
 		$data=array(
-			$this->name => $nombre
+			$this->name => $nombre,
+			$this->description => $description,
 		);
 		$this->db->insert($this->table,$data);
 		$ultimoId = $this->db->insert_id();

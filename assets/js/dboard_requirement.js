@@ -1,6 +1,6 @@
 var tabla;
 var actionMethod;
-var campos_global = [ 'name'];
+var campos_global = [ 'name','description'];
 
 //$("#"+nameId).parent('.input-group').next('span').text('Este campo es requerido.')
 $('input.validar').change(function(){

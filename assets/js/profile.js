@@ -941,7 +941,7 @@ function makeRequirementsHtml(requirements,discount_id)
     let requiremenstRows = '';
     requirements.forEach(requirement => {
         if(requirement.discount_id == discount_id){
-            requiremenstRows += `<li class="list-group-item"><a href="/administracion/requirements/document/${requirement.file}" target="_blank" class="">${requirement.name}</a></li>`;
+            requiremenstRows += `<li class="list-group-item"><a href="/administracion/requirements/document/${requirement.file}" target="_blank" class=""> ${requirement.name}  <i class="fa fa-file-pdf-o text-danger" aria-hidden="true"></i></a></li>`;
         }
     });
 
@@ -1050,6 +1050,7 @@ function makeInputFileRequisitosTemplate(requisitos)
         global_requirement_id.push(element.id);
         rows += `<div class="form-group">
                     <label for="file_requirement_${element.id}">${index+1}.- ${element.name}</label>
+                    <p>${element.description}</p>
                     <input type="file" id="file_requirement_${element.id}" name="file_requirement[${element.id}]" accept="application/pdf" class="form-control cleanerror">
                     <span class="help-block"></span>
                 </div>`;
