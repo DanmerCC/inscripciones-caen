@@ -4,6 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         
 class Auth_Permisions extends MY_Model {
 
+
+	const ADMINTRATOR = 2;
+
 	private $table='auth_permisos';
 						
 	private $columns=[
@@ -58,10 +61,28 @@ class Auth_Permisions extends MY_Model {
 	}
 
 	function can($name){
+
 		$id_user=$this->nativesession->get('idUsuario');
+		if($this->config->item('app_env') == 'local'){
+			$tipoUsers = $this->AuthRole_model->getRolesByUserId($id_user);
+			if($this->verifiIfIsAdmin($tipoUsers)) {
+				return true;
+			}
+		}
+		
 		$permisos=$this->get_by_user($id_user);
 		$permisos_nombres=c_extract($permisos,'nombre');
 		return in_array($name,$permisos_nombres);
+	}
+	private function verifiIfIsAdmin($tipoUsers) : bool
+	{
+		$status = false;
+		foreach ($tipoUsers as $key => $value) {
+			if ($value['id']==$this::ADMINTRATOR) {
+				$status = true;
+			}
+		}
+		return $status;
 	}
 
 	function getPermisionCurrentUser(){
