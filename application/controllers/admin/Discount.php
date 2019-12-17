@@ -110,6 +110,10 @@ class Discount extends MY_Controller  implements Idata_controller
 	{
 		$this->validatePermision($this->canDelete);
 		$discount_id = $this->input->post('id');
+		if($this->Discount_model->hasRequirement($discount_id)|| $this->Discount_model->hasSolicitud($discount_id))
+		{
+			$this->structuredResponse("No es posible eliminar ya que tiene dependencias",409);
+		}
 		$res = $this->Discount_model->delete($discount_id);
 		if($res){
 			$this->structuredResponse($res,200);
