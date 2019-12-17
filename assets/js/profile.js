@@ -888,14 +888,14 @@ function makeDiscountsHtmlList(discounts)
     let discountRow = '';
     discounts.forEach(discount => {
         discountRow +=`<div class='row'>
-            <div class='col-xs-3 col-md-4'>${discount.nombre}</div>
+            <div class='col-xs-3 col-md-4'>${discount.numeracion} ${discount.tipo} ${discount.nombre}</div>
             <div class='col-xs-4 col-md-3'>${discount.name}</div>
             <div class='col-xs-5 col-md-5'>
                 <div class='row'>
                     <div class='col-xs-6 col-md-2'><a class="btn btn-danger hide" onclick="" >Eliminar</a></div>
                     <div class='col-xs-12 col-md-5'>
                         <button type='button' class='btn btn-block btn-primary btn-xs' onclick="openModalDiscountInfo(${discount.solicitud_id})">
-                            Información requerida
+                            Ver mis requisitos
                         </button>
                     </div>
                 </div>
@@ -1048,11 +1048,17 @@ function makeInputFileRequisitosTemplate(requisitos)
     global_requirement_id = [];
     requisitos.forEach((element,index) => {
         global_requirement_id.push(element.id);
-        rows += `<div class="form-group">
-                    <label for="file_requirement_${element.id}">${index+1}.- ${element.name}</label>
-                    <p>${element.description}</p>
-                    <input type="file" id="file_requirement_${element.id}" name="file_requirement[${element.id}]" accept="application/pdf" class="form-control cleanerror">
-                    <span class="help-block"></span>
+        rows += `<div class="box box-solid">
+                    <div class="box-body"> 
+                    <div class="form-group">
+                        <div class="box-header bg-success">
+                            <label for="file_requirement_${element.id}">${index+1}.- ${element.name}</label>
+                        </div>
+                            <p>${element.description}</p>
+                            <input type="file" id="file_requirement_${element.id}" name="file_requirement[${element.id}]" accept="application/pdf" class="form-control cleanerror">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
                 </div>`;
     });
 
@@ -1097,6 +1103,7 @@ $("#formDiscountCreate").submit(function (e) {
 function resetFormDiscount()
 {
     $("#formDiscountCreate")[0].reset();
+    document.getElementById('bodyRequirementUploadFiles').innerHTML = '<div class="alert alert-success">Seleccionar un descuento</div>';
 }
 
 function isValidFormDiscount()

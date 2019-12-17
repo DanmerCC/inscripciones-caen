@@ -73,10 +73,11 @@ class Discount_model extends MY_Model
 	}
 
 	function bySolicituds($arrayIds){
-		$this->db->select($this->table.'.*,solicitud_discount.solicitud_id,curso.nombre,curso.numeracion')->from($this->table)
+		$this->db->select($this->table.'.*,solicitud_discount.solicitud_id,curso.nombre,curso.numeracion,t.nombre as tipo')->from($this->table)
 		->join('solicitud_discount','solicitud_discount.discount_id='.$this->table.'.'.$this->id)
 		->join('solicitud','solicitud.idSolicitud=solicitud_discount.solicitud_id')
 		->join('curso','solicitud.programa=curso.id_curso')
+		->join('tipo_curso t','t.idTipo_curso=curso.idTipo_curso')
 		->where_in('solicitud_discount.solicitud_id',$arrayIds);
 		return $this->db->get()->result_array();
 	}

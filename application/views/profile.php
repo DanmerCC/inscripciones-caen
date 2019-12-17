@@ -1043,13 +1043,13 @@
   <div class="modal-dialog modal-lg" role="document">
     <form id="formDiscountCreate" method="post" enctype="multipart/form-data">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header bg-primary">
             <h4 class="modal-title" id="exampleModalLabel">Agregar nuevo descuento</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" style="background-color: #ecf0f5;">
             <div class="row">
                 <div class="col-md-4">
                     <div class="box box-primary sombra" >
@@ -1103,10 +1103,12 @@
 </div>
 <!-- Modal -->
 
+
+
 <!-- Modal -->
 <div class="modal fade" id="discountModalInformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
-    <form id="formSolictitud" action="/postulante/solicitar" method="post" >
+    <form id="formSolictitudssad" action="/postulante/solicitar" method="post" >
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title" id=""><i class="fa fa-pencil margin-r-5"></i>Descuentos</h4>
