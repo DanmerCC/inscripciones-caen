@@ -69,6 +69,7 @@ class Discount_model extends MY_Model
 	}
 
 	function delete($id){
+		
 		return $this->parentDelete($id);
 	}
 
@@ -82,4 +83,20 @@ class Discount_model extends MY_Model
 		return $this->db->get()->result_array();
 	}
 
+	function hasRequirement($idDiscount){
+		$this->db->select('COUNT(id) as cantidad')
+		->from('discount_requirement')
+		->where('discount_id',$idDiscount);
+		$cantidad=$this->db->get();
+		return $cantidad->row()->cantidad>0;
+	}
+
+	function hasSolicitud($idDiscount){
+		$this->db->select('COUNT(id) as cantidad')
+		->from('solicitud_discount')
+		->where('solicitud_id',$idDiscount);
+		$cantidad=$this->db->get();
+		return $cantidad->row()->cantidad>0;
+	}
+	
 }
