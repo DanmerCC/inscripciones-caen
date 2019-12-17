@@ -1,9 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Solicitud_model extends CI_Model
+class Solicitud_model extends MY_Model
 {
 	private $tbl_solicitud='solicitud';
-	private $id='idSolicitud';
+	protected $table='solicitud';
+	protected $id='idSolicitud';
 	private $id_programa='programa';
 	private $check_sol_ad='check_sol_ad';
 	private $check_proyect_invs='check_proyect_invest';
@@ -306,12 +307,29 @@ class Solicitud_model extends CI_Model
 		return resultToArray($this->db->get());
 	}
 	
+	protected function relations(){
+		return [
+			'discount'=>[
+				'pivot_table'=>'solicitud_discount',
+				'column_relation'=>'solicitud_id',
+				'column_other_relation'=>'discount_id'
+			]
+		];
+	}
+
 	function getSolicitudProgramaByAlumno($idAlumno){
+		$this->db->select('solicitud_id')
+		->from('solicitud_discount');
+		$excludes_cursos=c_extract($this->db->get()->result_array(),'solicitud_id');
 		$this->db->select("p.idSolicitud,CONCAT(c.numeracion,' - ',t.nombre,' ',c.nombre) as nombre");
 		$this->db->from($this->tbl_solicitud.' p');
 		$this->db->join('curso c','c.id_curso=p.'.$this->id_programa);
 		$this->db->join('tipo_curso t','t.idTipo_curso=c.idTipo_curso');
 		$this->db->where('alumno',$idAlumno);
+		if(count($excludes_cursos)>0){
+			$this->db->where_not_in('p.idSolicitud',$excludes_cursos);
+		}
+
 		return resultToArray($this->db->get());
 	}
 

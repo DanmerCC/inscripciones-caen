@@ -79,6 +79,7 @@
 										<th>Detalles</th>
 										<th>Inscrito</th>
 										<th>Programa</th>
+										<th>fecha_registro</th>
 										<th>Documento</th>
 									</tfoot>
 								</table>

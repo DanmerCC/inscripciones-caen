@@ -54,7 +54,7 @@ class Requirement_model extends MY_Model
 
 
 	function byDiscountWithPivot($id){
-		return $this->byGetPivotByPivot('discount','discount_id',$id);
+		return $this->getByPivotValue('discount','discount_id',$id);
 	}
 
 	function byDiscount($id){
@@ -62,7 +62,7 @@ class Requirement_model extends MY_Model
 	}
 
 	function bySolicitudWithPivot($id){
-		return $this->byGetPivotByPivot('solicitud','solicitud_id',$id);
+		return $this->getByPivotValue('solicitud','solicitud_id',$id);
 	}
 
 	function byDiscountRestante($requirement_ids){

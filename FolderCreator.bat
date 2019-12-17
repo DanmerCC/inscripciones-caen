@@ -157,5 +157,7 @@ IF EXIST uploads (
 cd..
 cd..
 mkdir .\uploads\trash
-mkdir .\uploads\files\proinves	
+mkdir .\uploads\files\proinves
+mkdir .\uploads\files\eval
+mkdir .\uploads\files\requirement
 pause
