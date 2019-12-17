@@ -329,6 +329,11 @@ function eliminar(id) {
                     }else{
                         alert(response.data.message)
                     }
+                },
+                error: function(error) {
+                    if(typeof error.responseJSON.data != undefined ){
+                        alert(error.responseJSON.data)
+                    }
                 }
             });
         }
