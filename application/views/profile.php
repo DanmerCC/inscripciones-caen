@@ -1049,7 +1049,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body" style="background-color: #ecf0f5;">
+          <div class="modal-body fondo-modal" >
             <div class="row">
                 <div class="col-md-4">
                     <div class="box box-primary sombra" >
@@ -1110,14 +1110,14 @@
   <div class="modal-dialog modal-md" role="document">
     <form id="formSolictitudssad" action="/postulante/solicitar" method="post" >
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header bg-primary">
             <h4 class="modal-title" id=""><i class="fa fa-pencil margin-r-5"></i>Descuentos</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <div class="box box-solid sombra">
+          <div class="modal-body fondo-modal">
+            <div class="box box-solid sombra ">
                 <div class="box-body" id="discountsBodyAndRequirements">
                 </div>
             </div>

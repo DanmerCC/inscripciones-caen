@@ -1,4 +1,7 @@
 var global_requirement_id = [];
+var solicitudComponets=[];
+var solicitudFormalComponets=[];
+var proInvest=[];
 var configuracion = function(){
     ///$("#aDocs").trigger('click');
     //charge fileObject
@@ -70,9 +73,7 @@ var configuracion = function(){
     //configuracion de uploads
     //configInputsFile("#frmUploadCv input[type='file']","/postulante/upload/cv");
 
-	var solicitudComponets=[];
-	var solicitudFormalComponets=[];
-    var proInvest=[];
+	
     configuracionInputErrors()
     
     $("#formChangePwd").submit(function(evt){
@@ -396,7 +397,23 @@ $.ajax({
         }
 });
 
-$.ajax({
+
+
+
+$("#si_militar").on('change',function(){
+    desactStateMil(!$(this).prop('checked'));
+});
+realoadAllSolicitudes()
+loadAllDiscountList();
+
+}
+
+/*Carga de configuracion*/
+$(document).ready(configuracion);
+
+function realoadAllSolicitudes()
+{
+    $.ajax({
         url: "/api/solicitudes",
         type: "post",
         data:{},
@@ -406,7 +423,7 @@ $.ajax({
         success: function (data) {
 
             var datos= JSON.parse(data);
-            
+            $("#contentSolicitudes").html('');
             for (var i = datos.length - 1; i >= 0; i--) {
 
                 var alink = "/postulante/pdf/"+datos[i].idSolicitud;
@@ -441,6 +458,17 @@ $.ajax({
                     "</div>"+
                 "</div>";
                 
+                //conditional if exist discount
+                var htmlHasDiscount = '';
+                if (datos[i].solicitud_discount) {
+                    htmlHasDiscount = `<a class='btn btn-block btn-info btn-xs' title="Ver descuento" 
+                                        onclick="openModalDiscountInfo(${datos[i].idSolicitud})">
+                                            <i class="fa fa-eye"></i> Desc.</a>`;
+                }else{
+                    htmlHasDiscount = `<a class='btn btn-block btn-success btn-xs' title="Agregar descuento" 
+                                        onclick="openModalNewDiscountBySolicitud(${datos[i].idSolicitud},'${datos[i].numeracion} ${datos[i].tipoCurso} ${datos[i].nombreCurso}')">
+                                        <i class="fa fa-plus"></i> Desc.</a>`;
+                }
                 //Creacion de diseño de Despegable SOLICITUDES
                 var diseño = 
                 "<div class='row'>"+
@@ -448,13 +476,14 @@ $.ajax({
                     "<div class='col-xs-4 col-md-2'>"+datos[i].tipo_financiamiento+"</div>"+
                     "<div class='col-xs-5 col-md-6'>"+
                         "<div class='row'>"+
-                            "<div class='col-xs-6 col-md-2'><a href="+alink+">Ficha</a></div>"+
+                            "<div class='col-xs-6 col-md-1'><a href="+alink+">Ficha</a></div>"+
                             "<div class='col-xs-6 col-md-2'><a href="+alinkdel+">Eliminar</a></div>"+
                             "<div class='col-xs-12 col-md-4'>"+
                                 "<button type='button' class='btn btn-block btn-primary btn-xs' data-toggle='modal' data-target='#modalDocument"+(i+1)+"'>"+
                                     "Información requerida"+
                                 "</button>"+
                             "</div>"+
+                            "<div class='col-xs-12 col-md-2'>"+htmlHasDiscount+"</div>"+
                         "</div>"+
                     "</div>"+
                 "</div><br>"+
@@ -562,17 +591,7 @@ $.ajax({
             console.log(thrownError);
         }
 });
-
-$("#si_militar").on('change',function(){
-    desactStateMil(!$(this).prop('checked'));
-});
-
-loadAllDiscountList();
-
 }
-
-/*Carga de configuracion*/
-$(document).ready(configuracion);
 
 function desactStateMil(val){
     if (val) {
@@ -1079,6 +1098,7 @@ $("#formDiscountCreate").submit(function (e) {
             success: function (response) {
                 if (response.status == 'OK') {
                     $("#modalAddDiscount").modal("hide");
+                    realoadAllSolicitudes();
                     loadAllDiscountList();
                 } else {
                     alert("No se puedo guardar");
@@ -1145,4 +1165,17 @@ function showErrorForAll(element)
 {
     element.nextElementSibling.textContent = "Por favor completar campo.";
     element.parentElement.classList.add("has-error");
+}
+
+function openModalNewDiscountBySolicitud(solicitud_id,nombre_programa)
+{
+    resetFormDiscount();
+    document.getElementById('solicitud_idd').innerHTML = `<option value="${solicitud_id}">${nombre_programa}</option>`;
+    dispararTriggerSelect();
+    $("#modalAddDiscount").modal("show");
+}
+
+function dispararTriggerSelect()
+{
+    $("#solicitud_idd").trigger('change');
 }
