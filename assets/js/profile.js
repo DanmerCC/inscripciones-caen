@@ -1,3 +1,4 @@
+var tempDiscountId=-1;
 var global_requirement_id = [];
 var solicitudComponets=[];
 var solicitudFormalComponets=[];
@@ -1018,12 +1019,13 @@ function changeSolicitudForDiscountEvent(evt)
             success: function (response) {
                 if(response.data != null)
                 {
-                    makeSelectDiscounts(response.data);   
+                    makeListRequirenentsRadio(response.data);   
                 }
             }
         });
     }
 }
+//@deprecated 
 function makeSelectDiscounts(discounts)
 {
     let options = '<option value="">Elejir un descuento</option>';
@@ -1033,12 +1035,23 @@ function makeSelectDiscounts(discounts)
     document.getElementById('tipodescuento_idd').innerHTML  = options;
 }
 
-document.getElementById('tipodescuento_idd').onchange = changeDiscountForRequirementsEvent;
+function makeListRequirenentsRadio(discounts)
+{
+    let rows = '';
+    discounts.forEach(element => {
+        rows += `<li class="list-group-item entradaRow" style="cursor: pointer;">
+                    <input type="radio" description="${element.description}"  id="discountInput${element.id}" class="hide" name="discountInput" value="${element.id}">
+                    ${element.name}
+                </li>`;
+    });
+    document.getElementById('discountList').innerHTML  = rows;
+    loadFreshRenderEventList();
+}
 
 function changeDiscountForRequirementsEvent(evt)
 {
-    let discount_id = evt.target.value;
-    let descripcion = $(evt.target.children[evt.target.selectedIndex]).attr('description');
+    let discount_id = evt.value;
+    let descripcion = $(evt).attr('description');//$(evt.target.children[evt.target.selectedIndex]).attr('description');
     if (descripcion!='' && descripcion!=undefined) {
         document.getElementById('descripctionDescuentoSelected').textContent = descripcion;
     }else{
@@ -1124,20 +1137,22 @@ function resetFormDiscount()
 {
     $("#formDiscountCreate")[0].reset();
     document.getElementById('bodyRequirementUploadFiles').innerHTML = '<div class="alert alert-success">Seleccionar un descuento</div>';
+    tempDiscountId=-1;
+    document.getElementById('discountList').innerHTML = `<li class="list-group-item">No hay descuentos</li>`;
 }
 
 function isValidFormDiscount()
 {
     let status = true;
     let solicitud_id = document.getElementById('solicitud_idd').value;
-    let tipodescuento = document.getElementById('tipodescuento_idd').value;
+    let tipodescuento = $("input[name=discountInput]:checked").val();
     if(solicitud_id==''){
         showErrorForAll(document.getElementById('solicitud_idd'));
         status = false;
     }
 
-    if(tipodescuento==''){
-        showErrorForAll(document.getElementById('tipodescuento_idd'));
+    if(tipodescuento=='' || tipodescuento== undefined){
+        showErrorForDiscount();
         status = false;
     }
 
@@ -1167,12 +1182,47 @@ function showErrorForAll(element)
     element.parentElement.classList.add("has-error");
 }
 
+function showErrorForDiscount(){
+    document.getElementById('discountList').nextElementSibling.textContent = "Por favor elejir una opcion.";
+    document.getElementById('discountList').parentElement.classList.add("has-error");
+}
+
+function removeMessageErrorIfExist(){
+    document.getElementById('discountList').nextElementSibling.textContent = "";
+    document.getElementById('discountList').parentElement.classList.remove('has-error');
+}
+
 function openModalNewDiscountBySolicitud(solicitud_id,nombre_programa)
 {
     resetFormDiscount();
     document.getElementById('solicitud_idd').innerHTML = `<option value="${solicitud_id}">${nombre_programa}</option>`;
     dispararTriggerSelect();
     $("#modalAddDiscount").modal("show");
+}
+
+
+function loadFreshRenderEventList()
+{
+    document.querySelectorAll('.entradaRow').forEach(item => {
+        item.addEventListener('click', event => {
+            if(tempDiscountId != event.target.children[0].value){
+                tempDiscountId = event.target.children[0].value;
+                document.getElementById('tipodescuento_idd').value = event.target.children[0].value
+                event.target.children[0].checked =true;
+                cleanClass()
+                event.target.classList.add('active');
+                changeDiscountForRequirementsEvent(event.target.children[0])
+                removeMessageErrorIfExist();
+            }
+        })
+    })
+}
+
+function cleanClass()
+{
+    document.querySelectorAll('.entradaRow').forEach(item => {
+        item.classList.remove('active');
+    })
 }
 
 function dispararTriggerSelect()

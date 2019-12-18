@@ -969,8 +969,6 @@
               </div>
 
       <!-- end contenido -->
-
-
     </section>
     <!-- /.content -->
   </div>
@@ -1054,6 +1052,7 @@
                 <div class="col-md-4">
                     <div class="box box-primary sombra" >
                         <div class="box-body">
+                            <input type="hidden" name="tipodescuento_idd" id="tipodescuento_idd">
                             <div class="form-group">
                                 <label for="">Solicitudes</label>
                                 <select name="solicitud_idd" id="solicitud_idd" class="form-control cleanerror">
@@ -1061,11 +1060,18 @@
                                 </select>
                                 <span class="help-block"></span>
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group" >
                                 <label for="">Tipo descuentos</label>
                                 <select name="tipodescuento_idd" id="tipodescuento_idd" class="form-control cleanerror">
-                                    <option value="">Elejir una solicitud</option>
+                                    <option value="">Elejir un descuento</option>
                                 </select>
+                                <span class="help-block"></span>
+                            </div>-->
+                            <div class="form-group">
+                                <label for="">Tipo descuentos</label>
+                                <ul class="list-group" id="discountList">
+                                    
+                                </ul>
                                 <span class="help-block"></span>
                             </div> 
                             <div class="form-group">
