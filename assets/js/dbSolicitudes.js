@@ -324,6 +324,10 @@ function loadDiscountAndRequirements(solicitud)
         data: {},
         dataType: "json",
         success: function (response) {
+            if (response.data.tipo_financiamiento!=undefined && response.data.tipo_financiamiento != '')
+            {
+                document.getElementById('tipo_financiamientoo').textContent = response.data.tipo_financiamiento;
+            }
             if (response.status) {
                 document.getElementById('discountsBodyAndRequirements').innerHTML = makeDiscountsHtml(response.data.programa);
             } else {

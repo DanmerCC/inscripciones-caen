@@ -187,9 +187,9 @@
               <p class="text-muted text-center" id="mdl-profesion"></p>
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b >Solicitudes</b> <a class="pull-right" id="mdl-solicitudes">1,322</a>
+                  <b >Solicitudes</b> <a class="pull-right" id="mdl-solicitudes"></a>
                 </li>
-              </ul>
+              </ul><strong>Financiamiento: </strong> <p id="tipo_financiamientoo"></p>
             </div>
             <!-- /.box-body -->
           </div>
@@ -309,12 +309,6 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-Copy
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
 
 <!-- Modal -->
 <div class="modal fade" id="modalObservationMessage" tabindex="-1" role="dialog" aria-labelledby="modalObservationMessageModalLabelLabel" aria-hidden="true">
