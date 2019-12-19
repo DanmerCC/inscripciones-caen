@@ -25,6 +25,16 @@ class FinObservacionesSolicitud_model extends MY_Model
 		}
 	}
 
+	public function haveObservationBySolicitud($id_solicitud){
+		$this->db->from($this->table)->where($this->solicitud_id,$id_solicitud) ;
+		$result=$this->db->get();
+		if($result->num_rows()>=1){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	public function create($solicitud_id,$usuario_id,$comentario){
 		$data=[
 			$this->solicitud_id=>$solicitud_id,

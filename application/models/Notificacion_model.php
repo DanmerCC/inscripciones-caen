@@ -186,4 +186,24 @@ class Notificacion_model extends MY_Model
 		->get()->result_array();
 	}
 
+	public function getAllNotification($solicitud_id)
+	{
+		return $this->db->get_where('notifications_solicituds',array('solicitud_id'=>$solicitud_id))->result();
+	}
+
+	public function deleteReadNoificationByNotification($notificarion_id)
+	{
+		$this->db->where('notification_id',$notificarion_id)->delete('read_notifications');
+	}
+
+	public function deleteNotificationSolicitud($solicitud_id)
+	{
+		$this->db->where('solicitud_id',$solicitud_id)->delete('notifications_solicituds');
+	}
+
+	public function delete($notificarion_id)
+	{
+		$this->db->where($this->id,$notificarion_id)->delete($this->table);
+	}
+
 }

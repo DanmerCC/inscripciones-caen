@@ -471,6 +471,13 @@ function realoadAllSolicitudes()
                                         <i class="fa fa-plus"></i> Desc.</a>`;
                 }
                 //Creacion de diseño de Despegable SOLICITUDES
+                var htmlDelete = '';
+                console.log(datos[i].is_deletable);
+                if(!datos[i].is_deletable) {
+                    htmlDelete = `<div class='col-xs-6 col-md-2'><a href="${alinkdel}" class='btn btn-block btn-danger btn-xs' onclick="if(!confirm('Estas seguro de eliminar')){ event.preventDefault() }"><i class='fa fa-trash'></i></a></div>`;
+                }else{
+                    htmlDelete = "<div class='col-xs-6 col-md-2'><a class='btn btn-block btn-warning btn-xs' onclick='alertExistRelationForDelete()'><i class='fa fa-exclamation'></i></a></div>";
+                }
                 var diseño = 
                 "<div class='row'>"+
                     "<div class='col-xs-3 col-md-4'>"+datos[i].numeracion+" "+datos[i].tipoCurso+" "+datos[i].nombreCurso+"</div>"+
@@ -478,7 +485,7 @@ function realoadAllSolicitudes()
                     "<div class='col-xs-5 col-md-6'>"+
                         "<div class='row'>"+
                             "<div class='col-xs-6 col-md-1'><a href="+alink+">Ficha</a></div>"+
-                            "<div class='col-xs-6 col-md-2'><a href="+alinkdel+">Eliminar</a></div>"+
+                            htmlDelete+
                             "<div class='col-xs-12 col-md-4'>"+
                                 "<button type='button' class='btn btn-block btn-primary btn-xs' data-toggle='modal' data-target='#modalDocument"+(i+1)+"'>"+
                                     "Información requerida"+
@@ -992,6 +999,14 @@ function openModalAddNewDiscount(alumno_id){
         }
     });
     $("#modalAddDiscount").modal("show");
+}
+
+function alertExistRelationForDelete()
+{
+    bootbox.alert({
+        message: "<h4>No se puede eliminar ya que se encuentra en uso</h4>",
+        backdrop: true
+    });
 }
 
 function makeSelectSolicitudes(solicitudes)

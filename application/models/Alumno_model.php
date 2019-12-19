@@ -349,7 +349,10 @@ class Alumno_model extends CI_Model
 
 	public function solicitudes($id){
 
-		$this->db->select('a.documento as documento,s.idSolicitud,s.programa,s.alumno,s.tipo_financiamiento,s.fecha_registro,c.numeracion,c.nombre as nombreCurso,tc.nombre as tipoCurso,tc.idTipo_curso as idTipoCurso,sd.id as solicitud_discount');
+		$this->db->select('a.documento as documento,s.idSolicitud,s.programa,s.alumno,
+		s.tipo_financiamiento,s.fecha_registro,c.numeracion,c.nombre as nombreCurso,
+		tc.nombre as tipoCurso,tc.idTipo_curso as idTipoCurso,sd.id as solicitud_discount,s.sent_to_inscripcion');
+
 		$this->db->from('solicitud s');
 		$this->db->join('curso c', 's.programa=c.id_curso','left');
 		$this->db->join('tipo_curso tc', 'c.idTipo_curso = tc.idTipo_curso','left');

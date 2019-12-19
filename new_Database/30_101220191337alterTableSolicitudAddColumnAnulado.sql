@@ -1,0 +1,2 @@
+ALTER TABLE `read_notifications` DROP FOREIGN KEY `read_notifications_ibfk_1`; ALTER TABLE `read_notifications` ADD CONSTRAINT `read_notifications_ibfk_1` FOREIGN KEY (`notification_id`) REFERENCES `notifications`(`id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE `notifications_solicituds` DROP FOREIGN KEY `notifications_solicituds_ibfk_1`; ALTER TABLE `notifications_solicituds` ADD CONSTRAINT `notifications_solicituds_ibfk_1` FOREIGN KEY (`notifications_id`) REFERENCES `notifications`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

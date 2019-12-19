@@ -1140,5 +1140,6 @@
 <?php $this->load->view('adminlte/scriptsFooter');?>
 <script src="/assets/js/profile.js"></script>
 <script src="/assets/js/fileComponent.js"></script>
+<script src="/dist/js/jquery-externs/bootbox.min.js"></script>
 </body>
 </html>

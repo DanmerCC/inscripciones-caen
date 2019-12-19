@@ -10,6 +10,8 @@ class ApiAlumno extends CI_Controller
 		parent::__construct();
 		$this->load->library('Nativesession');
 		$this->load->helper('url');
+		$this->load->model('FinObservacionesSolicitud_model');
+		$this->load->model('Discount_model');
 	}
 
 	public function index()
@@ -49,6 +51,15 @@ class ApiAlumno extends CI_Controller
 		foreach ($solicitudes->result_array() as $row){
 			$hasHojaDatos=file_exists(CC_BASE_PATH."/files/hojadatos/".$row["idSolicitud"].".pdf");
 
+			if ($row['sent_to_inscripcion']==null) {
+				$row['is_deletable'] = true;
+				if ($this->haveRelationForDelete($row["idSolicitud"])) {
+					$row['is_deletable'] = false;
+				}
+			} else {
+				$row['is_deletable'] = false;
+			}
+
 			//verify if have a document Incomplete
 			$requiredFile=false;
 			$message="";
@@ -70,10 +81,8 @@ class ApiAlumno extends CI_Controller
 					break;
 				
 				default:
-					# code...
 					break;
 			}
-
 			$row["msgUploadFile"]=$message;
 			$row["completeFile"]=$requiredFile;
 			$row["hasFile"]=$hasHojaDatos;
@@ -81,12 +90,19 @@ class ApiAlumno extends CI_Controller
             $i++;
 		}
 
-
-
 		echo json_encode($result,JSON_UNESCAPED_UNICODE);
 	}
 
-	
+	private function haveRelationForDelete($solicitud_id)
+	{
+		if ($this->FinObservacionesSolicitud_model->haveObservationBySolicitud($solicitud_id)) {
+			return true;
+		}
+		if ($this->Discount_model->haveRowsBySolicitud($solicitud_id)) {
+			return true;
+		}
+		return false;
+	}
 
 	public function solicitud($id){
 		$this->load->model('Alumno_model');

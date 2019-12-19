@@ -73,6 +73,16 @@ class Discount_model extends MY_Model
 		return $this->parentDelete($id);
 	}
 
+	function haveRowsBySolicitud($solicitud_id)
+	{
+		$result = $this->db->get_where('solicitud_discount',array('solicitud_id'=>$solicitud_id));
+		if($result->num_rows()>=1){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	function bySolicituds($arrayIds){
 		$this->db->select($this->table.'.*,solicitud_discount.solicitud_id,curso.nombre,curso.numeracion,t.nombre as tipo')->from($this->table)
 		->join('solicitud_discount','solicitud_discount.discount_id='.$this->table.'.'.$this->id)

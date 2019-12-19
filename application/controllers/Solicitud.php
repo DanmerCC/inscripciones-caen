@@ -108,6 +108,9 @@ class Solicitud extends MY_Controller
 		$this->load->model('Solicitud_model');
 		//echo $this->Solicitud_model->delete($id);
 		$respuesta="";
+
+		$this->eliminarAllNotifications($id);
+
 		if($this->Solicitud_model->delete($id)){
 			$respuesta="Solicitud eliminada exitosamente";
 		}else{
@@ -118,6 +121,19 @@ class Solicitud extends MY_Controller
         $data["seconds"]="3";
         $data["url"]="/postulante";
         $this->load->view('errors/custom/flash_msg',$data);
+	}
+
+	private function eliminarAllNotifications($solicitud_id)
+	{
+		$notifications = $this->Notificacion_model->getAllNotification($solicitud_id);
+		if($notifications!=null)
+		{
+			foreach ($notifications as $key => $item) {
+				$this->Notificacion_model->deleteReadNoificationByNotification($item->notification_id);
+				$this->Notificacion_model->deleteNotificationSolicitud($solicitud_id);
+				$this->Notificacion_model->delete($item->notifications_id);
+			}
+		}
 	}
 
     public function test(){
