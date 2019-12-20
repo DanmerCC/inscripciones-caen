@@ -177,11 +177,12 @@ class Notificacion_model extends MY_Model
 		->join('read_notifications', 'read_notifications.notification_id = notifications.id', 'left')
 		->join('notifications_solicituds', 'notifications_solicituds.notifications_id = notifications.id','left')
 		->join('solicitud sol','sol.idSolicitud=notifications_solicituds.solicitud_id')
-		/*->where('usuario.id',$id_user)*/
+		->where('usuario.id',$id_user)
 		->where('notifications.time >',$actual_config)
 		->where('read_notifications.notification_id IS NULL',NULL)
 		->where_in('notifications_solicituds.solicitud_id',$arrays_id)
 		->group_by('notifications_solicituds.solicitud_id')
+		//->group_by('notifications.id')
 		->order_by('notifications.time','desc')
 		->get()->result_array();
 	}
