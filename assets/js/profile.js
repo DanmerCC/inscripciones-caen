@@ -423,7 +423,7 @@ function realoadAllSolicitudes()
 
         success: function (data) {
 
-            var datos= JSON.parse(data);
+            var datos = JSON.parse(data);
             $("#contentSolicitudes").html('');
             for (var i = datos.length - 1; i >= 0; i--) {
 
@@ -472,8 +472,7 @@ function realoadAllSolicitudes()
                 }
                 //Creacion de diseño de Despegable SOLICITUDES
                 var htmlDelete = '';
-                console.log(datos[i].is_deletable);
-                if(!datos[i].is_deletable) {
+                if(datos[i].is_deletable == true) {
                     htmlDelete = `<div class='col-xs-6 col-md-2'><a href="${alinkdel}" class='btn btn-block btn-danger btn-xs' onclick="if(!confirm('Estas seguro de eliminar')){ event.preventDefault() }"><i class='fa fa-trash'></i></a></div>`;
                 }else{
                     htmlDelete = "<div class='col-xs-6 col-md-2'><a class='btn btn-block btn-warning btn-xs' onclick='alertExistRelationForDelete()'><i class='fa fa-exclamation'></i></a></div>";

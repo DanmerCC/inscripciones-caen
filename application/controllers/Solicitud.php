@@ -131,7 +131,7 @@ class Solicitud extends MY_Controller
 			foreach ($notifications as $key => $item) {
 				$this->Notificacion_model->deleteReadNoificationByNotification($item->notification_id);
 				$this->Notificacion_model->deleteNotificationSolicitud($solicitud_id);
-				$this->Notificacion_model->delete($item->notifications_id);
+				$this->Notificacion_model->delete($item->notification_id);
 			}
 		}
 	}
