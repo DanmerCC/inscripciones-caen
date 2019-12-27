@@ -71,7 +71,7 @@ ALTER TABLE `discount_requirement`
 ALTER TABLE `solicitud_requirement`
   ADD CONSTRAINT `fk_solicitud_requirement_requirement_id` FOREIGN KEY (`requirement_id`) REFERENCES `requirements` (`id`),
   ADD CONSTRAINT `fk_solicitud_requirement_solicitud_id` FOREIGN KEY (`solicitud_id`) REFERENCES `solicitud` (`idSolicitud`),
-ADD CONSTRAINT `fk_solicitud_requirement_discount_id` FOREIGN KEY (`discount_id`) REFERENCES `discount` (`discount_id`);
+ADD CONSTRAINT `fk_solicitud_requirement_discount_id` FOREIGN KEY (`discount_id`) REFERENCES `discounts` (`id`);
 
 ALTER TABLE `solicitud_discount`
   ADD CONSTRAINT `fk_solicitud_solicitud_discount_id` FOREIGN KEY (`discount_id`) REFERENCES `discounts` (`id`),
