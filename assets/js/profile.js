@@ -1051,13 +1051,21 @@ function makeSelectDiscounts(discounts)
 
 function makeListRequirenentsRadio(discounts)
 {
+    
     let rows = '';
-    discounts.forEach(element => {
-        rows += `<li class="list-group-item entradaRow" style="cursor: pointer;">
-                    <input type="radio" description="${element.description}"  id="discountInput${element.id}" class="hide" name="discountInput" value="${element.id}">
-                    ${element.name}
-                </li>`;
-    });
+    if (discounts.length>0) {
+        discounts.forEach(element => {
+            rows += `<li class="list-group-item entradaRow" style="cursor: pointer;">
+                        <input type="radio" description="${element.description}"  id="discountInput${element.id}" class="hide" name="discountInput" value="${element.id}">
+                        ${element.name}
+                        <span class="pull-right-container">
+                            <small class="label pull-right bg-green">${element.percentage} %</small>
+                        </span>
+                    </li>`;
+        });
+    }else{
+        rows = '<li class="list-group-item">No hay descuentos</li>';
+    }
     document.getElementById('discountList').innerHTML  = rows;
     loadFreshRenderEventList();
 }
