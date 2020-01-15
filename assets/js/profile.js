@@ -483,7 +483,7 @@ function realoadAllSolicitudes()
                     "<div class='col-xs-4 col-md-2'>"+datos[i].tipo_financiamiento+"</div>"+
                     "<div class='col-xs-5 col-md-6'>"+
                         "<div class='row'>"+
-                            "<div class='col-xs-6 col-md-1'><a target='_blank' href="+alink+">Ficha</a></div>"+
+                            "<div class='col-xs-6 col-md-1' title='Hoja de datos completa lista para ser firmada'><a target='_blank' href="+alink+">Ficha completa</a></div>"+
                             "<div class='col-xs-12 col-md-4'>"+
                                 "<button type='button' class='btn btn-block btn-primary btn-xs' data-toggle='modal' data-target='#modalDocument"+(i+1)+"'>"+
                                     "Información requerida"+
