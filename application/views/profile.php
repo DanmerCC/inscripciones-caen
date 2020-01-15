@@ -837,8 +837,8 @@
                                                         <td>Hoja de datos</td>
                                                         <td>
                                                             <div class="col-md-12">
-                                                                <div class="form-group">
-                                                                <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2019/04/Solicitud-de-Inscripci%C3%B3n.xls" download>Hoja de datos</a>
+                                                                <div class="form-group" title="Puede obtener el formato autocompletado mas abajo en la seccion de Solicitudes">
+                                                                <a id="descSolicitud" href="http://www.caen.edu.pe/wordpress/wp-content/uploads/2019/04/Solicitud-de-Inscripci%C3%B3n.xls" download>Hoja de datos(Vacia)</a>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -901,7 +901,7 @@
                                                         <div class="row">
                                                             <div class="col-xs-3 col-md-4"><strong>Programa</strong></div>
                                                             <div class="col-xs-4 col-md-2"><strong>Financiamiento</strong></div>
-                                                            <div class="col-xs-5 col-md-6"><strong>Ficha de Inscripción</strong></div>
+                                                            <div class="col-xs-5 col-md-6"><strong>Opciones</strong></div>
                                                         </div><br>
                                                         <div id="contentSolicitudes">
                                                         </div>

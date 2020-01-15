@@ -478,19 +478,21 @@ function realoadAllSolicitudes()
                     htmlDelete = "<div class='col-xs-6 col-md-2'><a class='btn btn-block btn-warning btn-xs' onclick='alertExistRelationForDelete()'><i class='fa fa-exclamation'></i></a></div>";
                 }
                 var diseño = 
-                "<div class='row'>"+
+                "<div class='row panel box box-success'>"+
                     "<div class='col-xs-3 col-md-4'>"+datos[i].numeracion+" "+datos[i].tipoCurso+" "+datos[i].nombreCurso+"</div>"+
                     "<div class='col-xs-4 col-md-2'>"+datos[i].tipo_financiamiento+"</div>"+
                     "<div class='col-xs-5 col-md-6'>"+
                         "<div class='row'>"+
-                            "<div class='col-xs-6 col-md-1'><a href="+alink+">Ficha</a></div>"+
-                            htmlDelete+
+                            "<div class='col-xs-6 col-md-1'><a target='_blank' href="+alink+">Ficha</a></div>"+
                             "<div class='col-xs-12 col-md-4'>"+
                                 "<button type='button' class='btn btn-block btn-primary btn-xs' data-toggle='modal' data-target='#modalDocument"+(i+1)+"'>"+
                                     "Información requerida"+
                                 "</button>"+
-                            "</div>"+
-                            "<div class='col-xs-12 col-md-2'>"+htmlHasDiscount+"</div>"+
+							"</div>"+
+							
+							"<div class='col-xs-12 col-md-2'>"+htmlHasDiscount+"</div>"+
+							
+                            htmlDelete+
                         "</div>"+
                     "</div>"+
                 "</div><br>"+
