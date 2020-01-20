@@ -215,7 +215,7 @@ class Inscripcion_model extends CI_Model
 			'ins.id_inscripcion,'.
 			'ea.id as estado_admisions_id,'.
 			'ea.nombre as nombre_estado_admision,'.
-			'state_interview_id');
+			'ins.state_interview_id');
 		$this->db->from($this->table.' ins');
 		$this->db->group_start();
 			$this->db->like('CONCAT(c.numeracion," ",tc.nombre," ",c.nombre)',$text);

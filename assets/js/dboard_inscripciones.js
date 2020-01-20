@@ -513,16 +513,16 @@ function getHtmlEstadoEntrevista(estado){
 	if(estado==null){
 		return label_danger("No registrado")
 	}else{
-		if(estado.id==1){
-			return label_success(estado.nombre)
-		}
-		if(estado.id==2){
+		if(estado.id=="1"){
 			return label_danger(estado.nombre)
+		}
+		if(estado.id=="2"){
+			return label_success(estado.nombre)
 		}
 	}
 	
 	
-		return label(estado.nombre)
+		return 'ERROR'
 }
  
 function label_success(text){

@@ -8,7 +8,7 @@ class StateInterviewProgramed_model extends MY_Model
 	public $table='intvw_state_programmed_interviews';
 	public $id='id';
 
-	private $states_preload;
+	private $states_preload=null;
 
 	public $PENDIENTE=1;
 	public $REALIZADA=2;
@@ -24,6 +24,7 @@ class StateInterviewProgramed_model extends MY_Model
 	}
 
 	function loadFromMemoryById($id=null){
+		
 		$states=$this->loadFromMemory();
 		$state_finded=null;
 		if(empty($id)){

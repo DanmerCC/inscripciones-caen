@@ -234,8 +234,8 @@ class InterviewProgramed_model extends MY_Model
 
 		$this->db->trans_begin();
 		
-		$inscripcion=$this->getById($interview_id);
-		$this->Inscripcion_model->updateEstadoEntrevista($inscripcion['inscripcion_id'],$estado_id);
+		$interview=$this->getById($interview_id);
+		$status=$this->Inscripcion_model->updateEstadoEntrevista($interview['inscripcion_id'],$estado_id);
 
 		$this->db->where($this->id,$interview_id);
 		$this->db->update($this->table,[$this->estado_id=>$estado_id]);

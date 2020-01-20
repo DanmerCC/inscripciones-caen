@@ -224,7 +224,7 @@ class InscripcionController extends MY_Controller {
 			"iTotalRecords" => $cantidad, //enviamos el total de registros al datatables
 			"iTotalDisplayRecords" => $cantidad, //enviamos total de registros a visualizar
 			"aaData" => $data,
-			"query"=>$this->Inscripcion_model->filter_estado_admision_ids
+			"query"=>":)"
 		);
 		echo json_encode($results);
 	}
