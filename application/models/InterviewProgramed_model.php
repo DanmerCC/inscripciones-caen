@@ -4,7 +4,7 @@
  */
 class InterviewProgramed_model extends MY_Model
 {
-	private $table='intvw_programmed_interviews';
+	protected $table='intvw_programmed_interviews';
 	private $id='id';
 
 	private $alumno_id='alumno_id';
@@ -234,7 +234,7 @@ class InterviewProgramed_model extends MY_Model
 
 		$this->db->trans_begin();
 		
-		$inscripcion=$this->get($interview_id);
+		$inscripcion=$this->getById($interview_id);
 		$this->Inscripcion_model->updateEstadoEntrevista($inscripcion['inscripcion_id'],$estado_id);
 
 		$this->db->where($this->id,$interview_id);
@@ -251,6 +251,19 @@ class InterviewProgramed_model extends MY_Model
 		}
 
 		return $status;
+	}
+
+
+	public function getById($id){
+		$this->db->select()
+			->from($this->table)
+			->where($this->id,$id);
+		$result=$this->db->get();
+		if($result->num_rows()==1){
+			return $result->result_array()[0];
+		}else{
+			throw new Exception("Duplicidad de indices!! en entrevistas");
+		}
 	}
 
 	private function multiModelsTransactions($querysCallBack){
