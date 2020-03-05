@@ -1,8 +1,8 @@
-	var opt_1 = new Array("-","VI Doctorado en Desarrollo y Seguridad Estratégica");
-		var opt_2 = new Array("-","VII Maestría en Derechos Humanos, Derecho Internacional, Humanitario y Resolución de Conflictos");
-		var opt_3 = new Array("-","I Diplomado Especial en Administración y Gestión Pública");
-        var opt_4 = new Array("-","I Curso Plan Operativo Institucional (POI)");
-		function cambia(){
+	var opt_1 = new Array("-","VI Doctorado en Desarrollo y Seguridad Estratégica", "III Políticas Públicas y Gestión del Estado");
+		var opt_2 = new Array("-","XII Administración y Gestión Pública, V Inteligencia Estratégica, III Gestión del Riesgo de Desastres, Estudios Estratégicos y Seguridad Internacional");
+		var opt_3 = new Array("-","I Especial de Administración y Gestión Pública", "III Especial de gestión del Riesgo de Desastres", "III Ciberseguridad y Ciberdefensa", "II Seguridad Ciudadana, I en Gestión de Proyectos e Inversión Pública", "I Inteligencia Competitiva");
+        var opt_4 = new Array("-","VIII de Actualización", "II Gestión Efectiva de Conflicto", "XI de Altos Estudios en Política y Estrategia(CAEPE)","V de Seguridad Estrategica y Alta Dirección", "I Semi Presencial en Investigación Cualitativa", "Plan Operativo Insitucional");
+			function cambia(){
 			var cosa;
 			cosa = document.frm1.programa[document.frm1.programa.selectedIndex].value;
 			if(cosa!=0){
