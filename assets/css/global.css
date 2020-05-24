@@ -104,3 +104,26 @@ input[type="checkbox"].knob:checked:after {
 input[type="checkbox"].knob:checked + .light {
   background-color: #FFFF00;
 }
+
+
+input[type="checkbox"].sm {
+	position: relative;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	width: 2rem;
+	height: calc( 2rem / 2 );
+	background-color: #ddd;
+	border-radius: calc( 8rem / 2 );
+	outline: none;
+	transition: background 450ms ease;
+	box-shadow: 0 0 0 3px #cacaca;
+}
+
+input[type="checkbox"].sm:before {
+	width: calc( 2rem / 2 );
+	height: calc( 2rem / 2 );
+	background-color: #E53935;
+}
+
+

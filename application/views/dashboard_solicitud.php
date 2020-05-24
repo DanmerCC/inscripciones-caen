@@ -72,11 +72,15 @@
 						</div>
 					</div>
 					<!---->
-            <div class='col-sm-6'>
+            <div class='col-sm-5'>
               <select class="form-control" name="prueba1" id="selectProgram">
                 <!-- container -->
               </select>
-            </div>
+						</div>
+						<div class="col-sm-1">
+							<label for="descprogramas">Cambiar orden</label>
+							<input class="sm" type="checkbox"  id="descprogramas">
+						</div>
             
           </div>
 						<div class="box box-primary" >

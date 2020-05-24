@@ -112,10 +112,14 @@
 					<div class='col-sm-2'>
 						<a href="/administracion/vista/dowloadFilter" id="btnExport" class="btn btn-primary" target="_blank">Exportar completo</a>
 					</div>
-					<div class='col-sm-4'>
+					<div class='col-sm-3'>
 						<select class="form-control" name="prueba1" id="selectProgram">
 							<!-- container -->
 						</select>
+					</div>
+					<div class="col-sm-1">
+						<label for="descprogramas">Cambiar orden</label>
+						<input class="sm" type="checkbox"  id="descprogramas">
 					</div>
               
 						</div>

@@ -1,9 +1,16 @@
 var tabla;
-
+var CACHE_PROGRAMAS_SELECT = [];
 $("#btn-salir").prop('href','/administracion/salir');
 $(document).ready(function(){
 
 	
+	$('#descprogramas[type="checkbox"]').click(function(){
+		$current_val = $("#selectProgram").val()
+
+		$("#selectProgram").html(listProgramasActivos(CACHE_PROGRAMAS_SELECT,$(this).prop("checked")==true))
+		$("#selectProgram").val($current_val)
+	});
+
 
 	//Iniciando filtro de Solcitudes
 	$('#select2-estado-finanzas').select2();
@@ -196,25 +203,31 @@ function editComent (id){
     
 }
 
-function loadDataToSelect(){
+function loadDataToSelect(lastfirst=false){
     $.ajax({
         type: "get",
         url: "/api/programas/allSolicitud",
         data: "",
         dataType: "json",
         success: function (response) {
-            //console.log(response);
-            $("#selectProgram").html(listProgramasActivos(response));
+			//console.log(response);
+			CACHE_PROGRAMAS_SELECT = response
+            $("#selectProgram").html(listProgramasActivos(response,lastfirst));
         }
     });
 }
 
-function listProgramasActivos(array){
-    result="<option value='' disabled required selected>Seleciona una opcion</option>";
+function listProgramasActivos(array,loadfisrt){
+    result="";
     for (var i = 0; i < array.length; i++) {
-        result=result+"<option value="+array[i].id_curso+">"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"</option>";
+		if(loadfisrt){
+			result="<option value="+array[i].id_curso+">"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"</option>"+result;
+		}else{
+			result=result+"<option value="+array[i].id_curso+">"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"</option>";
+		}
+		
     }
-    return result;
+    return "<option value='' disabled required selected>Seleciona una opcion</option>"+result;
 }
 
 var modalDataAlumno={

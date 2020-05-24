@@ -1,4 +1,5 @@
 var tabla;
+var CACHE_PROGRAMAS_SELECT = [];
 
 function cargarDataTable(){
 	tabla = $('#dataTable1').dataTable({
@@ -79,6 +80,15 @@ $(document).ready(function(){
 	MDL_ENTREVISTAS_INSCRIPCION.onsave=function(){
 		tabla.ajax.reload(null,false);
 	}
+
+	$('#descprogramas[type="checkbox"]').click(function(){
+
+		$current_val = $("#selectProgram").val()
+
+		$("#selectProgram").html(listProgramasActivos(CACHE_PROGRAMAS_SELECT,$(this).prop("checked")==true))
+		$("#selectProgram").val($current_val)
+	});
+
 	$('#select2-estado-admision').change((evt)=>{
 		var select=$('#select2-estado-admision');
 		//console.log(select.val());
@@ -159,24 +169,34 @@ function makeRequirementsHtml(requirements,discount_id)
     return requiremenstRows;
 }
 
-function listProgramasActivos(array){
-    result="<option value='' disabled required selected>Seleciona una opcion</option>";
-    for (var i = 0; i < array.length; i++) {
-        result=result+"<option value='"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"'>"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"</option>";
-    }
-    return result;
+function listProgramasActivos(array,lastfirst=false){
+	
+	result="";
+	if(lastfirst){
+		for (var i = 0; i < array.length; i++) {
+			result="<option value='"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"'>"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"</option>"+result;
+		}
+	}else{
+		for (var i = 0; i < array.length; i++) {
+			result=result+"<option value='"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"'>"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"</option>";
+		}
+	}
+
+	
+    
+    return "<option value='' disabled required selected>Seleciona una opcion</option>"+result;
 }
 
 
-function loadDataToSelect(){
+function loadDataToSelect(lastfirst=false){
     $.ajax({
         type: "get",
         url: "/api/programas/allInscripciones",
         data: "",
         dataType: "json",
         success: function (response) {
-            // console.log(response);
-            $("#selectProgram").html(listProgramasActivos(response));
+            CACHE_PROGRAMAS_SELECT = response
+            $("#selectProgram").html(listProgramasActivos(response,lastfirst));
         }
     });
 }
