@@ -295,7 +295,7 @@ class InscripcionController extends MY_Controller {
 				"name"=>"Proyecto de Investigacion",
 				"identifier"=>"pinvs",
 				"statechecked"=>(boolean)$solicitud["check_proyect_invest"],
-                "stateUpload"=>file_exists(CC_BASE_PATH."/files/pinvs/".$solicitud["idSolicitud"].".pdf"),
+                "stateUpload"=>file_exists(CC_BASE_PATH."/files/proinves/".$solicitud["idSolicitud"].".pdf"),
                 "fileName"=>$solicitud["idSolicitud"]
             ],
             [
