@@ -695,8 +695,8 @@ class Inscripcion_model extends CI_Model
 			'c.nombre as nombre_programa,'.
 			'sf.id,'.
 			'sf.nombre as nombre_estado,'.
-			'ins.estado_finanzas_id'.
-			'tc.nombre as nombre_tipo'.
+			'ins.estado_finanzas_id,'.
+			'tc.nombre as nombre_tipo,'.
 			'c.numeracion'
 		);
 		$this->db->from($this->table.' ins');
