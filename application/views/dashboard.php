@@ -73,17 +73,6 @@
 				<?php endfor; ?>
         
 				</div>
-
-
-				<?php
-					echo'<br>';
-					print_r($resume_data);
-					echo'<br>';
-
-					echo'<br>';
-					print_r($resume_programas);
-					echo'<br>';
-				?>
 			</div>
       <!-- end contenido -->
     </section>
