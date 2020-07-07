@@ -696,7 +696,7 @@ class Inscripcion_model extends CI_Model
 			'sf.id,'.
 			'sf.nombre as nombre_estado,'.
 			'ins.estado_finanzas_id',
-			'tc.nombre nombre_tipo',
+			'tc.nombre as nombre_tipo',
 			'c.numeracion'
 		);
 		$this->db->from($this->table.' ins');
