@@ -37,9 +37,9 @@
     <section class="content">
       <div class="container">
 				<div class="row">
-				<div class="col-lg-3 col-xs-6 md-4">
+				
 				<?php for($i = 0;$i< count($resume_programas);$i++): ?>
-
+					<div class="col-lg-3 col-xs-6 md-4">
 					<?php
 
 					$acum_count = 0;
@@ -65,9 +65,10 @@
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
 					</div>
+					</div>
 					<!-- small box -->
 				<?php endfor; ?>
-        </div>
+        
 				</div>
 
 
