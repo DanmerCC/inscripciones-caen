@@ -55,7 +55,7 @@
             <div class="inner">
               <h3> <?=$acum_count ?></h3>
 
-              <p><?=$resume_programas["nombre_programa"] ?></p>
+              <p><?=$resume_programas[$i]["nombre_programa"] ?></p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
