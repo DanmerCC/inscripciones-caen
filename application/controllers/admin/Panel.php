@@ -48,6 +48,23 @@ class Panel extends CI_Controller
 
 			$data['resume_data'] = $this->Inscripcion_model->resumen();
 			$data['debug'] = $this->db->last_query();
+
+			$programas = [];
+			$temp_ids= [];
+
+			foreach ($data['resume_data'] as $resume) {
+				$tempid = $resume->id_curso;
+				$findprogramas=null;
+				if(!in_array($tempid,$temp_ids)){
+					$findprogramas['id_curso'] = $tempid;
+					$findprogramas['nombre_programa'] = $resume->nombre_programa;
+				}
+				array_push($programas,$findprogramas);
+
+			}
+			
+			$data['resume_programas'] = $programas;
+
 			$this->load->view('dashboard',$data);
 		}else
 		{
