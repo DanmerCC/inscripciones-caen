@@ -35,59 +35,14 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class=""><!-- container -->   
-          <div class="panel-body table-responsive" id="listadoregistros">
-            <table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
-              <thead>
-                <th>Opciones</th>
-                <th>nombres</th>
-                <th>apellido_paterno</th>
-                <th>apellido_materno</th>
-                <th>tipo_financiamiento</th>
-                <th>documento</th>
-                <th>curso_numeracion</th>
-                <th>fecha_registro</th>
-                <th>Estado</th>
-              </thead>
-              <tfoot>
-                <th>Opciones</th>
-                <th>nombres</th>
-                <th>apellido_paterno</th>
-                <th>apellido_materno</th>
-                <th>tipo_financiamiento</th>
-                <th>documento</th>
-                <th>curso_numeracion</th>
-                <th>fecha_registro</th>
-                <th>Estado</th>
-              </tfoot>
-            </table>
+      <div>
 
-            <table id="dataTable2" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
-              <thead>
-                <th>Opciones</th>
-                <th>nombre</th>
-                <th>duracion</th>
-                <th>costo_total</th>
-                <th>vacantes</th>
-                <th>fecha_inicio</th>
-                <th>fecha_final</th>
-                <th>Tipo</th>
-                <th>estado</th>
-              </thead>
-              <tfoot>
-                <th>Opciones</th>
-                <th>nombre</th>
-                <th>duracion</th>
-                <th>costo_total</th>
-                <th>vacantes</th>
-                <th>fecha_inicio</th>
-                <th>fecha_final</th>
-                <th>Tipo</th>
-                <th>estado</th>
-              </tfoot>
-            </table>
-          </div>
-      </div>
+				<?php
+					echo'<br>';
+					print_r($resume_data);
+					echo'<br>';
+				?>
+			</div>
       <!-- end contenido -->
     </section>
     <!-- /.content -->

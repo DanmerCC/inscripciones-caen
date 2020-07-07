@@ -14,6 +14,7 @@ class Panel extends CI_Controller
 		$this->load->library('Opciones');
 		$this->load->helper('url');
 		$this->load->model('Permiso_model');
+		$this->load->model('Inscripcion_model');
 	}
 	public function index(){
 
@@ -44,6 +45,9 @@ class Panel extends CI_Controller
 			$data['footer']=$this->load->view('adminlte/scriptsFooter','',TRUE);
 			$data["mainSidebar"]=$this->load->view('adminlte/main-sideBar',$opciones,TRUE);
 			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
+
+			$data['resume_data'] = $this->Inscripcion_model->resumen();
+
 			$this->load->view('dashboard',$data);
 		}else
 		{
