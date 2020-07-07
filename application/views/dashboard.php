@@ -44,11 +44,11 @@
 
 					$acum_count = 0;
 
-					/*for ($ii=0; $ii <count($resume_data) ; $ii++) { 
-						if($resume_data->id_curso == $resume_programas[$i]["id_curso"]){
-							$acum_count = $acum_count +$resume_data->incripcion_count;
+					for ($ii=0; $ii <count($resume_data) ; $ii++) { 
+						if($resume_data[$ii]->id_curso == $resume_programas[$i]["id_curso"]){
+							$acum_count = $acum_count +$resume_data[$ii]->incripcion_count;
 						}
-					}*/
+					}
 					?>
           <!-- small box -->
           <div class="small-box bg-yellow">
