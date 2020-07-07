@@ -39,31 +39,34 @@
 				<div class="row">
 				
 				<?php for($i = 0;$i< count($resume_programas);$i++): ?>
-					<div class="col-lg-3 col-xs-6 md-4">
+					<div class="col-lg-4 col-xs-6 md-4">
 					<?php
 
 					$acum_count = 0;
-					$pagantes = 0;
+					$acum_fince = 0;
 
 					for ($ii=0; $ii <count($resume_data) ; $ii++) { 
 						if($resume_data[$ii]->id_curso == $resume_programas[$i]["id_curso"]){
-							$acum_count = $acum_count +$resume_data[$ii]->incripcion_count;
+							$acum_count = $acum_count + $resume_data[$ii]->incripcion_count;
+							if($resume_data[$ii]->estado_finanzas_id == 2)
+							$acum_fince = $acum_fince +  $resume_data[$ii]->incripcion_count;
 						}
 					}
 					?>
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3> <?=$acum_count ?></h3>
-
+              <h3> <?=$acum_count ?> Inscritos </h3>
               <p><?=$resume_programas[$i]["numeracion"]." ".$resume_programas[$i]["nombre_tipo"]." ".$resume_programas[$i]["nombre_programa"] ?></p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">
-              More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
+            <div class="box-footer no-padding">
+              <ul class="nav nav-stacked">
+                <li><a href="#">Aprobado por finanzas <span class="pull-right badge bg-blue"><?=$acum_fince; ?></span></a></li>
+							</ul>
+            </div>
 					</div>
 					</div>
 					<!-- small box -->
