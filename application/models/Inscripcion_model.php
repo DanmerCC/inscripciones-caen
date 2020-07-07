@@ -699,8 +699,8 @@ class Inscripcion_model extends CI_Model
 			'tc.nombre as nombre_tipo,'.
 			'c.numeracion'
 		);
-		$this->db->from($this->table.' ins');
-		//$this->basic_query('ins');
+		//$this->db->from($this->table.' ins');
+		$this->basic_query('ins');
 		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');
 		$this->db->join('usuario u','ins.created_user_id = u.id','left');
 		$this->db->join('curso c','c.id_curso = s.programa','left');
