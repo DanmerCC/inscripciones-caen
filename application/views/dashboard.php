@@ -36,6 +36,39 @@
     <!-- Main content -->
     <section class="content">
       <div>
+				<div class="row">
+				<div class="col-lg-3 col-xs-6">
+				<?php for($i;$i< count($resume_programas);$i++): ?>
+
+					<?php
+
+					$acum_count = 0;
+
+					for ($ii=0; $ii <count($resume_data) ; $ii++) { 
+						if($resume_data->id_curso == $resume_programas[$i]["id_curso"]){
+							$acum_count = $acum_count +$resume_data->incripcion_count;
+						}
+					}
+					?>
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3> <?=$acum_count ?></h3>
+
+              <p><?=$resume_programas["nombre_programa"] ?></p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person-add"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+              More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+					</div>
+					<!-- small box -->
+				<?php endfor; ?>
+        </div>
+				</div>
+
 
 				<?php
 					echo'<br>';
