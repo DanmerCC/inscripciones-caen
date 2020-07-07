@@ -700,6 +700,6 @@ class Inscripcion_model extends CI_Model
 		$this->db->join('estado_finanzas sf','sf.id = ins.id_inscripcion','left');
 		$this->db->group_by(['c.id_curso','ins.estado_finanzas_id']);
 		$query = $this->db->order_by('c.id_curso',"DESC")->get();
-		return $query->result();
+		return $query;
 	}
 }
