@@ -35,7 +35,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <div>
+      <div class="container">
 				<div class="row">
 				<div class="col-lg-3 col-xs-6 md-12">
 				<?php for($i = 0;$i< count($resume_programas);$i++): ?>
