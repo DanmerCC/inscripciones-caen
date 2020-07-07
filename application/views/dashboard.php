@@ -37,12 +37,13 @@
     <section class="content">
       <div class="container">
 				<div class="row">
-				<div class="col-lg-3 col-xs-6 md-12">
+				<div class="col-lg-3 col-xs-6 md-4">
 				<?php for($i = 0;$i< count($resume_programas);$i++): ?>
 
 					<?php
 
 					$acum_count = 0;
+					$pagantes = 0;
 
 					for ($ii=0; $ii <count($resume_data) ; $ii++) { 
 						if($resume_data[$ii]->id_curso == $resume_programas[$i]["id_curso"]){
