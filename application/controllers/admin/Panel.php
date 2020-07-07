@@ -47,7 +47,7 @@ class Panel extends CI_Controller
 			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
 
 			$data['resume_data'] = $this->Inscripcion_model->resumen();
-
+			$data['debug'] = $this->db->last_query();
 			$this->load->view('dashboard',$data);
 		}else
 		{

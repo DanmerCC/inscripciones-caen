@@ -39,7 +39,7 @@
 
 				<?php
 					echo'<br>';
-					print_r($resume_data);
+					print_r($debug);
 					echo'<br>';
 				?>
 			</div>
