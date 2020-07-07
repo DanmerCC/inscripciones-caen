@@ -58,6 +58,7 @@ class Panel extends CI_Controller
 				if(!in_array($tempid,$temp_ids)){
 					$findprogramas['id_curso'] = $tempid;
 					$findprogramas['nombre_programa'] = $resume->nombre_programa;
+					$findprogramas['nombre_tipo'] = $resume->nombre_tipo;
 				}
 				array_push($programas,$findprogramas);
 

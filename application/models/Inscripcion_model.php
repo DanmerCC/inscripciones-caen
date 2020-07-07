@@ -689,7 +689,16 @@ class Inscripcion_model extends CI_Model
 
 	public function resumen(){
 
-		$this->db->select('COUNT(ins.id_inscripcion) as incripcion_count,c.id_curso,c.nombre as nombre_programa,sf.id,sf.nombre as nombre_estado,ins.estado_finanzas_id');
+		$this->db->select(
+			'COUNT(ins.id_inscripcion) as incripcion_count,'.
+			'c.id_curso,'.
+			'c.nombre as nombre_programa,'.
+			'sf.id,'.
+			'sf.nombre as nombre_estado,'.
+			'ins.estado_finanzas_id',
+			'tc.nombre nombre_tipo',
+			'c.numeracion'
+		);
 		$this->db->from($this->table.' ins');
 		//$this->basic_query('ins');
 		$this->db->join('solicitud s','ins.solicitud_id = s.idSolicitud','left');

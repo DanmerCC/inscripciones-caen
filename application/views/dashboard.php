@@ -37,7 +37,7 @@
     <section class="content">
       <div>
 				<div class="row">
-				<div class="col-lg-3 col-xs-6">
+				<div class="col-lg-3 col-xs-6 md-12">
 				<?php for($i = 0;$i< count($resume_programas);$i++): ?>
 
 					<?php
@@ -55,7 +55,7 @@
             <div class="inner">
               <h3> <?=$acum_count ?></h3>
 
-              <p><?=$resume_programas[$i]["nombre_programa"] ?></p>
+              <p><?=$resume_programas[$i]["numeracion"]." ".$resume_programas[$i]["nombre_tipo"]." ".$resume_programas[$i]["nombre_programa"] ?></p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
