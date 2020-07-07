@@ -35,7 +35,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container">
+      <div class="container-fluid">
 				<div class="row">
 				
 				<?php for($i = 0;$i< count($resume_programas);$i++): ?>
