@@ -38,7 +38,7 @@
       <div>
 				<div class="row">
 				<div class="col-lg-3 col-xs-6">
-				<?php for($i;$i< count($resume_programas);$i++): ?>
+				<?php for($i= 0;$i< count($resume_programas);$i++): ?>
 
 					<?php
 
