@@ -58,7 +58,15 @@
             <div class="inner">
               <h3> <?=$acum_count ?> Inscritos </h3>
               <p><?=$resume_programas[$i]["numeracion"]." ".$resume_programas[$i]["nombre_tipo"]." ".$resume_programas[$i]["nombre_programa"] ?></p>
-            </div>
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<?php
+							if($resume_programas[$i]["estado"]):
+							?>
+							<div class="progress progress-xs progress-striped active">
+								<div class="progress-bar progress-bar-success" style="width: 90%"></div>
+							</div>
+							<?php endif; ?>
+						</div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
