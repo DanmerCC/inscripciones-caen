@@ -82,9 +82,12 @@
         
 				</div>
 			</div>
+			<div hidden>
 			<?php 
 				echo var_dump($resume_programas,$resume_data);
 			?>
+			</div>
+			
       <!-- end contenido -->
     </section>
     <!-- /.content -->
