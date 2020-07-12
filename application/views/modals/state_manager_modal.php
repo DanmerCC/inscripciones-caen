@@ -144,6 +144,7 @@
 		then(MDL_MNG_STATE_ADMISION.succesAdmids).
 		catch((error)=>{
 			console.error(error)
+			console.error(error.status)
 		});
 	}
 
