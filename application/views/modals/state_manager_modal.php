@@ -145,6 +145,9 @@
 		catch((error)=>{
 			console.error(error)
 			console.error(error.status)
+			if(error.status==401){
+				alert('No tienes los permisos suficientes para hacer esto consulta con el administrador del sistema')
+			}
 		});
 	}
 
