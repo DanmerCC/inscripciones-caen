@@ -12,6 +12,7 @@
 <link href="/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
 <link href='<?=base_url()?>assets/plugins/calendar/core/main.css' rel='stylesheet' />
 <link href='<?=base_url()?>assets/plugins/calendar/daygrid/main.css' rel='stylesheet' />
+<link href='https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css' rel='stylesheet' />
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 <!-- Site wrapper -->
@@ -121,6 +122,13 @@
 						<label for="descprogramas">Cambiar orden</label>
 						<input class="sm" type="checkbox"  id="descprogramas">
 					</div>
+					
+					
+					<div class="col-md-3">
+						<div class="btn btn-primary" disabled id="btn-admd-mult" onclick="openModalAdmision()">
+							Admitir
+						</div>
+					</div>
               
 						</div>
 						<div>
@@ -144,6 +152,7 @@
 									<div class="box-body">
 									<table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
 										<thead>
+											<th></th>
 											<th>Opciones</th>
 											<th>Nombres</th>
 											<th>Apellidos</th>
@@ -158,6 +167,7 @@
 											<th>Entrevistas</th>
 										</thead>
 										<tfoot>
+											<th></th>
 										<th>Opciones</th>
 											<th>Nombres</th>
 											<th>Apellidos</th>
@@ -268,6 +278,9 @@
       </div>
     </div>
   </div>
+  <div id="uniquedinamiccontainer">
+	  
+  </div>
   <!-- Final de Modal -->
 
 
@@ -328,9 +341,17 @@
 <script src="/dist/js/jquery-externs/buttons.print.min.js"></script>
 <script src="/bower_components/select2/dist/js/select2.min.js"></script>
 <script src="/bower_components/datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
 <script src='<?=base_url()?>assets/plugins/calendar/core/main.js'></script>
 <script src='<?=base_url()?>assets/plugins/calendar/interaction/main.js'></script>
 <script src='<?=base_url()?>assets/plugins/calendar/daygrid/main.js'></script>
+<script>
+	var NO_COLUMN_VISIBLE_VAR_FROM_BACK = <?php echo json_encode(empty($_GET["ca"])?[]:$_GET["ca"]); ?>;
+	var can_change_inscription_to_admision = !!!<?php echo (int)$can_change_to_admision ?>;
+</script>
+<?php
+	$this->load->view('modals/state_manager_modal'); 
+?>
 <script src="/assets/js/dboard_inscripciones.js"></script>
 <style>
 .datepicker {

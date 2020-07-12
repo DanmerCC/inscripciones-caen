@@ -144,4 +144,10 @@ class MY_Controller extends CI_Controller
 			$this->structuredResponse(array("message"=>"No esta autorizado para esta accion"),401);
 		}
 	}
+
+	protected function jsonResponse($data,$status=200){
+
+		header('Content-type: application/json');
+		return $this->response($data,$status);
+	}
 }

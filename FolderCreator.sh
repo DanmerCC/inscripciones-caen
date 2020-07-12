@@ -54,3 +54,8 @@ fi
 if [ ! -d uploads/files/trash ]; then
     mkdir -p uploads/files/trash;
 fi 
+
+if [ ! -d uploads/files/actaadmids ]; then
+    mkdir -p uploads/files/actaadmids;
+fi 
+

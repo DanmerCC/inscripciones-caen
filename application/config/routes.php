@@ -372,3 +372,9 @@ $route['administracion/cursosdiscount/save'] = 'admin/Cursosdiscount/save';
 $route['administracion/cursosdiscount/update'] = 'admin/Cursosdiscount/update';
 $route['administracion/cursosdiscount/edit/(:num)'] = 'admin/Cursosdiscount/edit/$1';
 $route['administracion/cursosdiscount/delete'] = 'admin/Cursosdiscount/delete';
+
+//cargar nueva admision
+$route['administracion/admidslist'] = 'admin/Admision/create';
+$route['administracion/inscripcion/actas/(:num)'] = 'admin/Admision/byinscripcion/$1';//by id inscription
+$route['administracion/acta/view/(:num)'] = 'admin/Admision/show/$1';
+$route['administracion/acta/details/(:num)'] = 'admin/Admision/details/$1';

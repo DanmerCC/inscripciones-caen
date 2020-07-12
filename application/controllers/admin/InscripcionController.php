@@ -29,6 +29,7 @@ class InscripcionController extends MY_Controller {
 		$this->usuario_actual=$this->nativesession->get('idUsuario');
 		$this->load->model('EstadoAdmisionInscripcion_model');
         $this->load->model('StateInterviewProgramed_model');
+        $this->load->model('Auth_Permisions');
 		
 	}
 
@@ -48,6 +49,8 @@ class InscripcionController extends MY_Controller {
 			$data['mainHeader']=$this->load->view('adminlte/mainHeader',array("identity"=>$identidad),TRUE);
 			$data['estados_finanzas']=$this->estado_finanzas;
 			$data['estados_admision']=$this->EstadoAdmisionInscripcion_model->all();
+			$data['can_change_to_admision']=$this->Auth_Permisions->can('change_inscription_to_admision');
+
 			$this->load->view('dashboard_inscritos',$data);
 		}else
 		{
@@ -173,6 +176,7 @@ class InscripcionController extends MY_Controller {
 		$this->load->model('Auth_Permisions');
 		
 		$can_edit_finanzas=$this->Auth_Permisions->can('change_inscripcion_estado_finanzas');
+		
 		$this->Inscripcion_model->global_stado_finanzas=$estados;
 		$this->Inscripcion_model->filter_estado_admision_ids=$filters_values_estados_admision;
 
@@ -193,15 +197,16 @@ class InscripcionController extends MY_Controller {
 			$i++;
 			$is_anulated=!isset($value["f_anulado"]);
 				$data[] = array(
-				"0" => $this->innerInscripcionOptionsComponet($value,$is_anulated),
-				"1" => $value["nombres"],
-				"2" => $value["apellido_paterno"]." ".$value["apellido_materno"],
-				"3" => $value["numeracion"]." ".$value["tipo_curso"]." ".$value["nombre_curso"],
-				"4" => $value["documento"],
-				"5" => $value["email"],
-				"6" => (isset($value["celular"])?$value["celular"]:" ")." - ".(isset($value["telefono_casa"])?$value["telefono_casa"]:" "),
-				"7" => $value["created"],
-				"8" => "<div class='input-group-btn'>".
+				"0"=>json_encode($value),
+				"1" => $this->innerInscripcionOptionsComponet($value,$is_anulated),
+				"2" => $value["nombres"],
+				"3" => $value["apellido_paterno"]." ".$value["apellido_materno"],
+				"4" => $value["numeracion"]." ".$value["tipo_curso"]." ".$value["nombre_curso"],
+				"5" => $value["documento"],
+				"6" => $value["email"],
+				"7" => (isset($value["celular"])?$value["celular"]:" ")." - ".(isset($value["telefono_casa"])?$value["telefono_casa"]:" "),
+				"8" => $value["created"],
+				"9" => "<div class='input-group-btn'>".
 							($can_edit_finanzas?
 											
 												$this->HTML_drop_down_estado_finanzas(
@@ -214,9 +219,9 @@ class InscripcionController extends MY_Controller {
 							).
 							$this->HTML_details_icon($value["id_inscripcion"],$value["estado_finanzas_id"]).
 						"</div>",
-				"9" => $is_anulated?"<span class='label label-success'>Cargado</span>":"<span class='label label-danger'>Anulado</span>",
-				"10" => array("id"=>$value["estado_admisions_id"],"nombre"=>$value["nombre_estado_admision"]),
-				"11"=>$this->StateInterviewProgramed_model->loadFromMemoryById($value["state_interview_id"])
+				"10" => $is_anulated?"<span class='label label-success'>Cargado</span>":"<span class='label label-danger'>Anulado</span>",
+				"11" => array("id"=>$value["estado_admisions_id"],"nombre"=>$value["nombre_estado_admision"]),
+				"12"=>$this->StateInterviewProgramed_model->loadFromMemoryById($value["state_interview_id"])
 			);
 		}
 		$results = array(

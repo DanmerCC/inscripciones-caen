@@ -1,5 +1,94 @@
+/**
+ * global vars
+ * can_change_inscription_to_admision
+ */
+
 var tabla;
 var CACHE_PROGRAMAS_SELECT = [];
+var DEFAULT_NO_VISIBLE=[]
+
+var STATE_ID_PENDIENTE_ADMISION  = 1 
+
+/**
+ * asign var from back if is correct
+ */
+if(typeof NO_COLUMN_VISIBLE_VAR_FROM_BACK != 'undefined'){
+
+	if(!Array.isArray(NO_COLUMN_VISIBLE_VAR_FROM_BACK)){
+		console.log("NO_COLUMN_VISIBLE_VAR_FROM_BACK no es un array valido")
+	}else{
+		DEFAULT_NO_VISIBLE = NO_COLUMN_VISIBLE_VAR_FROM_BACK
+	}
+		
+}
+
+
+var MDL_ACTA_ADMINDS =  {
+	show(id){
+		//$("#uniquedinamiccontainer").html(this.template(id))
+		//$("#mdl_acta_visor_admision").modal('show')
+		var _this  = this
+		$.ajax({
+			type: "GET",
+			url: "/administracion/inscripcion/actas/"+id,
+			data: "data",
+			dataType: "json",
+			success: function (response) {
+				console.log(response)
+				$("#uniquedinamiccontainer").html(_this.template(JSON.parse(response)))
+				$("#mdl_acta_visor_admision").modal('show')
+			}
+		});
+	},
+	template(actas){
+		var template = ``
+		var _this = this
+		console.log(actas)
+		actas.forEach(acta => {
+			template = template + _this.maximixableframe(acta)
+		});
+		return `
+		<div class="modal fade" tabindex="-1" role="dialog" id="mdl_acta_visor_admision">
+			<div class="modal-dialog modal-lg" style="display: block; padding-right: 17px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Actas de inscripcion</h4>
+					</div>
+					<div class="modal-body">
+						<div class="">
+							<div class="">
+								${template}
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						
+						<button type="button" onclick="close()" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		`
+	},
+	maximixableframe(acta){
+		return `
+		<div>
+		  <div class="small-box bg-aqua" style="height:560px;">
+		  	
+			<div class="inner">
+			<h4><a target="_blank" href='/administracion/acta/details/${acta.id}'>Ver</a>  info de acta</h4>
+				<iframe src="/administracion/acta/view/${acta.id}" frameborder="0" width="100%" height="500px"></iframe>
+            </div>
+            <div class="icon">
+              <i class="ion ion-bag"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+		  </div>
+		</div>
+		`
+	}
+}
 
 function cargarDataTable(){
 	tabla = $('#dataTable1').dataTable({
@@ -26,7 +115,11 @@ function cargarDataTable(){
 			},
 	"initComplete":function( settings, json){
 		createRouteExport();
-		tabla.column(8).visible(false)
+		for (let indexx = 0; indexx < DEFAULT_NO_VISIBLE.length; indexx++) {
+			
+			tabla.column(DEFAULT_NO_VISIBLE[indexx]).visible(false)
+
+		}
 	},
 	"bDestroy": true,
 	"iDisplayLength": 15, // paginacion
@@ -51,18 +144,32 @@ function cargarDataTable(){
             "previous": "Anterior"
         }
 	}, //ordenar(columna, orden)
-	"columnDefs": [ {
-		"targets": 10,
+	"columnDefs": [ 
+		{
+            orderable: false,
+            className: 'select-checkbox',
+			targets:   0,
+			"render": function ( data, type, row, meta ) {
+				return "";
+			}
+        },
+		{
+		"targets": 11,
 		"render": function ( data, type, row, meta ) {
-		  return getHtmlEstadoAdmision(data);
+		  return getHtmlEstadoAdmision(data,row);
 		}
 	  },
+	  
 	  {
-		"targets": 11,
+		"targets": 12,
 		"render": function ( data, type, row, meta ) {
 		  return getHtmlEstadoEntrevista(data);
 		}
-	  } ]
+	  } ],
+	  "select": {
+		style:    'multi',
+		selector: 'td:first-child'
+	}
 }).DataTable();
 
 $('a.toggle-vis').on( 'click', function (e) {
@@ -77,9 +184,12 @@ $('a.toggle-vis').on( 'click', function (e) {
 }
 
 $(document).ready(function(){
+
 	MDL_ENTREVISTAS_INSCRIPCION.onsave=function(){
 		tabla.ajax.reload(null,false);
 	}
+
+	console.log(MDL_ENTREVISTAS_INSCRIPCION.getIdInscriptions);
 
 	$('#descprogramas[type="checkbox"]').click(function(){
 
@@ -119,10 +229,64 @@ $(document).ready(function(){
     });
 
     //contruirTitulos(dataTables.solicitudes.thead);
-    cargarDataTable();
+	cargarDataTable();
+	
+	tabla.on( 'select', function ( e, dt, type, indexes ) {
+		var rowsData = tabla.rows( '.selected' ).data().toArray()
+		var rowData = tabla.rows( indexes ).data().toArray()
+		var jsonData = tabla.rows( [0] ).data().toArray()
+		console.log(jsonData)
+		rowData = rowData.length == 1 ? rowData[0]:null
 
+		var hasANotAdmitible = rowsData.filter(x => {
+			return x[11].id != 1
+		}).length>0;
+		changeStateMultipleAdmidsButton(rowsData.length>0 && !hasANotAdmitible)
+
+		/*if(rowData[11].id != STATE_ID_PENDIENTE_ADMISION){
+			alert("Solo puedes admitir inscritos como pendientes")
+			dt.row().deselect()
+		}*/
+	} )
+	.on( 'deselect', function ( e, dt, type, indexes ) {
+		var rowsData = tabla.rows( '.selected' ).data().toArray()
+		var rowData = tabla.rows( indexes ).data().toArray()
+		changeStateMultipleAdmidsButton(rowsData.length>=1)
+		console.log(rowData);
+	} );
+
+	MDL_MNG_STATE_ADMISION.getIdInscriptions = function(){
+		return tabla.rows('.selected').data().toArray().map(x=>{
+			
+			var object = JSON.parse(x[0])
+			
+			return {
+				id_curso:object.id_curso,
+				inscripcion_id:object.id_inscripcion,
+				alumno_id:object.alumno,
+			}
+		})
+	}
+
+	MDL_MNG_STATE_ADMISION.succesAdmids = function (response){
+		tabla.ajax.reload(null,false);
+	}
 
 });
+
+function openModalAdmision(){
+	MDL_MNG_STATE_ADMISION.create(tabla.rows('.selected').data().toArray())
+}
+
+function changeStateMultipleAdmidsButton(state = true){
+	var button = $("#btn-admd-mult");
+	if(state){
+		button.removeAttr('disabled')
+	}else{
+		
+		button.attr('disabled', 'true')
+	}
+}
 
 function loadDiscountAndRequirements(solicitud)
 {
@@ -469,8 +633,8 @@ function cargarData(id){
 
 function createRouteExport(){
 	let search = tabla.ajax.params().search.value;
-	let anulado = tabla.ajax.params().columns[8].search.value;
-	let estados = tabla.ajax.params().columns[9].search.value;
+	let anulado = tabla.ajax.params().columns[9].search.value;
+	let estados = tabla.ajax.params().columns[10].search.value;
 	document.getElementById('btnExport').attributes.href.nodeValue = "/administracion/vista/dowloadFilter?search="+search+"&anulado="+anulado+"&estados="+estados;
 }
 
@@ -518,18 +682,34 @@ function getTiposAuthorizaciones(successCallBakc){
 	});
 }
 
-function getHtmlEstadoAdmision(estado){
-	if(estado.id==1){
-		return label_success(estado.nombre)
+function getHtmlEstadoAdmision(estado,inscripcion){
+
+	if(can_change_inscription_to_admision){
+		if(estado.id==1){
+
+			return label_default(estado.nombre)
+		}
+		if(estado.id==2){
+			console.log(inscripcion)
+			var id_inscripcion = JSON.parse(inscripcion[0]).id_inscripcion
+			var fulltemplate = `
+				<div onclick="MDL_ACTA_ADMINDS.show(${id_inscripcion})">
+					${label_success(estado.nombre)}
+				</div>
+			`
+			return fulltemplate
+		}
+	}else{
+		return dropDownAdmision(estado,inscripcion)
 	}
-	if(estado.id==2){
-		return label_danger(estado.nombre)
-	}
+	
 	
 		return label(estado.nombre)
 }
 
 function getHtmlEstadoEntrevista(estado){
+
+	
 	if(estado==null){
 		return label_danger("No registrado")
 	}else{
@@ -544,12 +724,36 @@ function getHtmlEstadoEntrevista(estado){
 	
 		return 'ERROR'
 }
+
+function dropDownAdmision(admision_state){
+	return `
+	<div class="input-group-btn">
+		<button type="button" class="  btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			sin revision
+			<span class="fa fa-caret-down"></span>
+		</button>
+		<ul class="dropdown-menu">
+		<li onclick="sol.change_estado(1410,1,&quot;sin revision&quot;)"><a class="" href="#">${JSON.stringify(admision_state)}sin revision</a></li>
+		<li onclick="sol.change_estado(1410,2,&quot;validado&quot;)"><a class=" text-green " href="#">validado</a></li>
+		<li onclick="sol.change_estado(1410,3,&quot;observado&quot;)"><a class=" text-red " href="#">observado</a></li>
+		</ul>
+		<a class="btn btn-social-icon btn-instagram" disabled="" onclick=""><i class="fa fa-fw fa-info-circle"></i></a>	  
+	 </div>
+	`
+}
  
 function label_success(text){
 	return `<span class="label label-success">${text}</span>`; 
 }
 function label_danger(text){
 	return `<span class="label label-danger">${text}</span>`; 
+}
+
+function label_info(text){
+	return `<span class="label label-info">${text}</span>`; 
+}
+function label_default(text){
+	return `<span class="label label-default">${text}</span>`; 
 }
 function label(text){
 	return `<span class="label">${text}</span>`; 
