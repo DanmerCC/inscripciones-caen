@@ -17,6 +17,9 @@ class Admision extends MY_Controller
 		$this->load->model('Permiso_model');
 		$this->load->model('Actasadmision_model');
 		$this->load->model('Admision_model');
+		$this->load->model('Auth_Permisions');
+		$this->hascreateacta=$this->Auth_Permisions->can('add_acta_admision');
+		$this->hascreateadmision=$this->Auth_Permisions->can('add_admisions_alumnos');
 	}
 
 	public function create(){
@@ -25,10 +28,8 @@ class Admision extends MY_Controller
 		$id_curso = $this->input->post('id_curso');
 		$alumno_id = $this->input->post('alumno_id');
 
-		$hascreateacta = $this->validatePermision('add_acta_admision');
-		$hascreateadmision = $this->validatePermision('add_admisions_alumnos');
 
-		$haspermission = $hascreateacta && $hascreateadmision;
+		$haspermission = $this->hascreateacta && $this->hascreateadmision;
 		$data_is_complete = (count($inscripcion_id) == count($id_curso) && count($id_curso) == count($alumno_id));
 		//cambiar
 		if(!$haspermission){
@@ -96,7 +97,7 @@ class Admision extends MY_Controller
 
 		//$admisions  = $this->Admision_model->by_acta($id_acta);
 
-		$this->load->model('Auth_Permisions');
+		//$this->load->model('Auth_Permisions');
 
 		if ($this->nativesession->get('tipo')=='admin') {
 			$identidad["rutaimagen"]="/dist/img/avatar5.png";
