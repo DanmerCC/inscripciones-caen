@@ -150,4 +150,11 @@ class MY_Controller extends CI_Controller
 		header('Content-type: application/json');
 		return $this->response($data,$status);
 	}
+
+	protected function jsonUnauthorized($data=[]){
+
+		header('Content-type: application/json');
+		header("HTTP/1.1 401 Unauthorized");
+		return  json_encode($data);
+	}
 }

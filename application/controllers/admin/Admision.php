@@ -32,7 +32,7 @@ class Admision extends MY_Controller
 		$data_is_complete = (count($inscripcion_id) == count($id_curso) && count($id_curso) == count($alumno_id));
 		//cambiar
 		if(!$haspermission){
-			return $this->response("No tienes los permisos necesarios",401);
+			return $this->jsonUnauthorized(["message"=>"No tienes los permisos necesarios"]);
 		}
 
 		if(!$data_is_complete){
