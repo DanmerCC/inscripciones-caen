@@ -31,7 +31,7 @@
       Reportes
       </h3>
       <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/administracion/home"><i class="fa fa-dashboard"></i> Home</a></li>
       </ol>
     </section>
     <br>
