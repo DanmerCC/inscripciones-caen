@@ -235,12 +235,13 @@ $(document).ready(function(){
 		var rowsData = tabla.rows( '.selected' ).data().toArray()
 		var rowData = tabla.rows( indexes ).data().toArray()
 		var jsonData = tabla.rows( [0] ).data().toArray()
-		console.log(jsonData)
+		
 		rowData = rowData.length == 1 ? rowData[0]:null
 
 		var hasANotAdmitible = rowsData.filter(x => {
 			return x[11].id != 1
 		}).length>0;
+
 		changeStateMultipleAdmidsButton(rowsData.length>0 && !hasANotAdmitible)
 
 		/*if(rowData[11].id != STATE_ID_PENDIENTE_ADMISION){
@@ -251,8 +252,9 @@ $(document).ready(function(){
 	.on( 'deselect', function ( e, dt, type, indexes ) {
 		var rowsData = tabla.rows( '.selected' ).data().toArray()
 		var rowData = tabla.rows( indexes ).data().toArray()
-		changeStateMultipleAdmidsButton(rowsData.length>=1)
-		console.log(rowData);
+		var hasInvalids = rowsData.filter(hasNotValidateAdmisibleRow).length > 0 || rowsData.length == 0
+		changeStateMultipleAdmidsButton(!hasInvalids)
+		
 	} );
 
 	MDL_MNG_STATE_ADMISION.getIdInscriptions = function(){
@@ -278,12 +280,19 @@ function openModalAdmision(){
 	MDL_MNG_STATE_ADMISION.create(tabla.rows('.selected').data().toArray())
 }
 
+function hasNotValidateAdmisibleRow(inscripcion){
+	return inscripcion[11].id != 1
+}
+
 function changeStateMultipleAdmidsButton(state = true){
 	var button = $("#btn-admd-mult");
 	if(state){
+		button.unbind('click')
 		button.removeAttr('disabled')
+		button.removeAttr('onclick')
+		button.click(openModalAdmision)
 	}else{
-		
+		button.unbind('click')
 		button.attr('disabled', 'true')
 	}
 }

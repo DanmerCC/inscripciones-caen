@@ -28,3 +28,7 @@ PRIMARY KEY (`id`),
  CONSTRAINT `fk_admisions_curso_acta_id` FOREIGN KEY (`acta_id`) REFERENCES `acta_admision` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+
+INSERT INTO `caenedup_caen2`.`auth_permisos` (`nombre`) VALUES ('add_acta_admision');
+INSERT INTO `caenedup_caen2`.`auth_permisos` (`nombre`) VALUES ('add_admisions_alumnos');

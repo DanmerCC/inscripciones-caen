@@ -125,7 +125,7 @@
 					
 					
 					<div class="col-md-3">
-						<div class="btn btn-primary" disabled id="btn-admd-mult" onclick="openModalAdmision()">
+						<div class="btn btn-primary" disabled id="btn-admd-mult">
 							Admitir
 						</div>
 					</div>

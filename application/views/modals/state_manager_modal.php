@@ -16,10 +16,20 @@
 		dataadmid:[],
 		create:function(inscripciondata){
 			this.dataadmid = this.getIds()
-			$("#mdl-manager-admision-container").html(
-				this.template(inscripciondata)
-			)
-			$("#mdl_manager_admision").modal('show')
+
+			var validsids = inscripciondata.filter(x=>{
+				return x[11].id == 1
+			})
+
+			if(validsids.length == inscripciondata.length){
+				$("#mdl-manager-admision-container").html(
+					this.template(inscripciondata)
+				)
+				$("#mdl_manager_admision").modal('show')
+			}else{
+				console.error("Se selecciono una inscripcion con estado no valido");
+			}
+			
 		},
 		succesAdmids:null,
 		getIdInscriptions:null,
