@@ -134,16 +134,16 @@
 						<div>
 							<div>
 								Ocultar/Mostrar:
-								 <a class="toggle-vis" data-column="1">Nombres</a> -
-									<a class="toggle-vis" data-column="2">Apellidos</a> -
-									 <a class="toggle-vis" data-column="3">Programa</a> - 
-									 <a class="toggle-vis" data-column="4">Documento</a> - 
-									 <a class="toggle-vis" data-column="5">Correo</a>-
-									 <a class="toggle-vis" data-column="6">Telefonos</a>-
-									 <a class="toggle-vis" data-column="7">Fecha de Registro</a>-
-									 <a class="toggle-vis" data-column="8">Finanzas</a>-
-									 <a class="toggle-vis" data-column="9">Anulado</a>-
-									 <a class="toggle-vis" data-column="10">Admision</a>-
+								 <a class="toggle-vis" data-column="2">Nombres</a> -
+									<a class="toggle-vis" data-column="3">Apellidos</a> -
+									 <a class="toggle-vis" data-column="4">Programa</a> - 
+									 <a class="toggle-vis" data-column="5">Documento</a> - 
+									 <a class="toggle-vis" data-column="6">Correo</a>-
+									 <a class="toggle-vis" data-column="7">Telefonos</a>-
+									 <a class="toggle-vis" data-column="8">Fecha de Registro</a>-
+									 <a class="toggle-vis" data-column="9">Finanzas</a>-
+									 <a class="toggle-vis" data-column="10">Anulado</a>-
+									 <a class="toggle-vis" data-column="11">Admision</a>-
 							</div>
 						</div>
 						<div class="row">
