@@ -91,6 +91,7 @@ class Registro extends CI_Controller
                 $this->nativesession->set('tipo',$nuevo_alumno["tipo"]);
                 
                 if($this->Alumno_model->nuevaSolicitud($programa_id, $alumno, $tipoFinan)){
+					$id_solicitud = $this->db->insert_id();
                    $programa_result=$this->Programa_model->findWithFullname($programa_id);
                     $this->Notificacion_model->create(array(
 						'action_id'=>10,//create solicitud
@@ -106,7 +107,8 @@ class Registro extends CI_Controller
                     $data["heading"]="Se registro correctamente";
                     $data["message"]="Su cuenta  $id_usuario_dni a sido registrada correctamente";
                     $data["seconds"]="5";
-                    $data["url"]="/postulante";    
+					$data["url"]="/postulante";
+					$this->session->set_flashdata('question_sol_id', $id_solicitud);    
                 }
                 
                 $this->load->view('errors/custom/flash_msg',$data);

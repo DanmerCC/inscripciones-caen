@@ -29,7 +29,7 @@
         
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Mi sitio</a></li>
+        <li><a href="/"><i class="fa fa-dashboard"></i> Mi sitio </a></li>
       </ol>
     </section>
 
@@ -1137,9 +1137,135 @@
 </div>
 <!-- Modal -->
 
-<?php $this->load->view('adminlte/scriptsFooter');?>
+
+<!-- Modal -->
+<div class="modal fade" id="question-social-network" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-primary">
+            <h4 class="modal-title" id=""><i class="fa fa-pencil margin-r-5"></i>Como te enteraste de este programa academico?</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body fondo-modal">
+            <div class="box box-solid">
+                <div class="container">
+					<div class="form" id="frm-mdl-questionorigen">
+					<div class="row">
+						<div class="col-6">
+							<div class="form-group">
+								<label for="">Redes Sociales</label>
+								<input type="checkbox" value="red_soc">
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<label for="">Resultados en buscados (Google,Yahoo,Bing,etc.)</label>
+								<input type="checkbox" value="searcher">
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<label for="">Pagina web</label>
+								<input type="checkbox" value="web">
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<label for="">Referencias de conocidos/familiares</label>
+								<input type="checkbox" value="references">
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<label for="">Conferencias/Expoferias</label>
+								<input type="checkbox" value="conferences">
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<label for="">Mension en medios ajenos al CAEN-EPG(noticias,reportajes,entrevitas,etc.)</label>
+								<input type="checkbox" value="notices_others">
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<label for="">otros</label>
+								<input type="text" id="input-others">
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+		  	<div type="button" class="btn btn-primary" data-dismiss="modal" id="btnanswer" onclick="question_response()">Enviar respuesta</div>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+  </div>
+</div>
+<!-- Modal -->
+
+<?php $this->load->view('adminlte//scriptsFooter');?>
+<script>
+
+	var MDL_QUESTION_ORIGEN = {
+		id:null,
+		question(id){
+			this.id = id
+			var modal = $("#question-social-network")
+			modal.modal("show")
+		},
+		sendanswwer(){
+
+			var inputs = $('#frm-mdl-questionorigen input:checked')
+			
+			var formData = new FormData
+			inputs.each((key,val)=>{
+				
+				formData.append(val.value,true)
+			})
+			
+			formData.append('others',$('#input-others').val());
+			formData.append('solicitud_id',this.id)
+
+			$.ajax({
+				type: 'POST',
+				url: '/postulante/answers',
+				cache: false,
+				contentType: false,
+				processData: false,
+				data: formData,
+				success: function (response) {
+					if(response.success){
+						console.log("cargando pregunta");
+					}
+					this.id = null
+				},
+				error(error){
+					this.id = null
+				}
+			});
+		}
+	}
+
+	function question_response(){
+		MDL_QUESTION_ORIGEN.sendanswwer()
+	}
+
+	function questionResponse(){
+
+	}
+	<?php if(isset($question_sol_id)): ?>
+		MDL_QUESTION_ORIGEN.question(<?=$question_sol_id;?>)
+	<?php endif; ?>
+</script>
 <script src="/assets/js/profile.js"></script>
 <script src="/assets/js/fileComponent.js"></script>
 <script src="/dist/js/jquery-externs/bootbox.min.js"></script>
+
 </body>
 </html>

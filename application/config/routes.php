@@ -63,6 +63,7 @@ $route['registro'] = 'Registro';
 $route['registro/enviar'] = 'Registro/guardar';
 $route['postulante'] = 'Postulante';
 $route['postulante/verificacion'] = 'Postulante/verificacion';
+$route['postulante/answers'] = 'Postulante/answersorigin';
 
 
 $route['public/api/programas'] = 'Programa/allActives';
@@ -372,3 +373,4 @@ $route['administracion/cursosdiscount/save'] = 'admin/Cursosdiscount/save';
 $route['administracion/cursosdiscount/update'] = 'admin/Cursosdiscount/update';
 $route['administracion/cursosdiscount/edit/(:num)'] = 'admin/Cursosdiscount/edit/$1';
 $route['administracion/cursosdiscount/delete'] = 'admin/Cursosdiscount/delete';
+

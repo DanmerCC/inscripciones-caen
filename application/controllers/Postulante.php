@@ -61,6 +61,7 @@ class Postulante extends MY_Controller {
 				$data["nacionalidad"]=$result[0]["nacionalidad"];
 				$data["paises"]=$this->Pais_model->all();
 				$data["config_acordion"]=$config_acordion;
+				$data["question_sol_id"]=$this->session->flashdata('question_sol_id');
 
 				$opciones["rutaimagen"]=$identity["rutaimagen"];
 				$opciones["menu"]=[];
@@ -445,6 +446,8 @@ class Postulante extends MY_Controller {
 			$tipo_financiamiento=$this->input->post('tipoFinan');
 			$this->load->model('Alumno_model');
 			$resultado=$this->Alumno_model->nuevaSolicitud($programa,$alumno,$tipo_financiamiento);
+			$solicitud_id = $this->db->insert_id();
+			$this->session->set_flashdata('question_sol_id', $solicitud_id);
 			$alumno_result=$this->Alumno_model->find($alumno);
 			$programa=$this->Programa_model->findWithFullname($programa);
 			if($resultado==1){
@@ -455,7 +458,7 @@ class Postulante extends MY_Controller {
 				));
 			}
 			$this->ConfigPerfil_model->setAcordion(Config_Acordion::$nineth_acordion);
-			redirect(base_url().'postulante', 'refresh');
+			redirect(base_url().'postulante?qi=1', 'refresh');
 		}
 
 	}
@@ -943,5 +946,22 @@ class Postulante extends MY_Controller {
 			$this->structuredResponse(null);
 		}
 
+	}
+
+	public function answersorigin(){
+		$red_soc = $this->input->post('red_soc')=="true";
+		$searcher = $this->input->post('searcher')=="true";
+		$web = $this->input->post('web')=="true";
+		$references  = $this->input->post('references')=="true";
+		$conferences  = $this->input->post('conferences')=="true";
+		$notices_others = $this->input->post('notices_others')=="true";
+		$others = $this->input->post('others');
+
+		$inscription_id = $this->input->post('inscription_id');
+
+		$this->db->insert('origen_inscriptions',$_POST);
+
+		return $this->response("Preguntas correctamente guardadas");
+		exit;
 	}
 }
