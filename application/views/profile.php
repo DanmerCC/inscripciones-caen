@@ -1226,7 +1226,7 @@
 			var formData = new FormData
 			inputs.each((key,val)=>{
 				
-				formData.append(val.value,true)
+				formData.append(val.value,1)
 			})
 			
 			formData.append('others',$('#input-others').val());
