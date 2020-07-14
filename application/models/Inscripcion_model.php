@@ -128,6 +128,7 @@ class Inscripcion_model extends CI_Model
 	public function get_page($start,$limit = 10,$deletes=true){
 		$this->db->select(
 			's.idSolicitud,'.
+			's.alumno,'.
 			'ins.id_inscripcion,'.
 			'ins.deleted as f_anulado,'.
 			'ins.'.$this->estado_finanzas_id.','.
@@ -195,6 +196,7 @@ class Inscripcion_model extends CI_Model
 	public function get_page_and_filter($start,$limit,$text,$deletes=true){
 		$this->db->select(
 			's.idSolicitud,'.
+			's.alumno,'.
 			'ins.id_inscripcion,'.
 			'ins.deleted as f_anulado,'.
 			'ins.'.$this->estado_finanzas_id.','.
@@ -711,5 +713,14 @@ class Inscripcion_model extends CI_Model
 		$this->db->group_by(['c.id_curso','ins.estado_finanzas_id']);
 		$query = $this->db->order_by('c.id_curso',"DESC")->get();
 		return $query->result();
+	}
+
+	function admids($ids){
+		$data=array(
+			$this->estado_admision_id=>$this->EstadoAdmisionInscripcion_model->ADMITIDO
+		);
+		$this->db->where_in($this->id, $ids);
+		$this->db->update($this->table,$data);
+		return $this->db->affected_rows()==count($ids);
 	}
 }

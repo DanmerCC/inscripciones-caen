@@ -61,8 +61,10 @@ class Panel extends CI_Controller
 					$findprogramas['nombre_tipo'] = $resume->nombre_tipo;
 					$findprogramas['numeracion'] = $resume->numeracion;
 					$findprogramas['estado'] = $resume->estado;
+					array_push($temp_ids,$tempid);
+					array_push($programas,$findprogramas);
 				}
-				array_push($programas,$findprogramas);
+				
 
 			}
 			

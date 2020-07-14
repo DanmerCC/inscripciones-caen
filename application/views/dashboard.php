@@ -29,7 +29,7 @@
         
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/administracion/home"><i class="fa fa-dashboard"></i> Home</a></li>
       </ol>
     </section>
 
@@ -82,6 +82,12 @@
         
 				</div>
 			</div>
+			<div hidden>
+			<?php 
+				echo var_dump($resume_programas,$resume_data);
+			?>
+			</div>
+			
       <!-- end contenido -->
     </section>
     <!-- /.content -->

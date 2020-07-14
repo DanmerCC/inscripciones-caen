@@ -12,6 +12,7 @@
 <link href="/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
 <link href='<?=base_url()?>assets/plugins/calendar/core/main.css' rel='stylesheet' />
 <link href='<?=base_url()?>assets/plugins/calendar/daygrid/main.css' rel='stylesheet' />
+<link href='https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css' rel='stylesheet' />
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 <!-- Site wrapper -->
@@ -34,7 +35,7 @@
 
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/administracion/home"><i class="fa fa-dashboard"></i> Home</a></li>
       </ol>
     </section>
 
@@ -121,21 +122,28 @@
 						<label for="descprogramas">Cambiar orden</label>
 						<input class="sm" type="checkbox"  id="descprogramas">
 					</div>
+					
+					
+					<div class="col-md-3">
+						<div class="btn btn-primary" disabled id="btn-admd-mult">
+							Admitir
+						</div>
+					</div>
               
 						</div>
 						<div>
 							<div>
 								Ocultar/Mostrar:
-								 <a class="toggle-vis" data-column="1">Nombres</a> -
-									<a class="toggle-vis" data-column="2">Apellidos</a> -
-									 <a class="toggle-vis" data-column="3">Programa</a> - 
-									 <a class="toggle-vis" data-column="4">Documento</a> - 
-									 <a class="toggle-vis" data-column="5">Correo</a>-
-									 <a class="toggle-vis" data-column="6">Telefonos</a>-
-									 <a class="toggle-vis" data-column="7">Fecha de Registro</a>-
-									 <a class="toggle-vis" data-column="8">Finanzas</a>-
-									 <a class="toggle-vis" data-column="9">Anulado</a>-
-									 <a class="toggle-vis" data-column="10">Admision</a>-
+								 <a class="toggle-vis" data-column="2">Nombres</a> -
+									<a class="toggle-vis" data-column="3">Apellidos</a> -
+									 <a class="toggle-vis" data-column="4">Programa</a> - 
+									 <a class="toggle-vis" data-column="5">Documento</a> - 
+									 <a class="toggle-vis" data-column="6">Correo</a>-
+									 <a class="toggle-vis" data-column="7">Telefonos</a>-
+									 <a class="toggle-vis" data-column="8">Fecha de Registro</a>-
+									 <a class="toggle-vis" data-column="9">Finanzas</a>-
+									 <a class="toggle-vis" data-column="10">Anulado</a>-
+									 <a class="toggle-vis" data-column="11">Admision</a>-
 							</div>
 						</div>
 						<div class="row">
@@ -144,6 +152,7 @@
 									<div class="box-body">
 									<table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover" style="width:100%">
 										<thead>
+											<th></th>
 											<th>Opciones</th>
 											<th>Nombres</th>
 											<th>Apellidos</th>
@@ -158,6 +167,7 @@
 											<th>Entrevistas</th>
 										</thead>
 										<tfoot>
+											<th></th>
 										<th>Opciones</th>
 											<th>Nombres</th>
 											<th>Apellidos</th>
@@ -268,6 +278,9 @@
       </div>
     </div>
   </div>
+  <div id="uniquedinamiccontainer">
+	  
+  </div>
   <!-- Final de Modal -->
 
 
@@ -328,9 +341,17 @@
 <script src="/dist/js/jquery-externs/buttons.print.min.js"></script>
 <script src="/bower_components/select2/dist/js/select2.min.js"></script>
 <script src="/bower_components/datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
 <script src='<?=base_url()?>assets/plugins/calendar/core/main.js'></script>
 <script src='<?=base_url()?>assets/plugins/calendar/interaction/main.js'></script>
 <script src='<?=base_url()?>assets/plugins/calendar/daygrid/main.js'></script>
+<script>
+	var NO_COLUMN_VISIBLE_VAR_FROM_BACK = <?php echo json_encode(empty($_GET["ca"])?[]:$_GET["ca"]); ?>;
+	var can_change_inscription_to_admision = !!!<?php echo (int)$can_change_to_admision ?>;
+</script>
+<?php
+	$this->load->view('modals/state_manager_modal'); 
+?>
 <script src="/assets/js/dboard_inscripciones.js"></script>
 <style>
 .datepicker {
