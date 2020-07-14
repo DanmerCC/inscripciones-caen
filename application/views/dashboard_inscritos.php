@@ -352,7 +352,7 @@
 <?php
 	$this->load->view('modals/state_manager_modal'); 
 ?>
-<script src="/assets/js/dboard_inscripciones.js"></script>
+<script src="/assets/js/dboard_inscripciones.js?v=1"></script>
 <style>
 .datepicker {
       z-index: 1600 !important; /* has to be larger than 1050 */
