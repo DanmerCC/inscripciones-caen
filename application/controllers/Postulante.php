@@ -420,7 +420,8 @@ class Postulante extends MY_Controller {
 		$this->load->model('Alumno_model');
 		$def_patria=($this->input->post('def_patria')=='1');
 		$def_democracia=($this->input->post('def_democracia')=='1');
-		$this->Alumno_model->updateOtros($def_patria,$def_democracia);
+		$id_alumno=$this->nativesession->get('idAlumno');
+		$this->Alumno_model->updateOtros($id_alumno,$def_patria,$def_democracia);
 		$this->ConfigPerfil_model->setAcordion(Config_Acordion::$seventh_acordion);
 		redirect(base_url().'postulante', 'refresh');
 	}

@@ -319,11 +319,12 @@ class Alumno_model extends CI_Model
         return $this->db->update('alumno', $data);
 	}
 
-	public function updateOtros($def_patria=null,$def_democracia){
+	public function updateOtros($id,$def_patria=null,$def_democracia){
 		$data = array(
 			'def_patria'=>$def_patria,
 			'def_democracia'=>$def_democracia
 		);
+		$this->db->where('id_alumno', $id);
 		return $this->db->update($this->table,$data);
 
 	}
