@@ -83,6 +83,8 @@ class InscripcionController extends MY_Controller {
 				$item['apellido_paterno']." ".$item['apellido_materno'],
 				$item['documento'],
 				$item['fecha_nac'],
+				$item['distrito_nac'],
+				$item['provincia'],
 				$item['email'],
 				$item['celular']."-".$item['telefono_casa'],
 				$item['nombre_user'],
@@ -92,7 +94,7 @@ class InscripcionController extends MY_Controller {
 				$item['created'],
 			);
 		}
-		$headers = ["N°","NOMBRES","APELLIDOS","DOCUMENTO","NACIMIENTO","CORREO","TELEFONOS","USUARIO","PROGRAMAS","GRADO PROFESION","ESTADO CIVIL","FECHA DE REGISTRO"];
+		$headers = ["N°","NOMBRES","APELLIDOS","DOCUMENTO","NACIMIENTO","DIST NAC","PROVINCIA","CORREO","TELEFONOS","USUARIO","PROGRAMAS","GRADO PROFESION","ESTADO CIVIL","FECHA DE REGISTRO"];
 
 		process_and_export_excel($headers,$cuerpo);
 		
