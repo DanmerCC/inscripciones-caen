@@ -6,6 +6,7 @@
 var tabla;
 var CACHE_PROGRAMAS_SELECT = [];
 var DEFAULT_NO_VISIBLE=[]
+var DEFAULT_LENGTH = 15;
 
 var STATE_ID_PENDIENTE_ADMISION  = 1 
 
@@ -92,14 +93,28 @@ var MDL_ACTA_ADMINDS =  {
 
 function cargarDataTable(){
 	tabla = $('#dataTable1').dataTable({
+	"fnInitComplete": function(){
+		// Enable THEAD scroll bars
+		$('.dataTables_scrollHead').css('overflow', 'auto');
+
+		// Sync THEAD scrolling with TBODY
+		$('.dataTables_scrollHead').on('scroll', function () {
+			$('.dataTables_scrollBody').scrollLeft($(this).scrollLeft());
+		});
+	},
+	deferRender: true,
+    scrollY:     700,
+    scroller:    false,
 	"aProcessing": true, //activamos el procesamiento del datatables
 	"serverSide": true, //paginacion y filtrado realizados por el servidor 
-	dom: 'Bfrtip', //definimos los elementos del contro la tabla
+	dom: 'Bfrltip', //definimos los elementos del contro la tabla
 	buttons: [
 		'copyHtml5',
 		'excelHtml5',
 		'csvHtml5',
-		'pdf'
+		'pdf',
+		'selectAll',
+		'selectNone'
 	],
 	"ajax":
 			{
@@ -122,6 +137,11 @@ function cargarDataTable(){
 		}
 	},
 	"bDestroy": true,
+	"bLengthChange":true,
+	//"bLengthMenu": [ 10, 15,25, 50, 75, 100 ],
+	//"aLengthMenu": [ 10, 15,25, 50, 75, 100 ],
+	//"sLengthMenu": [ 10, 15,25, 50, 75, 100 ],
+	"lengthMenu": [ 10, 15,25, 50, 75, 100 ],
 	"iDisplayLength": 15, // paginacion
 	"order": [[0, "desc"]],
 	language: {
@@ -180,7 +200,12 @@ $('a.toggle-vis').on( 'click', function (e) {
 
 		// Toggle the visibility
 		column.visible( ! column.visible() );
+		$(this).removeClass('btn-success')
+		$(this).removeClass('btn-danger')
+		$(this).addClass(column.visible()?'btn-success':'btn-danger')
 	} );
+
+
 }
 
 $(document).ready(function(){

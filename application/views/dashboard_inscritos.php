@@ -134,16 +134,16 @@
 						<div>
 							<div>
 								Ocultar/Mostrar:
-								 <a class="toggle-vis" data-column="2">Nombres</a> -
-									<a class="toggle-vis" data-column="3">Apellidos</a> -
-									 <a class="toggle-vis" data-column="4">Programa</a> - 
-									 <a class="toggle-vis" data-column="5">Documento</a> - 
-									 <a class="toggle-vis" data-column="6">Correo</a>-
-									 <a class="toggle-vis" data-column="7">Telefonos</a>-
-									 <a class="toggle-vis" data-column="8">Fecha de Registro</a>-
-									 <a class="toggle-vis" data-column="9">Finanzas</a>-
-									 <a class="toggle-vis" data-column="10">Anulado</a>-
-									 <a class="toggle-vis" data-column="11">Admision</a>-
+								 <a class="toggle-vis btn-success" data-column="2">Nombres</a> -
+									<a class="toggle-vis btn-success" data-column="3">Apellidos</a> -
+									 <a class="toggle-vis btn-success" data-column="4">Programa</a> - 
+									 <a class="toggle-vis btn-success" data-column="5">Documento</a> - 
+									 <a class="toggle-vis btn-success" data-column="6">Correo</a>-
+									 <a class="toggle-vis btn-success" data-column="7">Telefonos</a>-
+									 <a class="toggle-vis btn-success" data-column="8">Fecha de Registro</a>-
+									 <a class="toggle-vis btn-success" data-column="9">Finanzas</a>-
+									 <a class="toggle-vis btn-success" data-column="10">Anulado</a>-
+									 <a class="toggle-vis btn-success" data-column="11">Admision</a>-
 							</div>
 						</div>
 						<div class="row">
@@ -352,11 +352,17 @@
 <?php
 	$this->load->view('modals/state_manager_modal'); 
 ?>
-<script src="/assets/js/dboard_inscripciones.js?v=1"></script>
+<script src="/assets/js/dboard_inscripciones.js?v=2"></script>
 <style>
 .datepicker {
       z-index: 1600 !important; /* has to be larger than 1050 */
     }
+	/*#dataTable1_wrapper {
+		overflow-x: scroll;
+	}*/
+	a.toggle-vis {
+		cursor: pointer;
+	}
 </style>
 <script>
 	$('#select2-estado-finanzas').select2();
