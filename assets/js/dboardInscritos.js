@@ -1,4 +1,5 @@
 var tabla;
+var ALUMNO_SELECTED = []
 $("#btn-salir").prop('href','/administracion/salir');
 $(document).ready(function(){
 
@@ -12,12 +13,78 @@ $(document).ready(function(){
     $('#programas').on('click',function(){
         swtichTable('programas');
     });
-    ajaxCPws();
+	ajaxCPws();
+	
+	tabla.on( 'select', function ( e, dt, type, indexes ) {
+		var rowsData = tabla.rows( '.selected' ).data().toArray()
+		var jsonData  = rowsData.map(x=>JSON.parse(x[0])) 
+		ALUMNO_SELECTED = jsonData
+		validateCodeAlumnoButton(rowsData)
+	} ).on( 'deselect', function ( e, dt, type, indexes ) {
+		var rowsData = tabla.rows( '.selected' ).data().toArray()
+		var jsonData  = rowsData.map(x=>JSON.parse(x[0])) 
+		ALUMNO_SELECTED = jsonData
+		validateCodeAlumnoButton(rowsData)
+	} );
+
+
+
+	
 
 });
 /*fin de carga automatica*/
 
+function validateCodeAlumnoButton(rowsData){
+	var jsonData  = rowsData.map(x=>JSON.parse(x[0])) 
+	var $btnCodeAlumno = $("#id-btn-codigo-unique")
+	console.log(jsonData.filter(x => x.cod_alumno_increment))
+	var hasCods  = jsonData.filter(x => x.cod_alumno_increment != null)
+	changeStateCodeStudent(hasCods.length == 0)
+}
 
+function changeStateCodeStudent(state){
+	var button = $("#id-btn-codigo-unique");
+	if(state){
+		button.unbind('click')
+		button.removeAttr('disabled')
+		button.removeAttr('onclick')
+		button.click(openModalChargeCodigos)
+	}else{
+		button.unbind('click')
+		button.attr('disabled', 'true')
+	}
+}
+
+function openModalChargeCodigos(){
+	var ids_concats = ALUMNO_SELECTED.map(x=>x.id_alumno).join(',')
+	console.log(ids_concats)
+	console.log("este es o son los ids");
+	$.ajax({
+		type: "post",
+		url: "/admin/codestudent",
+		data: {
+			ids:ids_concats
+		},
+		dataType: "json",
+		success: function (response) {
+			console.log(response);
+			if(response.status){
+				alert(response.message)
+			}else{
+				alert(response.message)
+			}
+			tabla.ajax.reload(null,false)
+		},
+		error(code){
+			if(code.status == 401){
+				alert("No tienes permiso para crear codigos ")
+			}
+			
+		}
+		
+	});
+	
+}
 
 function cargarDataTable(){
 	    tabla = $('#dataTable1').dataTable({
@@ -29,7 +96,16 @@ function cargarDataTable(){
             'copyHtml5',
             'excelHtml5',
             'csvHtml5',
-            'pdf'
+			'pdf',
+			{
+				text: 'Codigo unico',
+				class:'createcodebtn',
+                action: function ( e, dt, node, config ) {
+					node
+					console.log(e,dt,node,config);
+                    alert( 'Button activated' );
+                }
+            }
         ],
         "fnInitComplete": function(){
             // Disable TBODY scoll bars
@@ -66,7 +142,21 @@ function cargarDataTable(){
                 },
         "bDestroy": true,
         "iDisplayLength": 15, // paginacion
-        "order": [[0, "desc"]] //ordenar(columna, orden)
+		"order": [[0, "desc"]], //ordenar(columna, orden)
+		"select": {
+			style:    'multi',
+			selector: 'td:first-child'
+		},
+		"columnDefs": [ 
+				{
+				orderable: false,
+				className: 'select-checkbox',
+				targets:   0,
+				"render": function ( data, type, row, meta ) {
+					return "";
+				}
+			}
+		]
     }).DataTable();
 }
 

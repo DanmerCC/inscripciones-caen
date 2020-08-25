@@ -12,7 +12,10 @@ $(document).ready(function(){
     $('#programas').on('click',function(){
         swtichTable('programas');
     });
-    ajaxCPws();
+	ajaxCPws();
+	tabla.on( 'select', function ( e, dt, type, indexes ) {
+		alert("seleccionado")
+	} )
 
 });
 /*fin de carga automatica*/
@@ -41,7 +44,21 @@ function cargarDataTable(){
                 },
         "bDestroy": true,
         "iDisplayLength": 15, // paginacion
-        "order": [[0, "desc"]] //ordenar(columna, orden)
+		"order": [[0, "desc"]], //ordenar(columna, orden)
+		"select": {
+			style:    'multi',
+			selector: 'td:first-child'
+		},
+		"columnDefs": [ 
+				{
+				orderable: false,
+				className: 'select-checkbox',
+				targets:   0,
+				"render": function ( data, type, row, meta ) {
+					return "";
+				}
+			}
+		]
     }).DataTable();
 }
 

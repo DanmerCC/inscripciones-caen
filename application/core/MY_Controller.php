@@ -9,7 +9,8 @@ class MY_Controller extends CI_Controller
     const OK = 200;
     const NO_FOUND = 404;
     const SERVER_ERROR = 500;
-    const UNAUTHORIZED = 401;
+	const UNAUTHORIZED = 401;
+	const BAD_REQUEST = 400;
 
     function __construct()
 	{
@@ -40,6 +41,13 @@ class MY_Controller extends CI_Controller
 
         if($status===self::OK){
             header('Content-Type: application/json');
+            echo json_encode($data,JSON_UNESCAPED_UNICODE);
+            exit;
+		}
+		
+		if($status===self::BAD_REQUEST){
+			header('Content-Type: application/json');
+			http_response_code(self::BAD_REQUEST);
             echo json_encode($data,JSON_UNESCAPED_UNICODE);
             exit;
         }

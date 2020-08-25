@@ -8,7 +8,7 @@
 <?php $this->load->view('adminlte/linksHead');?>
 <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css"> -->
 <link rel="stylesheet" href="/dist/css/jquery-externs/jquery.dataTables.min.css">
-
+<link href='https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css' rel='stylesheet' />
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 <!-- Site wrapper -->
@@ -37,12 +37,24 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class=""><!-- container -->
+			<div class=""><!-- container -->
+			<div class="panel-body">
+				<div class="box box-primary">
+					<div class="row">
+						<div class="col-md-12">
+							
+						<div disabled class="btn btn-primary" id="id-btn-codigo-unique">Codigo Unico</div>
+						</div>
+					</div>
+				</div>
+			</div>
+				
           <div class="panel-body" id="listadoregistros">
 						<div class="box box-primary" >
 							<div class="box-body" style="">
 								<table id="dataTable1" class="table table-striped table-bordered table-condensed table-hover  table-responsive" style="width:100%">
 									<thead>
+										<th></th>
 										<th>N°</th>
 										<th>TITULO</th>
 										<th>NOMBRES</th>
@@ -57,8 +69,12 @@
 										<th>BACHILLER</th>
 										<th>MAESTRIA</th>
 										<th>DOCTORADO</th>
+										<th>Correlativo de ALumno</th>
+										<th>Codigo Unico de ALumno</th>
+										<th>Opciones</th>
 									</thead>
 									<tfoot>
+										<th></th>
 										<th>TITULO</th>
 										<th>NOMBRES</th>
 										<th>APELLIDOS PATERNO</th>
@@ -72,6 +88,9 @@
 										<th>BACHILLER</th>
 										<th>MAESTRIA</th>
 										<th>DOCTORADO</th>
+										<th>Correlativo de ALumno</th>
+										<th>Codigo Unico de ALumno</th>
+										<th>Opciones</th>
 									</tfoot>
 								</table>
 							</div>
@@ -179,7 +198,7 @@
 <script src="/dist/js/jquery-externs/pdfmake.min.js"></script>
 <script src="/dist/js/jquery-externs/buttons.html5.min.js"></script>
 <script src="/dist/js/jquery-externs/buttons.print.min.js"></script>
-
+<script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
 <!-- <script src="/assets/js/dboardAlumno.js"></script> -->
 <script src="/assets/js/dboardInscritos.js"></script>
 </body>

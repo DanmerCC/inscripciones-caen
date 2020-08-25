@@ -187,6 +187,7 @@ $route['admin/parts/nuevoprograma'] = 'admin/Programa/newPrograma';
 $route['admin/notifications'] = 'admin/NotificationController/index';
 $route['admin/read'] = 'admin/NotificationController/read';
 
+$route['admin/codestudent'] = 'CodalumnoController/create';
 
 $route['admin/inscripcion/changestatefinan']='admin/InscripcionController/changeEstadoFinanzas';
 $route['admin/finobservacion/inscripcion/(:num)']='admin/FinanzasObservacionController/get_by_inscripcion_id/$1';
