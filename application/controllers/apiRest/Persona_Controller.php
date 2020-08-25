@@ -131,7 +131,7 @@ class Persona_Controller extends MY_Controller {
 			}
 		return 
 		[
-			"extension" => "none",
+			"extension" => $extension,
 			"name"=>"Foto",
 			"identifier"=>"foto",
 			"stateUpload"=>$state,
