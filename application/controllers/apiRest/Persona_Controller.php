@@ -116,12 +116,12 @@ class Persona_Controller extends MY_Controller {
 				$imagen="data:image/jpg;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".jpg"));
 
 			}else if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".png")){
-				$extension = "jpg";
+				$extension = "png";
 				$state=true;
 				$imagen="data:image/png;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".png"));
 
 			}else if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".gif")){
-				$extension = "jpg";
+				$extension = "gif";
 				$state=true;
 				$imagen="data:image/gif;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".gif"));
 				
