@@ -104,6 +104,7 @@ class Alumno_model extends CI_Model
 			$this->check_dj,
 			$this->check_dni,
 			$this->check_doct,
+			$this->check_maes,
 			$this->si_militar,
 			$this->idTipoDocumento,
 			$this->curso_caen,
