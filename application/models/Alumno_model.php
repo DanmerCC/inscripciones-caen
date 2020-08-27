@@ -53,9 +53,9 @@ class Alumno_model extends CI_Model
 	private $si_militar='si_militar';
 	private $idTipoDocumento='idTipoDocumento';
 	private $curso_caen ='curso_caen';
-	private $indicar_1  ='indicar_1';
+	private $indicar_1  ='indicar1';
 	private $curso_maestria  ='curso_maestria';
-	private $indicar_2  ='indicar_2';
+	private $indicar_2  ='indicar2';
 	//private $password  ='password';
 	
 
@@ -109,6 +109,7 @@ class Alumno_model extends CI_Model
 			$this->curso_caen,
 			$this->indicar_1,
 			$this->curso_maestria,
+			$this->indicar_2,
 		];
 
 	}
