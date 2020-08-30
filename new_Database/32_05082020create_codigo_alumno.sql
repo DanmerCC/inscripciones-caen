@@ -5,3 +5,6 @@ ADD INDEX `cod_alumno_increment_key` (`cod_alumno_increment`),
 ADD UNIQUE INDEX `cod_alumno_increment_unique` (`cod_alumno_increment`);
 
 ALTER TABLE `alumno` ADD COLUMN `cod_alumno_created` DATETIME NULL DEFAULT NULL AFTER `def_democracia`;
+
+
+UPDATE inscripcion SET state_interview_id = 1 WHERE state_interview_id IS NULL;

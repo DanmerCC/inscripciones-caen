@@ -131,6 +131,9 @@ function agregarNuevaProgramacion(){
 						MDL_ENTREVISTAS_INSCRIPCION.onsave();
 					}
 				}
+			},
+			error(erro){
+				alert("No puedes crear un entrevista");
 			}
 		});
 	}
@@ -139,7 +142,7 @@ function agregarNuevaProgramacion(){
 
 function validarDateInputlocal($object){
 	if($object.val()==''){
-		alert('Ingrese una fecha completa')
+		alert('Ingrese una fecha y/o hora completa')
 		return false
 	}
 
