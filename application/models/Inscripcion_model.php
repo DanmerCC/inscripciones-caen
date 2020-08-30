@@ -42,6 +42,7 @@ class Inscripcion_model extends CI_Model
 		);
 		$this->load->model('EstadoFinanzas_model');
 		$this->load->model('EstadoAdmisionInscripcion_model');//EstadoAdmisionInscripcion_model
+		$this->load->model('StateInterviewProgramed_model');
 		$this->array_estado_finanzas=$this->EstadoFinanzas_model->all();
 	}
 
@@ -70,7 +71,8 @@ class Inscripcion_model extends CI_Model
 		if($this->Solicitud_model->verify_requeriments($idSolicitud)){
 			$data=array(
 				$this->solicitud_id=>$idSolicitud,
-				$this->created_user_id=>$created_user_id
+				$this->created_user_id=>$created_user_id,
+				$this->state_interview_id=>$this->StateInterviewProgramed_model->PENDIENTE
 			);
 			$this->db->insert($this->table,$data);
 			$id_row_inserted=$this->db->insert_id();
