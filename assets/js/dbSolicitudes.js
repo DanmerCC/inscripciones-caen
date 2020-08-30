@@ -85,7 +85,29 @@ function cargarDataTable(){
             'excelHtml5',
             'csvHtml5',
             'pdf'
-        ],
+		],
+		"scrollY": 800,
+        "scrollX": true,
+		"initComplete":function(){
+			/*$('.dataTables_scrollBody').css({
+                'overflow': 'hidden',
+                'border': '0'
+            });*/
+           
+            // Enable TFOOT scoll bars
+            $('.dataTables_scrollFoot').css('overflow', 'auto');
+             
+            $('.dataTables_scrollHead').css('overflow', 'auto');
+            
+            // Sync TFOOT scrolling with TBODY
+            $('.dataTables_scrollFoot').on('scroll', function () {
+                $('.dataTables_scrollBody').scrollLeft($(this).scrollLeft());
+            });      
+            
+            $('.dataTables_scrollHead').on('scroll', function () {
+                $('.dataTables_scrollBody').scrollLeft($(this).scrollLeft());
+            });
+		},
         "ajax":
                 {
                     url: '/admin/dataTable/solicitud',
