@@ -245,6 +245,7 @@ $route['api/inscrito/persona'] = 'rest/apipersona_Controller/persona/id/';
 
 
 //**Rest codigo propio  v 0.1*/
+$route['api/v1/solicitudes'] = 'apiRest/SolicitudesController/get';
 $route['api/v1/inscritos'] = 'apiRest/Inscritos_Controller/get';
 $route['api/v1/inscritos/programa/(:num)'] = 'apiRest/Inscritos_Controller/byPrograma/$1';
 $route['api/v1/inscrito/(:num)'] = 'apiRest/Inscritos_Controller/getById/$1';
