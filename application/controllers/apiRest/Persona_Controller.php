@@ -108,27 +108,30 @@ class Persona_Controller extends MY_Controller {
 	 */
 	private function get_photo_object($alumno){
 		$state=false;
+		$extension = "none";
 		$imagen;
 			if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".jpg")){
+				$extension = "jpg";
 				$state=true;
 				$imagen="data:image/jpg;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".jpg"));
 
 			}else if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".png")){
-				
+				$extension = "png";
 				$state=true;
 				$imagen="data:image/png;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".png"));
 
 			}else if(file_exists(CC_BASE_PATH."/files/foto/".$alumno["documento"].".gif")){
-				
+				$extension = "gif";
 				$state=true;
 				$imagen="data:image/gif;base64,".base64_encode(file_get_contents(CC_BASE_PATH."/files/foto/".$alumno["documento"].".gif"));
 				
 			}else{
-
+				$extension = "none";
 				$imagen="#";
 			}
 		return 
 		[
+			"extension" => $extension,
 			"name"=>"Foto",
 			"identifier"=>"foto",
 			"stateUpload"=>$state,

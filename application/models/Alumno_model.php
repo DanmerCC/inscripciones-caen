@@ -50,6 +50,13 @@ class Alumno_model extends CI_Model
 	private $plana_militar='planaMilitar';
 	private $nacionalidad='nacionalidad';
 	private $situacion_laboral='situacion_laboral';
+	private $si_militar='si_militar';
+	private $idTipoDocumento='idTipoDocumento';
+	private $curso_caen ='curso_caen';
+	private $indicar_1  ='indicar1';
+	private $curso_maestria  ='curso_maestria';
+	private $indicar_2  ='indicar2';
+	//private $password  ='password';
 	
 
 	private $public_columns=[];
@@ -98,6 +105,12 @@ class Alumno_model extends CI_Model
 			$this->check_dni,
 			$this->check_doct,
 			$this->check_maes,
+			$this->si_militar,
+			$this->idTipoDocumento,
+			$this->curso_caen,
+			$this->indicar_1,
+			$this->curso_maestria,
+			$this->indicar_2,
 		];
 
 	}
