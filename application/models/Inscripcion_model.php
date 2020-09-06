@@ -27,6 +27,8 @@ class Inscripcion_model extends CI_Model
 
 	public $filter_estado_admision_ids=[];
 
+	public $global_like_alumno=NULL;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -143,6 +145,8 @@ class Inscripcion_model extends CI_Model
 			'a.email,'.
 			'a.celular,'.
 			'a.telefono_casa,'.
+			'a.cod_student_admin,'.
+			'a.cod_alumno_increment,'.
 			'tc.nombre as tipo_curso,'.
 			'a.apellido_paterno,'.
 			'a.apellido_materno,'.
@@ -153,6 +157,7 @@ class Inscripcion_model extends CI_Model
 			'ea.nombre as nombre_estado_admision,'.
 			'state_interview_id'
 		);
+		$this->likeGlobalCodAlumnoFilter('a');
 		$this->db->from($this->table.' ins');
 		$this->dtq_join_solicitud_usuario_curso_tipo_curso_alumno();
 		
@@ -182,6 +187,7 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
+		$this->likeGlobalCodAlumnoFilter('a');
 		$this->dt_query_datatable_filter_array('ins');
 		$this->query_part_for_filter_by_estado_admision('ins');
 		$result=$this->db->get()->result_array();
@@ -189,6 +195,18 @@ class Inscripcion_model extends CI_Model
 			return $result[0]['count'];
 		}
 		return null;
+	}
+
+	function likeGlobalCodAlumnoFilter($prefix=null){
+
+		if($this->global_like_alumno != null){
+			if($prefix==null){
+				$this->db->like('alumno.cod_student_admin',$this->global_like_alumno,'after');
+			}else{
+				$this->db->like($prefix.'.cod_student_admin',$this->global_like_alumno,'after');
+			}
+		}
+		
 	}
 
 
@@ -211,6 +229,8 @@ class Inscripcion_model extends CI_Model
 			'a.email,'.
 			'a.celular,'.
 			'a.telefono_casa,'.
+			'a.cod_student_admin,'.
+			'a.cod_alumno_increment,'.
 			'tc.nombre as tipo_curso,'.
 			'a.apellido_paterno,'.
 			'a.apellido_materno,'.
@@ -226,6 +246,7 @@ class Inscripcion_model extends CI_Model
 			$this->db->or_like('a.nombres',$text);
 			$this->db->or_like('a.apellido_paterno',$text);
 			$this->db->or_like('a.apellido_materno',$text);
+			$this->db->or_like('a.documento',$text);
 		$this->db->group_end();
 		$this->dtq_join_solicitud_usuario_curso_tipo_curso_alumno();
 		if(!$deletes){
@@ -235,6 +256,7 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
+		$this->likeGlobalCodAlumnoFilter('a');
 		$this->dt_query_datatable_filter_array('ins');
 		$this->query_part_for_filter_by_estado_admision('ins');
 		$this->db->limit($limit,$start);
@@ -258,6 +280,7 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
+		$this->likeGlobalCodAlumnoFilter('a');
 		$this->dt_query_datatable_filter_array('ins');
 		$this->query_part_for_filter_by_estado_admision('ins');
 		

@@ -98,6 +98,7 @@
 										<th>Finanzas</th>
 										<th>Comentario</th>
 										<th>fecha_registro</th>
+										<th>Codigo de Alumno</th>
 										<th>Estado</th>
 									</thead>
 									<tfoot>
@@ -112,6 +113,7 @@
 										<th>Finanzas</th>
 										<th>Comentario</th>
 										<th>fecha_registro</th>
+										<th>Codigo de Alumno</th>
 										<th>Estado</th>
 									</tfoot>
 								</table>

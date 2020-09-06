@@ -129,6 +129,11 @@
 							Admitir
 						</div>
 					</div>
+					<div class="col-md-3">
+						<div class="btn btn-primary" disabled id="btn-student-cod-mult" onclick="openModalCreaCodigos()">
+							Crear Codigos de alumno
+						</div>
+					</div>
               
 						</div>
 						<div>
@@ -140,10 +145,10 @@
 									 <a class="toggle-vis btn-success" data-column="5">Documento</a> - 
 									 <a class="toggle-vis btn-success" data-column="6">Correo</a>-
 									 <a class="toggle-vis btn-success" data-column="7">Telefonos</a>-
-									 <a class="toggle-vis btn-success" data-column="8">Fecha de Registro</a>-
-									 <a class="toggle-vis btn-success" data-column="9">Finanzas</a>-
-									 <a class="toggle-vis btn-success" data-column="10">Anulado</a>-
-									 <a class="toggle-vis btn-success" data-column="11">Admision</a>-
+									 <a class="toggle-vis btn-success" data-column="9">Fecha de Registro</a>-
+									 <a class="toggle-vis btn-success" data-column="10">Finanzas</a>-
+									 <a class="toggle-vis btn-success" data-column="11">Anulado</a>-
+									 <a class="toggle-vis btn-success" data-column="12">Admision</a>-
 							</div>
 						</div>
 						<div class="row">
@@ -160,6 +165,7 @@
 											<th>Documento</th>
 											<th>Correo</th>
 											<th>Telefonos</th>
+											<th>Codigo de alumno</th>
 											<th>Fecha de Registro</th>
 											<th>Finanzas</th>
 											<th>Estado</th>
@@ -175,6 +181,7 @@
 											<th>Documento</th>
 											<th>Correo</th>
 											<th>Telefonos</th>
+											<th>Codigo de alumno</th>
 											<th>Fecha de Registro</th>
 											<th>Finanzas</th>
 											<th>Estado</th>
@@ -350,7 +357,8 @@
 	var can_change_inscription_to_admision = !!!<?php echo (int)$can_change_to_admision ?>;
 </script>
 <?php
-	$this->load->view('modals/state_manager_modal'); 
+	$this->load->view('modals/state_manager_modal');
+	$this->load->view('modals/create_codigos'); 
 ?>
 <script src="/assets/js/dboard_inscripciones.js?v=2"></script>
 <style>

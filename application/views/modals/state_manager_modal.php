@@ -3,7 +3,7 @@
 <div id="mdl-manager-admision-container"></div>
 <script>
 	var COLUMN_NAME = 3 
-	var COLUMN_STATE = 11
+	var COLUMN_STATE = 12
 	var MDL_MNG_STATE_ADMISION = {
 		/**
 		 * objects
@@ -18,7 +18,7 @@
 			this.dataadmid = this.getIds()
 
 			var validsids = inscripciondata.filter(x=>{
-				return x[11].id == 1
+				return x[12].id == 1 || x[12].id == "1" 
 			})
 
 			if(validsids.length == inscripciondata.length){

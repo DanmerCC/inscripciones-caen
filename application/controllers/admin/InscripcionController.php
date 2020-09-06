@@ -167,12 +167,15 @@ class InscripcionController extends MY_Controller {
 
 	public function datatable_dashboard(){
 
+		$STUDENT_CODE_COLUMN=12;
+
 		$search=$this->input->post("search[]");
 		$start=$this->input->post('start');
 		$length=$this->input->post('length');
 		$columns=$this->input->post('columns');
-		$deletes=(boolean)($columns[8]["search"]["value"]==='true');
+		$deletes=(boolean)($columns[11]["search"]["value"]==='true');
 		$column_nine=$columns[9]["search"]["value"];
+		$column_cod_admin=$columns[8]["search"]["value"];
 		$estados=($column_nine=="")?[]:explode(',',$column_nine);
 
 		$value_estados_admision=$columns[10]["search"]["value"];
@@ -180,6 +183,11 @@ class InscripcionController extends MY_Controller {
 		$this->load->model('Auth_Permisions');
 		
 		$can_edit_finanzas=$this->Auth_Permisions->can('change_inscripcion_estado_finanzas');
+
+		
+		if(strlen($column_cod_admin)>0){
+			$this->Inscripcion_model->global_like_alumno = $column_cod_admin;
+		}
 		
 		$this->Inscripcion_model->global_stado_finanzas=$estados;
 		$this->Inscripcion_model->filter_estado_admision_ids=$filters_values_estados_admision;
@@ -190,7 +198,6 @@ class InscripcionController extends MY_Controller {
 			$rspta = $this->Inscripcion_model->get_page_and_filter($start,$length,$search["value"],$deletes);
 			
 		}else{
-			
 			$cantidad = $this->Inscripcion_model->get_count($deletes);
 			$rspta = $this->Inscripcion_model->get_page($start,$length,$deletes);
 		}
@@ -209,8 +216,9 @@ class InscripcionController extends MY_Controller {
 				"5" => $value["documento"],
 				"6" => $value["email"],
 				"7" => (isset($value["celular"])?$value["celular"]:" ")." - ".(isset($value["telefono_casa"])?$value["telefono_casa"]:" "),
-				"8" => $value["created"],
-				"9" => "<div class='input-group-btn'>".
+				"8"=>$value["cod_student_admin"],
+				"9" => $value["created"],
+				"10" => "<div class='input-group-btn'>".
 							($can_edit_finanzas?
 											
 												$this->HTML_drop_down_estado_finanzas(
@@ -223,9 +231,9 @@ class InscripcionController extends MY_Controller {
 							).
 							$this->HTML_details_icon($value["id_inscripcion"],$value["estado_finanzas_id"]).
 						"</div>",
-				"10" => $is_anulated?"<span class='label label-success'>Cargado</span>":"<span class='label label-danger'>Anulado</span>",
-				"11" => array("id"=>$value["estado_admisions_id"],"nombre"=>$value["nombre_estado_admision"]),
-				"12"=>$this->StateInterviewProgramed_model->loadFromMemoryById($value["state_interview_id"])
+				"11" => $is_anulated?"<span class='label label-success'>Cargado</span>":"<span class='label label-danger'>Anulado</span>",
+				"12" => array("id"=>$value["estado_admisions_id"],"nombre"=>$value["nombre_estado_admision"]),
+				"13"=>$this->StateInterviewProgramed_model->loadFromMemoryById($value["state_interview_id"])
 			);
 		}
 		$results = array(
@@ -233,7 +241,7 @@ class InscripcionController extends MY_Controller {
 			"iTotalRecords" => $cantidad, //enviamos el total de registros al datatables
 			"iTotalDisplayRecords" => $cantidad, //enviamos total de registros a visualizar
 			"aaData" => $data,
-			"query"=>":)"
+			"query"=>$query
 		);
 		echo json_encode($results);
 	}

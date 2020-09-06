@@ -28,7 +28,7 @@ $(document).ready(function(){
     });
 
     //contruirTitulos(dataTables.solicitudes.thead);
-    cargarDataTable();
+	cargarDataTable();
     ajaxCPws();
     $('#solicitantes').on('click',function(){
         swtichTable('solicitantes');
@@ -92,7 +92,9 @@ function cargarDataTable(){
 			/*$('.dataTables_scrollBody').css({
                 'overflow': 'hidden',
                 'border': '0'
-            });*/
+			});*/
+			
+			
            
             // Enable TFOOT scoll bars
             $('.dataTables_scrollFoot').css('overflow', 'auto');
@@ -106,7 +108,24 @@ function cargarDataTable(){
             
             $('.dataTables_scrollHead').on('scroll', function () {
                 $('.dataTables_scrollBody').scrollLeft($(this).scrollLeft());
-            });
+			});
+
+			/*$('#dataTable1_filter').append(`
+				<label>Buscar por codigo de alumno:<input type="search" class="" placeholder="" aria-controls="dataTable1"></label>
+			`)*/
+
+			var label  = document.createElement('label')
+			label.innerHTML = "Codigo"
+			var input = document.createElement('input')
+			input.setAttribute('placeholder','Buscar por codigo')
+			//input.setAttribute('class','form-control')
+			input.addEventListener('input',(e)=>{
+				console.log(e.target.value);
+				tabla.column(8).search(e.target.value).draw()
+			})
+			label.appendChild(input)
+			$('#dataTable1_filter').append(label)
+
 		},
         "ajax":
                 {
@@ -116,7 +135,16 @@ function cargarDataTable(){
                     error: function (e) {
                         console.log(e.responseText);
                     }
-                },
+				},
+		"columnDefs": [ 
+				{
+				orderable: false,
+				targets:   11,
+				"render": function ( data, type, row, meta ) {
+					return data?data:'No alumno';
+				}
+			}
+		],
         "bDestroy": true,
         "iDisplayLength": 15, // paginacion
         "order": [[0, "desc"]] //ordenar(columna, orden)

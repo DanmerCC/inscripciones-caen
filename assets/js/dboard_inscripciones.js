@@ -101,6 +101,16 @@ function cargarDataTable(){
 		$('.dataTables_scrollHead').on('scroll', function () {
 			$('.dataTables_scrollBody').scrollLeft($(this).scrollLeft());
 		});
+		var label  = document.createElement('label')
+		label.innerHTML = "Codigo"
+		var input = document.createElement('input')
+		input.setAttribute('placeholder','Buscar por codigo')
+		//input.setAttribute('class','form-control')
+		input.addEventListener('input',(e)=>{
+			tabla.column(8).search(e.target.value).draw()
+		})
+		label.appendChild(input)
+		$('#dataTable1_filter').append(label)
 	},
 	deferRender: true,
     scrollY:     700,
@@ -174,14 +184,14 @@ function cargarDataTable(){
 			}
         },
 		{
-		"targets": 11,
+		"targets": 12,
 		"render": function ( data, type, row, meta ) {
 		  return getHtmlEstadoAdmision(data,row);
 		}
 	  },
 	  
 	  {
-		"targets": 12,
+		"targets": 13,
 		"render": function ( data, type, row, meta ) {
 		  return getHtmlEstadoEntrevista(data);
 		}
@@ -241,7 +251,7 @@ $(document).ready(function(){
 	$("#slct_anulados").change(()=>{
 		var input_select=document.getElementById('slct_anulados');
 		//console.log(input_select.checked)
-		tabla.column(8).search(input_select.checked).draw();
+		tabla.column(11).search(input_select.checked).draw();
 		createRouteExport();
 		//tabla.ajax.reload(null,false);
 	})
@@ -262,12 +272,20 @@ $(document).ready(function(){
 		var jsonData = tabla.rows( [0] ).data().toArray()
 		
 		rowData = rowData.length == 1 ? rowData[0]:null
+		var rowsJsonData = rowsData.map(x=>JSON.parse(x[0]))
 
-		var hasANotAdmitible = rowsData.filter(x => {
-			return x[11].id != 1
+		var hasANotAdmitible = rowsJsonData.filter(x => {
+			var number = Number.parseInt(x.estado_admisions_id)
+			return x.estado_admisions_id != STATE_ID_PENDIENTE_ADMISION || number != STATE_ID_PENDIENTE_ADMISION
 		}).length>0;
 
-		changeStateMultipleAdmidsButton(rowsData.length>0 && !hasANotAdmitible)
+		
+		console.log(rowsJsonData);
+		var hasCodeInSelection = rowsJsonData.filter(x=>{return hasCodeStudent(x)}).length>0
+		
+		changeStateMultipleAdmidsButton(rowsJsonData.length>0 && !hasANotAdmitible)
+
+		changeStateMultipleCodeCreateButton(!hasCodeInSelection)
 
 		/*if(rowData[11].id != STATE_ID_PENDIENTE_ADMISION){
 			alert("Solo puedes admitir inscritos como pendientes")
@@ -279,6 +297,9 @@ $(document).ready(function(){
 		var rowData = tabla.rows( indexes ).data().toArray()
 		var hasInvalids = rowsData.filter(hasNotValidateAdmisibleRow).length > 0 || rowsData.length == 0
 		changeStateMultipleAdmidsButton(!hasInvalids)
+		var rowsJsonData = rowsData.map(x=>JSON.parse(x[0]))
+		var hasCodeInSelection = rowsJsonData.filter(x=>{return hasCodeStudent(x)}).length>0|| rowsData.length == 0
+		changeStateMultipleCodeCreateButton(!hasCodeInSelection)
 		
 	} );
 
@@ -299,14 +320,28 @@ $(document).ready(function(){
 		tabla.ajax.reload(null,false);
 	}
 
+	MDL_MNG_CREATE_CODESTUDENT.succesAdmids= function (data){
+		tabla.ajax.reload(null,false);
+	}
+
 });
+
+function hasCodeStudent(jsonRow){
+	return jsonRow.cod_student_admin!=null
+}
 
 function openModalAdmision(){
 	MDL_MNG_STATE_ADMISION.create(tabla.rows('.selected').data().toArray())
 }
 
+function openModalCreaCodigos(){
+	var jsonData = tabla.rows('.selected').data().toArray().map(x=>JSON.parse(x[0]))
+	MDL_MNG_CREATE_CODESTUDENT.create(jsonData)
+}
+
 function hasNotValidateAdmisibleRow(inscripcion){
-	return inscripcion[11].id != 1
+	
+	return inscripcion[12].id != 1
 }
 
 function changeStateMultipleAdmidsButton(state = true){
@@ -320,6 +355,23 @@ function changeStateMultipleAdmidsButton(state = true){
 		button.unbind('click')
 		button.attr('disabled', 'true')
 	}
+}
+
+function changeStateMultipleCodeCreateButton(state = true){
+	var button = $("#btn-student-cod-mult");
+	if(state){
+		button.unbind('click')
+		button.removeAttr('disabled')
+		button.removeAttr('onclick')
+		button.click(openModalCreaCodigos)
+	}else{
+		button.unbind('click')
+		button.attr('disabled', 'true')
+	}
+}
+
+function createCodigosModal(){
+
 }
 
 function loadDiscountAndRequirements(solicitud)
@@ -728,7 +780,7 @@ function getHtmlEstadoAdmision(estado,inscripcion){
 			var id_inscripcion = JSON.parse(inscripcion[0]).id_inscripcion
 			var fulltemplate = `
 				<div onclick="MDL_ACTA_ADMINDS.show(${id_inscripcion})">
-					${label_success(estado.nombre)}
+					${label_success(estado.nombre,'<i class="fa fa-file-pdf-o" aria-hidden="true"></i>')}
 				</div>
 			`
 			return fulltemplate
@@ -776,8 +828,8 @@ function dropDownAdmision(admision_state){
 	`
 }
  
-function label_success(text){
-	return `<span class="label label-success">${text}</span>`; 
+function label_success(text,inject=''){
+	return `<span class="label label-success">${inject} ${text}</span>`; 
 }
 function label_danger(text){
 	return `<span class="label label-danger">${text}</span>`; 

@@ -13,10 +13,13 @@ class Solicitud_model extends MY_Model
 	private $state='estado';
 	private $notification_mensaje='notification_mensaje';
 	private $estado_finanzas_id = 'estado_finanzas_id';
+	private $cod_alumno_increment = 'cod_alumno_increment';
 
 
 	public $global_stado_finanzas=[];
 	public $array_estado_finanzas=[];
+	private $global_where_in = [];
+	private $active_global_where = false;
 
 
 	public $program_id_filter='';
@@ -32,6 +35,14 @@ class Solicitud_model extends MY_Model
 		$this->load->model('EstadoFinanzasSolicitud_model');
 		$this->array_estado_finanzas=$this->EstadoFinanzasSolicitud_model->all();
 		$this->load->helper('mihelper');
+	}
+
+	public function setWhereInGlobal($values){
+		if(!is_array($values)){
+			throw new Exception("El parametro tiene que ser un array", 1);
+		}
+		$this->global_where_in = $values;
+		$this->active_global_where = true;
 	}
 
 	public function existe($idAlumno,$programa){
@@ -98,6 +109,14 @@ class Solicitud_model extends MY_Model
 		$this->query_part_filter_estado_finanzas();
 		$this->query_part_filter_by_program('s');
 
+		if($this->active_global_where){
+			if(count($this->global_where_in)>0){
+				$this->db->where_in('s.idSolicitud',$this->global_where_in);
+			}else{
+				$this->db->where('s.idSolicitud',false);//hack
+			}
+			
+		}
 		return $this->db->get();
 	}
 
@@ -151,7 +170,10 @@ class Solicitud_model extends MY_Model
 		's.marcaPago ,'.
 		's.comentario ,'.
 		'ef.nombre as estado_finanzas,'.
-		's.notification_mensaje');
+		's.notification_mensaje,'.
+		'a.cod_alumno_increment,'.
+		'a.cod_student_admin,'
+	);
 	}
 
 	public function count_sent_less(){
@@ -554,4 +576,15 @@ class Solicitud_model extends MY_Model
 	{
 		$this->db->insert("solicitud_requirement",$param);
 	}
+
+	public function getBySearchCodigoAlumno($search){
+		
+		$this->db->select('s.*');
+		$this->db->from($this->table.' s');
+		$this->db->join('alumno a','s.alumno=a.id_alumno');
+		$this->db->like('a.cod_student_admin',$search,'after');
+		$this->db->or_where('a.cod_student_admin',$search);
+		return $this->db->get()->result_array();
+	}
+
 }

@@ -76,15 +76,28 @@ class Solicitud extends MY_Controller
 	}
 
     public function dataTable(){
-        $search=$this->input->post("search[]");
+		$search=$this->input->post("search[]");
+		
 		$start=$this->input->post('start');
 		$length=$this->input->post('length');
-        $activeSearch=((strlen($search["value"])!=0))||empty($search);
+		$activeSearch=((strlen($search["value"])!=0))||empty($search);
+		
 
 		$columns=$this->input->post('columns');
 
 		$programa_filtro=$columns[7]["search"]["value"];
+		$codigo_filtro = $columns[8]["search"]["value"];
+		$activeCodigoSearch = ((strlen($codigo_filtro)>0))||!empty($codigo_filtro);
 
+		if($activeCodigoSearch){
+			$result = $this->Solicitud_model->getBySearchCodigoAlumno($codigo_filtro);
+			$ids = array_column($result,'idSolicitud');
+			$this->Solicitud_model->setWhereInGlobal($ids);
+		}
+		
+		
+		//$sql=
+		
 		$column_filtros=$columns[2]["search"]["value"];
 		$estados=($column_filtros=="")?[]:explode(',',$column_filtros);
 		$this->load->model('Auth_Permisions');
@@ -99,7 +112,7 @@ class Solicitud extends MY_Controller
         }else{
             $rspta = resultToArray($this->Solicitud_model->get_data_for_datatable($start,$length));
 		}
-		
+		$query = $this->db->last_query();
 		$data = Array();
 		
 		$solicitud_ids=c_extract($rspta,'idSolicitud');
@@ -151,15 +164,17 @@ class Solicitud extends MY_Controller
 							$this->HTML_btn_default($rspta[$i]["estado_finanzas"],$rspta[$i]["estado_finanzas_id"])
 						).$this->HTML_details_icon($rspta[$i]["idSolicitud"],$rspta[$i]["estado_finanzas_id"])."</div>",
                 "9" => '<textarea class="form-control" onclick="editComent('.$rspta[$i]["idSolicitud"].');" readonly="readonly">'.$rspta[$i]["comentario"].'</textarea>',
-                "10" => $rspta[$i]["fecha_registro"],
-                "11" => ($rspta[$i]["estado"]=='0')?'<span class="label bg-red">Sin atender</span>':'<span class="label bg-green">Atendido</span>'
+				"10" => $rspta[$i]["fecha_registro"],
+				"11" => $rspta[$i]["cod_student_admin"],
+                "12" => ($rspta[$i]["estado"]=='0')?'<span class="label bg-red">Sin atender</span>':'<span class="label bg-green">Atendido</span>'
             );
          }    
         $results = array(
             "sEcho" =>$this->input->post('sEcho'), //Informacion para datatables
             "iTotalRecords" => $cantidad, //enviamos el total de registros al datatables
             "iTotalDisplayRecords" => ($activeSearch)?$this->Solicitud_model->count_with_filter($search["value"]):$cantidad, //enviamos total de registros a visualizar
-            "aaData" => $data);
+			"aaData" => $data,
+			"query"=>["q"=>$query,"ac"=>$activeCodigoSearch]);
         echo json_encode($results);
 	}
 

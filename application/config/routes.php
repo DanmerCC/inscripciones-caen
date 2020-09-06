@@ -187,7 +187,6 @@ $route['admin/parts/nuevoprograma'] = 'admin/Programa/newPrograma';
 $route['admin/notifications'] = 'admin/NotificationController/index';
 $route['admin/read'] = 'admin/NotificationController/read';
 
-$route['admin/codestudent'] = 'CodalumnoController/create';
 
 $route['admin/inscripcion/changestatefinan']='admin/InscripcionController/changeEstadoFinanzas';
 $route['admin/finobservacion/inscripcion/(:num)']='admin/FinanzasObservacionController/get_by_inscripcion_id/$1';
@@ -381,3 +380,7 @@ $route['administracion/admidslist'] = 'admin/Admision/create';
 $route['administracion/inscripcion/actas/(:num)'] = 'admin/Admision/byinscripcion/$1';//by id inscription
 $route['administracion/acta/view/(:num)'] = 'admin/Admision/show/$1';
 $route['administracion/acta/details/(:num)'] = 'admin/Admision/details/$1';
+
+//codigo de alumno
+$route['administracion/lastcode'] = 'CodalumnoController/maxCode';
+$route['admin/codestudent'] = 'CodalumnoController/create';
