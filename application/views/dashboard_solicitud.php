@@ -360,6 +360,6 @@
 
 <script src="/assets/plugins/bootbox/bootbox.all.min.js"></script>
 <!-- <script src="/assets/js/dboardAlumno.js"></script> -->
-<script src="/assets/js/dbSolicitudes.js?v=1"></script>
+<script src="/assets/js/dbSolicitudes.js?v=2"></script>
 </body>
 </html>

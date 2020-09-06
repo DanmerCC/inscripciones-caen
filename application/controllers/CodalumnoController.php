@@ -69,6 +69,7 @@ class CodalumnoController extends MY_Controller {
 		}else{
 			
 			return $this->jsonResponse([
+				"data"=>$data,
 				"message"=>"Existe un alumno que ya tienen  codigo",
 				"code"=>$ALUMNO_ID_NOT_CLEAN,
 				"status"=>false

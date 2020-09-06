@@ -79,6 +79,7 @@ class InscripcionController extends MY_Controller {
 		foreach ($rspta as $key => $item) {
 			$cuerpo[] = array(
 				($key+1),
+				$item['cod_student_admin'],
 				$item['nombres'],
 				$item['apellido_paterno']." ".$item['apellido_materno'],
 				$item['documento'],
@@ -95,7 +96,7 @@ class InscripcionController extends MY_Controller {
 				$item['created'],
 			);
 		}
-		$headers = ["N°","NOMBRES","APELLIDOS","DOCUMENTO","NACIMIENTO","DIST NAC","PROVINCIA","DEPARTAMENTO","CORREO","TELEFONOS","USUARIO","PROGRAMAS","GRADO PROFESION","ESTADO CIVIL","FECHA DE REGISTRO"];
+		$headers = ["N°","CODALUMNO","NOMBRES","APELLIDOS","DOCUMENTO","NACIMIENTO","DIST NAC","PROVINCIA","DEPARTAMENTO","CORREO","TELEFONOS","USUARIO","PROGRAMAS","GRADO PROFESION","ESTADO CIVIL","FECHA DE REGISTRO"];
 
 		process_and_export_excel($headers,$cuerpo);
 		
