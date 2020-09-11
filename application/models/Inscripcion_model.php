@@ -584,7 +584,7 @@ class Inscripcion_model extends CI_Model
 		$this->db->join('alumno a','s.alumno = a.id_alumno','left');
 		$this->db->join('estado_finanzas ef','ins.estado_finanzas_id = ef.id','left');
 		$this->db->join('estado_admisions ea','ins.estado_admision_id = ea.id','left');
-		$this->db->group_by('ins.id_inscripcion');
+		//$this->db->group_by('ins.id_inscripcion');
 		$this->db->order_by('ins.created','desc');
 	}
 

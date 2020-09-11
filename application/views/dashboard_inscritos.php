@@ -360,7 +360,7 @@
 	$this->load->view('modals/state_manager_modal');
 	$this->load->view('modals/create_codigos'); 
 ?>
-<script src="/assets/js/dboard_inscripciones.js?v=3"></script>
+<script src="/assets/js/dboard_inscripciones.js?v=4"></script>
 <style>
 .datepicker {
       z-index: 1600 !important; /* has to be larger than 1050 */

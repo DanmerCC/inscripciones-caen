@@ -719,8 +719,8 @@ function cargarData(id){
 
 function createRouteExport(){
 	let search = tabla.ajax.params().search.value;
-	let anulado = tabla.ajax.params().columns[9].search.value;
-	let estados = tabla.ajax.params().columns[10].search.value;
+	let anulado = tabla.ajax.params().columns[11].search.value;
+	let estados = tabla.ajax.params().columns[9].search.value;
 	document.getElementById('btnExport').attributes.href.nodeValue = "/administracion/vista/dowloadFilter?search="+search+"&anulado="+anulado+"&estados="+estados;
 }
 
