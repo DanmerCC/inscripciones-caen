@@ -178,6 +178,8 @@ class InscripcionController extends MY_Controller {
 		$column_nine=$columns[9]["search"]["value"];
 		$column_cod_admin=$columns[8]["search"]["value"];
 		$estados=($column_nine=="")?[]:explode(',',$column_nine);
+		$programa_id=$columns[5]["search"]["value"];
+		$programa_id=is_numeric($programa_id)?(int)($programa_id):null;
 
 		$value_estados_admision=$columns[10]["search"]["value"];
 		$filters_values_estados_admision=($value_estados_admision=="")?[]:explode(',',$value_estados_admision);
@@ -192,6 +194,7 @@ class InscripcionController extends MY_Controller {
 		
 		$this->Inscripcion_model->global_stado_finanzas=$estados;
 		$this->Inscripcion_model->filter_estado_admision_ids=$filters_values_estados_admision;
+		$this->Inscripcion_model->filter_programa_id=$programa_id;
 
 		if(strlen($search["value"])>0){
 			

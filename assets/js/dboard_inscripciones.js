@@ -250,16 +250,14 @@ $(document).ready(function(){
 
 	$("#slct_anulados").change(()=>{
 		var input_select=document.getElementById('slct_anulados');
-		//console.log(input_select.checked)
 		tabla.column(11).search(input_select.checked).draw();
 		createRouteExport();
-		//tabla.ajax.reload(null,false);
 	})
 
 	loadDataToSelect();
 
     $("#selectProgram").change(function(){
-        tabla.search($(this).val()).draw();
+		tabla.column(5).search($(this).val()).draw()
 		createRouteExport();
     });
 
@@ -420,15 +418,15 @@ function makeRequirementsHtml(requirements,discount_id)
 }
 
 function listProgramasActivos(array,lastfirst=false){
-	
+
 	result="";
 	if(lastfirst){
 		for (var i = 0; i < array.length; i++) {
-			result="<option value='"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"'>"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"</option>"+result;
+			result="<option value='"+array[i].id_curso+"'>"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"</option>"+result;
 		}
 	}else{
 		for (var i = 0; i < array.length; i++) {
-			result=result+"<option value='"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"'>"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"</option>";
+			result=result+"<option value='"+array[i].id_curso+"'>"+array[i].numeracion+" "+array[i].tipoNombre+" "+array[i].nombre+"</option>";
 		}
 	}
 
