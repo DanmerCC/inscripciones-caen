@@ -329,6 +329,13 @@ class Inscripcion_model extends CI_Model
 				)
 			);
 		}
+		if($this->filter_programa_id){
+			$this->db->where(
+				array(
+					'c.id_curso'=>$this->filter_programa_id
+				)
+			);
+		}
 		$this->dt_query_datatable_filter_array('ins');
 		//$this->db->limit($limit,$start);
         return resultToArray($this->db->get());
@@ -343,6 +350,13 @@ class Inscripcion_model extends CI_Model
 			$this->db->where(
 				array(
 					'ins.'.$this->deleted=>NULL
+				)
+			);
+		}
+		if($this->filter_programa_id){
+			$this->db->where(
+				array(
+					'c.id_curso'=>$this->filter_programa_id
 				)
 			);
 		}

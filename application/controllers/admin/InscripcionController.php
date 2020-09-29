@@ -65,10 +65,15 @@ class InscripcionController extends MY_Controller {
 		$value=$this->input->get("search");
 		$deletes=(boolean)($this->input->get('anulado')==='true');
 		$column_nine=$this->input->get('estados');
+		$programa_id=$this->input->get('p_id');
+		$programa_id=$programa_id==""?null:$programa_id;
+		/*echo var_dump($programa_id);
+		exit;*/
 		$estados=($column_nine=="")?[]:explode(',',$column_nine);
 		$this->load->model('Auth_Permisions');
 
 		$this->Inscripcion_model->global_stado_finanzas=$estados;
+		$this->Inscripcion_model->filter_programa_id=$programa_id;
 
 		if(strlen($value)>0){
 			$rspta = $this->Inscripcion_model->get_all_to_export_and_filter($value,$deletes);

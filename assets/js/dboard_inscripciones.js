@@ -719,7 +719,8 @@ function createRouteExport(){
 	let search = tabla.ajax.params().search.value;
 	let anulado = tabla.ajax.params().columns[11].search.value;
 	let estados = tabla.ajax.params().columns[9].search.value;
-	document.getElementById('btnExport').attributes.href.nodeValue = "/administracion/vista/dowloadFilter?search="+search+"&anulado="+anulado+"&estados="+estados;
+	let programa_id = tabla.ajax.params().columns[5].search.value;
+	document.getElementById('btnExport').attributes.href.nodeValue = "/administracion/vista/dowloadFilter?search="+search+"&anulado="+anulado+"&estados="+estados+"&p_id="+programa_id;
 }
 
 function load_details_state_finanzas(id){
