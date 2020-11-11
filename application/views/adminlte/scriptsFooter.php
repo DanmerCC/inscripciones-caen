@@ -13,7 +13,6 @@
 <script src="/assets/js/globalhelper.js"></script>
 
 <script src="/bower_components/select2/dist/js/select2.min.js"></script>
-
 <!-- AdminLTE adminlte/for demo purposes -->
 <script src="/adminlte/dist/js/demo.js"></script>
 <script>
@@ -21,6 +20,22 @@
     $('.sidebar-menu').tree()
   })
 </script>
+<?php 
+$url =  current_url();
+echo base_url();
+$exceptions = [
+	base_url()."login",
+	base_url()."registro",
+	base_url()."login/recoverpassword",
+	base_url().'login/updatePassword',
+	base_url().'registro',
+	base_url().'registro/enviar',
+	base_url().'postulante',
+	base_url().'postulante/verificacion',
+	base_url().'postulante/answers'
+];
+if(!in_array($url,$exceptions)):
+?>
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
@@ -34,3 +49,4 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 <!--End of Tawk.to Script-->
+<?php endif; ?>
