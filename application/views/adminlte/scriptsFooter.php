@@ -22,7 +22,6 @@
 </script>
 <?php 
 $url =  current_url();
-echo base_url();
 $exceptions = [
 	base_url()."login",
 	base_url()."registro",
