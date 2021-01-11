@@ -15,7 +15,9 @@
 		"chriskacerguis/codeigniter-restserver": "^3.0",
 		"iio/libmergepdf": "^4.0",
 		"phpoffice/phpword": "^0.16.0",
-		"phpoffice/phpspreadsheet": "^1.9"
+		"phpoffice/phpspreadsheet": "^1.9",
+		"symfony/polyfill-ctype": "^1.22",
+		"vlucas/phpdotenv": "^5.2"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

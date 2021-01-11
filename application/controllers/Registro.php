@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+require('./vendor/autoload.php');
 class Registro extends CI_Controller
 {
 
@@ -10,6 +11,7 @@ class Registro extends CI_Controller
         $this->load->helper('url');
 		$this->load->library('Nativesession');
 		$this->load->helper('mihelper');
+		$this->load->helper('env');
 		$this->load->model('Programa_model');
 		$this->load->model('Notificacion_model');
     }
@@ -136,7 +138,48 @@ class Registro extends CI_Controller
            }
         }
         return $result;
-    }
+	}
+	
+	private function genericRequest($url,$body,$headers=[],$method='GET'){
+		
+		$cu=curl_init($url);
+		if ($cu === false) {
+			throw new Exception('failed to initialize');
+		}
+		if($method=='POST'){
+			curl_setopt($cu, CURLOPT_POST, true);
+		}
+		curl_setopt($cu, CURLOPT_POSTFIELDS, json_encode($body));
+		curl_setopt($cu, CURLOPT_VERBOSE, true);
+		curl_setopt($cu, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($cu, CURLOPT_RETURNTRANSFER, true);
+		
+		$result = curl_exec($cu);
+
+		if ($result === false) {
+			throw new Exception(curl_error($cu), curl_errno($cu));
+		}
+		curl_close($cu);
+		
+		return $result;
+	}
+	public function registrotest(){
+		/*echo __DIR__.'../../';
+		//$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'../../');
+		$dotenv = Dotenv\Dotenv::createImmutable('./');
+		//$dotenv->required('CUSTOM_VAR');
+		$dotenv->load();
+
+		echo var_dump($dotenv);*/
+		echo $_ENV['CUSTOM_VAR'];
+		echo "......... \n";
+		echo getenv('CUSTOM_VAR');
+		echo "......... \n";
+		echo \getenv('CUSTOM_VAR');
+		echo "......... \n";
+		echo env('CUSTOM_VAR');
+		exit;
+	}
 
     
 

@@ -333,7 +333,7 @@ $route['informes/save'] = 'InformesController/save';
 
 $route['admin/evaluables'] = 'admin/InscripcionController/getEvaluables';
 $route['admin/evaluacion/save'] = 'admin/EvaluacionesController/guardar';
-$route['prueba'] = 'admin/EvaluacionesController/prueba';
+$route['prueba'] = 'Registro/registrotest';
 
 //ALL LOGIG NEW DISCOUNT
 $route['postulante/solicitud/discount/store'] = 'Solicitud/storeSolicitudDiscount/$1';
