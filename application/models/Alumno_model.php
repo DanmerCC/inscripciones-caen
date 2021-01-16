@@ -67,6 +67,7 @@ class Alumno_model extends CI_Model
 	{
 		parent::__construct();
 		$this->load->helper('mihelper');
+		$this->load->model('EstadoFinanzasSolicitud_model');
 		$this->public_columns=[
 			$this->id,
 			$this->nombres,
@@ -351,11 +352,12 @@ class Alumno_model extends CI_Model
         return $this->db->update('alumno', $data);
 	}
 
-	public function nuevaSolicitud($programa,$alumno,$tipo_financiamiento){
+	public function nuevaSolicitud($programa,$alumno,$tipo_financiamiento,$finance_state_id=null){
 		$data=array(
 			'programa' => "$programa",
 			'alumno' => "$alumno",
-			'tipo_financiamiento' => "$tipo_financiamiento"
+			'tipo_financiamiento' => "$tipo_financiamiento",
+			'estado_finanzas_id'=>$finance_state_id==null?$this->EstadoFinanzasSolicitud_model->PENDIENTE:$finance_state_id
 		);
 		$this->db->insert('solicitud',$data);
 		return $this->db->affected_rows()==1;

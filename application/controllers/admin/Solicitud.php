@@ -240,6 +240,9 @@ class Solicitud extends MY_Controller
 				case $this->EstadoFinanzasSolicitud_model->VALIDADO:
 					$class_color=' text-green ';
 					break;
+				case $this->EstadoFinanzasSolicitud_model->VALIDADO_AUTOMATIC:
+					$class_color=' text-green ';
+					break;
 				case $this->EstadoFinanzasSolicitud_model->OBSERVADO:
 					$class_color=' text-red ';
 					break;
@@ -257,6 +260,10 @@ class Solicitud extends MY_Controller
 
 		switch ($estado_finanzas_id) {
 			case $this->EstadoFinanzasSolicitud_model->VALIDADO:
+				$btn_class_color=' text-green ';
+				break;
+
+			case $this->EstadoFinanzasSolicitud_model->VALIDADO_AUTOMATIC:
 				$btn_class_color=' text-green ';
 				break;
 				

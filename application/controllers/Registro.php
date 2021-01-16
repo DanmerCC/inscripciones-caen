@@ -14,6 +14,9 @@ class Registro extends CI_Controller
 		$this->load->helper('env');
 		$this->load->model('Programa_model');
 		$this->load->model('Notificacion_model');
+		$this->load->model('Deudores_model');
+		$this->load->model('EstadoFinanzasSolicitud_model');
+		$this->load->model('FinObservacionesSolicitud_model');
     }
 
     public function index()
@@ -90,10 +93,23 @@ class Registro extends CI_Controller
                 $this->nativesession->set('idUsuario',$nuevo_usuario["id"]);
                 $this->nativesession->set('dni',$nuevo_alumno["documento"]);
                 $this->nativesession->set('estado','logeado');
-                $this->nativesession->set('tipo',$nuevo_alumno["tipo"]);
-                
-                if($this->Alumno_model->nuevaSolicitud($programa_id, $alumno, $tipoFinan)){
+				$this->nativesession->set('tipo',$nuevo_alumno["tipo"]);
+
+				$estado_finan_id = null;
+				
+                if($this->Alumno_model->nuevaSolicitud($programa_id, $alumno, $tipoFinan,$estado_finan_id)){
 					$id_solicitud = $this->db->insert_id();
+
+					if(env('PAGOS_ACTIVE_DEBTORS_EP',false)){
+						try {
+							$this->Deudores_model->runCallbackValidate($id_solicitud);
+						} catch (\Exception $e) {
+							
+							log_message('info', $e->getMessage());
+						}
+						
+					}
+
                    $programa_result=$this->Programa_model->findWithFullname($programa_id);
                     $this->Notificacion_model->create(array(
 						'action_id'=>10,//create solicitud
@@ -153,7 +169,6 @@ class Registro extends CI_Controller
 		curl_setopt($cu, CURLOPT_VERBOSE, true);
 		curl_setopt($cu, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($cu, CURLOPT_RETURNTRANSFER, true);
-		
 		$result = curl_exec($cu);
 
 		if ($result === false) {
@@ -164,21 +179,7 @@ class Registro extends CI_Controller
 		return $result;
 	}
 	public function registrotest(){
-		/*echo __DIR__.'../../';
-		//$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'../../');
-		$dotenv = Dotenv\Dotenv::createImmutable('./');
-		//$dotenv->required('CUSTOM_VAR');
-		$dotenv->load();
-
-		echo var_dump($dotenv);*/
-		echo $_ENV['CUSTOM_VAR'];
-		echo "......... \n";
-		echo getenv('CUSTOM_VAR');
-		echo "......... \n";
-		echo \getenv('CUSTOM_VAR');
-		echo "......... \n";
-		echo env('CUSTOM_VAR');
-		exit;
+		return "-";
 	}
 
     

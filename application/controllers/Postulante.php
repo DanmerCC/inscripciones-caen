@@ -429,6 +429,7 @@ class Postulante extends MY_Controller {
 	public function solicitud(){
 
 		$this->load->model('Solicitud_model');
+		$this->load->model('Deudores_model');
 
 		$alumno=$this->nativesession->get('idAlumno');
 		$programa=$this->input->post('programa');
@@ -448,6 +449,13 @@ class Postulante extends MY_Controller {
 			$this->load->model('Alumno_model');
 			$resultado=$this->Alumno_model->nuevaSolicitud($programa,$alumno,$tipo_financiamiento);
 			$solicitud_id = $this->db->insert_id();
+
+			try {
+				$this->Deudores_model->runCallbackValidate($solicitud_id);
+			} catch (Exception $e) {
+				log_message('info',$e->getMessage());
+			}
+			
 			$this->session->set_flashdata('question_sol_id', $solicitud_id);
 			$alumno_result=$this->Alumno_model->find($alumno);
 			$programa=$this->Programa_model->findWithFullname($programa);

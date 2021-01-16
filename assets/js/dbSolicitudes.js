@@ -467,7 +467,7 @@ function reiniciarModalAlumno(id,obj_dom){
 
 
 function request_bootbox(id,estado_id){
-	if(estado_id==2){
+	if(estado_id==2 || estado_id == 4){
 		bootbox.confirm({
 			title: "Desea inscribir",
 			message: "Esta seguro de enviar a INSCRITOS esta solicitud",
