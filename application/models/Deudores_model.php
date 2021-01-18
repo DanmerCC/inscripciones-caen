@@ -31,7 +31,8 @@ class Deudores_model extends MY_Model
 		}
 		return $this->genericRequest($this->url_trigger_job.$sol_id,
 			[
-				'TOKEN'=>$tokencallback
+				'TOKEN'=>$tokencallback,
+				'url_callback'=>base_url().env('BOT_PATH_BACK').$sol_id
 			],
 			[
 				'Content-Type: application/json; charset=UTF-8',

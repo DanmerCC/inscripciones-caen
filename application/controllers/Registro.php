@@ -181,9 +181,9 @@ class Registro extends CI_Controller
 	}
 	public function registrotest(){
 
-		$this->load->model('Apitoken_model');
-		$resultado = $this->Apitoken_model->create();
-		echo var_dump($resultado);
+		/*$this->load->model('Apitoken_model');
+		$resultado = $this->Apitoken_model->create();*/
+		echo var_dump(base_url().env('BOT_PATH_BACK'));
 		//$this->Apitoken_model->use($resultado);
 		exit;
 		return "-";
