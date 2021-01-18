@@ -17,6 +17,7 @@ class Registro extends CI_Controller
 		$this->load->model('Deudores_model');
 		$this->load->model('EstadoFinanzasSolicitud_model');
 		$this->load->model('FinObservacionesSolicitud_model');
+		$this->load->model('Apitoken_model');
     }
 
     public function index()
@@ -181,10 +182,12 @@ class Registro extends CI_Controller
 	}
 	public function registrotest(){
 
-		/*$this->load->model('Apitoken_model');
-		$resultado = $this->Apitoken_model->create();*/
-		echo var_dump(base_url().env('BOT_PATH_BACK'));
-		//$this->Apitoken_model->use($resultado);
+		$this->load->model('Apitoken_model');
+		$this->load->model('Deudores_model');
+
+		$resultado = $this->Apitoken_model->create();
+		$result = $this->Deudores_model->runCallbackValidate(1466,$resultado);
+		echo var_dump($result);
 		exit;
 		return "-";
 	}

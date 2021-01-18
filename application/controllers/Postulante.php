@@ -12,6 +12,7 @@ class Postulante extends MY_Controller {
 		$this->load->model('Notificacion_model');
 		$this->load->model('Programa_model');
 		$this->load->model('Alumno_model');
+		$this->load->model('Apitoken_model');
 	}
 
 	public function index()
@@ -451,7 +452,8 @@ class Postulante extends MY_Controller {
 			$solicitud_id = $this->db->insert_id();
 
 			try {
-				$this->Deudores_model->runCallbackValidate($solicitud_id);
+				$tokencallback = $this->Apitoken_model->create();
+				$this->Deudores_model->runCallbackValidate($solicitud_id,$tokencallback);
 			} catch (Exception $e) {
 				log_message('info',$e->getMessage());
 			}

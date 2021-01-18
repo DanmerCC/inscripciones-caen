@@ -25,7 +25,7 @@ class SolicitudesController extends MY_Controller {
 
 		$ins_id = $this->uri->segment(4);
 		$json_request_body = json_decode(file_get_contents('php://input'));
-		$state_id  = $json_request_body->state_id;
+		$state_id  = (int)$json_request_body->state_id;
 		$comment = $json_request_body->comment??"";
 		$token = $json_request_body->TOKEN;
 
@@ -39,14 +39,14 @@ class SolicitudesController extends MY_Controller {
 		}
 
 		if(!in_array($state_id,$permits_array)){
-			return $this->response(["status"=>false,"message"=>"estado no permitido"]);
+			return $this->response(["status"=>false,"message"=>"estado no permitido","sdasd"=>$permits_array]);
 		}
 
-		if($state_id==$this->EstadoFinanzasSolicitud_model->OBSERVADO){
+		/*if($state_id==$this->EstadoFinanzasSolicitud_model->OBSERVADO){
 			if($comment){
 				return $this->response(["status"=>false,"message"=>"estado no permitido"]);
 			}
-		}
+		}*/
 
 		if($this->Apitoken_model->exist($token)){
 			$token  = $this->Apitoken_model->use($token);
