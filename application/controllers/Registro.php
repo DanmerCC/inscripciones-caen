@@ -102,7 +102,8 @@ class Registro extends CI_Controller
 
 					if(env('PAGOS_ACTIVE_DEBTORS_EP',false)){
 						try {
-							$this->Deudores_model->runCallbackValidate($id_solicitud);
+							$tokencallback = $this->Apitoken_model->create();
+							$this->Deudores_model->runCallbackValidate($id_solicitud,$tokencallback);
 						} catch (\Exception $e) {
 							
 							log_message('info', $e->getMessage());
@@ -179,6 +180,12 @@ class Registro extends CI_Controller
 		return $result;
 	}
 	public function registrotest(){
+
+		$this->load->model('Apitoken_model');
+		$resultado = $this->Apitoken_model->create();
+		echo var_dump($resultado);
+		//$this->Apitoken_model->use($resultado);
+		exit;
 		return "-";
 	}
 

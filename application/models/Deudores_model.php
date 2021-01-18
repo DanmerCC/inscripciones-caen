@@ -23,13 +23,16 @@ class Deudores_model extends MY_Model
 	 * @param int $sol_id
 	 * @return Boolean
 	 */
-	public function runCallbackValidate($sol_id){
+	public function runCallbackValidate($sol_id,$tokencallback=null){
 
 		if(!env('PAGOS_ACTIVE_DEBTORS_EP')){
 			
 			return false;
 		}
-		return $this->genericRequest($this->url_trigger_job.$sol_id,[],
+		return $this->genericRequest($this->url_trigger_job.$sol_id,
+			[
+				'TOKEN'=>$tokencallback
+			],
 			[
 				'Content-Type: application/json; charset=UTF-8',
 				'Accept: application/json'
