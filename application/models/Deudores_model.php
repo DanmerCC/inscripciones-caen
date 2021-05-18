@@ -8,6 +8,7 @@ class Deudores_model extends MY_Model
 	public $BOT_USER_ID = 1253;
 	public $url_direct_work;
 	public $url_trigger_job;
+	public $url_callback_url;
 
 	function __construct()
 	{
@@ -15,6 +16,8 @@ class Deudores_model extends MY_Model
 		$this->load->helper('env');
 		$this->url_direct_work = env('PAGOS_BASE_URL')."/api/querydebts";
 		$this->url_trigger_job = env('PAGOS_BASE_URL')."/api/runvalidatesol/";
+		$this->url_trigger_jobv2 = env('PAGOS_BASE_URL')."/api/runquery";
+		$this->url_callback_url = base_url()."pagos/callback/";
 	}
 
 	/**
@@ -41,6 +44,38 @@ class Deudores_model extends MY_Model
 			'POST',
 			env('PAGOS_PORT')
 		);
+	}
+
+	public function runApiSearch($sol_id,$nombres,$ap_paterno,$ap_materno,$documento = null){
+		$url_complete = $this->url_callback_url.$sol_id;
+		log_message('error',"enviando a :".$this->url_trigger_jobv2);
+		log_message('error',"           y callback :".$url_complete);
+		try {
+			$result  = $this->genericRequest(
+				$this->url_trigger_jobv2,
+				[
+					'names'=>$nombres,
+					'father_last_name'=>$ap_paterno,
+					'mother_last_name'=>$ap_materno,
+					'dni'=>$documento,
+					'cip'=>$documento,
+					'url_callback'=>$url_complete
+				],
+				[
+					'Content-Type: application/json; charset=UTF-8',
+					'Accept: application/json'
+				],
+				'POST'
+			);
+			log_message('info',"devuelve :$result ");
+			log_message('error',"devuelve :$result ");
+		
+			$object = json_decode($result);
+			return $object;
+
+		} catch (Exception $e) {
+			throw new Exception("Error al llamar a api de busqueda de deudores");
+		}
 	}
 	
 	public function isDebtor($nombre,$apellido_paterno,$apellido_materno,$document,$cip){
@@ -70,8 +105,6 @@ class Deudores_model extends MY_Model
 			} catch (Exception $e) {
 				throw new Exception("Error al buscar deudas");
 			}
-		}else{
-			throw new Exception("No se encontro un url valida");
 		}
 	}
 

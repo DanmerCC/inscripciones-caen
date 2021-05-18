@@ -6,6 +6,10 @@ if(!function_exists('env')){
 	//formateamos la fecha y la hora, función de cesarcancino.com
 	function env($name,$default=null){
 
+		if(!isset($_ENV[$name])){
+			return null;
+		}
+
 		if($_ENV[$name]==""){
 			$value =  NULL;
 		}else{

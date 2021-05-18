@@ -453,7 +453,8 @@ class Postulante extends MY_Controller {
 
 			try {
 				$tokencallback = $this->Apitoken_model->create();
-				$this->Deudores_model->runCallbackValidate($solicitud_id,$tokencallback);
+				$model_student = $this->Alumno_model->find($alumno);
+				$this->Deudores_model->runApiSearch($solicitud_id,$model_student['nombres'],$model_student['apellido_paterno'],$model_student['apellido_materno'],$model_student['documento']);
 			} catch (Exception $e) {
 				log_message('info',$e->getMessage());
 			}

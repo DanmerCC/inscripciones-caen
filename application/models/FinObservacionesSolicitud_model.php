@@ -36,6 +36,7 @@ class FinObservacionesSolicitud_model extends MY_Model
 	}
 
 	public function create($solicitud_id,$usuario_id,$comentario){
+		log_message('error','Crearndo observacion para sol id :'.$solicitud_id." : ".$comentario);
 		$data=[
 			$this->solicitud_id=>$solicitud_id,
 			$this->usuario_id=>$usuario_id,

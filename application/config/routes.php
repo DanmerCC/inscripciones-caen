@@ -385,3 +385,5 @@ $route['administracion/acta/details/(:num)'] = 'admin/Admision/details/$1';
 //codigo de alumno
 $route['administracion/lastcode'] = 'CodalumnoController/maxCode';
 $route['admin/codestudent'] = 'CodalumnoController/create';
+
+$route['pagos/callback/(:num)'] = 'admin/Solicitud/handleResults/$1';

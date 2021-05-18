@@ -368,7 +368,7 @@ class Solicitud_model extends MY_Model
 		$this->db->from($this->tbl_solicitud);
 		$this->db->where($this->id_programa,$idPrograma);*/
 
-		$this->db->select('c.nombre nombrePrograma, a.nombres, a.apellido_paterno, a.apellido_materno, s.fecha_registro');
+		$this->db->select('c.nombre nombrePrograma, a.nombres, a.apellido_paterno, a.apellido_materno, s.fecha_registro,s.idSolicitud');
 		$this->db->from('solicitud s');
 		$this->db->join('alumno a', 's.alumno=a.id_alumno');
 		$this->db->join('curso c', 's.programa=c.id_curso');

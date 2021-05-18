@@ -104,10 +104,11 @@ class Registro extends CI_Controller
 					if(env('PAGOS_ACTIVE_DEBTORS_EP',false)){
 						try {
 							$tokencallback = $this->Apitoken_model->create();
-							$this->Deudores_model->runCallbackValidate($id_solicitud,$tokencallback);
+							log_message('error','Ejecutando ... interaccion con pagos');
+							$this->Deudores_model->runApiSearch($id_solicitud,$nuevo_alumno['nombres'],$nuevo_alumno['apellido_paterno'],$nuevo_alumno['apellido_materno'],$nuevo_alumno['documento']);
 						} catch (\Exception $e) {
 							
-							log_message('info', $e->getMessage());
+							log_message('error', $e->getMessage());
 						}
 						
 					}
@@ -184,11 +185,14 @@ class Registro extends CI_Controller
 
 		$this->load->model('Apitoken_model');
 		$this->load->model('Deudores_model');
+		$this->load->model('Solicitud_model');
 
-		$resultado = $this->Apitoken_model->create();
-		$result = $this->Deudores_model->runCallbackValidate(1466,$resultado);
-		echo var_dump($result);
-		exit;
+		$solicitudes = $this->Solicitud_model->getAllByProgramaFilter(73);
+		
+		for ($i=0; $i < count($solicitudes); $i++) {
+			$resultado = $this->Apitoken_model->create();
+			$result = $this->Deudores_model->runApiSearch($solicitudes[$i]["idSolicitud"],$resultado);
+		}
 		return "-";
 	}
 

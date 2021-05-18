@@ -475,6 +475,10 @@ class Solicitud extends MY_Controller
 
 
 	public function test($id){
+
+		echo var_dump($_ENV);
+		log_message('error',"asdasd");
+		exit;
 		$this->verify_login_or_fail();
 		$this->load->model('Documentrender_model');
 		$nuva_solicitud=new SolicitudDocument($id);
@@ -541,6 +545,22 @@ class Solicitud extends MY_Controller
 	{
 		$solicitudes = $this->Solicitud_model->getSolicitudProgramaByAlumno($solicitud_id);
 		return $this->structuredResponse($solicitudes,200);
+	}
+
+	public function handleResults($id_solicitud){
+		log_message('error',"Ejecutando handle de evneto de respuesta");
+		$data = json_decode(file_get_contents('php://input'));
+		log_message('error',"recibiendo :".file_get_contents('php://input'));
+		if($data->payload){
+			if($data->payload->debtor){
+				$this->load->model('Solicitud_model');
+				$this->load->helper('env');
+				$result = $this->Solicitud_model->setEstadoFinanzas($id_solicitud,$this->EstadoFinanzasSolicitud_model->OBSERVADO);
+
+				log_message('error',"cambiando estado .... ".($result?"correcto ":"algo paso!"));
+				$this->FinObservacionesSolicitud_model->create($id_solicitud,env('BOT_USER_ID',NULL),"Se detecto una deuda de ".$data->payload->amount);
+			}
+		}
 	}
 
 }
