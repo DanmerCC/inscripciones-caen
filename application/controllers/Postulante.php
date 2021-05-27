@@ -119,7 +119,7 @@ class Postulante extends MY_Controller {
 			die();
 		}
 
-		$this->db->select('alumno.documento,id,alumno.documento,acceso,password,alumno,tipo,alumno.id_alumno as id_alumno');
+		$this->db->select('alumno.nombres,alumno.apellido_paterno,alumno.apellido_materno,alumno.email,alumno.documento,id,alumno.documento,acceso,password,alumno,tipo,alumno.id_alumno as id_alumno');
 		$this->db->from('usuario');
 		$this->db->join('alumno', 'usuario.alumno = alumno.id_alumno');
 		$this->db->where('usuario.acceso',$user);
@@ -138,6 +138,8 @@ class Postulante extends MY_Controller {
 					$this->nativesession->set('idAlumno',$result->result()[0]->id_alumno);
 					$this->nativesession->set('idUsuario',$result->result()[0]->id);
 					$this->nativesession->set('dni',$result->result()[0]->documento);
+					$this->nativesession->set('email',$result->result()[0]->email);
+					$this->nativesession->set('names',$result->result()[0]->nombres." ".$result->result()[0]->apellido_paterno." ".$result->result()[0]->apellido_materno);
 					$this->nativesession->set('estado','logeado');
 					$this->nativesession->set('tipo',$result->result()[0]->tipo);
 					redirect(base_url().'postulante', 'refresh');

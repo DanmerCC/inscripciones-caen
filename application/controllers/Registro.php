@@ -93,6 +93,8 @@ class Registro extends CI_Controller
                 $this->nativesession->set('idAlumno',$nuevo_alumno["id_alumno"]);
                 $this->nativesession->set('idUsuario',$nuevo_usuario["id"]);
                 $this->nativesession->set('dni',$nuevo_alumno["documento"]);
+                $this->nativesession->set('email',$nuevo_alumno["email"]);
+                $this->nativesession->set('names',$nuevo_alumno["nombres"]." ".$nuevo_alumno["apellido_paterno"]." ".$nuevo_alumno["apellido_materno"]);
                 $this->nativesession->set('estado','logeado');
 				$this->nativesession->set('tipo',$nuevo_alumno["tipo"]);
 
@@ -196,6 +198,10 @@ class Registro extends CI_Controller
 		return "-";
 	}
 
-    
+	public function test(){
+
+		echo var_dump($_SESSION);
+		exit;
+	}
 
 }

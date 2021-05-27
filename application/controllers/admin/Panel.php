@@ -90,7 +90,7 @@ class Panel extends CI_Controller
 		$user=$this->input->post('usuario');
 		$password=$this->input->post('password');
 
-		$this->db->select('id,acceso,password,alumno,tipo');
+		$this->db->select('id,acceso,password,alumno,tipo,correo');
 		$this->db->from('usuario');
 		$this->db->where('usuario.acceso',$user);
 		$this->db->where('usuario.tipo !=',"alumno");
@@ -103,6 +103,8 @@ class Panel extends CI_Controller
 				/*Estableciendo variables de session*/
 				$this->nativesession->set('idUsuario',$result->result()[0]->id);
 				$this->nativesession->set('acceso',$result->result()[0]->acceso);
+				$this->nativesession->set('email',$result->result()[0]->correo);
+				$this->nativesession->set('names',$result->result()[0]->acceso);
 				$this->nativesession->set('tipo',$result->result()[0]->tipo);
 				$this->nativesession->set('estado','logeado');
 				$casedes=(($result->result()[0]->tipo=='casede')||($result->result()[0]->tipo=='casedeanf'));
