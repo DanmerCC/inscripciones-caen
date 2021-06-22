@@ -23,6 +23,15 @@ function process_and_export_excel($headers,$cuerpo,$original=true){
 	$sheet->getColumnDimension('I')->setWidth(20);
 	$sheet->getColumnDimension('J')->setWidth(15);
 	$sheet->getColumnDimension('K')->setWidth(20);
+	$sheet->getColumnDimension('L')->setWidth(20);
+	$sheet->getColumnDimension('M')->setWidth(20);
+	$sheet->getColumnDimension('N')->setWidth(20);
+	$sheet->getColumnDimension('O')->setWidth(20);
+	$sheet->getColumnDimension('P')->setWidth(20);
+	$sheet->getColumnDimension('Q')->setWidth(20);
+	$sheet->getColumnDimension('R')->setWidth(20);
+	$sheet->getColumnDimension('S')->setWidth(20);
+	$sheet->getColumnDimension('T')->setWidth(20);
 
 	foreach ($headers as $key => $val) {
 		$sheet->setCellValue($col.$fila, $val);

@@ -99,9 +99,11 @@ class InscripcionController extends MY_Controller {
 				$item['grado_profesion'],
 				$item['estado_civil'],
 				$item['created'],
+				$item['direccion']." ".$item['interior'],
+				$item['distrito'],
 			);
 		}
-		$headers = ["N°","CODALUMNO","NOMBRES","APELLIDOS","DOCUMENTO","NACIMIENTO","DIST NAC","PROVINCIA","DEPARTAMENTO","CORREO","TELEFONOS","USUARIO","PROGRAMAS","GRADO PROFESION","ESTADO CIVIL","FECHA DE REGISTRO"];
+		$headers = ["N°","CODALUMNO","NOMBRES","APELLIDOS","DOCUMENTO","NACIMIENTO","DIST NAC","PROVINCIA","DEPARTAMENTO","CORREO","TELEFONOS","USUARIO","PROGRAMAS","GRADO PROFESION","ESTADO CIVIL","FECHA DE REGISTRO","DIRECCION - INTERIOR","DISTRITO"];
 
 		process_and_export_excel($headers,$cuerpo);
 		
