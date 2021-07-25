@@ -146,7 +146,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" id="btnFormPorgrama" data-dismiss="modal">Cerrar</button>
-          <button id="btnActualizarPr" type="submit" class="btn btn-primary" form="formPro">Guardar cambios</button>
+          <button id="btnActualizarPr" type="submit" class="btn btn-primary" form="formPro" disabled="disabled">Guardar cambios</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
