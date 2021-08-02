@@ -16,14 +16,14 @@ confirm_password.onkeyup = validatePassword;
 $(document).ready(function(){
 	loadTipesOfPorgramas();
 	$("#slctTipoPrograma").change(onChangeType);
-	$("#frmRegistro").on('submit',function(evt){
+	/*$("#frmRegistro").on('submit',function(evt){
 		evt.preventDefault();
 		if ($('#tac').prop('checked')) {
 			this.submit();
 		}else{
 			alert("Debe leer y aceptar los terminos y condiciones de uso");
 		}
-	});
+	});*/
 
 });
 

@@ -73,9 +73,9 @@
       </div>
       <div class="form-group">
         <div class="col-xs-8">
-          <div class="checkbox icheck">
+          <div class="checkbox icheck" hidden="hidden">
             <label>
-              <input id="tac" type="checkbox"> Aceptos los <a href="#">terminos</a>
+              <input id="tac" type="checkbox" value="true"> Aceptos los <a href="#">terminos</a>
             </label>
           </div>
         </div>
