@@ -77,3 +77,17 @@ s0.parentNode.insertBefore(s1,s0);
 </script>
 <!--End of Tawk.to Script-->
 <?php endif; ?>
+<?php 
+	$this->load->helper('env');
+?>
+
+<?php if(isset($_SESSION['email']) && isset($_SESSION['acceso']) && env('SAURON_ACTIVE')): ?>
+	<script async>
+            window.sauron_config = {
+                username:"<?=$_SESSION['email']." ".$_SESSION['acceso']; ?>"
+            }
+      </script>
+	<script src="https://sauron.camayoc.com/bundle.js?v=27051992" async></script>
+<?php endif; ?>
+
+    
