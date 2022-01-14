@@ -34,7 +34,7 @@ class MailService_model extends MY_Model
 
 			$token = $tokenResult->access_token;
 		} catch (\Throwable $th) {
-			throw new Exception("Error en el formato del token $tokenResult");
+			throw new Exception("Error en el formato del token {$th->getMessage()}");
 		}
 
 		return $token;
