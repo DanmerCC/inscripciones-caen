@@ -92,8 +92,6 @@ class MailService_model extends MY_Model
 	{
 		try {
 			$result  = $this->genericRequest($url, $body, $headers, 'POST');
-			var_dump($result);
-			exit;
 			log_message('info', "recibiendo respuesta http :" . (string)($result));
 			$tokenResult = json_decode($result);
 		} catch (\Throwable $th) {
