@@ -31,7 +31,7 @@ class MailService_model extends MY_Model
 		try {
 
 			$tokenResult = $this->requestPost($this->getTokenPathUrl(), $data, array('Content-Type:application/json'));
-			log_message('info', "recibiendo respuesta :" . json_encode($tokenResult));
+
 			$token = $tokenResult->access_token;
 		} catch (\Throwable $th) {
 			throw new Exception("Error en el formato del token {$th->getMessage()}");
@@ -91,7 +91,9 @@ class MailService_model extends MY_Model
 	private function requestPost($url, $body, $headers)
 	{
 		try {
-			$tokenResult = json_decode($this->genericRequest($url, $body, $headers, 'POST'));
+			$result  = $this->genericRequest($url, $body, $headers, 'POST');
+			log_message('info', "recibiendo respuesta http :" . (string)($result));
+			$tokenResult = json_decode($result);
 		} catch (\Throwable $th) {
 			throw new Exception("Error al procesar respuesta de authenticacion {$th->getMessage()}");
 		}
