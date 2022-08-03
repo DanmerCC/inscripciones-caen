@@ -58,6 +58,7 @@ class Programa_model extends CI_Model
 						's.sent_to_inscripcion IS NULL '=>NULL,
 					))
 				->group_end()
+				->order_by('c.s.fecha_registro','DESC')
 				->group_by('c.id_curso');
 		return $result->get();
 	}
@@ -76,6 +77,7 @@ class Programa_model extends CI_Model
 						)
 					)
 				->group_end()
+				->order_by('ins.fecha_registro','DESC')
 				->group_by('c.id_curso');
 		return $result->get();
 	}
