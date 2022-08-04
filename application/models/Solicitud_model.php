@@ -149,7 +149,7 @@ class Solicitud_model extends MY_Model
 				's.'.$this->sent.' IS NULL '=>NULL,
 			))
 		->group_end()
-		->order_by('s.'.$this->id,'desc')
+		->order_by('s.'.'fecha_registro','desc')
 		;
 	}
 
