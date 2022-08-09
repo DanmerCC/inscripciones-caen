@@ -123,7 +123,7 @@ class Programa_model extends MY_Model
 						)
 					)
 				->group_end()
-				->order_by('ins.fecha_registro','DESC')
+				->order_by('ins.fecha_inicio','DESC')
 				->group_by('c.id_curso');
 		return $result->get();
 	}
