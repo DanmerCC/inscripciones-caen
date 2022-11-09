@@ -11,23 +11,28 @@
 </head>
 <body class="hold-transition skin-red sidebar-mini">
 <!-- Site wrapper -->
-<div class="wrapper">
 
+<div class="wrapper">
 <?=$mainHeader; ?>
   <!-- =============================================== -->
 
   <!-- Left side column. contains the sidebar -->
 <?=$mainSidebar; ?>
 
-  <!-- =============================================== -->
+<!-- =============================================== -->
+<!-- Content Wrapper. Contains page content -->
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
+<div class="content-wrapper">
+	  <div style="font-weight: bold; width: 100%; height: 48px; background-color: #e5e53a; display:grid; place-items: center">
+		  Esta versión Pronto se dejará de usar, te recomendamos el nuevo sistema de Inscripciones
+		  <a href="https://alumnos.caen.edu.pe" target="_blank">enlace aquí</a>
+	  </div>
+	  
+	  <!-- Content Header (Page header) -->
+	  <section class="content-header">
+      <!-- <h1>
         
-      </h1>
+      </h1> -->
       <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Mi sitio </a></li>
       </ol>

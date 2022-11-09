@@ -11,6 +11,10 @@
 	<link rel="stylesheet" href="/assets/css/login.css">
 </head>
 <body class="hold-transition login-page bg-caen">
+<div style="position: absolute; top: 0; left: 0; z-index: 99999;font-weight: bold; width: 100%; height: 48px; background-color: #e5e53a; display:grid; place-items: center">
+		  Esta versión Pronto se dejará de usar, te recomendamos el nuevo sistema de Inscripciones
+		  <a href="https://alumnos.caen.edu.pe" target="_blank">enlace aquí</a>
+	  </div>
 <div class="login-box">
   <div class="login-logo">
   <!-- <img src="assets/img/logo-caen.png" alt=""> -->
