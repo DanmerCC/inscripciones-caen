@@ -22,6 +22,10 @@
   <!-- =============================================== -->
 
   <!-- Content Wrapper. Contains page content -->
+	<div style="z-index: 99999;font-weight: bold; width: 100%; height: 48px; background-color: #e5e53a; display:grid; place-items: center">
+		Esta versión Pronto se dejará de usar, te recomendamos el nuevo sistema de Matriculas
+		<a href="https://matriculas.caen.edu.pe/" target="_blank">enlace aquí</a>
+	</div>
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
