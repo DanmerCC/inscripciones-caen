@@ -9,6 +9,7 @@ class Registro extends CI_Controller
     {
         parent::__construct();
         $this->load->helper('url');
+		$this->load->helper('env');
 		$this->load->library('Nativesession');
 		$this->load->helper('mihelper');
 		$this->load->helper('env');
@@ -22,6 +23,9 @@ class Registro extends CI_Controller
 
     public function index()
     {
+		$url_alumnos = env('ALUMNOS')."registrarse";
+		header('Location: '.$url_alumnos);
+		return;
         $tipos=$this->Programa_model->types();
         if(isset($_GET["dp"])){
             $programa_defecto=$this->Programa_model->findById($_GET["dp"]);
