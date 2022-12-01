@@ -23,8 +23,27 @@ class Registro extends CI_Controller
 
     public function index()
     {
-		$url_alumnos = env('ALUMNOS')."registrarse";
-		header('Location: '.$url_alumnos);
+		//if (isset($_SERVER))
+		
+		if ($_SERVER['REQUEST_SCHEME'] == 'https'){
+			$protocol = "https";
+		} else {
+			$protocol = "http";
+		}
+
+		$url = $protocol ."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+		$url_alumnos = env('ALUMNOS')."registro";
+
+		$find='dp=';
+		if (strpos($url, $find)) {
+			$str = substr($url, strpos($url, $find) + strlen($find));
+			header('Location: '.$url_alumnos."?".$find.$str);
+
+		} else {
+			  header('Location: '.$url_alumnos);
+		}
+
 		return;
         $tipos=$this->Programa_model->types();
         if(isset($_GET["dp"])){
